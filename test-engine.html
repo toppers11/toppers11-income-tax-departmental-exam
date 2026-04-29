@@ -93,7 +93,12 @@ body{-webkit-user-select:none;-moz-user-select:none;-ms-user-select:none;user-se
 .q-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:1.2rem;flex-wrap:wrap;gap:0.5rem;}
 .q-num-badge{font-size:0.72rem;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;color:var(--green-dark);}
 .q-paper-tag{font-size:0.7rem;font-weight:600;background:var(--green-pale);color:var(--green-dark);border-radius:999px;padding:0.2rem 0.6rem;}
-.q-text{font-size:1rem;font-weight:500;color:var(--ink);line-height:1.7;margin-bottom:1.4rem;}
+.q-text{font-size:1rem;
+  font-weight:500;
+  color:var(--ink);
+  line-height:1.7;
+  margin-bottom:1.4rem;
+  white-space: pre-line;   /* ✅ THIS FIX */}
 .opts-list{display:flex;flex-direction:column;gap:0.65rem;}
 .opt-btn{display:flex;align-items:flex-start;gap:0.75rem;padding:0.85rem 1rem;border-radius:10px;border:1.5px solid var(--border);background:#fff;text-align:left;cursor:pointer;transition:all 0.15s;font-family:'DM Sans',sans-serif;font-size:0.9rem;color:var(--ink);width:100%;}
 .opt-btn:hover{border-color:var(--green-light);background:var(--green-pale);}
