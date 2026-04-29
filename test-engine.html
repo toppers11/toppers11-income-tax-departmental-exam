@@ -1168,9 +1168,14 @@ function renderQuestion(){
   visited[currentQ] = true;
   document.getElementById('q-num-label').textContent = `Question ${currentQ+1} of ${TOTAL}`;
   // Question text (bilingual)
-  const qTextEl = document.getElementById('q-text');
-  qTextEl.innerHTML = `<span class="opt-text-en">${escHtml(q.q)}</span>`
-    + (q.q_hi ? `<div class="q-hindi">${escHtml(q.q_hi)}</div>` : '');
+const qTextEl = document.getElementById('q-text');
+
+const formattedQ = (q.q || "")
+  .replace(/\\n/g, "\n")   // handle escaped \n from DB
+  .replace(/\n/g, "<br>"); // convert to HTML line break
+
+qTextEl.innerHTML = `<span class="opt-text-en">${formattedQ}</span>`
+  + (q.q_hi ? `<div class="q-hindi">${q.q_hi.replace(/\n/g,"<br>")}</div>` : '');
   const opts = document.getElementById('opts-list');
   const letters = ['A','B','C','D'];
   opts.innerHTML = q.opts.map((o,i)=>{
@@ -1284,7 +1289,7 @@ function submitTest(){
     return `<div class="review-card ${cls}" data-status="${ua===-1?'skip':ua===ca?'correct':'wrong'}">
       <span class="rc-status-badge">${statusLabel}</span>
       <div class="rc-q-num">Q${i+1} &nbsp;·&nbsp; Your Answer: ${ua===-1?'—':letters2[ua]} &nbsp;·&nbsp; Correct: ${letters2[ca]}</div>
-      <div class="rc-question"><span class="opt-text-en">${escHtml(q.q)}</span>${q.q_hi?`<div class="q-hindi">${escHtml(q.q_hi)}</div>`:''}</div>
+      <div class="rc-question"><span class="opt-text-en">${formattedQ}</span>${q.q_hi?`<div class="q-hindi">${escHtml(q.q_hi)}</div>`:''}</div>
       ${topicBadge}
       <div class="rc-opts">${opts}</div>
       ${expEn}${expHi}
