@@ -227,7 +227,8 @@ body{-webkit-user-select:none;-moz-user-select:none;-ms-user-select:none;user-se
 .lang-hi .opt-text-hi{display:block;}
 .lang-hi .opt-text-en{display:none;}
 /* Detailed review */
-.rc-explanation{margin-top:0.75rem;padding:0.75rem 0.9rem;border-radius:8px;font-size:0.82rem;line-height:1.65;}
+.rc-explanation{margin-top:0.75rem;padding:0.85rem 1rem;border-radius:8px;font-size:0.83rem;line-height:1.75;}
+.rc-explanation br+br{display:block;content:'';margin-top:0.5rem;}
 .rc-explanation-en{background:#EFF6FF;border:1px solid #BFDBFE;color:#1E40AF;}
 .rc-explanation-hi{background:#F0FDF4;border:1px solid #A7F3D0;color:#065F46;font-family:'Noto Sans Devanagari',sans-serif;margin-top:0.4rem;}
 .rc-explanation-label{font-size:0.64rem;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;margin-bottom:0.3rem;opacity:0.7;}
@@ -1109,6 +1110,15 @@ function escHtml(str) {
     .replace(/"/g,'&quot;');
 }
 
+/* Escape HTML then convert newlines → <br> for explanation blocks */
+function formatExp(str) {
+  if (!str) return '';
+  return escHtml(str)
+    .replace(/\\n/g, '\n')          // handle literal \n in JSON strings
+    .replace(/\n{2,}/g, '<br><br>') // double newline → paragraph break
+    .replace(/\n/g, '<br>');        // single newline → line break
+}
+
 
 
 function getUser(){ try{ return JSON.parse(localStorage.getItem('t11_user')||'{}'); }catch(e){ return {}; } }
@@ -1275,8 +1285,8 @@ function submitTest(){
       </div>`;
     }).join('');
     const topicBadge = q.topic ? `<span class="rc-topic-badge">${escHtml(q.topic)}</span><br/>` : '';
-    const expEn = q.exp_en ? `<div class="rc-explanation rc-explanation-en"><div class="rc-explanation-label">📖 Explanation (English)</div>${escHtml(q.exp_en)}</div>` : '';
-    const expHi = q.exp_hi ? `<div class="rc-explanation rc-explanation-hi"><div class="rc-explanation-label">📖 व्याख्या (हिंदी)</div>${escHtml(q.exp_hi)}</div>` : '';
+    const expEn = q.exp_en ? `<div class="rc-explanation rc-explanation-en"><div class="rc-explanation-label">📖 Explanation (English)</div>${formatExp(q.exp_en)}</div>` : '';
+    const expHi = q.exp_hi ? `<div class="rc-explanation rc-explanation-hi"><div class="rc-explanation-label">📖 व्याख्या (हिंदी)</div>${formatExp(q.exp_hi)}</div>` : '';
     return `<div class="review-card ${cls}" data-status="${ua===-1?'skip':ua===ca?'correct':'wrong'}">
       <span class="rc-status-badge">${statusLabel}</span>
       <div class="rc-q-num">Q${i+1} &nbsp;·&nbsp; Your Answer: ${ua===-1?'—':letters2[ua]} &nbsp;·&nbsp; Correct: ${letters2[ca]}</div>
