@@ -987,7 +987,9 @@ window.addEventListener('DOMContentLoaded', async () => {
     const tableName = (SUPABASE_TABLE[META.bank] || SUPABASE_TABLE[META.subjBank]) || 'questions';
     console.info('test-engine: querying table=' + tableName);
 
-    const url = `${SUPABASE_URL}/rest/v1/${tableName}?order=id.asc&limit=2000`;
+    // ── Fetch only question + option columns (no explanations) for fast initial load ──
+    const Q_COLS = 'id,question_en,question_hi,opt_a_en,opt_b_en,opt_c_en,opt_d_en,opt_a_hi,opt_b_hi,opt_c_hi,opt_d_hi,correct_answer,marks,hint,topic';
+    const url = `${SUPABASE_URL}/rest/v1/${tableName}?select=${Q_COLS}&order=id.asc&limit=2000`;
     const res = await fetch(url, { headers: sbHeaders });
     const resText = await res.text();
     if(res.ok){
@@ -995,9 +997,10 @@ window.addEventListener('DOMContentLoaded', async () => {
       if(Array.isArray(data) && data.length > 0){
         // Sort by id as integer (in case id column is TEXT type in Supabase)
         data.sort((a, b) => parseInt(a.id) - parseInt(b.id));
-        console.info('test-engine: ' + data.length + ' questions loaded from ' + tableName);
+        console.info('test-engine: ' + data.length + ' questions loaded from ' + tableName + ' (explanations excluded — lazy load)');
         const ansMap = { A:0, B:1, C:2, D:3 };
         const dbQuestions = data.map(r => ({
+          id:      r.id,
           q:       r.question_en,
           opts:    [r.opt_a_en, r.opt_b_en, r.opt_c_en, r.opt_d_en],
           ans:     ansMap[(r.correct_answer||'').toString().trim().toUpperCase()] ?? 0,
@@ -1007,9 +1010,8 @@ window.addEventListener('DOMContentLoaded', async () => {
           opts_hi: (r.opt_a_hi || r.opt_b_hi || r.opt_c_hi || r.opt_d_hi)
                     ? [r.opt_a_hi||'', r.opt_b_hi||'', r.opt_c_hi||'', r.opt_d_hi||'']
                     : null,
-          exp_en:  r.explanation_en || '',
-          exp_hi:  r.explanation_hi || '',
           topic:   r.topic || '',
+          // exp_en / exp_hi intentionally omitted — fetched lazily on submit
         }));
         QUESTIONS = dbQuestions.slice(0, META.qs);
         console.info('test-engine: loaded ' + QUESTIONS.length + ' questions in original order');
@@ -1243,7 +1245,7 @@ function showSubmitModal(){
 }
 function closeModal(){ document.getElementById('submit-modal').classList.remove('show'); }
 
-function submitTest(){
+async function submitTest(){
   clearInterval(timerInterval);
   closeModal();
   let correct=0, wrong=0, skip=0;
@@ -1266,13 +1268,56 @@ function submitTest(){
   document.getElementById('res-skip').textContent = skip;
   document.getElementById('res-marks').textContent = marks.toFixed(2);
 
-  const letters = ['A','B','C','D'];
+  // Show result page immediately — explanations load below
+  showPage('result-page');
+
+  // ── Lazy-fetch explanations (only now, after submit) ──
+  // Show a skeleton loader while fetching
+  document.getElementById('review-list').innerHTML = `
+    <div style="text-align:center;padding:2.5rem 1rem;color:var(--muted);">
+      <svg width="32" height="32" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24" style="display:block;margin:0 auto 0.75rem;animation:spin 1s linear infinite;">
+        <circle cx="12" cy="12" r="10" stroke-opacity="0.2"/><path d="M12 2a10 10 0 0 1 10 10" stroke-linecap="round"/>
+      </svg>
+      <style>@keyframes spin{to{transform:rotate(360deg)}}</style>
+      Loading explanations…
+    </div>`;
+
+  // Build a lookup: question id → { exp_en, exp_hi }
+  let expMap = {};
+  try {
+    const tableName = (SUPABASE_TABLE[META.bank] || SUPABASE_TABLE[META.subjBank]) || 'questions';
+    const EXP_COLS  = 'id,explanation_en,explanation_hi';
+    const expUrl    = `${SUPABASE_URL}/rest/v1/${tableName}?select=${EXP_COLS}&order=id.asc&limit=2000`;
+    const sbHeaders = {
+      'apikey': SUPABASE_ANON,
+      'Authorization': 'Bearer ' + SUPABASE_ANON,
+      'Content-Type': 'application/json',
+    };
+    const expRes = await fetch(expUrl, { headers: sbHeaders });
+    if(expRes.ok){
+      const expData = await expRes.json();
+      expData.forEach(r => {
+        expMap[String(r.id)] = {
+          en: r.explanation_en || '',
+          hi: r.explanation_hi || '',
+        };
+      });
+      console.info('test-engine: explanations lazy-loaded for ' + expData.length + ' rows');
+    } else {
+      console.warn('test-engine: explanation fetch failed — HTTP ' + expRes.status);
+    }
+  } catch(e) {
+    console.warn('test-engine: explanation fetch error:', e.message);
+  }
+
+  // ── Render review cards with explanations now available ──
   const letters2 = ['A','B','C','D'];
   document.getElementById('review-list').innerHTML = QUESTIONS.map((q,i)=>{
-    const ua = answers[i];
-    const ca = q.ans;
+    const ua  = answers[i];
+    const ca  = q.ans;
+    const exp = expMap[String(q.id)] || {};
     const statusLabel = ua===-1?'Skipped':ua===ca?'✓ Correct':'✗ Wrong';
-    let cls = ua===-1?'rc-skip':ua===ca?'rc-correct':'rc-wrong';
+    const cls = ua===-1?'rc-skip':ua===ca?'rc-correct':'rc-wrong';
     const opts = q.opts.map((o,j)=>{
       let ocls='';
       if(j===ca) ocls='rc-correct-ans';
@@ -1285,8 +1330,8 @@ function submitTest(){
       </div>`;
     }).join('');
     const topicBadge = q.topic ? `<span class="rc-topic-badge">${escHtml(q.topic)}</span><br/>` : '';
-    const expEn = q.exp_en ? `<div class="rc-explanation rc-explanation-en"><div class="rc-explanation-label">📖 Explanation (English)</div>${formatExp(q.exp_en)}</div>` : '';
-    const expHi = q.exp_hi ? `<div class="rc-explanation rc-explanation-hi"><div class="rc-explanation-label">📖 व्याख्या (हिंदी)</div>${formatExp(q.exp_hi)}</div>` : '';
+    const expEn = exp.en ? `<div class="rc-explanation rc-explanation-en"><div class="rc-explanation-label">📖 Explanation (English)</div>${formatExp(exp.en)}</div>` : '';
+    const expHi = exp.hi ? `<div class="rc-explanation rc-explanation-hi"><div class="rc-explanation-label">📖 व्याख्या (हिंदी)</div>${formatExp(exp.hi)}</div>` : '';
     return `<div class="review-card ${cls}" data-status="${ua===-1?'skip':ua===ca?'correct':'wrong'}">
       <span class="rc-status-badge">${statusLabel}</span>
       <div class="rc-q-num">Q${i+1} &nbsp;·&nbsp; Your Answer: ${ua===-1?'—':letters2[ua]} &nbsp;·&nbsp; Correct: ${letters2[ca]}</div>
@@ -1296,8 +1341,6 @@ function submitTest(){
       ${expEn}${expHi}
     </div>`;
   }).join('');
-
-  showPage('result-page');
 }
 
 // ═══════════════════════════════════════════════════════════
