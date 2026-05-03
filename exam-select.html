@@ -271,6 +271,38 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--ink);min-
 </div>
 
 <script>
+const SUPABASE_URL      = 'https://fgsnpinwwpzjjroytkov.supabase.co';
+const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImZnc25waW53d3B6ampyb3l0a292Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzQyMDM2NzIsImV4cCI6MjA4OTc3OTY3Mn0._PcBUCAEWjrkQBj7y0rf3pwJo8cDb6or9CJ35IeQAdI';
+
+async function sbFetch(path){
+  const res=await fetch(SUPABASE_URL+'/rest/v1/'+path,{headers:{'apikey':SUPABASE_ANON_KEY,'Authorization':'Bearer '+SUPABASE_ANON_KEY}});
+  if(!res.ok) return null;
+  return res.json();
+}
+async function sbUpdate(table,match,row){
+  try{ await fetch(SUPABASE_URL+'/rest/v1/'+table+'?'+match,{method:'PATCH',headers:{'Content-Type':'application/json','apikey':SUPABASE_ANON_KEY,'Authorization':'Bearer '+SUPABASE_ANON_KEY,'Prefer':'return=minimal'},body:JSON.stringify(row)}); }
+  catch(e){ console.warn('sbUpdate failed:',e.message); }
+}
+async function hashPass(pass){
+  const buf=await crypto.subtle.digest('SHA-256',new TextEncoder().encode(pass));
+  return Array.from(new Uint8Array(buf)).map(b=>b.toString(16).padStart(2,'0')).join('');
+}
+async function fetchProfileFromSupabase(user){
+  if(!user||!user.email) return;
+  try{
+    const rows=await sbFetch('users?email=eq.'+encodeURIComponent(user.email.toLowerCase())+'&select=full_name,mobile,region,paid,plan,registered_at&limit=1');
+    if(!rows||rows.length===0) return;
+    const r=rows[0];
+    const users=getUsers();
+    const key=user.email.toLowerCase();
+    users[key]={...(users[key]||{}),name:r.full_name||users[key]?.name||user.name,mobile:r.mobile||users[key]?.mobile||'',region:r.region||users[key]?.region||'',paid:r.paid??(users[key]?.paid||false),plan:r.plan||users[key]?.plan||null,registeredAt:r.registered_at||users[key]?.registeredAt||''};
+    saveUsers(users);
+    const upd={...user,name:r.full_name||user.name,paid:r.paid||false,plan:r.plan||null};
+    saveUser(upd);
+    populateProfile(upd,users);
+  }catch(e){ console.warn('fetchProfileFromSupabase failed:',e.message); }
+}
+
 function getUser(){ try{ return JSON.parse(localStorage.getItem('t11_user')||'{}'); }catch(e){ return {}; } }
 function getUsers(){ try{ return JSON.parse(localStorage.getItem('t11_users')||'{}'); }catch(e){ return {}; } }
 function saveUsers(u){ localStorage.setItem('t11_users', JSON.stringify(u)); }
@@ -365,15 +397,20 @@ function saveProfile(){
   saveUser(updated);
   populateProfile(updated, users);
   closeEditModal();
+  // Sync to Supabase
+  const sbPayload={full_name:name,mobile,region};
+  if(pass){hashPass(pass).then(h=>{sbUpdate('users','email=eq.'+encodeURIComponent(oldKey),{...sbPayload,pass_hash:h}).catch(()=>{});});}
+  else{sbUpdate('users','email=eq.'+encodeURIComponent(oldKey),sbPayload).catch(e=>console.warn('sync failed:',e.message));}
   alert('✓ Profile updated successfully!');
 }
 
-window.addEventListener('DOMContentLoaded',()=>{
+window.addEventListener('DOMContentLoaded',async ()=>{
   const user = getUser();
   if(!user||!user.token){ window.location.href='login.html'; return; }
   populateProfile(user, getUsers());
   const name = user.name || user.email || 'User';
   document.getElementById('hero-title').textContent = `Welcome, ${name.split(' ')[0]}! Choose Your Exam`;
+  await fetchProfileFromSupabase(user); // sync mobile/region from Supabase
 });
 </script>
 </body>
