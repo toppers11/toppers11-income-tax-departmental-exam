@@ -349,8 +349,8 @@ nav{background:#fff;border-bottom:1px solid var(--bo);padding:0 1.5rem;height:58
 <script>
 
 // ── Supabase ──────────────────────────────────────────────────────────────
-const SUPABASE_URL      = 'YOUR_SUPABASE_URL';
-const SUPABASE_ANON_KEY = 'YOUR_SUPABASE_ANON_KEY';
+const SUPABASE_URL      = 'https://fgsnpinwwpzjjroytkov.supabase.co';
+const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImZnc25waW53d3B6ampyb3l0a292Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzQyMDM2NzIsImV4cCI6MjA4OTc3OTY3Mn0._PcBUCAEWjrkQBj7y0rf3pwJo8cDb6or9CJ35IeQAdI';
 async function sbInsert(table, row) {
   try {
     const res = await fetch(SUPABASE_URL + '/rest/v1/' + table, {
@@ -360,16 +360,6 @@ async function sbInsert(table, row) {
     });
     if(!res.ok) console.warn('Supabase error:',res.status);
   } catch(e){ console.warn('Supabase unreachable:',e); }
-}
-async function sbUpdate(table, match, row){
-  try{
-    const res=await fetch(SUPABASE_URL+'/rest/v1/'+table+'?'+match,{method:'PATCH',headers:{'Content-Type':'application/json','apikey':SUPABASE_ANON_KEY,'Authorization':'Bearer '+SUPABASE_ANON_KEY,'Prefer':'return=minimal'},body:JSON.stringify(row)});
-    if(!res.ok) console.warn('Supabase update error:',res.status);
-  }catch(e){ console.warn('Supabase update failed:',e.message); }
-}
-async function hashPass(pass){
-  const buf=await crypto.subtle.digest('SHA-256',new TextEncoder().encode(pass));
-  return Array.from(new Uint8Array(buf)).map(b=>b.toString(16).padStart(2,'0')).join('');
 }
 async function fetchAndUpdateQuestionCounts() {
   try {
@@ -643,44 +633,12 @@ function activate() {
   btn.innerHTML = '🔓 I’ve Paid — Activate My Access Now';
 }
 function showToast(msg){const t=document.getElementById('toast');document.getElementById('toast-msg').textContent=msg;t.classList.add('show');setTimeout(()=>t.classList.remove('show'),3500);}
-window.addEventListener('DOMContentLoaded',async ()=>{
+window.addEventListener('DOMContentLoaded',()=>{
   const user=getUser();if(!user||!user.token){window.location.href='login.html';return;}
-  populateProfile(user,getUsers());   // immediate render from cache
-  await fetchProfileFromSupabase(user); // then silently sync from DB
+  populateProfile(user,getUsers());
   render();
   fetchAndUpdateQuestionCounts();
 });
-
-// ── Fetch full profile from Supabase and refresh local cache + UI ──
-async function fetchProfileFromSupabase(user){
-  if(!user||!user.email) return;
-  try{
-    const res = await fetch(
-      SUPABASE_URL+'/rest/v1/users?email=eq.'+encodeURIComponent(user.email.toLowerCase())+'&select=full_name,mobile,region,paid,plan,registered_at&limit=1',
-      {headers:{'apikey':SUPABASE_ANON_KEY,'Authorization':'Bearer '+SUPABASE_ANON_KEY}}
-    );
-    if(!res.ok) return;
-    const rows = await res.json();
-    if(!rows||rows.length===0) return;
-    const r=rows[0];
-    const users=getUsers();
-    const key=user.email.toLowerCase();
-    users[key]={
-      ...(users[key]||{}),
-      name         : r.full_name   || users[key]?.name   || user.name,
-      mobile       : r.mobile      || users[key]?.mobile  || '',
-      region       : r.region      || users[key]?.region  || '',
-      paid         : r.paid        ?? (users[key]?.paid   || false),
-      plan         : r.plan        || users[key]?.plan    || null,
-      registeredAt : r.registered_at || users[key]?.registeredAt || '',
-    };
-    saveUsers(users);
-    // Also update the lightweight t11_user token with latest paid/plan
-    const upd={...user, name:r.full_name||user.name, paid:r.paid||false, plan:r.plan||null};
-    saveUser(upd);
-    populateProfile(upd, users);  // re-render with fresh data
-  }catch(e){ console.warn('fetchProfileFromSupabase failed:',e.message); }
-}
 
 // ── Profile dropdown shared logic ──
 function getUsers(){ try{ return JSON.parse(localStorage.getItem('t11_users')||'{}'); }catch(e){ return {}; } }
@@ -762,12 +720,7 @@ function saveProfile(){
   if(newKey!==oldKey){if(users[newKey]){err('That email is already registered.');return;}delete users[oldKey];}
   users[newKey]=rec;saveUsers(users);
   const upd={...user,name,email};saveUser(upd);
-  populateProfile(upd,users);closeEditModal();
-  // Push changes to Supabase (fire-and-forget — keeps DB in sync)
-  const sbPayload={full_name:name,mobile,region};
-  if(pass){hashPass(pass).then(h=>{sbUpdate('users','email=eq.'+encodeURIComponent(oldKey),{...sbPayload,pass_hash:h}).catch(()=>{});});}
-  else{sbUpdate('users','email=eq.'+encodeURIComponent(oldKey),sbPayload).catch(e=>console.warn('Profile sync failed:',e.message));}
-  alert('✓ Profile updated successfully!');
+  populateProfile(upd,users);closeEditModal();alert('✓ Profile updated successfully!');
 }
 
 </script>

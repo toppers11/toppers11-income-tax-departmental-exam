@@ -385,8 +385,8 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--ink);min-
 //  SUPABASE CONFIG — fill in your real project URL and anon key below
 //  Find them at: https://supabase.com/dashboard → Settings → API
 // ══════════════════════════════════════════════════════════════════════════
-const SUPABASE_URL      = 'YOUR_SUPABASE_URL';      // e.g. https://xyzxyz.supabase.co
-const SUPABASE_ANON_KEY = 'YOUR_SUPABASE_ANON_KEY'; // eyJhbGciOiJIUzI1NiIs...
+const SUPABASE_URL      = 'https://fgsnpinwwpzjjroytkov.supabase.co';      // e.g. https://xyzxyz.supabase.co
+const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImZnc25waW53d3B6ampyb3l0a292Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzQyMDM2NzIsImV4cCI6MjA4OTc3OTY3Mn0._PcBUCAEWjrkQBj7y0rf3pwJo8cDb6or9CJ35IeQAdI'; // eyJhbGciOiJIUzI1NiIs...
 
 // ── Supabase REST helpers ─────────────────────────────────────────────────
 async function sbRequest(method, table, body, params) {
@@ -411,37 +411,6 @@ async function sbRequest(method, table, body, params) {
 }
 async function sbSelect(table, params) { return sbRequest('GET', table, null, params); }
 async function sbInsert(table, row)    { return sbRequest('POST', table, row); }
-async function sbUpdate(table, match, row){
-  let url = SUPABASE_URL+'/rest/v1/'+table+'?'+match;
-  const res = await fetch(url,{method:'PATCH',headers:{'Content-Type':'application/json','apikey':SUPABASE_ANON_KEY,'Authorization':'Bearer '+SUPABASE_ANON_KEY,'Prefer':'return=minimal'},body:JSON.stringify(row)});
-  if(!res.ok) throw new Error('HTTP '+res.status);
-}
-// ─────────────────────────────────────────────────────────────────────────
-
-// ── Fetch full profile from Supabase → refresh local cache + UI ──────────
-async function fetchProfileFromSupabase(user){
-  if(!user||!user.email) return;
-  try{
-    const rows = await sbSelect('users','email=eq.'+encodeURIComponent(user.email.toLowerCase())+'&select=full_name,mobile,region,paid,plan,registered_at&limit=1');
-    if(!rows||rows.length===0) return;
-    const r=rows[0];
-    const users=getUsers();
-    const key=user.email.toLowerCase();
-    users[key]={
-      ...(users[key]||{}),
-      name         : r.full_name    || users[key]?.name   || user.name,
-      mobile       : r.mobile       || users[key]?.mobile  || '',
-      region       : r.region       || users[key]?.region  || '',
-      paid         : r.paid         ?? (users[key]?.paid   || false),
-      plan         : r.plan         || users[key]?.plan    || null,
-      registeredAt : r.registered_at|| users[key]?.registeredAt||'',
-    };
-    saveUsers(users);
-    const upd={...user, name:r.full_name||user.name, paid:r.paid||false, plan:r.plan||null};
-    saveUser(upd);
-    populateProfile(upd, users);
-  }catch(e){ console.warn('fetchProfileFromSupabase failed:',e.message); }
-}
 // ─────────────────────────────────────────────────────────────────────────
 
 // ── Password hash (SHA-256) ───────────────────────────────────────────────
@@ -592,10 +561,6 @@ function saveProfile(){
   saveUser(updatedUser);
   populateProfile(updatedUser, users);
   closeEditModal();
-  // Push changes to Supabase (fire-and-forget — keeps DB in sync)
-  const sbPayload = { full_name: name, mobile, region };
-  if(pass){ hashPass(pass).then(h=>{ sbUpdate('users','email=eq.'+encodeURIComponent(oldKey),{...sbPayload,pass_hash:h}).catch(()=>{}); }); }
-  else { sbUpdate('users','email=eq.'+encodeURIComponent(oldKey), sbPayload).catch(e=>console.warn('Profile sync failed:',e.message)); }
   alert('✓ Profile updated successfully!');
 }
 
