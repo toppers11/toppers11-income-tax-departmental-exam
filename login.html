@@ -378,30 +378,82 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--ink);min-
   </div>
 </div>
 
+
 <script>
 
-// ── Supabase ──────────────────────────────────────────────────────────────
-const SUPABASE_URL      = 'YOUR_SUPABASE_URL';
-const SUPABASE_ANON_KEY = 'YOUR_SUPABASE_ANON_KEY';
+// ══════════════════════════════════════════════════════════════════════════
+//  SUPABASE CONFIG — fill in your real project URL and anon key below
+//  Find them at: https://supabase.com/dashboard → Settings → API
+// ══════════════════════════════════════════════════════════════════════════
+const SUPABASE_URL      = 'YOUR_SUPABASE_URL';      // e.g. https://xyzxyz.supabase.co
+const SUPABASE_ANON_KEY = 'YOUR_SUPABASE_ANON_KEY'; // eyJhbGciOiJIUzI1NiIs...
 
-async function sbInsert(table, row) {
-  try {
-    const res = await fetch(SUPABASE_URL + '/rest/v1/' + table, {
-      method : 'POST',
-      headers: {
-        'Content-Type' : 'application/json',
-        'apikey'       : SUPABASE_ANON_KEY,
-        'Authorization': 'Bearer ' + SUPABASE_ANON_KEY,
-        'Prefer'       : 'return=minimal'
-      },
-      body: JSON.stringify(row)
-    });
-    if (!res.ok) console.warn('Supabase error:', res.status);
-  } catch(e) { console.warn('Supabase unreachable:', e); }
+// ── Supabase REST helpers ─────────────────────────────────────────────────
+async function sbRequest(method, table, body, params) {
+  let url = SUPABASE_URL + '/rest/v1/' + table;
+  if (params) url += '?' + params;
+  const opts = {
+    method,
+    headers: {
+      'Content-Type' : 'application/json',
+      'apikey'       : SUPABASE_ANON_KEY,
+      'Authorization': 'Bearer ' + SUPABASE_ANON_KEY,
+      'Prefer'       : method === 'POST' ? 'return=representation' : 'return=minimal'
+    }
+  };
+  if (body) opts.body = JSON.stringify(body);
+  const res = await fetch(url, opts);
+  const text = await res.text();
+  let data = null;
+  try { data = JSON.parse(text); } catch(e) {}
+  if (!res.ok) throw new Error((data && (data.message || data.details || data.error)) || ('HTTP ' + res.status));
+  return data;
 }
-// ─────────────────────────────────────────────────────────────────────────────
+async function sbSelect(table, params) { return sbRequest('GET', table, null, params); }
+async function sbInsert(table, row)    { return sbRequest('POST', table, row); }
+async function sbUpdate(table, match, row){
+  let url = SUPABASE_URL+'/rest/v1/'+table+'?'+match;
+  const res = await fetch(url,{method:'PATCH',headers:{'Content-Type':'application/json','apikey':SUPABASE_ANON_KEY,'Authorization':'Bearer '+SUPABASE_ANON_KEY,'Prefer':'return=minimal'},body:JSON.stringify(row)});
+  if(!res.ok) throw new Error('HTTP '+res.status);
+}
+// ─────────────────────────────────────────────────────────────────────────
+
+// ── Fetch full profile from Supabase → refresh local cache + UI ──────────
+async function fetchProfileFromSupabase(user){
+  if(!user||!user.email) return;
+  try{
+    const rows = await sbSelect('users','email=eq.'+encodeURIComponent(user.email.toLowerCase())+'&select=full_name,mobile,region,paid,plan,registered_at&limit=1');
+    if(!rows||rows.length===0) return;
+    const r=rows[0];
+    const users=getUsers();
+    const key=user.email.toLowerCase();
+    users[key]={
+      ...(users[key]||{}),
+      name         : r.full_name    || users[key]?.name   || user.name,
+      mobile       : r.mobile       || users[key]?.mobile  || '',
+      region       : r.region       || users[key]?.region  || '',
+      paid         : r.paid         ?? (users[key]?.paid   || false),
+      plan         : r.plan         || users[key]?.plan    || null,
+      registeredAt : r.registered_at|| users[key]?.registeredAt||'',
+    };
+    saveUsers(users);
+    const upd={...user, name:r.full_name||user.name, paid:r.paid||false, plan:r.plan||null};
+    saveUser(upd);
+    populateProfile(upd, users);
+  }catch(e){ console.warn('fetchProfileFromSupabase failed:',e.message); }
+}
+// ─────────────────────────────────────────────────────────────────────────
+
+// ── Password hash (SHA-256) ───────────────────────────────────────────────
+async function hashPass(pass) {
+  const buf = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(pass));
+  return Array.from(new Uint8Array(buf)).map(b => b.toString(16).padStart(2,'0')).join('');
+}
+
+// ── Session helpers ───────────────────────────────────────────────────────
 function saveUser(u){ localStorage.setItem('t11_user', JSON.stringify(u)); }
 function loadUser(){ try{ return JSON.parse(localStorage.getItem('t11_user')); }catch(e){ return null; } }
+// Legacy local store — kept for profile display compatibility
 function getUsers(){ try{ return JSON.parse(localStorage.getItem('t11_registered_users') || '{}'); }catch(e){ return {}; } }
 function saveUsers(obj){ localStorage.setItem('t11_registered_users', JSON.stringify(obj)); }
 
@@ -421,12 +473,12 @@ function showSuccess(name, isNew){
   document.getElementById('login-panel').style.display='none';
   document.getElementById('register-panel').style.display='none';
   document.getElementById('auth-footer').style.display='none';
-  document.getElementById('success-title').textContent = isNew ? `Welcome, ${name}! 🎉` : `Welcome back, ${name}!`;
+  document.getElementById('success-title').textContent = isNew ? ('Welcome, '+name+'! 🎉') : ('Welcome back, '+name+'!');
   document.getElementById('success-msg').textContent = isNew
     ? 'Account created! 3 free tests are ready — 1 each for ITI, ITO and MS.'
     : 'Logged in successfully. Heading to your dashboard now…';
   document.getElementById('success-panel').style.display='';
-  setTimeout(()=>{ window.location.href='exam-select.html'; }, 1600);
+  setTimeout(function(){ window.location.href='exam-select.html'; }, 1600);
 }
 
 /* Profile dropdown */
@@ -455,12 +507,12 @@ function populateProfile(user, users){
   document.getElementById('pd-name').textContent = user.name || '—';
   document.getElementById('pd-email-hdr').textContent = user.email || '—';
   document.getElementById('pd-email').textContent = user.email || '—';
-  document.getElementById('pd-mobile').textContent = stored.mobile ? '+91 ' + stored.mobile : 'Not provided';
+  document.getElementById('pd-mobile').textContent = stored.mobile ? '+91 '+stored.mobile : 'Not provided';
   document.getElementById('pd-region').textContent = stored.region || 'Not selected';
   document.getElementById('pd-since').textContent = stored.registeredAt
     ? new Date(stored.registeredAt).toLocaleDateString('en-IN',{day:'numeric',month:'short',year:'numeric'})
     : '—';
-  document.getElementById('pd-plan').textContent = user.paid ? (user.plan || 'Premium') : 'Free (3 Tests)';
+  document.getElementById('pd-plan').textContent = user.paid ? (user.plan||'Premium') : 'Free (3 Tests)';
 }
 
 /* Edit modal */
@@ -475,7 +527,6 @@ function openEditModal(){
   document.getElementById('edit-email').value  = user?.email || '';
   document.getElementById('edit-mobile').value = stored.mobile || '';
   document.getElementById('edit-region').value = stored.region || '';
-  // Mobile update limit UI
   const mobileLocked = stored.mobileUpdateUsed === true;
   const mobileBadge = document.getElementById('mobile-update-badge');
   const mobileHint  = document.getElementById('mobile-update-hint');
@@ -495,8 +546,8 @@ function openEditModal(){
     mobileInput.style.background = '';
     mobileInput.style.cursor = '';
   }
-  document.getElementById('edit-pass').value   = '';
-  document.getElementById('edit-pass2').value  = '';
+  document.getElementById('edit-pass').value  = '';
+  document.getElementById('edit-pass2').value = '';
   document.getElementById('edit-modal').classList.add('open');
 }
 function closeEditModal(){ document.getElementById('edit-modal').classList.remove('open'); clearErrors(); }
@@ -520,7 +571,6 @@ function saveProfile(){
   const oldKey = (user?.email||'').toLowerCase();
   const newKey = email.toLowerCase();
   if(!users[oldKey]){ showError('edit-error','Session error. Please log in again.'); return; }
-  // Enforce 1 mobile number change limit
   const existingRecord = users[oldKey];
   if(mobile && existingRecord.mobile && existingRecord.mobile !== mobile){
     if(existingRecord.mobileUpdateUsed){
@@ -542,51 +592,69 @@ function saveProfile(){
   saveUser(updatedUser);
   populateProfile(updatedUser, users);
   closeEditModal();
+  // Push changes to Supabase (fire-and-forget — keeps DB in sync)
+  const sbPayload = { full_name: name, mobile, region };
+  if(pass){ hashPass(pass).then(h=>{ sbUpdate('users','email=eq.'+encodeURIComponent(oldKey),{...sbPayload,pass_hash:h}).catch(()=>{}); }); }
+  else { sbUpdate('users','email=eq.'+encodeURIComponent(oldKey), sbPayload).catch(e=>console.warn('Profile sync failed:',e.message)); }
   alert('✓ Profile updated successfully!');
 }
 
 function logout(){ localStorage.removeItem('t11_user'); window.location.href='login.html'; }
 
-function doLogin(){
+// ══════════════════════════════════════════════════════════════════════════
+//  LOGIN — reads from Supabase users table
+// ══════════════════════════════════════════════════════════════════════════
+async function doLogin(){
   clearErrors();
-  // Honeypot check — bots fill hidden fields, real users don't
+  // Honeypot bot check
   if(document.getElementById('hp-website') && document.getElementById('hp-website').value !== ''){
-    // Silently pretend to succeed to confuse bots
     const btn = document.getElementById('login-btn');
     btn.disabled=true; btn.innerHTML='<span class="spinner"></span> Logging in…';
     setTimeout(()=>{ btn.disabled=false; btn.innerHTML='Log In &amp; Go to Dashboard →'; showError('login-error','Login failed. Please try again.'); }, 2000);
     return;
   }
   const identifier = document.getElementById('login-email').value.trim();
-  const pass  = document.getElementById('login-pass').value;
+  const pass       = document.getElementById('login-pass').value;
   if(!identifier){ showError('login-error','Please enter your mobile number or email address.'); return; }
-  if(!pass) { showError('login-error','Please enter your password.'); return; }
+  if(!pass)      { showError('login-error','Please enter your password.');                       return; }
   const btn = document.getElementById('login-btn');
   btn.disabled=true; btn.innerHTML='<span class="spinner"></span> Logging in…';
-  try{
-    const users = getUsers();
-    // Try email lookup first, then mobile number lookup
+  try {
     const isMobile = /^\d{10}$/.test(identifier);
-    let matchedKey = null;
-    if(isMobile){
-      // Search all accounts for matching mobile
-      matchedKey = Object.keys(users).find(k => users[k].mobile === identifier) || null;
-    } else {
-      matchedKey = identifier.toLowerCase();
+    // Query Supabase for the user
+    const filterParam = isMobile
+      ? 'mobile=eq.' + encodeURIComponent(identifier) + '&select=*&limit=1'
+      : 'email=eq.'  + encodeURIComponent(identifier.toLowerCase()) + '&select=*&limit=1';
+    const rows = await sbSelect('users', filterParam);
+    if (!rows || rows.length === 0) {
+      throw new Error(isMobile
+        ? 'No account found with this mobile number. Please register first.'
+        : 'No account found with this email. Please register first.');
     }
-    if(!matchedKey || !users[matchedKey]) throw new Error(isMobile ? 'No account found with this mobile number. Please register first.' : 'No account found with this email. Please register first.');
-    if(users[matchedKey].pass !== btoa(pass)) throw new Error('Incorrect password. Please try again.');
-    const rec = users[matchedKey];
-    saveUser({ email:matchedKey, name:rec.name, token:'local_'+Date.now(), paid:rec.paid||false, plan:rec.plan||null });
-    showSuccess(rec.name.split(' ')[0], false);
-    setTimeout(function(){ window.location.href = 'exam-select.html'; }, 1500);
-  }catch(e){
-    showError('login-error', e.message||'Login failed.');
+    const rec = rows[0];
+    // Verify password — support both legacy btoa and new SHA-256 hashes
+    const hashInput = await hashPass(pass);
+    const legacyHash = btoa(pass);
+    if (rec.pass_hash !== hashInput && rec.pass_hash !== legacyHash) {
+      throw new Error('Incorrect password. Please try again.');
+    }
+    // Cache a lightweight local copy for profile display
+    const users = getUsers();
+    const key = (rec.email||'').toLowerCase();
+    users[key] = { name: rec.full_name, mobile: rec.mobile, region: rec.region, paid: rec.paid, plan: rec.plan, registeredAt: rec.registered_at };
+    saveUsers(users);
+    saveUser({ email: rec.email, name: rec.full_name, token: 'sb_' + Date.now(), paid: rec.paid||false, plan: rec.plan||null });
+    showSuccess(rec.full_name.split(' ')[0], false);
+  } catch(e) {
+    showError('login-error', e.message || 'Login failed.');
     btn.disabled=false; btn.innerHTML='Log In &amp; Go to Dashboard →';
   }
 }
 
-function doRegister(){
+// ══════════════════════════════════════════════════════════════════════════
+//  REGISTER — writes to Supabase users table
+// ══════════════════════════════════════════════════════════════════════════
+async function doRegister(){
   clearErrors();
   const name   = document.getElementById('reg-name').value.trim();
   const email  = document.getElementById('reg-email').value.trim();
@@ -603,30 +671,32 @@ function doRegister(){
   if(pass!==pass2)                { showError('reg-error','Passwords do not match.'); return; }
   const btn = document.getElementById('reg-btn');
   btn.disabled=true; btn.innerHTML='<span class="spinner"></span> Creating account…';
-  try{
-    const users = getUsers();
-    const key = email.toLowerCase();
-    if(users[key]) throw new Error('An account with this email already exists. Please log in.');
+  try {
+    // Check if email already registered in Supabase
+    const existing = await sbSelect('users', 'email=eq.' + encodeURIComponent(email.toLowerCase()) + '&select=id&limit=1');
+    if (existing && existing.length > 0) throw new Error('An account with this email already exists. Please log in.');
     const registeredAt = new Date().toISOString();
-    users[key]={ name, pass:btoa(pass), mobile, region, paid:false, plan:null, registeredAt };
-    saveUsers(users);
-    // Record all registration details in Supabase
-    sbInsert('users', {
-      email        : key,
+    const passHash = await hashPass(pass);
+    // Insert into Supabase
+    await sbInsert('users', {
+      email        : email.toLowerCase(),
       full_name    : name,
       mobile       : mobile,
       region       : region,
+      pass_hash    : passHash,
       paid         : false,
       plan         : null,
       registered_at: registeredAt,
       source       : 'web_registration'
     });
-    saveUser({ email, name, token:'local_'+Date.now(), paid:false, plan:null });
+    // Also cache locally for profile display
+    const users = getUsers();
+    users[email.toLowerCase()] = { name, mobile, region, paid: false, plan: null, registeredAt };
+    saveUsers(users);
+    saveUser({ email: email.toLowerCase(), name, token: 'sb_' + Date.now(), paid: false, plan: null });
     showSuccess(name.split(' ')[0], true);
-    // Auto-redirect to dashboard after brief success flash
-    setTimeout(function(){ window.location.href = 'exam-select.html'; }, 1800);
-  }catch(e){
-    showError('reg-error', e.message||'Registration failed.');
+  } catch(e) {
+    showError('reg-error', e.message || 'Registration failed.');
     btn.disabled=false; btn.innerHTML='Create Account &amp; Start Free →';
   }
 }
@@ -634,7 +704,6 @@ function doRegister(){
 window.addEventListener('DOMContentLoaded',()=>{
   const user = loadUser();
   if(user && user.token){
-    // Already logged in — redirect immediately, no intermediate page
     window.location.replace('exam-select.html');
     return;
   }
