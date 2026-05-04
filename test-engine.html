@@ -988,7 +988,7 @@ window.addEventListener('DOMContentLoaded', async () => {
     console.info('test-engine: querying table=' + tableName);
 
     // ── Fetch only question + option columns (no explanations) for fast initial load ──
-    const Q_COLS = 'id,question_en,question_hi,opt_a_en,opt_b_en,opt_c_en,opt_d_en,opt_a_hi,opt_b_hi,opt_c_hi,opt_d_hi,correct_answer,marks,hint,topic';
+    const Q_COLS = 'id,question_en,question_hi,opt_a_en,opt_b_en,opt_c_en,opt_d_en,opt_a_hi,opt_b_hi,opt_c_hi,opt_d_hi,correct_answer';
     const url = `${SUPABASE_URL}/rest/v1/${tableName}?select=${Q_COLS}&order=id.asc&limit=2000`;
     const res = await fetch(url, { headers: sbHeaders });
     const resText = await res.text();
@@ -1004,13 +1004,11 @@ window.addEventListener('DOMContentLoaded', async () => {
           q:       r.question_en,
           opts:    [r.opt_a_en, r.opt_b_en, r.opt_c_en, r.opt_d_en],
           ans:     ansMap[(r.correct_answer||'').toString().trim().toUpperCase()] ?? 0,
-          marks:   r.marks  || null,
-          hint:    r.hint   || null,
           q_hi:    r.question_hi || '',
           opts_hi: (r.opt_a_hi || r.opt_b_hi || r.opt_c_hi || r.opt_d_hi)
                     ? [r.opt_a_hi||'', r.opt_b_hi||'', r.opt_c_hi||'', r.opt_d_hi||'']
                     : null,
-          topic:   r.topic || '',
+          topic:   '',
           // exp_en / exp_hi intentionally omitted — fetched lazily on submit
         }));
         QUESTIONS = dbQuestions.slice(0, META.qs);
