@@ -1119,6 +1119,14 @@ function formatExp(str) {
     .replace(/\n/g, '<br>');        // single newline → line break
 }
 
+/* Format question text: escape HTML and convert newlines to <br> for proper paragraph display */
+function formatQ(str) {
+  if (!str) return '';
+  return escHtml(str)
+    .replace(/\\n/g, '\n')          // handle literal \n in data
+    .replace(/\n/g, '<br>');        // newline → line break
+}
+
 
 
 function getUser(){ try{ return JSON.parse(localStorage.getItem('t11_user')||'{}'); }catch(e){ return {}; } }
@@ -1175,8 +1183,8 @@ function renderQuestion(){
   document.getElementById('q-num-label').textContent = `Question ${currentQ+1} of ${TOTAL}`;
   // Question text (bilingual)
   const qTextEl = document.getElementById('q-text');
-  qTextEl.innerHTML = `<span class="opt-text-en">${escHtml(q.q)}</span>`
-    + (q.q_hi ? `<div class="q-hindi">${escHtml(q.q_hi)}</div>` : '');
+  qTextEl.innerHTML = `<span class="opt-text-en">${formatQ(q.q)}</span>`
+    + (q.q_hi ? `<div class="q-hindi">${formatQ(q.q_hi)}</div>` : '');
   const opts = document.getElementById('opts-list');
   const letters = ['A','B','C','D'];
   opts.innerHTML = q.opts.map((o,i)=>{
@@ -1333,7 +1341,7 @@ async function submitTest(){
     return `<div class="review-card ${cls}" data-status="${ua===-1?'skip':ua===ca?'correct':'wrong'}">
       <span class="rc-status-badge">${statusLabel}</span>
       <div class="rc-q-num">Q${i+1} &nbsp;·&nbsp; Your Answer: ${ua===-1?'—':letters2[ua]} &nbsp;·&nbsp; Correct: ${letters2[ca]}</div>
-      <div class="rc-question"><span class="opt-text-en">${escHtml(q.q)}</span>${q.q_hi?`<div class="q-hindi">${escHtml(q.q_hi)}</div>`:''}</div>
+      <div class="rc-question"><span class="opt-text-en">${formatQ(q.q)}</span>${q.q_hi?`<div class="q-hindi">${formatQ(q.q_hi)}</div>`:''}</div>
       ${topicBadge}
       <div class="rc-opts">${opts}</div>
       ${expEn}${expHi}
