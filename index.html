@@ -650,7 +650,6 @@ footer{background:var(--wh);border-top:1px solid var(--bdr);padding:2.5rem 0 0;}
 </footer>
 
 <!-- ══ SCHEMA ══ -->
-<script type="application/ld+json">{"@context":"https://schema.org","@type":"EducationalOrganization","name":"Toppers11","url":"https://www.toppers11.in","description":"India's premier mock test platform for Income Tax Departmental Promotion Exams — MS, ITI, ITO."}</script>
 
 <script>
 // ── Tab switching ──
@@ -681,6 +680,31 @@ window.addEventListener('scroll',()=>{
 // ── Fade-up observer ──
 const obs=new IntersectionObserver(entries=>entries.forEach(e=>{if(e.isIntersecting)e.target.classList.add('vis');}),{threshold:0.1,rootMargin:'0px 0px -30px 0px'});
 document.querySelectorAll('.fade-up:not(.vis)').forEach(el=>obs.observe(el));
+</script>
+<script type="application/ld+json">
+[
+  {
+    "@context": "https://schema.org",
+    "@type": "EducationalOrganization",
+    "name": "Toppers11",
+    "url": "https://it.toppers11.com",
+    "description": "India's only mock test platform built exclusively for Income Tax Departmental Promotion Exams - MS (UDC), ITI (Inspector) and ITO (Officer).",
+    "telephone": "+918743865551",
+    "contactPoint": {"@type": "ContactPoint", "telephone": "+918743865551", "contactType": "customer support", "availableLanguage": ["English","Hindi"]},
+    "sameAs": ["https://toppers11.com", "https://wa.me/918743865551"]
+  },
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {"@type":"Question","name":"What exams does Toppers11 cover?","acceptedAnswer":{"@type":"Answer","text":"Toppers11 covers all three Income Tax Departmental Promotion Exams: MS (Ministerial Staff / UDC), ITI (Income Tax Inspector), and ITO (Income Tax Officer). Each exam has 4 papers with paper-wise mock tests and PYQs."}},
+      {"@type":"Question","name":"How much does Toppers11 cost?","acceptedAnswer":{"@type":"Answer","text":"Individual papers cost Rs.195 per paper per year. The Complete Bunch (all 4 papers) costs Rs.555 per year. One free PYQ test is available per paper after free registration."}},
+      {"@type":"Question","name":"Are free tests available on Toppers11?","acceptedAnswer":{"@type":"Answer","text":"Yes. Toppers11 offers 1 free Previous Year Question (PYQ) test per paper for all three exam categories - MS, ITI, and ITO. No credit card required. Simply register and access the free test instantly."}},
+      {"@type":"Question","name":"Does the test include negative marking?","acceptedAnswer":{"@type":"Answer","text":"Yes. For all objective papers, 1 mark is awarded for correct answers and 1/8th mark is deducted for wrong ones. Toppers11 tests replicate the official CBDT exam pattern exactly."}},
+      {"@type":"Question","name":"How is Toppers11 different from other platforms?","acceptedAnswer":{"@type":"Answer","text":"Toppers11 is the only platform in India built exclusively for Income Tax Departmental Promotion Exams. Every question is crafted specifically for MS, ITI, and ITO exams per the official CBDT syllabus."}}
+    ]
+  }
+]
 </script>
 </body>
 </html>
