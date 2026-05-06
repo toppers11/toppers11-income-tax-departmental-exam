@@ -94,7 +94,7 @@ body{-webkit-user-select:none;-moz-user-select:none;-ms-user-select:none;user-se
 .q-num-badge{font-size:0.72rem;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;color:var(--green-dark);}
 .q-paper-tag{font-size:0.7rem;font-weight:600;background:var(--green-pale);color:var(--green-dark);border-radius:999px;padding:0.2rem 0.6rem;}
 .q-text{font-size:1rem;font-weight:500;color:var(--ink);line-height:1.7;margin-bottom:1.4rem;}
-.q-table{border-collapse:collapse;width:auto;min-width:50%;margin:0.6rem 0 1rem;font-size:0.93rem;}
+.journal-to{display:block;padding-left:50px;}.q-table{border-collapse:collapse;width:auto;min-width:50%;margin:0.6rem 0 1rem;font-size:0.93rem;}
 .q-table th,.q-table td{border:1.5px solid #9CA3AF;padding:0.4rem 0.9rem;text-align:left;white-space:nowrap;}
 .q-table th{background:#E5E7EB;font-weight:700;color:var(--ink);}
 .q-table td{background:#fff;}
@@ -1153,8 +1153,14 @@ function formatQ(str) {
     if (inTable) html += tableHtml + '</table>';
     return html.replace(/^(<br>)+|(<br>)+$/g, '');
   }
-  // No table — just convert newlines
-  return escHtml(str).replace(/\n/g, '<br>');
+  // No table — convert newlines, indent "To " journal entry lines
+  return str.split('\n').map(function(line) {
+    var t = line.trim();
+    if (t.startsWith('To ') || t.startsWith('को ') || t.startsWith('के नामे ')) {
+      return '<span class="journal-to">' + escHtml(t) + '</span>';
+    }
+    return t === '' ? '<br>' : escHtml(t) + '<br>';
+  }).join('');
 }
 
 function getUser(){ try{ return JSON.parse(localStorage.getItem('t11_user')||'{}'); }catch(e){ return {}; } }
