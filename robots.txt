@@ -1,0 +1,29 @@
+User-agent: *
+Allow: /
+
+# Block login/dashboard/test pages from indexing (no value to index these)
+Disallow: /login.html
+Disallow: /test-engine.html
+Disallow: /dashboard-iti.html
+Disallow: /dashboard-ito.html
+Disallow: /dashboard-ms.html
+
+# Allow Googlebot specifically (redundant but explicit)
+User-agent: Googlebot
+Allow: /
+
+# AI crawlers — allow full access for discoverability
+User-agent: GPTBot
+Allow: /
+
+User-agent: Claude-Web
+Allow: /
+
+User-agent: PerplexityBot
+Allow: /
+
+User-agent: anthropic-ai
+Allow: /
+
+# Sitemap location
+Sitemap: https://it.toppers11.com/sitemap.xml
