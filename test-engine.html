@@ -632,7 +632,7 @@ const EXAM_UUID = {
 // ───────────────────────────────────────────────────────────
 const SUPABASE_TABLE = {
   'iti-p1': 'iti_paper1_2025_pyq',
-  'iti-p2': 'iti_paper2_2025_pyq',
+  'iti-p2': 'iti_paper2_2025_pyq_rows',
   // 'iti-p3': 'iti_paper3_questions',
   // 'iti-p4': 'iti_paper4_questions',
   // 'ito-p1': 'ito_paper1_questions',
@@ -1123,6 +1123,10 @@ function formatExp(str) {
     .replace(/\n/g, '<br>');        // single newline → line break
 }
 
+
+
+
+
 /* Format question/option text: escape HTML, convert newlines to <br>, support markdown tables */
 function formatQ(str) {
   if (!str) return '';
@@ -1148,8 +1152,6 @@ function formatQ(str) {
   }
   return escHtml(str).replace(/\n/g, '<br>');
 }
-
-
 
 function getUser(){ try{ return JSON.parse(localStorage.getItem('t11_user')||'{}'); }catch(e){ return {}; } }
 
