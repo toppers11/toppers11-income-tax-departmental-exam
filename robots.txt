@@ -26,4 +26,4 @@ User-agent: anthropic-ai
 Allow: /
 
 # Sitemap location
-Sitemap: https://it.toppers11.com/sitemap.xml
+Sitemap: https://incometax.toppers11.com/sitemap.xml
