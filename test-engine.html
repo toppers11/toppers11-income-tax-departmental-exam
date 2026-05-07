@@ -640,12 +640,35 @@ const EXAM_UUID = {
 // Maps each bank key → the actual Supabase table name.
 // Add an entry here whenever you create a new questions table.
 // ───────────────────────────────────────────────────────────
+// ── SUPABASE TABLE MAP ──────────────────────────────────────
+// Maps each SERIES ID → the exact Supabase table name for that test.
+// When you upload a new CSV to Supabase, just add one line here:
+//   'iti-p2-pyq24': 'iti_paper2_2024_pyq',
+// No other file needs to be changed.
+// ───────────────────────────────────────────────────────────
 const SUPABASE_TABLE = {
-  'iti-p1': 'iti_paper1_2025_pyq',
-  'iti-p2': 'iti_paper2_2025_pyq',
-  // 'iti-p3': 'iti_paper3_questions',
-  // 'iti-p4': 'iti_paper4_questions',
-  // 'ito-p1': 'ito_paper1_questions',
+  // ── ITI Paper I ──
+  'iti-p1-pyq25': 'iti_paper1_2025_pyq',
+  // 'iti-p1-pyq24': 'iti_paper1_2024_pyq',
+  // 'iti-p1-pyq23': 'iti_paper1_2023_pyq',
+  // 'iti-p1-s01':   'iti_paper1_mock_01',   // example for mock series
+
+  // ── ITI Paper II ──
+  'iti-p2-pyq25': 'iti_paper2_2025_pyq',
+  // 'iti-p2-pyq24': 'iti_paper2_2024_pyq',
+  // 'iti-p2-pyq23': 'iti_paper2_2023_pyq',
+
+  // ── ITI Paper III ──
+  // 'iti-p3-pyq25': 'iti_paper3_2025_pyq',
+
+  // ── ITI Paper IV ──
+  // 'iti-p4-pyq25': 'iti_paper4_2025_pyq',
+
+  // ── ITO Paper I ──
+  // 'ito-p1-pyq25': 'ito_paper1_2025_pyq',
+
+  // ── ITO Paper II ──
+  // 'ito-p2-pyq25': 'ito_paper2_2025_pyq',
 };
 
 // ═══════════════════════════════════════════════════════════
@@ -998,8 +1021,8 @@ window.addEventListener('DOMContentLoaded', async () => {
       'Authorization': 'Bearer ' + SUPABASE_ANON,
       'Content-Type': 'application/json',
     };
-    const tableName = (SUPABASE_TABLE[META.bank] || SUPABASE_TABLE[META.subjBank]) || 'questions';
-    console.info('test-engine: querying table=' + tableName);
+    const tableName = SUPABASE_TABLE[id] || 'questions';
+    console.info('test-engine: querying table=' + tableName + ' (series=' + id + ')');
 
     // ── Fetch only question + option columns (no explanations) for fast initial load ──
     const Q_COLS = 'id,question_en,question_hi,opt_a_en,opt_b_en,opt_c_en,opt_d_en,opt_a_hi,opt_b_hi,opt_c_hi,opt_d_hi,correct_answer';
@@ -1046,7 +1069,7 @@ window.addEventListener('DOMContentLoaded', async () => {
       // Show a clear inline error on the instruction page instead of alert+redirect
       const errDiv = document.getElementById('supabase-error-banner');
       if(errDiv){
-        const tbl = (SUPABASE_TABLE[META.bank] || SUPABASE_TABLE[META.subjBank]) || 'your_table';
+        const tbl = SUPABASE_TABLE[id] || 'your_table';
         errDiv.innerHTML = `
           <div style="background:#FEF2F2;border:1.5px solid #FECACA;border-radius:12px;padding:1.2rem 1.5rem;margin-bottom:1.2rem;">
             <div style="font-weight:700;color:#DC2626;margin-bottom:0.5rem;">⚠️ Could not load questions from Supabase</div>
@@ -1334,7 +1357,7 @@ async function submitTest(){
   // Build a lookup: question id → { exp_en, exp_hi }
   let expMap = {};
   try {
-    const tableName = (SUPABASE_TABLE[META.bank] || SUPABASE_TABLE[META.subjBank]) || 'questions';
+    const tableName = SUPABASE_TABLE[new URLSearchParams(window.location.search).get('id')] || 'questions';
     const EXP_COLS  = 'id,explanation_en,explanation_hi';
     const expUrl    = `${SUPABASE_URL}/rest/v1/${tableName}?select=${EXP_COLS}&order=id.asc&limit=2000`;
     const sbHeaders = {
