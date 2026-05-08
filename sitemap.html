@@ -70,6 +70,37 @@ footer{background:#fff;border-top:1px solid var(--border);padding:2rem 0;}
 .footer-link:hover{color:var(--green-dark);}
 
 .last-updated{font-size:0.75rem;color:var(--muted);margin-bottom:2rem;display:flex;align-items:center;gap:0.4rem;}
+
+/* ── HAMBURGER ── */
+.nav-toggle{display:none;background:none;border:none;cursor:pointer;padding:0.35rem;border-radius:6px;color:var(--ink);}
+.nav-toggle:hover{background:var(--green-pale);}
+
+/* ── MOBILE ── */
+@media(max-width:640px){
+  .nav-toggle{display:flex;align-items:center;justify-content:center;}
+  .nav-links{
+    display:none;flex-direction:column;align-items:stretch;gap:0;
+    position:absolute;top:64px;left:0;right:0;
+    background:rgba(250,250,250,0.98);backdrop-filter:blur(12px);
+    border-bottom:1px solid var(--border);
+    padding:0.75rem 1.25rem 1rem;
+    box-shadow:0 8px 24px rgba(0,0,0,0.08);
+  }
+  .nav-links.open{display:flex;}
+  .nav-link{padding:0.7rem 0;border-bottom:1px solid var(--border);font-size:0.88rem;}
+  .nav-link:last-of-type{border-bottom:none;}
+  .btn-primary{margin-top:0.75rem;justify-content:center;padding:0.7rem 1rem;font-size:0.85rem;}
+
+  .hero{padding:40px 0 36px;}
+  .main{padding:2rem 1rem 3.5rem;}
+
+  .sm-link{padding:0.6rem 1rem;font-size:0.8rem;}
+  .sm-link.sub{padding-left:1.8rem;}
+
+  footer{padding:1.5rem 0;}
+  .footer-inner{flex-direction:column;align-items:flex-start;gap:1.25rem;}
+  .footer-links{gap:1rem;}
+}
 /* ─── LOGO ─── */
 .logo-wrap{display:flex;align-items:center;gap:0;text-decoration:none;line-height:1;}
 .logo-block{display:flex;flex-direction:column;align-items:flex-start;gap:0;}
@@ -84,7 +115,10 @@ footer{background:#fff;border-top:1px solid var(--border);padding:2rem 0;}
 <nav>
   <div class="nav-inner">
     <a href="index.html" class="logo-wrap"><div class="logo-block"><span class="logo-since">Employee Choice</span><span class="logo-main">TOPPERS<span>11</span></span><span class="logo-sub">AI-Powered Test Series</span></div></a>
-    <div class="nav-links">
+    <button class="nav-toggle" aria-label="Toggle menu" onclick="document.getElementById('nav-links').classList.toggle('open')">
+      <svg width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M4 6h16M4 12h16M4 18h16"/></svg>
+    </button>
+    <div class="nav-links" id="nav-links">
       <a href="index.html" class="nav-link">Home</a>
       <a href="about.html" class="nav-link">About</a>
       <a href="faq.html" class="nav-link">FAQ</a>
