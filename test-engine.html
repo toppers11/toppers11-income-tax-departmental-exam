@@ -43,16 +43,18 @@ body{-webkit-user-select:none;-moz-user-select:none;-ms-user-select:none;user-se
 #inst-page.active,#test-page.active,#result-page.active,#subj-page.active,#subj-result-page.active{display:flex;flex-direction:column;min-height:100vh;}
 
 /* ═══ TOPBAR ═══ */
-.topbar{background:#fff;border-bottom:1px solid var(--border);padding:0 1.5rem;height:58px;display:flex;align-items:center;justify-content:space-between;flex-shrink:0;}
-
+.topbar{background:#fff;border-bottom:1px solid var(--border);padding:0 1rem;min-height:58px;display:flex;align-items:center;justify-content:space-between;flex-shrink:0;flex-wrap:wrap;gap:0.4rem;}
+@media(max-width:480px){.topbar{padding:0.5rem 0.75rem;}}
 .topbar-logo span{color:#22c55e;}
-.topbar-right{display:flex;align-items:center;gap:0.8rem;}
+.topbar-right{display:flex;align-items:center;gap:0.5rem;flex-wrap:wrap;}
 .topbar-info{font-size:0.8rem;font-weight:600;color:var(--muted);}
-.timer-display{font-family:'DM Mono',monospace;font-size:1rem;font-weight:700;color:var(--ink);background:var(--green-pale);border:1.5px solid var(--green-light);border-radius:8px;padding:0.3rem 0.75rem;letter-spacing:0.05em;}
+@media(max-width:480px){.topbar-info{display:none;}}
+.timer-display{font-family:'DM Mono',monospace;font-size:1rem;font-weight:700;color:var(--ink);background:var(--green-pale);border:1.5px solid var(--green-light);border-radius:8px;padding:0.3rem 0.65rem;letter-spacing:0.05em;}
 .timer-display.warning{color:#DC2626;background:var(--red-pale);border-color:#FECACA;animation:timerPulse 1s infinite;}
 @keyframes timerPulse{0%,100%{opacity:1;}50%{opacity:0.6;}}
-.btn-submit-top{background:linear-gradient(135deg,#059669,#10B981);color:#fff;font-size:0.78rem;font-weight:700;letter-spacing:0.05em;text-transform:uppercase;padding:0.45rem 1rem;border-radius:8px;border:none;cursor:pointer;}
+.btn-submit-top{background:linear-gradient(135deg,#059669,#10B981);color:#fff;font-size:0.75rem;font-weight:700;letter-spacing:0.03em;text-transform:uppercase;padding:0.4rem 0.75rem;border-radius:8px;border:none;cursor:pointer;white-space:nowrap;}
 .btn-submit-top:hover{opacity:0.9;}
+@media(max-width:480px){.logo-since{display:none;}.logo-sub{display:none;}.logo-main{font-size:1.2rem;}}
 
 /* ═══ INSTRUCTIONS ═══ */
 .inst-body{max-width:900px;margin:2rem auto;padding:0 1.5rem 3rem;width:100%;flex:1;}
@@ -97,12 +99,19 @@ body{-webkit-user-select:none;-moz-user-select:none;-ms-user-select:none;user-se
 .test-layout{display:grid;grid-template-columns:1fr 260px;gap:0;flex:1;}
 @media(max-width:768px){.test-layout{grid-template-columns:1fr;}}
 
+/* Mobile palette toggle button */
+.mob-palette-btn{display:none;background:var(--green-pale);border:1.5px solid var(--green-light);color:var(--green-dark);font-size:0.75rem;font-weight:700;padding:0.35rem 0.75rem;border-radius:8px;cursor:pointer;margin-bottom:0.75rem;}
+@media(max-width:768px){.mob-palette-btn{display:block;}}
+@media(max-width:768px){.sidebar{border-left:none;border-top:1px solid var(--border);padding:1rem;}.sidebar.mob-hidden{display:none;}}
+
 /* Question area */
-.q-area{padding:1.5rem;overflow-y:auto;}
-.q-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:1.2rem;flex-wrap:wrap;gap:0.5rem;}
+.q-area{padding:1rem;overflow-y:auto;}
+@media(min-width:769px){.q-area{padding:1.5rem;}}
+.q-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:1rem;flex-wrap:wrap;gap:0.5rem;}
 .q-num-badge{font-size:0.72rem;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;color:var(--green-dark);}
 .q-paper-tag{font-size:0.7rem;font-weight:600;background:var(--green-pale);color:var(--green-dark);border-radius:999px;padding:0.2rem 0.6rem;}
-.q-text{font-size:1rem;font-weight:500;color:var(--ink);line-height:1.7;margin-bottom:1.4rem;}
+.q-text{font-size:0.95rem;font-weight:500;color:var(--ink);line-height:1.75;margin-bottom:1.2rem;}
+@media(min-width:769px){.q-text{font-size:1rem;}}
 .journal-to{display:block;padding-left:50px;}.q-table{border-collapse:collapse;width:auto;min-width:50%;margin:0.6rem 0 1rem;font-size:0.93rem;}
 .q-table th,.q-table td{border:1.5px solid #9CA3AF;padding:0.4rem 0.9rem;text-align:left;white-space:nowrap;}
 .q-table th{background:#E5E7EB;font-weight:700;color:var(--ink);}
@@ -121,13 +130,15 @@ body{-webkit-user-select:none;-moz-user-select:none;-ms-user-select:none;user-se
 .opt-text{line-height:1.55;}
 
 /* Nav buttons */
-.q-nav{display:flex;gap:0.6rem;margin-top:1.5rem;flex-wrap:wrap;}
-.q-btn{padding:0.55rem 1rem;border-radius:8px;border:1.5px solid var(--border);background:#fff;font-family:'DM Sans',sans-serif;font-size:0.8rem;font-weight:600;color:var(--ink);cursor:pointer;transition:all 0.15s;}
+.q-nav{display:flex;gap:0.5rem;margin-top:1.2rem;flex-wrap:wrap;}
+.q-btn{padding:0.5rem 0.85rem;border-radius:8px;border:1.5px solid var(--border);background:#fff;font-family:'DM Sans',sans-serif;font-size:0.78rem;font-weight:600;color:var(--ink);cursor:pointer;transition:all 0.15s;white-space:nowrap;}
+@media(max-width:480px){.q-btn{flex:1;min-width:calc(50% - 0.25rem);text-align:center;justify-content:center;}.q-btn-submit{margin-left:0;}}
 .q-btn:hover{border-color:var(--green-light);}
 .q-btn-primary{background:var(--green);border-color:var(--green);color:#fff;}
 .q-btn-primary:hover{background:var(--green-dark);}
 .q-btn-review{background:var(--purple-pale);border-color:var(--purple);color:var(--purple);}
 .q-btn-submit{background:var(--ink);border-color:var(--ink);color:#fff;margin-left:auto;}
+@media(max-width:480px){.q-btn-submit{margin-left:0;}}
 
 /* Sidebar */
 .sidebar{background:#fff;border-left:1px solid var(--border);padding:1rem;overflow-y:auto;}
@@ -260,6 +271,49 @@ body{-webkit-user-select:none;-moz-user-select:none;-ms-user-select:none;user-se
 .filter-btn.f-correct.active{background:var(--green-dark);border-color:var(--green-dark);}
 .filter-btn.f-wrong.active{background:#DC2626;border-color:#DC2626;}
 .filter-btn.f-skip.active{background:#6B7280;border-color:#6B7280;}
+
+/* ═══ FEEDBACK SECTION ═══ */
+.feedback-section{margin-top:0.9rem;border-top:1px dashed #D1D5DB;padding-top:0.75rem;}
+.feedback-toggle-btn{display:flex;align-items:center;gap:0.4rem;background:none;border:1.5px solid #E5E7EB;border-radius:8px;padding:0.35rem 0.75rem;font-size:0.72rem;font-weight:600;color:var(--muted);cursor:pointer;transition:all 0.15s;font-family:'DM Sans',sans-serif;}
+.feedback-toggle-btn:hover{border-color:#F59E0B;color:#92400E;background:#FFFBEB;}
+.feedback-toggle-btn.open{border-color:#F59E0B;color:#92400E;background:#FFFBEB;}
+.feedback-form{margin-top:0.65rem;background:#FFFBEB;border:1px solid #FDE68A;border-radius:10px;padding:0.85rem;}
+.feedback-form-title{font-size:0.68rem;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;color:#92400E;margin-bottom:0.6rem;}
+.feedback-types{display:flex;flex-wrap:wrap;gap:0.4rem;margin-bottom:0.65rem;}
+.feedback-type-btn{padding:0.25rem 0.65rem;border-radius:999px;border:1.5px solid #FDE68A;background:#fff;font-size:0.7rem;font-weight:600;color:#92400E;cursor:pointer;transition:all 0.15s;}
+.feedback-type-btn:hover,.feedback-type-btn.selected{background:#F59E0B;border-color:#F59E0B;color:#fff;}
+.feedback-textarea{width:100%;min-height:70px;padding:0.6rem 0.75rem;border:1.5px solid #FDE68A;border-radius:8px;font-family:'DM Sans',sans-serif;font-size:0.82rem;color:var(--ink);resize:vertical;outline:none;background:#fff;margin-bottom:0.5rem;}
+.feedback-textarea:focus{border-color:#F59E0B;box-shadow:0 0 0 2px rgba(245,158,11,0.15);}
+.feedback-submit-btn{background:linear-gradient(135deg,#D97706,#F59E0B);color:#fff;font-size:0.75rem;font-weight:700;padding:0.4rem 1rem;border-radius:8px;border:none;cursor:pointer;}
+.feedback-submit-btn:disabled{opacity:0.5;cursor:not-allowed;}
+.feedback-success{font-size:0.78rem;color:#065F46;background:#D1FAE5;border:1px solid #A7F3D0;border-radius:8px;padding:0.5rem 0.75rem;margin-top:0.5rem;}
+
+/* ═══ MOBILE RESULT PAGE ═══ */
+@media(max-width:480px){
+  .result-body{padding:0 0.75rem 3rem;}
+  .result-hero{padding:1.25rem 1rem;border-radius:14px;}
+  .result-hero h2{font-size:1.3rem;}
+  .score-circle{width:80px;height:80px;}
+  .score-pct{font-size:1.4rem;}
+  .result-stats{grid-template-columns:repeat(2,1fr);gap:0.5rem;margin-bottom:1rem;}
+  .res-stat{padding:0.75rem;}
+  .res-stat-n{font-size:1.2rem;}
+  .review-card{padding:0.85rem;}
+  .rc-q-num{font-size:0.65rem;}
+  .rc-question{font-size:0.85rem;}
+}
+
+/* ═══ MOBILE OPTIONS ═══ */
+@media(max-width:480px){
+  .opts-list{gap:0.5rem;}
+  .opt-btn{padding:0.7rem 0.75rem;font-size:0.85rem;}
+  .opt-letter{width:24px;height:24px;font-size:0.65rem;}
+}
+/* ═══ MOBILE TABLE ═══ */
+@media(max-width:480px){
+  .q-table{font-size:0.78rem;min-width:unset;width:100%;}
+  .q-table th,.q-table td{padding:0.3rem 0.5rem;white-space:normal;}
+}
 </style>
   <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@600;700&family=Noto+Sans+Devanagari:wght@400;500;600&display=swap" rel="stylesheet"/>
 </head>
@@ -355,6 +409,7 @@ body{-webkit-user-select:none;-moz-user-select:none;-ms-user-select:none;user-se
         <span class="q-num-badge" id="q-num-label">Question 1 of --</span>
         <span class="q-paper-tag" id="q-paper-tag"></span>
       </div>
+      <button class="mob-palette-btn" onclick="toggleMobPalette()" id="mob-pal-btn">☰ Question Palette</button>
       <div class="q-text" id="q-text">Loading…</div>
       <div class="opts-list" id="opts-list"></div>
       <div class="q-nav">
@@ -364,7 +419,7 @@ body{-webkit-user-select:none;-moz-user-select:none;-ms-user-select:none;user-se
         <button class="q-btn q-btn-submit" onclick="showSubmitModal()">Submit</button>
       </div>
     </div>
-    <div class="sidebar">
+    <div class="sidebar" id="q-sidebar">
       <div class="sidebar-title">Question Palette</div>
       <div class="q-palette" id="q-palette"></div>
       <div class="sidebar-legend">
@@ -640,35 +695,12 @@ const EXAM_UUID = {
 // Maps each bank key → the actual Supabase table name.
 // Add an entry here whenever you create a new questions table.
 // ───────────────────────────────────────────────────────────
-// ── SUPABASE TABLE MAP ──────────────────────────────────────
-// Maps each SERIES ID → the exact Supabase table name for that test.
-// When you upload a new CSV to Supabase, just add one line here:
-//   'iti-p2-pyq24': 'iti_paper2_2024_pyq',
-// No other file needs to be changed.
-// ───────────────────────────────────────────────────────────
 const SUPABASE_TABLE = {
-  // ── ITI Paper I ──
-  'iti-p1-pyq25': 'iti_paper1_2025_pyq',
-  // 'iti-p1-pyq24': 'iti_paper1_2024_pyq',
-  // 'iti-p1-pyq23': 'iti_paper1_2023_pyq',
-  // 'iti-p1-s01':   'iti_paper1_mock_01',   // example for mock series
-
-  // ── ITI Paper II ──
-  'iti-p2-pyq25': 'iti_paper2_2025_pyq',
-  // 'iti-p2-pyq24': 'iti_paper2_2024_pyq',
-  // 'iti-p2-pyq23': 'iti_paper2_2023_pyq',
-
-  // ── ITI Paper III ──
-  'iti-p3-pyq25': 'iti_paper3_2025_pyq',
-
-  // ── ITI Paper IV ──
-   'iti-p4-pyq25': 'iti_paper4_2025_pyq',
-
-  // ── ITO Paper I ──
-  // 'ito-p1-pyq25': 'ito_paper1_2025_pyq',
-
-  // ── ITO Paper II ──
-  // 'ito-p2-pyq25': 'ito_paper2_2025_pyq',
+  'iti-p1': 'iti_paper1_2025_pyq',
+  'iti-p2': 'iti_paper2_2025_pyq',
+  // 'iti-p3': 'iti_paper3_questions',
+  // 'iti-p4': 'iti_paper4_questions',
+  // 'ito-p1': 'ito_paper1_questions',
 };
 
 // ═══════════════════════════════════════════════════════════
@@ -1021,8 +1053,8 @@ window.addEventListener('DOMContentLoaded', async () => {
       'Authorization': 'Bearer ' + SUPABASE_ANON,
       'Content-Type': 'application/json',
     };
-    const tableName = SUPABASE_TABLE[id] || 'questions';
-    console.info('test-engine: querying table=' + tableName + ' (series=' + id + ')');
+    const tableName = (SUPABASE_TABLE[META.bank] || SUPABASE_TABLE[META.subjBank]) || 'questions';
+    console.info('test-engine: querying table=' + tableName);
 
     // ── Fetch only question + option columns (no explanations) for fast initial load ──
     const Q_COLS = 'id,question_en,question_hi,opt_a_en,opt_b_en,opt_c_en,opt_d_en,opt_a_hi,opt_b_hi,opt_c_hi,opt_d_hi,correct_answer';
@@ -1069,7 +1101,7 @@ window.addEventListener('DOMContentLoaded', async () => {
       // Show a clear inline error on the instruction page instead of alert+redirect
       const errDiv = document.getElementById('supabase-error-banner');
       if(errDiv){
-        const tbl = SUPABASE_TABLE[id] || 'your_table';
+        const tbl = (SUPABASE_TABLE[META.bank] || SUPABASE_TABLE[META.subjBank]) || 'your_table';
         errDiv.innerHTML = `
           <div style="background:#FEF2F2;border:1.5px solid #FECACA;border-radius:12px;padding:1.2rem 1.5rem;margin-bottom:1.2rem;">
             <div style="font-weight:700;color:#DC2626;margin-bottom:0.5rem;">⚠️ Could not load questions from Supabase</div>
@@ -1211,6 +1243,7 @@ function startTest(){
     renderPalette();
     renderQuestion();
     startTimer(META.mins, 'timer-box', submitTest);
+    initMobileSidebar();
   }
 }
 
@@ -1357,7 +1390,7 @@ async function submitTest(){
   // Build a lookup: question id → { exp_en, exp_hi }
   let expMap = {};
   try {
-    const tableName = SUPABASE_TABLE[new URLSearchParams(window.location.search).get('id')] || 'questions';
+    const tableName = (SUPABASE_TABLE[META.bank] || SUPABASE_TABLE[META.subjBank]) || 'questions';
     const EXP_COLS  = 'id,explanation_en,explanation_hi';
     const expUrl    = `${SUPABASE_URL}/rest/v1/${tableName}?select=${EXP_COLS}&order=id.asc&limit=2000`;
     const sbHeaders = {
@@ -1410,6 +1443,24 @@ async function submitTest(){
       ${topicBadge}
       <div class="rc-opts">${opts}</div>
       ${expEn}${expHi}
+      <div class="feedback-section">
+        <button class="feedback-toggle-btn" onclick="toggleFeedback(this)" data-qid="${escHtml(String(q.id))}" data-qnum="${i+1}">
+          <svg width="13" height="13" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+          Report an Issue
+        </button>
+        <div class="feedback-form" style="display:none;">
+          <div class="feedback-form-title">What's the issue with Q${i+1}?</div>
+          <div class="feedback-types">
+            <button class="feedback-type-btn" onclick="selectFeedbackType(this)">Wrong Answer</button>
+            <button class="feedback-type-btn" onclick="selectFeedbackType(this)">Wrong Question</button>
+            <button class="feedback-type-btn" onclick="selectFeedbackType(this)">Wrong Explanation</button>
+            <button class="feedback-type-btn" onclick="selectFeedbackType(this)">Typo / Language Error</button>
+            <button class="feedback-type-btn" onclick="selectFeedbackType(this)">Other</button>
+          </div>
+          <textarea class="feedback-textarea" placeholder="Describe the issue (optional)…"></textarea>
+          <button class="feedback-submit-btn" onclick="submitFeedback(this,'${escHtml(String(q.id))}',${i+1})">Submit Feedback</button>
+        </div>
+      </div>
     </div>`;
   }).join('');
 }
@@ -1463,6 +1514,90 @@ function submitSubjective(){
 
   showPage('subj-result-page');
 }
+
+// ═══════════════════════════════════════════════════════════
+// MOBILE PALETTE TOGGLE
+// ═══════════════════════════════════════════════════════════
+function toggleMobPalette(){
+  const sidebar = document.getElementById('q-sidebar');
+  const btn = document.getElementById('mob-pal-btn');
+  if(!sidebar) return;
+  const isHidden = sidebar.classList.toggle('mob-hidden');
+  btn.textContent = isHidden ? '☰ Question Palette' : '✕ Hide Palette';
+}
+
+// Hide sidebar on mobile by default when test starts
+function initMobileSidebar(){
+  if(window.innerWidth <= 768){
+    const sidebar = document.getElementById('q-sidebar');
+    if(sidebar) sidebar.classList.add('mob-hidden');
+  }
+}
+
+// ═══════════════════════════════════════════════════════════
+// FEEDBACK FUNCTIONS
+// ═══════════════════════════════════════════════════════════
+function toggleFeedback(btn){
+  const form = btn.nextElementSibling;
+  const isOpen = form.style.display === 'block';
+  form.style.display = isOpen ? 'none' : 'block';
+  btn.classList.toggle('open', !isOpen);
+  btn.innerHTML = isOpen
+    ? '<svg width="13" height="13" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg> Report an Issue'
+    : '✕ Cancel';
+}
+
+function selectFeedbackType(btn){
+  const allBtns = btn.closest('.feedback-types').querySelectorAll('.feedback-type-btn');
+  allBtns.forEach(b => b.classList.remove('selected'));
+  btn.classList.add('selected');
+}
+
+async function submitFeedback(btn, qid, qnum){
+  const form = btn.closest('.feedback-form');
+  const selectedType = form.querySelector('.feedback-type-btn.selected');
+  const note = form.querySelector('.feedback-textarea').value.trim();
+
+  if(!selectedType){
+    form.querySelector('.feedback-types').style.outline = '2px solid #F59E0B';
+    setTimeout(()=>{ form.querySelector('.feedback-types').style.outline=''; }, 1500);
+    return;
+  }
+
+  btn.disabled = true;
+  btn.textContent = 'Submitting…';
+
+  const payload = {
+    question_id: qid,
+    question_num: qnum,
+    issue_type: selectedType.textContent,
+    note: note || null,
+    test_id: new URLSearchParams(window.location.search).get('id') || 'unknown',
+    submitted_at: new Date().toISOString(),
+  };
+
+  // Try to send to Supabase feedback table if configured, else log
+  try {
+    const fbUrl = `${SUPABASE_URL}/rest/v1/question_feedback`;
+    const res = await fetch(fbUrl, {
+      method: 'POST',
+      headers: {
+        'apikey': SUPABASE_ANON,
+        'Authorization': 'Bearer ' + SUPABASE_ANON,
+        'Content-Type': 'application/json',
+        'Prefer': 'return=minimal',
+      },
+      body: JSON.stringify(payload),
+    });
+    console.info('Feedback submitted, status:', res.status);
+  } catch(e){
+    console.warn('Feedback submit error (non-fatal):', e.message);
+  }
+
+  // Show success regardless (graceful degradation)
+  form.innerHTML = `<div class="feedback-success">✅ Thank you! Your feedback for Q${qnum} has been submitted. We'll review it shortly.</div>`;
+}
+
 </script>
 </body>
 </html>
