@@ -440,6 +440,9 @@ nav{background:#fff;border-bottom:1px solid var(--bo);padding:0 1.5rem;height:58
           <div class="upi-row" onclick="copyUpi()"><span class="upi-txt" id="upi-disp"></span><button class="cp-btn" id="cp-btn">Copy</button></div>
           <div style="font-size:0.7rem;color:var(--mu);margin-bottom:0.4rem;">Amount: <strong id="amt-lbl" style="color:var(--cd)"></strong></div>
           <div class="upi-apps"><a class="app-a" id="gpay-a" href="#">GPay</a><a class="app-a" id="phonepe-a" href="#">PhonePe</a><a class="app-a" id="paytm-a" href="#">Paytm</a></div>
+          <div style="margin-top:0.6rem;text-align:center;">
+            <button onclick="switchUpi()" style="font-size:0.7rem;font-weight:600;color:var(--cd);background:var(--cp);border:1.5px solid var(--cl);border-radius:999px;padding:0.28rem 0.75rem;cursor:pointer;">🔄 Payment failed? Try another UPI ID <span id="upi-switch-badge" style="opacity:0.6;font-size:0.62rem;">1/3</span></button>
+          </div>
         </div>
         <div class="utr-box">
           <div class="utr-ttl">✅ Paid? Activate Your Access</div>
@@ -487,7 +490,13 @@ async function fetchAndUpdateQuestionCounts() {
 }
 // ─────────────────────────────────────────────────────────────────────────────
 
-const UPI_ID='8743865551@paytm',UPI_NAME='Toppers11';
+// ── UPI Rotation Pool (toppers11@ IDs only, mobile-number IDs excluded) ──
+const UPI_POOL=['toppers11@ptaxis','toppers11@ptyes','toppers11@pthdfc'];
+const UPI_NAME='Toppers11';
+let _upiIdx=Math.floor(Math.random()*UPI_POOL.length);
+function getUpiId(){return UPI_POOL[_upiIdx];}
+function nextUpiId(){_upiIdx=(_upiIdx+1)%UPI_POOL.length;return UPI_POOL[_upiIdx];}
+Object.defineProperty(window,'UPI_ID',{get:getUpiId});
 const PLANS={'single-ms':{label:'MS Single Paper',amount:199,desc:'All 21 tests for 1 subject'},'bunch-ms':{label:'MS Complete (All 4 Papers)',amount:555,desc:'All 84 tests — best value',best:true}};
 const PAPERS=[
   {key:'p1',name:'Précis & Draft Writing',hasFree:true,tests:[
@@ -696,16 +705,22 @@ function doContinue(){
   document.getElementById('step1').style.display='none';document.getElementById('step2').style.display='';
   document.getElementById('qr-lbl').textContent=`Scan & Pay ₹${p.amount}`;
   document.getElementById('amt-lbl').textContent='₹'+p.amount;
-  document.getElementById('upi-disp').textContent=UPI_ID;
-  const upiStr=`upi://pay?pa=${UPI_ID}&pn=${encodeURIComponent(UPI_NAME)}&am=${p.amount}&cu=INR&tn=${encodeURIComponent(p.label)}`;
-  document.getElementById('gpay-a').href=`tez://upi/pay?pa=${UPI_ID}&pn=${encodeURIComponent(UPI_NAME)}&am=${p.amount}&cu=INR`;
+  renderUpiStep();
+}
+function renderUpiStep(){
+  if(!selPlan)return;const p=PLANS[selPlan];const uid=getUpiId();
+  document.getElementById('upi-disp').textContent=uid;
+  const upiStr=`upi://pay?pa=${uid}&pn=${encodeURIComponent(UPI_NAME)}&am=${p.amount}&cu=INR&tn=${encodeURIComponent(p.label)}`;
+  document.getElementById('gpay-a').href=`tez://upi/pay?pa=${uid}&pn=${encodeURIComponent(UPI_NAME)}&am=${p.amount}&cu=INR`;
   document.getElementById('phonepe-a').href=upiStr;
-  document.getElementById('paytm-a').href=`paytmmp://pay?pa=${UPI_ID}&pn=${encodeURIComponent(UPI_NAME)}&am=${p.amount}&cu=INR`;
+  document.getElementById('paytm-a').href=`paytmmp://pay?pa=${uid}&pn=${encodeURIComponent(UPI_NAME)}&am=${p.amount}&cu=INR`;
   const qc=document.getElementById('qr-canvas');qc.innerHTML='';
   try{new QRCode(qc,{text:upiStr,width:142,height:142,colorDark:'#1E3A8A',colorLight:'#fff',correctLevel:QRCode.CorrectLevel.M})}catch(e){qc.innerHTML='<div style="padding:1rem;font-size:0.7rem;color:#6B7280">Use UPI ID below</div>';}
+  const badge=document.getElementById('upi-switch-badge');if(badge)badge.textContent=`${_upiIdx+1}/${UPI_POOL.length}`;
 }
+function switchUpi(){nextUpiId();renderUpiStep();showToast('🔄 Switched to UPI ID '+(_upiIdx+1)+' of '+UPI_POOL.length);}
 function backToPlan(){document.getElementById('step1').style.display='';document.getElementById('step2').style.display='none';}
-function copyUpi(){navigator.clipboard.writeText(UPI_ID).then(()=>{const b=document.getElementById('cp-btn');b.textContent='✓';setTimeout(()=>b.textContent='Copy',2000);}).catch(()=>prompt('Copy:',UPI_ID));}
+function copyUpi(){const uid=getUpiId();navigator.clipboard.writeText(uid).then(()=>{const b=document.getElementById('cp-btn');b.textContent='✓';setTimeout(()=>b.textContent='Copy',2000);}).catch(()=>prompt('Copy:',uid));}
 function activate() {
   const btn = document.getElementById('act-btn');
   btn.disabled = true;
