@@ -1,6 +1,14 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+<!-- ══ MAINTENANCE BANNER ══ -->
+<div class="maintenance-banner">
+  <p>
+    <span class="banner-icon">🔧</span>
+    Our website is currently under maintenance until May 2026. We appreciate your patience and understanding.
+  </p>
+</div>
+
 <!-- Google tag (gtag.js) -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-V2VM68RT43"></script>
 <script>
@@ -35,6 +43,33 @@
 *{box-sizing:border-box;margin:0;padding:0;}
 html{scroll-behavior:smooth;}
 body{font-family:'Sora',sans-serif;background:var(--bg);color:var(--ink);overflow-x:hidden;font-size:15px;}
+
+/* ══════════════════ MAINTENANCE BANNER ══════════════════ */
+.maintenance-banner{
+  background:#FEF08A;
+  border-bottom:3px solid #EAB308;
+  padding:0.75rem 1.5rem;
+  text-align:center;
+  position:relative;
+  z-index:9999;
+}
+.maintenance-banner p{
+  font-family:'Sora',sans-serif;
+  font-size:0.92rem;
+  font-weight:700;
+  color:#713F12;
+  letter-spacing:0.01em;
+  line-height:1.5;
+  display:inline-flex;
+  align-items:center;
+  gap:0.5rem;
+  flex-wrap:wrap;
+  justify-content:center;
+}
+.maintenance-banner .banner-icon{
+  font-size:1.1rem;
+  flex-shrink:0;
+}
 
 /* ══════════════════ TOPBAR ══════════════════ */
 .topbar{background:#0c5535;padding:0.35rem 0;}
