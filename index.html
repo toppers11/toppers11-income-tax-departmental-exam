@@ -51,6 +51,17 @@ body{font-family:'Open Sans',sans-serif;background:var(--bg);color:var(--ink);ov
 .mob-btn{display:inline-flex;align-items:center;gap:.35rem;padding:.45rem .85rem;border-radius:5px;font-family:'Open Sans',sans-serif;font-size:.72rem;font-weight:700;text-decoration:none;letter-spacing:.04em;white-space:nowrap;}
 .mob-btn-login{background:#e8e8e8;color:#555;}
 .mob-btn-reg{background:var(--t3);color:#fff;}
+.mob-action-strip{display:none;width:100%;border-top:1px solid #eee;padding:.5rem 1rem .6rem;gap:.3rem;justify-content:center;}
+.mob-ac{display:flex;flex-direction:column;align-items:center;gap:.15rem;text-decoration:none;padding:.4rem .5rem;border-radius:6px;flex:1;max-width:70px;min-width:52px;position:relative;}
+.mob-ac svg{width:20px;height:20px;}
+.mob-ac-title{font-size:.48rem;font-weight:800;letter-spacing:.06em;text-transform:uppercase;text-align:center;line-height:1.2;}
+.mob-ac-sub{font-size:.42rem;font-weight:600;letter-spacing:.04em;text-transform:uppercase;opacity:.85;text-align:center;}
+.mob-ac-eq{background:var(--t3);color:#fff;}
+.mob-ac-wq{background:var(--dark);color:#fff;}
+.mob-ac-login{background:#e8e8e8;color:#555;}
+.mob-ac-reg{background:#e8e8e8;color:#555;}
+.mob-ac-wt{background:var(--t2);color:#fff;}
+.mob-free-badge{position:absolute;top:-5px;right:-4px;background:var(--yellow);color:#111;font-size:.4rem;font-weight:800;letter-spacing:.06em;padding:.08rem .25rem;border-radius:3px;text-transform:uppercase;}
 
 /* ══ MAINTENANCE BANNER ══ */
 .maint{background:var(--t1);border-bottom:2px solid var(--t3);position:relative;overflow:hidden;}
@@ -652,39 +663,32 @@ footer{background:var(--dark);padding:2.8rem 0 0;position:relative;overflow:hidd
   .nav-inner{padding:.4rem 1.2rem;}
 }
 @media(max-width:640px){
-  .top-inner{gap:.5rem;flex-wrap:wrap;}
-  .action-cards{gap:.28rem;flex:1;justify-content:flex-end;}
-  .ac{min-width:58px;padding:.38rem .45rem;}
-  .ac svg{width:22px;height:22px;}
-  .bundle-in{flex-direction:column;}.bundle-right{align-items:flex-start;}
-  .foot-top{flex-direction:column;gap:1.4rem;}
-  .promo-grid{grid-template-columns:1fr;}
-
-  /* Logo shrink on mobile */
+  /* ── TOP BAR: center logo, strip below ── */
+  .top-inner{flex-direction:column;align-items:center;padding:.7rem 0 0;gap:0;}
+  .logo-box{align-items:center;text-align:center;}
+  .logo-box .site-tag{justify-content:center;}
   .logo-box .site-name{font-size:32px;}
   .logo-box .logo-eyebrow{font-size:1rem;}
-
-  /* ── TOP BAR MOBILE ── */
+  .logo-box .site-tag{font-size:.44rem;}
   .action-cards{display:none;}
-  .mob-top-actions{display:flex;gap:.5rem;align-items:center;}
-  .top-inner{justify-content:space-between;flex-wrap:nowrap;}
-  .logo-box .site-name{font-size:32px;}
-  .logo-box .logo-eyebrow{font-size:1rem;}
-  .logo-box .site-tag{font-size:.42rem;}
+  .mob-top-actions{display:none;}
+  .mob-action-strip{display:flex;}
 
   /* Maintenance banner compact */
   .maint-msg{font-size:.72rem;}
-
-  /* Hide some action cards on small screens */
-  .ac-login,.ac-reg{display:none;}
 
   /* Hero */
   .hero{padding:30px 0 40px;}
   .hero-tagline{font-size:1.3rem;}
   .hero-sub{font-size:.8rem;}
 
+  /* Exam + promo grids */
+  .exam-cards{grid-template-columns:1fr;}
+  .promo-grid{grid-template-columns:1fr;}
+  .bundle-in{flex-direction:column;}.bundle-right{align-items:flex-start;}
+
   /* FAQ */
-  .faq-list{padding:0 1rem;}
+  .faq-list{padding:0 .8rem;}
   .fq{font-size:.78rem;padding:.75rem 1rem;}
   .fa{padding:0 1rem;}
   .fa.open{padding:0 1rem .85rem;}
@@ -772,14 +776,33 @@ footer{background:var(--dark);padding:2.8rem 0 0;position:relative;overflow:hidd
         <span class="ac-sub">Free Access</span>
       </a>
     </div>
-    <!-- Mobile-only top buttons -->
-    <div class="mob-top-actions">
-      <a href="login.html" class="mob-btn mob-btn-login">
-        <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
-        Login
+    <!-- Mobile action strip (shown below logo on mobile) -->
+    <div class="mob-action-strip">
+      <a href="login.html" class="mob-ac mob-ac-eq">
+        <svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
+        <span class="mob-ac-title">Everyday</span>
+        <span class="mob-ac-sub">Quiz</span>
       </a>
-      <a href="login.html" class="mob-btn mob-btn-reg">
-        Register
+      <a href="login.html" class="mob-ac mob-ac-wq">
+        <svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+        <span class="mob-ac-title">Weekend</span>
+        <span class="mob-ac-sub">₹500/Week</span>
+      </a>
+      <a href="login.html" class="mob-ac mob-ac-login">
+        <svg viewBox="0 0 24 24" fill="none" stroke="#888" stroke-width="2"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+        <span class="mob-ac-title" style="color:#666">Login</span>
+        <span class="mob-ac-sub" style="color:#aaa">Account</span>
+      </a>
+      <a href="login.html" class="mob-ac mob-ac-reg">
+        <svg viewBox="0 0 24 24" fill="none" stroke="#888" stroke-width="2"><path d="M16 21v-2a4 4 0 00-4-4H6a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><line x1="19" y1="8" x2="19" y2="14"/><line x1="22" y1="11" x2="16" y2="11"/></svg>
+        <span class="mob-ac-title" style="color:#666">Register</span>
+        <span class="mob-ac-sub" style="color:#aaa">Free</span>
+      </a>
+      <a href="login.html" class="mob-ac mob-ac-wt">
+        <span class="mob-free-badge">FREE</span>
+        <svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2"><path d="M12 2L15.1 8.3 22 9.3 17 14.1 18.2 21 12 17.8 5.8 21 7 14.1 2 9.3 8.9 8.3 12 2z"/></svg>
+        <span class="mob-ac-title">Weekly</span>
+        <span class="mob-ac-sub">Test</span>
       </a>
     </div>
   </div>
