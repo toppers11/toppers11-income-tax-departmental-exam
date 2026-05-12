@@ -246,11 +246,29 @@ nav{background:#fff;border-bottom:none;position:sticky;top:0;z-index:200;}
   .pw-note{padding:.7rem 1.1rem 1rem;font-size:.6rem;}
 }
 
-@media(max-width:400px){
+@media(max-width:480px){
+  .logo-box .site-name{font-size:26px;}
+  .logo-box .logo-eyebrow{font-size:.85rem;}
+  .logo-box .site-tag{font-size:.44rem;}
+  .ac-title{font-size:.48rem;}
+  .ac-sub{font-size:.42rem;}
+  .ac{min-width:48px;padding:.32rem .35rem;}
+  .hero-tagline{font-size:1.15rem;}
+  .fq{font-size:.74rem;}
+  .fa p{font-size:.72rem;}
+  .foot-brand .site-name{font-size:1.7rem;}
+  .top-inner{justify-content:space-between;}
+  .action-cards{flex-wrap:nowrap;overflow-x:auto;-webkit-overflow-scrolling:touch;padding-bottom:2px;}
   .promo-content-col{padding-top:210px;}
   .promo-name{font-size:1.3rem;}
   .promo-win{font-size:1rem;}
   .pw-countdown{justify-content:center;}
+}
+@media(min-width:641px) and (max-width:900px){
+  .logo-box .site-name{font-size:38px;}
+  .faq-list{padding:0 1.5rem;}
+  .papers-grid{grid-template-columns:repeat(2,1fr);}
+  .foot-brand .site-name{font-size:2.2rem;}
 }
 /* ══ WEEKEND CARD ANIMATIONS ══ */
 @keyframes prizePulse{0%,100%{text-shadow:0 0 0 rgba(0,171,132,0);transform:scale(1);}50%{text-shadow:0 0 18px rgba(0,171,132,0.45);transform:scale(1.04);}}
@@ -635,6 +653,48 @@ footer{background:var(--dark);padding:2.8rem 0 0;position:relative;overflow:hidd
   .bundle-in{flex-direction:column;}.bundle-right{align-items:flex-start;}
   .foot-top{flex-direction:column;gap:1.4rem;}
   .promo-grid{grid-template-columns:1fr;}
+
+  /* Logo shrink on mobile */
+  .logo-box .site-name{font-size:32px;}
+  .logo-box .logo-eyebrow{font-size:1rem;}
+
+  /* Hide some action cards on small screens */
+  .ac-login,.ac-reg{display:none;}
+
+  /* Hero */
+  .hero{padding:30px 0 40px;}
+  .hero-tagline{font-size:1.3rem;}
+  .hero-sub{font-size:.8rem;}
+
+  /* FAQ */
+  .faq-list{padding:0 1rem;}
+  .fq{font-size:.78rem;padding:.75rem 1rem;}
+  .fa{padding:0 1rem;}
+  .fa.open{padding:0 1rem .85rem;}
+  .fa p{font-size:.75rem;}
+
+  /* Section headings */
+  .sec-title{font-size:1.3rem;}
+  .sec-sub{font-size:.78rem;}
+
+  /* Papers grid */
+  .papers-grid{grid-template-columns:1fr;}
+
+  /* Why grid */
+  .why-grid{grid-template-columns:1fr;}
+
+  /* Testimonials */
+  .testi-cards{grid-template-columns:1fr;}
+
+  /* Footer */
+  .foot-inner{padding:2rem 1.2rem 1rem;}
+  .foot-top{flex-direction:column;}
+  .foot-cols{flex-direction:column;gap:1.2rem;}
+  .foot-brand .site-name{font-size:2rem;}
+
+  /* CTA band */
+  .cta-inner{padding:1.5rem 1.2rem;}
+  .cta-h{font-size:1.3rem;}
 }
 </style>
 </head>
