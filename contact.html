@@ -161,36 +161,18 @@ footer{background:#fff;border-top:1px solid var(--border);padding:2rem 0;}
             <svg width="22" height="22" fill="#16A34A" viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 0C5.373 0 0 5.373 0 12c0 2.123.554 4.118 1.523 5.845L0 24l6.335-1.499A11.96 11.96 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 22c-1.886 0-3.655-.498-5.189-1.37l-.371-.22-3.762.89.934-3.667-.241-.376A9.964 9.964 0 012 12C2 6.477 6.477 2 12 2s10 4.477 10 10-4.477 10-10 10z"/></svg>
           </div>
           <div>
-            <h4>WhatsApp Support</h4>
-            <p>Fastest response — usually within a few hours during working hours.</p>
-            <a href="https://wa.me/918743865551" target="_blank">
-              +91 87438 65551
+            <h4>Send Grievances on WhatsApp</h4>
+            <p>Send your grievances to Toppers11 Team. Usually responded within a few hours during working hours.</p>
+            <a href="#" onclick="openWA();return false;" style="color:var(--green-dark);font-weight:600;display:inline-flex;align-items:center;gap:0.3rem;">
+              Toppers11 Team Support
               <svg width="12" height="12" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6M15 3h6v6M10 14L21 3"/></svg>
             </a>
           </div>
         </div>
 
-        <div class="contact-card">
-          <div class="c-icon c-icon-mail">
-            <svg width="22" height="22" fill="none" stroke="#3B82F6" stroke-width="2" viewBox="0 0 24 24"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
-          </div>
-          <div>
-            <h4>Email Support</h4>
-            <p>For detailed queries about payments, access issues or partnerships.</p>
-            <a href="/cdn-cgi/l/email-protection#e89c8798988d9a9bd9d9c6878e8e818b818984a88f85898184c68b8785"><span class="__cf_email__" data-cfemail="5c28332c2c392e2f6d6d72333a3a353f353d301c3b313d3530723f3331">[email&#160;protected]</span></a>
-          </div>
-        </div>
 
-        <div class="contact-card">
-          <div class="c-icon c-icon-green">
-            <svg width="22" height="22" fill="none" stroke="#059669" stroke-width="2" viewBox="0 0 24 24"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>
-          </div>
-          <div>
-            <h4>Address</h4>
-            <p>Online platform serving Income Tax Department employees across India.</p>
-            <a href="#">www.toppers11.in</a>
-          </div>
-        </div>
+
+
       </div>
 
       <div class="hours-card">
@@ -212,10 +194,7 @@ footer{background:#fff;border-top:1px solid var(--border);padding:2rem 0;}
           <label class="form-label">Full Name *</label>
           <input type="text" class="form-input" id="f-name" placeholder="e.g. Rajesh Kumar"/>
         </div>
-        <div class="form-group">
-          <label class="form-label">Email Address *</label>
-          <input type="email" class="form-input" id="f-email" placeholder="you@example.com"/>
-        </div>
+
       </div>
       <div class="form-row">
         <div class="form-group">
@@ -255,7 +234,7 @@ footer{background:#fff;border-top:1px solid var(--border);padding:2rem 0;}
         Send Message
       </button>
       <div class="success-msg" id="success-msg">
-        ✓ Message sent successfully! We'll get back to you within 24 hours on the email or WhatsApp you provided.
+        ✓ Message sent successfully! We'll get back to you within 24 hours on WhatsApp.
       </div>
     </div>
 
@@ -277,7 +256,7 @@ footer{background:#fff;border-top:1px solid var(--border);padding:2rem 0;}
   </div>
 </footer>
 
-<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+<script>
 function submitForm() {
   const name = document.getElementById('f-name').value.trim();
   const email = document.getElementById('f-email').value.trim();
@@ -285,7 +264,7 @@ function submitForm() {
   const msg = document.getElementById('f-message').value.trim();
   const phone = document.getElementById('f-phone').value.trim();
   const category = document.getElementById('f-category').value;
-  if(!name || !email || !subject || !msg) { alert('Please fill in all required fields (*)'); return; }
-  if(!email.includes('@')) { alert('Please enter a valid email address.'); return; }
+  if(!name || !subject || !msg) { alert('Please fill in all required fields (*)'); return; }
+  
   // Compose and open email client
   const body = `Name: ${name}\nEmail: ${email}\nPhone: ${phone || 'Not provided'}\nExam Category: ${category || 'Not specified'}\

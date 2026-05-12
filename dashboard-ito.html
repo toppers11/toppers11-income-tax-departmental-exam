@@ -417,8 +417,8 @@ nav{background:#fff;border-bottom:1px solid var(--bo);padding:0 1.5rem;height:58
       </svg>
     </div>
     <div class="rn-body">
-      <div class="rn-title">⚡ One Retest Per Assessment</div>
-      <div class="rn-msg">Make every attempt count! You have <strong>one retest available</strong> for each test in this series. Approach each question with focus to achieve your highest potential score — once your retest is used, the test will be marked <strong>Completed</strong>.</div>
+      <div class="rn-title">⚡ 3 Attempts Per Assessment</div>
+      <div class="rn-msg">You have <strong>3 total attempts</strong> for each test in this series. Once all 3 attempts are used, the test will be marked <strong>Completed</strong>.</div>
     </div>
   </div>
   <div id="panels"></div>
@@ -449,7 +449,7 @@ nav{background:#fff;border-bottom:1px solid var(--bo);padding:0 1.5rem;height:58
           <div class="utr-sub">Once you have completed the UPI payment above, tap the button below to instantly unlock all your tests.</div>
           <div class="al-err" id="utr-err"></div>
           <button class="btn-act" id="act-btn" onclick="activate()"><svg width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg>I’ve Paid — Activate My Access Now</button>
-          <div class="utr-note">🔒 Instant activation. Problem? WhatsApp <strong>+91 87438 65551</strong></div>
+          <div class="utr-note">🔒 Instant activation. Problem? WhatsApp <strong>Toppers11 Team</strong></div>
         </div>
         <button class="btn-bk" onclick="backToPlan()">← Change Plan</button>
       </div>
@@ -497,7 +497,7 @@ let _upiIdx=Math.floor(Math.random()*UPI_POOL.length);
 function getUpiId(){return UPI_POOL[_upiIdx];}
 function nextUpiId(){_upiIdx=(_upiIdx+1)%UPI_POOL.length;return UPI_POOL[_upiIdx];}
 Object.defineProperty(window,'UPI_ID',{get:getUpiId});
-const PLANS={'single-ito':{label:'ITO Single Subject',amount:199,desc:'All 21 tests for 1 subject'},'bunch-ito':{label:'ITO Complete (All 4 Subjects)',amount:555,desc:'All 84 tests — best value',best:true}};
+const PLANS={'single-ito':{label:'ITO Single Subject',amount:355,desc:'All 21 tests for 1 subject'},'bunch-ito':{label:'ITO Complete (All 4 Subjects)',amount:955,desc:'All 84 tests — best value',best:true}};
 const PAPERS=[
   {key:'p1',name:'IT Law & Computation + Cases',hasFree:true,tests:[
     {id:'ito-p1-pyq25',lbl:'PYQ 2025',title:'ITO PAPER 1 2025 PYQ',free:true,pyq:true,qs:100,mins:120},
@@ -650,7 +650,7 @@ function buildCards(p,i){
     const unlocked=isUnlocked(t);
     const score=getScore(t.id);
     const attempts=getAttempts(t.id);
-    const maxed=unlocked&&score&&attempts>=2;
+    const maxed=unlocked&&score&&attempts>=3;
     const wrap=document.createElement('div');
     if(t.free){wrap.className='free-wrap';wrap.innerHTML='<div class="free-ribbon">★ FREE</div>';}
     let card;
@@ -665,7 +665,7 @@ function buildCards(p,i){
     const sc=score?`<span class="cscore">${score.correct||0}/${score.total||t.qs}</span>`:'';
     let ac;
     if(maxed){
-      ac=`<span class="ca ca-done"><svg width="10" height="10" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>Completed</span><span class="retest-badge">1 Retest Used</span>${sc}`;
+      ac=`<span class="ca ca-done"><svg width="10" height="10" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>Completed</span><span class="retest-badge">All 3 Attempts Used</span>${sc}`;
     } else if(unlocked){
       ac=`<span class="ca"><svg width="10" height="10" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><polygon points="5 3 19 12 5 21 5 3"/></svg>${score?'Retake':'Start'}</span>${sc}`;
     } else {
@@ -750,6 +750,14 @@ function activate() {
   saveUser({...user, paid: true, plan: selPlan});
   // Push to Supabase
   sbInsert('payments', record);
+  // Also update user paid status in Supabase
+  try{
+    await fetch(SUPABASE_URL+'/rest/v1/users?email=eq.'+encodeURIComponent((user.email||'').toLowerCase()),{
+      method:'PATCH',
+      headers:{'Content-Type':'application/json','apikey':SUPABASE_ANON_KEY,'Authorization':'Bearer '+SUPABASE_ANON_KEY,'Prefer':'return=minimal'},
+      body:JSON.stringify({paid:true,plan:selPlan})
+    });
+  }catch(e){console.warn('Supabase user update failed',e);}
   closeModal();
   showToast('🎉 All ITO tests unlocked!');
   render();
@@ -757,9 +765,27 @@ function activate() {
   btn.innerHTML = '🔓 I’ve Paid — Activate My Access Now';
 }
 function showToast(msg){const t=document.getElementById('toast');document.getElementById('toast-msg').textContent=msg;t.classList.add('show');setTimeout(()=>t.classList.remove('show'),3500);}
-window.addEventListener('DOMContentLoaded',()=>{
+window.addEventListener('DOMContentLoaded',async()=>{
   const user=getUser();if(!user||!user.token){window.location.href='login.html';return;}
-  populateProfile(user,getUsers());
+  // Always re-check paid status from Supabase to prevent stale state
+  try{
+    const rows=await sbFetch('users?email=eq.'+encodeURIComponent((user.email||'').toLowerCase())+'&select=paid,plan&limit=1');
+    if(rows&&rows.length){
+      const r=rows[0];
+      if(r.paid&&!user.paid){
+        const updated={...user,paid:true,plan:r.plan||user.plan};
+        saveUser(updated);
+        // Also record payment if missing from localStorage
+        const payments=JSON.parse(localStorage.getItem('t11_payments')||'[]');
+        const already=payments.some(p=>p.email===(user.email||'').toLowerCase());
+        if(!already&&r.plan){
+          payments.push({email:(user.email||'').toLowerCase(),plan_key:r.plan,activated_at:new Date().toISOString(),source:'db_recovery'});
+          localStorage.setItem('t11_payments',JSON.stringify(payments));
+        }
+      }
+    }
+  }catch(e){console.warn('Plan sync failed',e);}
+  populateProfile(getUser(),getUsers());
   render();
   fetchAndUpdateQuestionCounts();
 });
@@ -779,7 +805,7 @@ function populateProfile(user, users){
   const pe=document.getElementById('pd-em');if(pe)pe.textContent=user.email||'—';
   const pm=document.getElementById('pd-mob');if(pm)pm.textContent=s.mobile?'+91 '+s.mobile:'Not provided';
   const pr=document.getElementById('pd-reg');if(pr)pr.textContent=s.region||'Not selected';
-  const pp=document.getElementById('pd-plan-v');if(pp)pp.textContent=user.paid?(user.plan||'Premium'):'Free (3 Tests)';
+  const pp=document.getElementById('pd-plan-v');if(pp)pp.textContent=user.paid?(user.plan?user.plan.replace('bunch-','').replace('single-','').toUpperCase()+' Access':'Premium Access'):'Free (3 Tests)';
 }
 function toggleProfile(){
   const wrap=document.getElementById('chip-wrap');

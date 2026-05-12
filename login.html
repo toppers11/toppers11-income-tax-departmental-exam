@@ -140,14 +140,11 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--ink);min-
         <div class="pd-avatar-lg" id="pd-avatar-lg">U</div>
         <div class="pd-header-info">
           <h3 id="pd-name">—</h3>
-          <p id="pd-email-hdr">—</p>
+
         </div>
       </div>
       <div class="pd-body">
-        <div class="pd-row">
-          <div class="pd-icon"><svg width="16" height="16" fill="none" stroke="#059669" stroke-width="2" viewBox="0 0 24 24"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg></div>
-          <div><div class="pd-label">Email</div><div class="pd-value" id="pd-email">—</div></div>
-        </div>
+
         <div class="pd-row">
           <div class="pd-icon"><svg width="16" height="16" fill="none" stroke="#059669" stroke-width="2" viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 9.81a19.79 19.79 0 01-3.07-8.63A2 2 0 012 1h3a2 2 0 012 1.72 12.84 12.84 0 00.7 2.81 2 2 0 01-.45 2.11L6.09 8.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45 12.84 12.84 0 002.81.7A2 2 0 0122 16.92z"/></svg></div>
           <div><div class="pd-label">Mobile</div><div class="pd-value" id="pd-mobile">—</div></div>
@@ -192,10 +189,7 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--ink);min-
           <label class="form-label">Full Name *</label>
           <input type="text" class="form-input" id="edit-name" placeholder="e.g. Rajesh Kumar"/>
         </div>
-        <div class="form-group">
-          <label class="form-label">Email Address *</label>
-          <input type="email" class="form-input" id="edit-email" placeholder="you@example.com"/>
-        </div>
+
       </div>
       <div class="form-group">
         <label class="form-label">Mobile Number <span id="mobile-update-badge" style="display:none;font-size:0.68rem;font-weight:600;color:#991B1B;background:#FEF2F2;border:1px solid #FECACA;border-radius:999px;padding:0.1rem 0.5rem;margin-left:0.3rem;">Update used — locked</span></label>
@@ -281,9 +275,9 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--ink);min-
         <input type="text" id="hp-website" name="website" autocomplete="off" tabindex="-1" value=""/>
       </div>
       <div class="form-group">
-        <label class="form-label">Mobile No / Email ID</label>
-        <input type="text" class="form-input" id="login-email" placeholder="10-digit mobile or you@example.com" onkeydown="if(event.key==='Enter')doLogin()" autocomplete="username"/>
-        <div class="form-hint">You can log in with either your registered mobile number or email address.</div>
+        <label class="form-label">Mobile Number / User ID</label>
+        <input type="text" class="form-input" id="login-email" placeholder="10-digit mobile number" onkeydown="if(event.key==='Enter')doLogin()" autocomplete="username"/>
+        <div class="form-hint">Log in with your registered mobile number.</div>
       </div>
       <div class="form-group">
         <label class="form-label">Password</label>
@@ -307,8 +301,7 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--ink);min-
           <input type="text" class="form-input" id="reg-name" placeholder="e.g. Rajesh Kumar"/>
         </div>
         <div class="form-group">
-          <label class="form-label">Email Address *</label>
-          <input type="email" class="form-input" id="reg-email" placeholder="you@example.com"/>
+
         </div>
       </div>
       <div class="form-group">
@@ -490,7 +483,7 @@ function populateProfile(user, users){
   document.getElementById('pd-since').textContent = stored.registeredAt
     ? new Date(stored.registeredAt).toLocaleDateString('en-IN',{day:'numeric',month:'short',year:'numeric'})
     : '—';
-  document.getElementById('pd-plan').textContent = user.paid ? (user.plan||'Premium') : 'Free (3 Tests)';
+  document.getElementById('pd-plan').textContent = user.paid ? (user.plan ? user.plan.replace('bunch-','').replace('single-','').replace('ito','ITO').replace('iti','ITI').replace('ms','MS').toUpperCase() + ' Access' : 'Premium Access') : 'Free (3 Tests)';
 }
 
 /* Edit modal */
@@ -661,7 +654,6 @@ async function doRegister(){
       paid         : false,
       plan         : null,
       registered_at: registeredAt,
-      source       : 'web_registration'
     });
     // Also cache locally for profile display
     const users = getUsers();
