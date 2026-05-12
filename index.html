@@ -46,6 +46,12 @@
 html{scroll-behavior:smooth;}
 body{font-family:'Open Sans',sans-serif;background:var(--bg);color:var(--ink);overflow-x:hidden;}
 
+/* Mobile-only top action buttons — hidden on desktop */
+.mob-top-actions{display:none;}
+.mob-btn{display:inline-flex;align-items:center;gap:.35rem;padding:.45rem .85rem;border-radius:5px;font-family:'Open Sans',sans-serif;font-size:.72rem;font-weight:700;text-decoration:none;letter-spacing:.04em;white-space:nowrap;}
+.mob-btn-login{background:#e8e8e8;color:#555;}
+.mob-btn-reg{background:var(--t3);color:#fff;}
+
 /* ══ MAINTENANCE BANNER ══ */
 .maint{background:var(--t1);border-bottom:2px solid var(--t3);position:relative;overflow:hidden;}
 .maint::before{content:'';position:absolute;inset:0;background:repeating-linear-gradient(90deg,transparent,transparent 80px,rgba(255,255,255,0.03) 80px,rgba(255,255,255,0.03) 160px);}
@@ -658,6 +664,17 @@ footer{background:var(--dark);padding:2.8rem 0 0;position:relative;overflow:hidd
   .logo-box .site-name{font-size:32px;}
   .logo-box .logo-eyebrow{font-size:1rem;}
 
+  /* ── TOP BAR MOBILE ── */
+  .action-cards{display:none;}
+  .mob-top-actions{display:flex;gap:.5rem;align-items:center;}
+  .top-inner{justify-content:space-between;flex-wrap:nowrap;}
+  .logo-box .site-name{font-size:32px;}
+  .logo-box .logo-eyebrow{font-size:1rem;}
+  .logo-box .site-tag{font-size:.42rem;}
+
+  /* Maintenance banner compact */
+  .maint-msg{font-size:.72rem;}
+
   /* Hide some action cards on small screens */
   .ac-login,.ac-reg{display:none;}
 
@@ -755,10 +772,18 @@ footer{background:var(--dark);padding:2.8rem 0 0;position:relative;overflow:hidd
         <span class="ac-sub">Free Access</span>
       </a>
     </div>
+    <!-- Mobile-only top buttons -->
+    <div class="mob-top-actions">
+      <a href="login.html" class="mob-btn mob-btn-login">
+        <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+        Login
+      </a>
+      <a href="login.html" class="mob-btn mob-btn-reg">
+        Register
+      </a>
+    </div>
   </div>
 </div>
-
-<!-- ══ MAIN NAV ══ -->
 <nav>
   <div class="nav-inner">
     <a href="index.html" class="nav-link nav-home active">Home</a>
