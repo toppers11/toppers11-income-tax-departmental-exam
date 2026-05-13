@@ -1,283 +1,371 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
+<!doctype html><html lang=en>
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-V2VM68RT43"></script>
 <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-V2VM68RT43');</script>
-<meta charset="UTF-8"/>
-<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-<title>ITI Dashboard — Toppers11</title>
-<meta name="robots" content="noindex, nofollow"/>
-<link href="https://fonts.googleapis.com" rel="preconnect"/>
-<link crossorigin href="https://fonts.gstatic.com" rel="preconnect"/>
-<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@300;400;600;700;800;900&family=Open+Sans:wght@400;600;700&family=Dancing+Script:wght@600;700&family=Righteous&display=swap" rel="stylesheet"/>
+<meta charset=UTF-8>
+<meta content="width=device-width,initial-scale=1.0" name=viewport>
+<title>ITI Inspector Dashboard — Toppers11</title>
+<meta content="noindex, nofollow" name=robots>
+<meta content=#00AB84 name=theme-color>
+<link href=https://fonts.googleapis.com rel=preconnect>
+<link crossorigin href=https://fonts.gstatic.com rel=preconnect>
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@300;400;600;700;800;900&family=Open+Sans:wght@400;600;700&family=Dancing+Script:wght@600;700&family=Playfair+Display:ital,wght@1,700;1,800&family=Righteous&display=swap" onload="this.onload=null;this.rel='stylesheet'" as=style rel=preload>
+<noscript><link href="https://fonts.googleapis.com/css2?family=Nunito:wght@300;400;600;700;800;900&family=Open+Sans:wght@400;600;700&family=Dancing+Script:wght@600;700&family=Playfair+Display:ital,wght@1,700;1,800&family=Righteous&display=swap" rel=stylesheet></noscript>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
 <style>
-:root{
-  --t1:#006d5b;--t2:#25a36f;--t3:#00ab84;--t-dark:#004d3f;--t-mid:#008c6e;
-  --yellow:#f5c518;--yellow2:#e8a900;
-  --dark:#1a1a2e;--dark2:#2d2d44;
-  --ink:#222;--muted:#555;--bg:#f7f7f7;--wh:#fff;--bdr:#ddd;
-}
-*{box-sizing:border-box;margin:0;padding:0;}
-html{scroll-behavior:smooth;}
-body{background:var(--bg);color:var(--ink);font-family:'Open Sans',sans-serif;min-height:100vh;overflow-x:hidden;}
+:root{--t1:#006d5b;--t2:#25a36f;--t3:#00ab84;--t-dark:#004d3f;--t-mid:#008c6e;--yellow:#f5c518;--yellow2:#e8a900;--dark:#1a1a2e;--dark2:#2d2d44;--ink:#222;--muted:#555;--bg:#f7f7f7;--wh:#fff;--bdr:#ddd}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--ink);font-family:Open Sans,sans-serif;overflow-x:hidden}
 
 /* ── PROGRESS BAR ── */
-#progress{background:linear-gradient(90deg,var(--t1),var(--t3));position:fixed;top:0;left:0;width:0%;height:3px;z-index:9999;transition:width .15s;}
+#progress{background:linear-gradient(90deg,var(--t1),var(--t3));position:fixed;top:0;left:0;width:0%;height:3px;z-index:9999;transition:width .15s}
 
-/* ── TOP BAR / NAV ── */
-.top-bar{border-bottom:2px solid var(--t3);background:#fff;padding:.6rem 0;position:sticky;top:0;z-index:200;}
-.top-inner{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:center;gap:1rem;max-width:1100px;margin:0 auto;padding:0 1.2rem;}
+/* ── TOP BAR ── */
+.top-bar{border-bottom:2px solid var(--t3);background:#fff;padding:.6rem 0}
+.top-inner{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:center;gap:1rem;max-width:1200px;margin:0 auto;padding:0 1.2rem}
 
-/* Logo */
-.logo-wrap{display:inline-flex;flex-direction:column;gap:0;text-decoration:none;line-height:1;flex-shrink:0;}
-.logo-eyebrow{font-family:'Dancing Script',cursive;font-size:1.1rem;font-weight:600;color:var(--t3);letter-spacing:.02em;margin-bottom:-2px;display:block;}
-.logo-main{font-family:'Nunito',sans-serif;font-size:2.2rem;font-weight:100;color:#1a1a2e;letter-spacing:.02em;text-transform:lowercase;display:block;}
-.logo-main span{color:var(--t3);font-family:'Righteous',cursive;font-size:2.2rem;}
-.logo-sub{font-size:.52rem;font-weight:700;letter-spacing:.18em;text-transform:uppercase;color:#555;display:flex;align-items:center;gap:.4rem;}
-.logo-sub:before,.logo-sub:after{content:'';background:var(--t3);flex:1;min-width:14px;height:1.5px;display:inline-block;}
+/* Logo — exact from index-2 */
+.logo-box{flex-direction:column;flex-shrink:0;gap:0;min-width:160px;padding:.4rem 0;line-height:1;text-decoration:none;display:inline-flex;position:relative}
+.logo-box .logo-eyebrow{letter-spacing:.04em;color:var(--t3);text-transform:none;font-family:Great Vibes,Dancing Script,cursive;font-size:1.3rem;font-weight:400;line-height:1;margin-bottom:10px;display:block}
+.logo-box .site-name{color:#1a1a2e;letter-spacing:.02em;text-transform:lowercase;margin-bottom:.25rem;padding-bottom:.18rem;font-family:Nunito,sans-serif;font-size:48px;font-weight:100;line-height:1;display:block}
+.logo-box .site-tag{letter-spacing:.18em;text-transform:uppercase;color:#555;align-items:center;gap:.4rem;font-size:.52rem;font-weight:700;display:flex}
+.logo-box .site-tag:before,.logo-box .site-tag:after{content:'';background:var(--t3);flex:1;min-width:14px;height:1.5px;display:inline-block}
+.logo-box:hover .site-name{color:var(--t3)}
+.logo-box:hover .logo-eyebrow{opacity:.7}
 
 /* Back link */
-.btn-back{display:inline-flex;align-items:center;gap:.3rem;font-size:.78rem;font-weight:600;color:var(--muted);text-decoration:none;background:none;border:none;cursor:pointer;padding:.3rem .5rem;border-radius:5px;transition:color .15s;}
-.btn-back:hover{color:var(--t3);}
+.btn-back{display:inline-flex;align-items:center;gap:.3rem;font-size:.75rem;font-weight:600;color:var(--muted);text-decoration:none;background:none;border:none;cursor:pointer;padding:.35rem .65rem;border-radius:5px;transition:color .15s;letter-spacing:.03em;text-transform:uppercase}
+.btn-back:hover{color:var(--t3)}
 
 /* User chip */
-.user-chip-wrap{position:relative;display:flex;align-items:center;}
-.chip{display:flex;align-items:center;gap:.45rem;cursor:pointer;background:#f0fdf8;border:1.5px solid #a7f3d0;border-radius:999px;padding:.28rem .75rem .28rem .3rem;transition:box-shadow .15s;}
-.chip:hover{box-shadow:0 2px 10px rgba(0,171,132,.2);}
-.av{width:26px;height:26px;border-radius:50%;background:linear-gradient(135deg,var(--t-dark),var(--t3));display:grid;place-items:center;font-size:.68rem;font-weight:700;color:#fff;}
-.uname{font-size:.78rem;font-weight:600;color:var(--t-dark);}
-.chevron-d{transition:transform .2s;margin-left:.2rem;}
-.user-chip-wrap.open .chevron-d{transform:rotate(180deg);}
+.user-chip-wrap{position:relative;display:flex;align-items:center}
+.chip{display:flex;align-items:center;gap:.45rem;cursor:pointer;background:#f0fdf8;border:1.5px solid #a7f3d0;border-radius:999px;padding:.28rem .75rem .28rem .3rem;transition:box-shadow .15s}
+.chip:hover{box-shadow:0 2px 10px rgba(0,171,132,.2)}
+.av{width:28px;height:28px;border-radius:50%;background:linear-gradient(135deg,var(--t-dark),var(--t3));display:grid;place-items:center;font-size:.68rem;font-weight:700;color:#fff}
+.uname{font-size:.78rem;font-weight:600;color:var(--t-dark)}
+.chevron-d{transition:transform .2s;margin-left:.2rem}
+.user-chip-wrap.open .chevron-d{transform:rotate(180deg)}
 
 /* Profile dropdown */
-.profile-dropdown{position:absolute;top:calc(100% + 10px);right:0;width:300px;background:#fff;border:1px solid var(--bdr);border-radius:16px;box-shadow:0 16px 48px rgba(0,0,0,.12);z-index:500;overflow:hidden;display:none;}
-.profile-dropdown.open{display:block;animation:ddIn .2s ease;}
-@keyframes ddIn{from{opacity:0;transform:translateY(-8px);}to{opacity:1;transform:translateY(0);}}
-.pd-hdr{background:linear-gradient(135deg,var(--t-dark),var(--t3));padding:1.2rem 1.4rem;display:flex;align-items:center;gap:.9rem;}
-.pd-av-lg{width:46px;height:46px;border-radius:50%;background:rgba(255,255,255,.2);display:grid;place-items:center;font-size:1.1rem;font-weight:700;color:#fff;flex-shrink:0;border:2px solid rgba(255,255,255,.35);}
-.pd-hdr-info h3{font-size:.95rem;font-weight:700;color:#fff;margin-bottom:.1rem;}
-.pd-hdr-info p{font-size:.75rem;color:rgba(255,255,255,.72);}
-.pd-body{padding:1rem 1.4rem 1.2rem;}
-.pd-row{display:flex;align-items:flex-start;gap:.7rem;padding:.5rem 0;border-bottom:1px solid var(--bdr);}
-.pd-row:last-child{border-bottom:none;}
-.pd-ico{width:32px;height:32px;border-radius:8px;background:#f0fdf8;display:grid;place-items:center;flex-shrink:0;margin-top:2px;}
-.pd-lbl{font-size:.7rem;font-weight:600;color:var(--muted);letter-spacing:.04em;text-transform:uppercase;margin-bottom:.15rem;}
-.pd-val{font-size:.84rem;font-weight:500;color:var(--ink);line-height:1.4;}
-.pd-ftr{padding:.8rem 1.4rem;border-top:1px solid var(--bdr);display:flex;gap:.6rem;}
-.pd-btn-ed{flex:1;padding:.55rem;font-size:.78rem;font-weight:600;background:#f0fdf8;color:var(--t-dark);border:none;border-radius:8px;cursor:pointer;transition:background .15s;}
-.pd-btn-ed:hover{background:#a7f3d0;}
-.pd-btn-lo{flex:1;padding:.55rem;font-size:.78rem;font-weight:600;background:#fef2f2;color:#991b1b;border:none;border-radius:8px;cursor:pointer;transition:background .15s;}
-.pd-btn-lo:hover{background:#fee2e2;}
+.profile-dropdown{position:absolute;top:calc(100% + 10px);right:0;width:300px;background:#fff;border:1px solid var(--bdr);border-radius:16px;box-shadow:0 16px 48px rgba(0,0,0,.12);z-index:500;overflow:hidden;display:none}
+.profile-dropdown.open{display:block;animation:ddIn .2s ease}
+@keyframes ddIn{from{opacity:0;transform:translateY(-8px)}to{opacity:1;transform:translateY(0)}}
+.pd-hdr{background:linear-gradient(135deg,var(--t-dark),var(--t3));padding:1.2rem 1.4rem;display:flex;align-items:center;gap:.9rem}
+.pd-av-lg{width:46px;height:46px;border-radius:50%;background:rgba(255,255,255,.2);display:grid;place-items:center;font-size:1.1rem;font-weight:700;color:#fff;flex-shrink:0;border:2px solid rgba(255,255,255,.35)}
+.pd-hdr-info h3{font-size:.95rem;font-weight:700;color:#fff;margin-bottom:.1rem}
+.pd-hdr-info p{font-size:.75rem;color:rgba(255,255,255,.72)}
+.pd-body{padding:1rem 1.4rem 1.2rem}
+.pd-row{display:flex;align-items:flex-start;gap:.7rem;padding:.5rem 0;border-bottom:1px solid var(--bdr)}
+.pd-row:last-child{border-bottom:none}
+.pd-ico{width:32px;height:32px;border-radius:8px;background:#f0fdf8;display:grid;place-items:center;flex-shrink:0;margin-top:2px}
+.pd-lbl{font-size:.7rem;font-weight:600;color:var(--muted);letter-spacing:.04em;text-transform:uppercase;margin-bottom:.15rem}
+.pd-val{font-size:.84rem;font-weight:500;color:var(--ink);line-height:1.4}
+.pd-ftr{padding:.8rem 1.4rem;border-top:1px solid var(--bdr);display:flex;gap:.6rem}
+.pd-btn-ed{flex:1;padding:.55rem;font-size:.78rem;font-weight:600;background:#f0fdf8;color:var(--t-dark);border:none;border-radius:8px;cursor:pointer;transition:background .15s}
+.pd-btn-ed:hover{background:#a7f3d0}
+.pd-btn-lo{flex:1;padding:.55rem;font-size:.78rem;font-weight:600;background:#fef2f2;color:#991b1b;border:none;border-radius:8px;cursor:pointer;transition:background .15s}
+.pd-btn-lo:hover{background:#fee2e2}
 
-/* ── HERO ── */
-.hero{background:var(--t3);padding:2rem 1.2rem 1.8rem;position:relative;overflow:hidden;}
-.hero:before{content:'';position:absolute;inset:0;background:repeating-linear-gradient(90deg,#0000,#0000 80px,#ffffff08 80px 160px);}
-.hero-inner{position:relative;z-index:1;max-width:1100px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:.8rem;}
-.hero-title{font-family:'Nunito',sans-serif;font-size:1.8rem;font-weight:900;color:#fff;line-height:1.1;}
-.hero-sub-text{font-size:.8rem;color:rgba(255,255,255,.8);margin-top:.3rem;}
-.hero-badge{background:rgba(255,255,255,.15);border:1px solid rgba(255,255,255,.3);border-radius:8px;padding:.4rem .85rem;font-size:.72rem;font-weight:600;color:#fff;display:flex;align-items:center;gap:.4rem;}
+/* ── HERO — exact index-2 style ── */
+.hero{background:var(--t3);min-height:160px;padding:2.5rem 0 2rem;position:relative;overflow:hidden}
+.tri{pointer-events:none;z-index:0;position:absolute}
+.hero-inner{z-index:2;position:relative;max-width:1200px;margin:0 auto;padding:0 1.2rem;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:1rem}
+.hero-title{font-family:Nunito,sans-serif;font-size:clamp(1.5rem,3vw,2rem);font-weight:900;color:#fff;line-height:1.1}
+.hero-title em{color:#fff;font-family:Playfair Display,serif;font-size:1.05em;font-style:italic;font-weight:800}
+.hero-sub-text{font-size:.85rem;color:rgba(255,255,255,.82);margin-top:.3rem;font-style:italic}
+.hero-badge-wrap{display:flex;gap:.6rem;flex-wrap:wrap;align-items:center}
+.hero-badge{background:rgba(255,255,255,.15);border:1px solid rgba(255,255,255,.3);border-radius:8px;padding:.45rem .9rem;font-size:.72rem;font-weight:600;color:#fff;display:flex;align-items:center;gap:.4rem}
+.hero-badge-yellow{background:rgba(245,197,24,.15);border-color:rgba(245,197,24,.4);color:var(--yellow)}
 
-/* ── TABS BAR ── */
-.tabs-bar{background:#fff;border-bottom:2px solid var(--bdr);position:sticky;top:68px;z-index:100;}
-.tabs-inner{max-width:1100px;margin:0 auto;padding:0 1.2rem;display:flex;overflow-x:auto;scrollbar-width:none;}
-.tabs-inner::-webkit-scrollbar{display:none;}
-.tab-btn{flex-shrink:0;padding:0 1.1rem;height:52px;font-family:'Open Sans',sans-serif;font-size:.8rem;font-weight:600;color:var(--muted);background:none;border:none;border-bottom:3px solid transparent;cursor:pointer;white-space:nowrap;transition:all .15s;display:flex;flex-direction:column;align-items:flex-start;justify-content:center;gap:.06rem;line-height:1;}
-.tab-num{font-size:.58rem;font-weight:700;text-transform:uppercase;letter-spacing:.07em;color:var(--muted);}
-.tab-name{font-size:.8rem;font-weight:700;}
-.tab-btn:hover .tab-name{color:var(--ink);}
-.tab-btn.active{border-bottom-color:var(--t3);}
-.tab-btn.active .tab-name{color:var(--t-dark);}
-.tab-btn.active .tab-num{color:var(--t3);}
-.free-star{color:var(--t3);font-size:.68rem;}
+/* ── TABS BAR — index-2 nav style ── */
+.tabs-bar{z-index:200;background:#fff;border-bottom:2px solid var(--bdr);position:sticky;top:0}
+.tabs-inner{max-width:1200px;margin:0 auto;padding:0 1.2rem;display:flex;overflow-x:auto;scrollbar-width:none}
+.tabs-inner::-webkit-scrollbar{display:none}
+.tab-btn{flex-shrink:0;padding:0 1.1rem;height:52px;font-family:Open Sans,sans-serif;letter-spacing:.04em;text-transform:uppercase;color:#444;white-space:nowrap;border-bottom:3px solid transparent;background:none;border-top:none;border-left:none;border-right:none;cursor:pointer;display:flex;flex-direction:column;align-items:flex-start;justify-content:center;gap:.06rem;transition:all .15s}
+.tab-num{font-size:.55rem;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:var(--muted)}
+.tab-name{font-size:.72rem;font-weight:700}
+.tab-btn:hover .tab-name{color:var(--t3)}
+.tab-btn.active{border-bottom-color:var(--t3)}
+.tab-btn.active .tab-name{color:var(--t3)}
+.tab-btn.active .tab-num{color:var(--t3)}
+.free-star{color:var(--t3);font-size:.62rem}
 
 /* ── MAIN CONTENT ── */
-.main{max-width:1100px;margin:0 auto;padding:1.4rem 1.2rem 5rem;}
+.main{max-width:1200px;margin:0 auto;padding:1.5rem 1.2rem 5rem}
 
-/* Unlock bar */
-.unlock-bar{background:#fff;border:1.5px solid #a7f3d0;border-radius:12px;padding:1rem 1.2rem;display:flex;align-items:center;gap:1rem;flex-wrap:wrap;margin-bottom:1.2rem;}
-.ub-text{flex:1;font-size:.8rem;color:var(--t-dark);line-height:1.5;}
-.ub-text strong{display:block;font-size:.86rem;margin-bottom:.1rem;}
-.btn-unlock{background:var(--t3);color:#fff;border:none;border-radius:8px;padding:.6rem 1.15rem;font-family:'Open Sans',sans-serif;font-size:.82rem;font-weight:700;cursor:pointer;white-space:nowrap;transition:background .15s;}
-.btn-unlock:hover{background:var(--t1);}
+/* Unlock bar — index-2 bundle style adapted */
+.unlock-bar{background:var(--t1);border-radius:10px;margin-bottom:1.2rem;padding:1.2rem 1.6rem;position:relative;overflow:hidden;display:flex;align-items:center;flex-wrap:wrap;gap:1rem}
+.unlock-bar:before{content:'';pointer-events:none;background-image:radial-gradient(circle,#ffffff0a 1px,#0000 1px);background-size:22px 22px;position:absolute;inset:0}
+.ub-text{flex:1;z-index:1;position:relative}
+.ub-text strong{display:block;font-size:.9rem;font-weight:800;color:#fff;margin-bottom:.15rem}
+.ub-text span{font-size:.75rem;color:rgba(255,255,255,.75)}
+.btn-unlock{letter-spacing:.04em;text-transform:uppercase;cursor:pointer;background:#fff;color:var(--t1);border:none;border-radius:6px;align-items:center;gap:.4rem;padding:.58rem 1.15rem;font-family:Open Sans,sans-serif;font-size:.74rem;font-weight:700;transition:all .2s;display:inline-flex;z-index:1;position:relative;flex-shrink:0}
+.btn-unlock:hover{transform:translateY(-1px);box-shadow:0 6px 18px rgba(0,0,0,.2)}
 
-/* Retest notice */
-.retest-notice{display:flex;align-items:flex-start;gap:.9rem;background:linear-gradient(135deg,#f0fdf8,#dcfce7);border:1.5px solid #6ee7b7;border-radius:12px;padding:1rem 1.2rem;margin-bottom:1.2rem;}
-.rn-icon{width:38px;height:38px;border-radius:10px;flex-shrink:0;background:linear-gradient(135deg,var(--t1),var(--t3));display:grid;place-items:center;}
-.rn-title{font-size:.82rem;font-weight:700;color:var(--t-dark);margin-bottom:.18rem;letter-spacing:.01em;}
-.rn-msg{font-size:.76rem;color:#047857;line-height:1.6;}
-.rn-msg strong{color:var(--t-dark);}
+/* Notice bar */
+.retest-notice{display:flex;align-items:flex-start;gap:.9rem;background:#fff;border:1.5px solid #a7f3d0;border-radius:10px;padding:1rem 1.2rem;margin-bottom:1.2rem}
+.rn-icon{width:36px;height:36px;border-radius:8px;flex-shrink:0;background:linear-gradient(135deg,var(--t1),var(--t3));display:grid;place-items:center}
+.rn-title{font-size:.82rem;font-weight:700;color:var(--t-dark);margin-bottom:.15rem}
+.rn-msg{font-size:.74rem;color:#047857;line-height:1.6}
+.rn-msg strong{color:var(--t-dark)}
 
 /* ── PANELS ── */
-.panel{display:none;}
-.panel.active{display:block;}
-.ph{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:.5rem;margin-bottom:1rem;padding-bottom:.75rem;border-bottom:1px solid var(--bdr);}
-.ph-left h2{font-size:.95rem;font-weight:700;color:var(--ink);}
-.ph-left p{font-size:.7rem;color:var(--muted);margin-top:.1rem;}
-.free-pill{display:inline-flex;align-items:center;gap:.3rem;background:#f0fdf8;border:1px solid #a7f3d0;border-radius:999px;padding:.2rem .65rem;font-size:.65rem;font-weight:700;color:var(--t1);}
+.panel{display:none}
+.panel.active{display:block}
 
-/* ── TEST CARDS GRID ── */
-.tests-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:.7rem;}
-.free-wrap{position:relative;}
-.free-ribbon{background:linear-gradient(135deg,var(--t1),var(--t3));color:#fff;font-size:.58rem;font-weight:800;letter-spacing:.08em;text-transform:uppercase;text-align:center;padding:.28rem;border-radius:10px 10px 0 0;display:flex;align-items:center;justify-content:center;gap:.25rem;}
-.free-wrap .card{border-radius:0 0 10px 10px;border-color:var(--t3);box-shadow:0 3px 14px rgba(0,171,132,.15);}
-.card{background:#fff;border:1.5px solid var(--bdr);border-radius:10px;overflow:hidden;cursor:pointer;display:block;text-decoration:none;transition:all .17s;}
-.card:hover{transform:translateY(-3px);border-color:var(--t3);box-shadow:0 8px 20px rgba(0,171,132,.13);}
-.card.locked{opacity:.62;cursor:not-allowed;}
-.card.locked:hover{transform:none;box-shadow:none;border-color:var(--bdr);}
-.card.completed{opacity:.75;cursor:not-allowed;border-color:#6ee7b7;}
-.card.completed:hover{transform:none;box-shadow:none;border-color:#6ee7b7;}
-.ct{padding:.75rem .9rem .5rem;display:flex;align-items:flex-start;justify-content:space-between;gap:.35rem;}
-.lbl{font-size:.56rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;padding:.13rem .4rem;border-radius:999px;white-space:nowrap;}
-.lbl-reg{background:#f0fdf8;color:var(--t1);}
-.lbl-pyq{background:#f5f3ff;color:#6d28d9;}
-.st{font-size:.58rem;font-weight:700;}
-.st-free{color:var(--t3);}
-.st-lock{color:var(--muted);}
-.cb{padding:0 .9rem .55rem;}
-.ctitle{font-size:.85rem;font-weight:700;color:var(--ink);line-height:1.3;margin-bottom:.1rem;}
-.cmeta{display:flex;gap:.5rem;}
-.mi{font-size:.63rem;color:var(--muted);display:flex;align-items:center;gap:.18rem;}
-.cf{padding:.5rem .9rem;border-top:1px solid #f3f4f6;display:flex;align-items:center;justify-content:space-between;}
-.ca{font-size:.66rem;font-weight:700;text-transform:uppercase;letter-spacing:.04em;color:var(--t3);display:flex;align-items:center;gap:.22rem;}
-.ca-done{color:var(--t1);}
-.ca-lock{color:var(--muted);}
-.cscore{font-size:.66rem;color:var(--muted);}
-.retest-badge{font-size:.58rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase;background:#f0fdf8;color:var(--t1);border:1px solid #6ee7b7;border-radius:999px;padding:.12rem .45rem;margin-left:.3rem;}
+/* Panel header — section-head style */
+.ph{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:.5rem;margin-bottom:1.25rem;padding-bottom:.85rem;border-bottom:1px solid var(--bdr)}
+.ph-left h2{font-size:.95rem;font-weight:800;color:var(--ink)}
+.ph-left p{font-size:.7rem;color:var(--muted);margin-top:.1rem}
+.free-pill{display:inline-flex;align-items:center;gap:.3rem;background:#f0fdf8;border:1px solid #a7f3d0;border-radius:999px;padding:.2rem .65rem;font-size:.62rem;font-weight:700;color:var(--t1)}
 
-/* ── MODAL ── */
-.overlay{position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:500;display:none;place-items:center;padding:1rem;}
-.overlay.show{display:grid;}
-.modal{background:#fff;border-radius:16px;width:100%;max-width:400px;overflow:hidden;}
-.mh{background:linear-gradient(135deg,var(--t-dark),var(--t3));padding:1.2rem 1.4rem;display:flex;align-items:center;justify-content:space-between;}
-.mh h3{font-family:'Nunito',sans-serif;font-size:1.2rem;font-weight:800;color:#fff;}
-.btn-x{background:rgba(255,255,255,.2);border:none;color:#fff;width:26px;height:26px;border-radius:50%;cursor:pointer;font-size:1rem;display:grid;place-items:center;}
-.mb{padding:1.3rem;}
-.plan-cards{display:flex;flex-direction:column;gap:.5rem;margin-bottom:1rem;}
-.pc{border:2px solid var(--bdr);border-radius:10px;padding:.75rem .9rem;cursor:pointer;display:flex;align-items:center;gap:.65rem;transition:all .12s;position:relative;}
-.pc:hover{border-color:#a7f3d0;}
-.pc.sel{border-color:var(--t3);background:#f0fdf8;}
-.pr{width:16px;height:16px;border:2px solid var(--bdr);border-radius:50%;flex-shrink:0;display:grid;place-items:center;}
-.pc.sel .pr{border-color:var(--t3);}
-.pd{width:7px;height:7px;border-radius:50%;background:var(--t3);display:none;}
-.pc.sel .pd{display:block;}
-.pi h4{font-size:.82rem;font-weight:700;margin-bottom:.05rem;}
-.pi p{font-size:.68rem;color:var(--muted);}
-.pp{margin-left:auto;font-size:1.2rem;font-weight:800;white-space:nowrap;color:var(--ink);}
-.best{position:absolute;top:-7px;right:8px;background:var(--t3);color:#fff;font-size:.52rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;padding:.12rem .45rem;border-radius:999px;}
-.btn-cont{width:100%;padding:.78rem;border:none;border-radius:9px;font-size:.88rem;font-weight:700;cursor:pointer;background:linear-gradient(135deg,var(--t1),var(--t3));color:#fff;margin-top:.5rem;font-family:'Open Sans',sans-serif;}
-.btn-cont:hover{background:var(--t1);}
-.qr-box{background:#fff;border:2px solid #a7f3d0;border-radius:12px;padding:1rem;text-align:center;margin-bottom:.9rem;}
-.qr-lbl{font-size:.72rem;font-weight:700;color:var(--t-dark);margin-bottom:.6rem;text-transform:uppercase;letter-spacing:.05em;}
-.qr-img{width:150px;height:150px;margin:0 auto .6rem;border:2px solid #a7f3d0;border-radius:8px;overflow:hidden;background:#fff;display:flex;align-items:center;justify-content:center;}
-.upi-row{display:flex;align-items:center;justify-content:center;gap:.4rem;background:#f0fdf8;border-radius:7px;padding:.38rem .7rem;margin-bottom:.35rem;cursor:pointer;}
-.upi-txt{font-family:monospace;font-size:.82rem;font-weight:700;color:var(--t-dark);}
-.cp-btn{font-size:.58rem;font-weight:700;background:var(--t3);color:#fff;border:none;border-radius:4px;padding:.14rem .38rem;cursor:pointer;}
-.upi-apps{display:flex;gap:.35rem;justify-content:center;flex-wrap:wrap;margin-top:.4rem;}
-.app-a{display:inline-flex;align-items:center;padding:.28rem .6rem;border-radius:999px;border:1.5px solid var(--bdr);font-size:.65rem;font-weight:600;color:var(--ink);background:#fff;text-decoration:none;}
-.app-a:hover{border-color:#a7f3d0;color:var(--t3);}
-.utr-box{background:#f0fdf8;border:2px solid #a7f3d0;border-radius:10px;padding:1rem;}
-.utr-ttl{font-size:.8rem;font-weight:700;color:var(--t-dark);margin-bottom:.12rem;}
-.utr-sub{font-size:.7rem;color:var(--muted);margin-bottom:.65rem;line-height:1.5;}
-.utr-in{width:100%;padding:.65rem .85rem;border:1.5px solid var(--bdr);border-radius:8px;font-family:monospace;font-size:.88rem;color:var(--ink);background:#fff;outline:none;margin-bottom:.65rem;}
-.utr-in:focus{border-color:var(--t3);box-shadow:0 0 0 3px rgba(0,171,132,.1);}
-.btn-act{width:100%;padding:.75rem;border:none;border-radius:9px;font-size:.85rem;font-weight:700;cursor:pointer;background:linear-gradient(135deg,var(--t1),var(--t3));color:#fff;display:flex;align-items:center;justify-content:center;gap:.4rem;font-family:'Open Sans',sans-serif;}
-.btn-act:disabled{opacity:.55;cursor:not-allowed;}
-.utr-note{font-size:.66rem;color:var(--muted);text-align:center;margin-top:.5rem;line-height:1.5;}
-.utr-note strong{color:var(--t3);}
-.btn-bk{background:none;border:none;color:var(--muted);font-size:.74rem;cursor:pointer;display:block;text-align:center;padding:.4rem;margin-top:.4rem;width:100%;}
-.al-err{padding:.55rem .8rem;border-radius:8px;font-size:.75rem;font-weight:500;margin-bottom:.75rem;display:none;background:#fef2f2;border:1px solid #fecaca;color:#991b1b;}
-.al-err.show{display:block;}
-.spin{display:inline-block;width:13px;height:13px;border:2px solid rgba(255,255,255,.35);border-top-color:#fff;border-radius:50%;animation:sp .6s linear infinite;}
-@keyframes sp{to{transform:rotate(360deg);}}
-.toast{position:fixed;bottom:1.5rem;right:1.5rem;background:var(--t-dark);color:#fff;padding:.72rem 1rem;border-radius:10px;font-size:.8rem;font-weight:600;box-shadow:0 6px 22px rgba(0,0,0,.18);z-index:999;display:none;align-items:center;gap:.4rem;}
-.toast.show{display:flex;}
+/* Bundle block — exact from index-2 */
+.bundle{background:var(--t1);border-radius:10px;margin-bottom:1.2rem;padding:1.4rem 1.6rem;position:relative;overflow:hidden}
+.bundle:before{content:'';pointer-events:none;background-image:radial-gradient(circle,#ffffff0a 1px,#0000 1px);background-size:22px 22px;position:absolute;inset:0}
+.bundle-in{z-index:1;display:flex;flex-wrap:wrap;justify-content:space-between;align-items:center;gap:1rem;position:relative}
+.bundle-badge{letter-spacing:.1em;text-transform:uppercase;color:rgba(255,255,255,.9);background:rgba(255,255,255,.18);border:1px solid rgba(255,255,255,.35);border-radius:999px;align-items:center;gap:.3rem;margin-bottom:.45rem;padding:.18rem .65rem;font-size:.59rem;font-weight:700;display:inline-flex}
+.bundle-title{color:#fff;margin-bottom:.2rem;font-size:1.2rem;font-weight:800}
+.bundle-sub{color:rgba(255,255,255,.7);margin-bottom:.6rem;font-size:.72rem}
+.bundle-papers{display:flex;flex-direction:column;gap:.28rem}
+.bp{color:rgba(255,255,255,.85);align-items:center;gap:.45rem;font-size:.72rem;display:flex}
+.bundle-right{flex-direction:column;flex-shrink:0;align-items:flex-end;gap:.65rem;display:flex}
+.bundle-strike{color:rgba(255,255,255,.45);font-size:.7rem;text-decoration:line-through}
+.bundle-save{color:var(--yellow);letter-spacing:.06em;background:rgba(255,255,255,.18);border-radius:999px;padding:.15rem .6rem;font-size:.62rem;font-weight:700}
+.bundle-price{color:#fff;font-family:Open Sans,sans-serif;font-size:2rem;font-weight:900;line-height:1}
+.bundle-psub{color:rgba(255,255,255,.55);margin-top:.08rem;font-size:.62rem}
+.btn-bunch{letter-spacing:.04em;cursor:pointer;background:#fff;color:var(--t1);border:none;border-radius:6px;align-items:center;gap:.4rem;padding:.58rem 1.15rem;font-family:Open Sans,sans-serif;font-size:.74rem;font-weight:700;transition:all .2s;display:inline-flex}
+.btn-bunch:hover{transform:translateY(-1px);box-shadow:0 6px 18px rgba(0,0,0,.25)}
+
+/* Papers label */
+.papers-lbl{letter-spacing:.1em;text-transform:uppercase;color:#aaa;margin-bottom:.75rem;font-size:.63rem;font-weight:700}
+
+/* Test cards grid — pc style from index-2 */
+.tests-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:.85rem}
+@media(max-width:900px){.tests-grid{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:500px){.tests-grid{grid-template-columns:1fr}}
+
+.free-wrap{position:relative}
+.free-ribbon{background:linear-gradient(135deg,var(--t1),var(--t3));color:#fff;font-size:.54rem;font-weight:800;letter-spacing:.1em;text-transform:uppercase;text-align:center;padding:.3rem;border-radius:8px 8px 0 0;display:flex;align-items:center;justify-content:center;gap:.25rem}
+.free-wrap .card{border-radius:0 0 8px 8px;border-color:var(--t3);box-shadow:0 3px 14px rgba(0,171,132,.15)}
+
+/* card = pc from index-2 */
+.card{background:#fff;border:1.5px solid var(--bdr);border-radius:8px;overflow:hidden;cursor:pointer;display:block;text-decoration:none;transition:all .2s}
+.card:hover{border-color:var(--t3);transform:translateY(-3px);box-shadow:0 8px 24px rgba(0,109,91,.12)}
+.card.locked{opacity:.62;cursor:not-allowed}
+.card.locked:hover{transform:none;box-shadow:none;border-color:var(--bdr)}
+.card.completed{cursor:not-allowed;border-color:#6ee7b7}
+.card.completed:hover{transform:none;box-shadow:none;border-color:#6ee7b7}
+
+.ct{padding:.75rem .9rem .5rem;display:flex;align-items:flex-start;justify-content:space-between;gap:.35rem}
+.lbl{font-size:.56rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;padding:.13rem .4rem;border-radius:999px;white-space:nowrap}
+.lbl-reg{background:#f0fdf8;color:var(--t1)}
+.lbl-pyq{background:#f5f3ff;color:#6d28d9}
+.st{font-size:.56rem;font-weight:800;letter-spacing:.06em;text-transform:uppercase}
+.st-open{color:var(--t3)}
+.st-lock{color:var(--muted)}
+.st-done{color:var(--t1)}
+
+.cb{padding:0 .9rem .55rem}
+.ctitle{font-size:.86rem;font-weight:800;color:var(--ink);line-height:1.3;margin-bottom:.12rem}
+.ctopics{font-size:.67rem;color:var(--muted);line-height:1.45;margin-bottom:.4rem}
+.cmeta{display:flex;gap:.55rem;flex-wrap:wrap}
+.mi{font-size:.61rem;color:var(--muted);display:flex;align-items:center;gap:.18rem}
+.pc-type{letter-spacing:.06em;text-transform:uppercase;border-radius:999px;padding:.13rem .42rem;font-size:.54rem;font-weight:700}
+.type-obj{color:#055aaa;background:#e5f3ff}
+.type-sub{color:#53a;background:#f0eeff}
+
+.cf{padding:.5rem .9rem;border-top:1px solid #f0f0f0;display:flex;align-items:center;justify-content:space-between}
+.ca{font-size:.65rem;font-weight:700;text-transform:uppercase;letter-spacing:.04em;color:var(--t3);display:flex;align-items:center;gap:.22rem}
+.ca-done{color:var(--t1)}
+.ca-lock{color:var(--muted)}
+.cscore{font-size:.64rem;color:var(--muted)}
+.retest-badge{font-size:.55rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase;background:#f0fdf8;color:var(--t1);border:1px solid #6ee7b7;border-radius:999px;padding:.1rem .4rem;margin-left:.28rem}
+
+/* pb buttons from index-2 */
+.pc-btns{display:flex;flex-direction:column;align-items:flex-end;gap:.28rem}
+.pb{letter-spacing:.04em;text-transform:uppercase;cursor:pointer;text-align:center;border:none;border-radius:4px;padding:.32rem .68rem;font-family:Open Sans,sans-serif;font-size:.58rem;font-weight:700;text-decoration:none;transition:all .16s;display:block}
+.pb-free{color:var(--t1);background:#00ab841a;border:1px solid rgba(0,171,132,.3)}
+.pb-free:hover{background:var(--t3);color:#fff}
+.pb-buy{background:var(--dark);color:#fff}
+.pb-buy:hover{background:#000}
+.pb-done{background:#f0fdf8;color:var(--t1);border:1px solid #6ee7b7;cursor:not-allowed}
+.pb-lock{background:#eee;color:var(--muted);cursor:not-allowed}
+
+/* ── PURCHASE MODAL ── */
+.overlay{position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:600;display:none;place-items:center;padding:1rem}
+.overlay.show{display:grid}
+.modal{background:#fff;border-radius:16px;width:100%;max-width:420px;overflow:hidden}
+.mh{background:linear-gradient(135deg,var(--t-dark),var(--t3));padding:1.2rem 1.4rem;display:flex;align-items:center;justify-content:space-between}
+.mh h3{font-family:Nunito,sans-serif;font-size:1.2rem;font-weight:800;color:#fff}
+.btn-x{background:rgba(255,255,255,.2);border:none;color:#fff;width:28px;height:28px;border-radius:50%;cursor:pointer;font-size:1rem;display:grid;place-items:center}
+.mb{padding:1.3rem}
+.plan-cards{display:flex;flex-direction:column;gap:.5rem;margin-bottom:1rem}
+.pc-m{border:2px solid var(--bdr);border-radius:10px;padding:.75rem .9rem;cursor:pointer;display:flex;align-items:center;gap:.65rem;transition:all .12s;position:relative}
+.pc-m:hover{border-color:#a7f3d0}
+.pc-m.sel{border-color:var(--t3);background:#f0fdf8}
+.pr{width:16px;height:16px;border:2px solid var(--bdr);border-radius:50%;flex-shrink:0;display:grid;place-items:center}
+.pc-m.sel .pr{border-color:var(--t3)}
+.pd-dot{width:7px;height:7px;border-radius:50%;background:var(--t3);display:none}
+.pc-m.sel .pd-dot{display:block}
+.pi h4{font-size:.82rem;font-weight:700;margin-bottom:.05rem}
+.pi p{font-size:.68rem;color:var(--muted)}
+.pp{margin-left:auto;font-size:1.2rem;font-weight:800;white-space:nowrap;color:var(--ink)}
+.best-m{position:absolute;top:-7px;right:8px;background:var(--t3);color:#fff;font-size:.52rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;padding:.12rem .45rem;border-radius:999px}
+.btn-cont{width:100%;padding:.78rem;border:none;border-radius:9px;font-size:.88rem;font-weight:700;cursor:pointer;background:linear-gradient(135deg,var(--t1),var(--t3));color:#fff;margin-top:.5rem;font-family:Open Sans,sans-serif}
+.btn-cont:hover{background:var(--t1)}
+.qr-box{background:#fff;border:2px solid #a7f3d0;border-radius:12px;padding:1rem;text-align:center;margin-bottom:.9rem}
+.qr-lbl{font-size:.72rem;font-weight:700;color:var(--t-dark);margin-bottom:.6rem;text-transform:uppercase;letter-spacing:.05em}
+.qr-img{width:150px;height:150px;margin:0 auto .6rem;border:2px solid #a7f3d0;border-radius:8px;overflow:hidden;background:#fff;display:flex;align-items:center;justify-content:center}
+.upi-row{display:flex;align-items:center;justify-content:center;gap:.4rem;background:#f0fdf8;border-radius:7px;padding:.38rem .7rem;margin-bottom:.35rem;cursor:pointer}
+.upi-txt{font-family:monospace;font-size:.82rem;font-weight:700;color:var(--t-dark)}
+.cp-btn{font-size:.58rem;font-weight:700;background:var(--t3);color:#fff;border:none;border-radius:4px;padding:.14rem .38rem;cursor:pointer}
+.upi-apps{display:flex;gap:.35rem;justify-content:center;flex-wrap:wrap;margin-top:.4rem}
+.app-a{display:inline-flex;align-items:center;padding:.28rem .6rem;border-radius:999px;border:1.5px solid var(--bdr);font-size:.65rem;font-weight:600;color:var(--ink);background:#fff;text-decoration:none}
+.app-a:hover{border-color:#a7f3d0;color:var(--t3)}
+.utr-box{background:#f0fdf8;border:2px solid #a7f3d0;border-radius:10px;padding:1rem}
+.utr-ttl{font-size:.8rem;font-weight:700;color:var(--t-dark);margin-bottom:.12rem}
+.utr-sub{font-size:.7rem;color:var(--muted);margin-bottom:.65rem;line-height:1.5}
+.al-err{padding:.55rem .8rem;border-radius:8px;font-size:.75rem;font-weight:500;margin-bottom:.75rem;display:none;background:#fef2f2;border:1px solid #fecaca;color:#991b1b}
+.al-err.show{display:block}
+.btn-act{width:100%;padding:.75rem;border:none;border-radius:9px;font-size:.85rem;font-weight:700;cursor:pointer;background:linear-gradient(135deg,var(--t1),var(--t3));color:#fff;display:flex;align-items:center;justify-content:center;gap:.4rem;font-family:Open Sans,sans-serif}
+.btn-act:disabled{opacity:.55;cursor:not-allowed}
+.utr-note{font-size:.66rem;color:var(--muted);text-align:center;margin-top:.5rem;line-height:1.5}
+.utr-note strong{color:var(--t3)}
+.btn-bk{background:none;border:none;color:var(--muted);font-size:.74rem;cursor:pointer;display:block;text-align:center;padding:.4rem;margin-top:.4rem;width:100%}
+.spin{display:inline-block;width:13px;height:13px;border:2px solid rgba(255,255,255,.35);border-top-color:#fff;border-radius:50%;animation:sp .6s linear infinite}
+@keyframes sp{to{transform:rotate(360deg)}}
+.toast{position:fixed;bottom:1.5rem;right:1.5rem;background:var(--t-dark);color:#fff;padding:.72rem 1rem;border-radius:10px;font-size:.8rem;font-weight:600;box-shadow:0 6px 22px rgba(0,0,0,.18);z-index:999;display:none;align-items:center;gap:.4rem}
+.toast.show{display:flex}
 
 /* ── EDIT MODAL ── */
-.edit-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.45);z-index:9999;align-items:center;justify-content:center;padding:1rem;}
-.edit-overlay.open{display:flex;}
-.edit-box{background:#fff;border-radius:20px;width:100%;max-width:520px;max-height:90vh;overflow-y:auto;box-shadow:0 24px 64px rgba(0,0,0,.18);}
-.edit-hdr{background:linear-gradient(135deg,var(--t-dark),var(--t3));padding:1.4rem 1.75rem;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;}
-.edit-hdr h2{font-family:'Nunito',sans-serif;font-size:1.3rem;font-weight:800;color:#fff;}
-.edit-cls{background:rgba(255,255,255,.18);border:none;color:#fff;width:32px;height:32px;border-radius:8px;cursor:pointer;font-size:1.1rem;display:grid;place-items:center;}
-.edit-cls:hover{background:rgba(255,255,255,.28);}
-.edit-bdy{padding:1.5rem 1.75rem 2rem;}
-.ef-grp{margin-bottom:1rem;}
-.ef-lbl{display:block;font-size:.78rem;font-weight:600;color:var(--ink);margin-bottom:.4rem;}
-.ef-inp,.ef-sel{width:100%;padding:.72rem .9rem;border:1.5px solid var(--bdr);border-radius:9px;font-family:'Open Sans',sans-serif;font-size:.875rem;color:var(--ink);background:#fff;outline:none;transition:border-color .15s,box-shadow .15s;}
-.ef-inp:focus,.ef-sel:focus{border-color:var(--t3);box-shadow:0 0 0 3px rgba(0,171,132,.1);}
-.ef-sel{appearance:none;background-image:url("data:image/svg+xml,%3Csvg width='12' height='8' fill='none' stroke='%236B7280' stroke-width='1.5' viewBox='0 0 12 8' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M1 1l5 5 5-5'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right .9rem center;padding-right:2.2rem;}
-.ef-hint{font-size:.72rem;color:var(--muted);margin-top:.3rem;}
-.ef-ph-grp{display:flex;}
-.ef-ph-pre{display:flex;align-items:center;padding:.72rem .75rem;background:#f9fafb;border:1.5px solid var(--bdr);border-right:none;border-radius:9px 0 0 9px;font-size:.875rem;color:var(--muted);font-weight:600;}
-.ef-ph-grp .ef-inp{border-radius:0 9px 9px 0;flex:1;}
-.ef-row{display:grid;grid-template-columns:1fr 1fr;gap:.75rem;}
-.ef-err{padding:.7rem 1rem;border-radius:9px;font-size:.8rem;font-weight:500;margin-bottom:1rem;display:none;background:#fef2f2;border:1px solid #fecaca;color:#991b1b;}
-.ef-err.show{display:block;}
-.ef-save{width:100%;padding:.82rem;border:none;border-radius:10px;font-family:'Open Sans',sans-serif;font-size:.9rem;font-weight:700;cursor:pointer;background:linear-gradient(135deg,var(--t1),var(--t3));color:#fff;margin-top:.75rem;}
-.ef-save:hover{filter:brightness(1.05);}
+.edit-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.45);z-index:9999;align-items:center;justify-content:center;padding:1rem}
+.edit-overlay.open{display:flex}
+.edit-box{background:#fff;border-radius:20px;width:100%;max-width:520px;max-height:90vh;overflow-y:auto;box-shadow:0 24px 64px rgba(0,0,0,.18)}
+.edit-hdr{background:linear-gradient(135deg,var(--t-dark),var(--t3));padding:1.4rem 1.75rem;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0}
+.edit-hdr h2{font-family:Nunito,sans-serif;font-size:1.3rem;font-weight:800;color:#fff}
+.edit-cls{background:rgba(255,255,255,.18);border:none;color:#fff;width:32px;height:32px;border-radius:8px;cursor:pointer;font-size:1.1rem;display:grid;place-items:center}
+.edit-cls:hover{background:rgba(255,255,255,.28)}
+.edit-bdy{padding:1.5rem 1.75rem 2rem}
+.ef-grp{margin-bottom:1rem}
+.ef-lbl{display:block;font-size:.78rem;font-weight:600;color:var(--ink);margin-bottom:.4rem}
+.ef-inp,.ef-sel{width:100%;padding:.72rem .9rem;border:1.5px solid var(--bdr);border-radius:9px;font-family:Open Sans,sans-serif;font-size:.875rem;color:var(--ink);background:#fff;outline:none;transition:border-color .15s,box-shadow .15s}
+.ef-inp:focus,.ef-sel:focus{border-color:var(--t3);box-shadow:0 0 0 3px rgba(0,171,132,.1)}
+.ef-sel{appearance:none;background-image:url("data:image/svg+xml,%3Csvg width='12' height='8' fill='none' stroke='%236B7280' stroke-width='1.5' viewBox='0 0 12 8' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M1 1l5 5 5-5'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right .9rem center;padding-right:2.2rem}
+.ef-hint{font-size:.72rem;color:var(--muted);margin-top:.3rem}
+.ef-ph-grp{display:flex}
+.ef-ph-pre{display:flex;align-items:center;padding:.72rem .75rem;background:#f9fafb;border:1.5px solid var(--bdr);border-right:none;border-radius:9px 0 0 9px;font-size:.875rem;color:var(--muted);font-weight:600}
+.ef-ph-grp .ef-inp{border-radius:0 9px 9px 0;flex:1}
+.ef-row{display:grid;grid-template-columns:1fr 1fr;gap:.75rem}
+.ef-err{padding:.7rem 1rem;border-radius:9px;font-size:.8rem;font-weight:500;margin-bottom:1rem;display:none;background:#fef2f2;border:1px solid #fecaca;color:#991b1b}
+.ef-err.show{display:block}
+.ef-save{width:100%;padding:.82rem;border:none;border-radius:10px;font-family:Open Sans,sans-serif;font-size:.9rem;font-weight:700;cursor:pointer;background:linear-gradient(135deg,var(--t1),var(--t3));color:#fff;margin-top:.75rem}
+.ef-save:hover{filter:brightness(1.05)}
+
+/* Back-to-top — exact index-2 */
+#btt{background:var(--t1);color:#fff;cursor:pointer;opacity:0;z-index:400;border:none;border-radius:50%;place-items:center;width:40px;height:40px;transition:opacity .3s,transform .3s;display:grid;position:fixed;bottom:1.8rem;right:1.6rem;transform:translateY(12px);box-shadow:0 4px 14px rgba(0,109,91,.4)}
+#btt.vis{opacity:1;transform:translateY(0)}
+#btt:hover{background:var(--t-dark)}
+
+/* WA button */
+#wa{z-index:400;background:#25d366;border-radius:50%;place-items:center;width:48px;height:48px;text-decoration:none;transition:transform .2s;display:grid;position:fixed;bottom:5rem;right:1.6rem;box-shadow:0 4px 16px rgba(37,211,102,.45)}
+#wa:hover{transform:scale(1.1)}
+#wa span{border:2px solid #25d366;border-radius:50%;animation:2s ease-out 3s infinite wap;position:absolute;inset:-4px}
+@keyframes wap{0%{opacity:.7;transform:scale(1)}70%,to{opacity:0;transform:scale(1.45)}}
+
+/* Floating triangle decorations from hero */
+@keyframes floatT-tl{0%,to{transform:rotate(-22deg)translateY(0)}50%{transform:rotate(-22deg)translateY(-10px)}}
+@keyframes floatT-tr{0%,to{transform:rotate(18deg)translateY(0)}50%{transform:rotate(18deg)translateY(-12px)}}
+@keyframes floatT-br{0%,to{transform:rotate(-15deg)translateY(0)}50%{transform:rotate(-15deg)translateY(-8px)}}
+.tri-tl{width:70px;height:70px;animation:5s ease-in-out infinite floatT-tl;top:20px;left:6%}
+.tri-tr{width:85px;height:85px;animation:7s ease-in-out .5s infinite floatT-tr;top:10px;right:7%}
+.tri-br{opacity:.7;width:55px;height:55px;animation:9s ease-in-out 2s infinite floatT-br;bottom:15px;right:18%}
 
 /* ── RESPONSIVE ── */
-@media(max-width:600px){
-  .logo-main{font-size:1.6rem;}
-  .logo-main span{font-size:1.6rem;}
-  .hero-title{font-size:1.35rem;}
-  .main{padding:1rem .9rem 4rem;}
-  .tabs-inner{padding:0 .8rem;}
-  .tab-btn{padding:0 .75rem;}
-  .tab-name{font-size:.74rem;}
-  .unlock-bar{flex-direction:column;align-items:stretch;}
-  .btn-unlock{text-align:center;}
-  .tests-grid{grid-template-columns:1fr;}
-  .ef-row{grid-template-columns:1fr;}
-  .overlay{padding:0;align-items:flex-end;}
-  .modal{border-radius:20px 20px 0 0;max-height:92vh;overflow-y:auto;}
-  .edit-overlay{padding:0;align-items:flex-end;}
-  .edit-box{border-radius:20px 20px 0 0;max-height:92vh;}
-  .uname{display:none;}
-  .toast{left:1rem;right:1rem;bottom:1rem;justify-content:center;}
+@media(max-width:640px){
+  .logo-box .site-name{font-size:32px}
+  .logo-box .logo-eyebrow{font-size:1rem}
+  .logo-box .site-tag{font-size:.44rem}
+  .hero{padding:1.8rem 0 1.4rem}
+  .hero-title{font-size:1.3rem}
+  .main{padding:1rem .9rem 4rem}
+  .tabs-inner{padding:0 .8rem}
+  .tab-btn{padding:0 .75rem}
+  .tab-name{font-size:.68rem}
+  .unlock-bar{flex-direction:column;align-items:stretch}
+  .btn-unlock{text-align:center;justify-content:center}
+  .tests-grid{grid-template-columns:1fr}
+  .bundle-in{flex-direction:column}
+  .bundle-right{align-items:flex-start}
+  .ef-row{grid-template-columns:1fr}
+  .overlay{padding:0;align-items:flex-end}
+  .modal{border-radius:20px 20px 0 0;max-height:92vh;overflow-y:auto}
+  .edit-overlay{padding:0;align-items:flex-end}
+  .edit-box{border-radius:20px 20px 0 0;max-height:92vh}
+  .uname{display:none}
+  .toast{left:1rem;right:1rem;bottom:1rem;justify-content:center}
 }
-@media(min-width:601px) and (max-width:900px){
-  .tests-grid{grid-template-columns:repeat(auto-fill,minmax(175px,1fr));}
+@media(min-width:641px) and (max-width:900px){
+  .tests-grid{grid-template-columns:repeat(2,1fr)}
+  .logo-box .site-name{font-size:38px}
 }
 </style>
-</head>
+
 <body>
-<div id="progress"></div>
+<div id=progress></div>
+<button aria-label="Back to top" onclick="scrollTo({top:0,behavior:'smooth'})" id=btt>
+  <svg viewbox="0 0 24 24" fill=none height=15 stroke=currentColor stroke-width=2.5 width=15><path d="M5 15l7-7 7 7"/></svg>
+</button>
+<a href="https://wa.me/918743865551?text=Hi%20Toppers11%20Team" aria-label=WhatsApp id=wa rel=noopener target=_blank>
+  <svg viewbox="0 0 24 24" fill=#fff height=25 width=25><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+  <span></span>
+</a>
 
 <!-- TOP BAR -->
-<div class="top-bar">
-  <div class="top-inner">
-    <div style="display:flex;align-items:center;gap:.9rem;">
-      <a href="index.html" class="logo-wrap">
-        <span class="logo-eyebrow">Employee Choice</span>
-        <span class="logo-main">toppers<span>11</span></span>
-        <span class="logo-sub">AI-Powered Test Series</span>
+<div class=top-bar>
+  <div class=top-inner>
+    <div style="display:flex;align-items:center;gap:1rem;">
+      <a class=logo-box href=index.html>
+        <span class=logo-eyebrow>Employee Choice</span>
+        <span class=site-name>toppers<span style="color:var(--t3);font-family:Righteous,cursive;font-size:48px">11</span></span>
+        <span class=site-tag>AI-Powered Test Series</span>
       </a>
-      <a href="exam-select.html" class="btn-back">
-        <svg width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"/></svg>All Exams
+      <a href=exam-select.html class=btn-back>
+        <svg width=13 height=13 fill=none stroke=currentColor stroke-width=2.5 viewbox="0 0 24 24"><polyline points="15 18 9 12 15 6"/></svg>
+        All Exams
       </a>
     </div>
-    <div class="user-chip-wrap" id="chip-wrap">
-      <div class="chip" onclick="toggleProfile()">
-        <div class="av" id="uav">U</div>
-        <span class="uname" id="uname">User</span>
-        <svg class="chevron-d" width="11" height="11" fill="none" stroke="var(--t3)" stroke-width="2.5" viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg>
+    <div class=user-chip-wrap id=chip-wrap>
+      <div class=chip onclick="toggleProfile()">
+        <div class=av id=uav>U</div>
+        <span class=uname id=uname>User</span>
+        <svg class=chevron-d width=11 height=11 fill=none stroke="var(--t3)" stroke-width=2.5 viewbox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg>
       </div>
-      <div class="profile-dropdown" id="profile-dropdown">
-        <div class="pd-hdr">
-          <div class="pd-av-lg" id="pd-av-lg">U</div>
-          <div class="pd-hdr-info"><h3 id="pd-nm">—</h3><p id="pd-em-hdr">—</p></div>
+      <div class="profile-dropdown" id=profile-dropdown>
+        <div class=pd-hdr>
+          <div class=pd-av-lg id=pd-av-lg>U</div>
+          <div class=pd-hdr-info><h3 id=pd-nm>—</h3><p id=pd-em-hdr>—</p></div>
         </div>
-        <div class="pd-body">
-          <div class="pd-row"><div class="pd-ico"><svg width="15" height="15" fill="none" stroke="var(--t3)" stroke-width="2" viewBox="0 0 24 24"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg></div><div><div class="pd-lbl">Email</div><div class="pd-val" id="pd-em">—</div></div></div>
-          <div class="pd-row"><div class="pd-ico"><svg width="15" height="15" fill="none" stroke="var(--t3)" stroke-width="2" viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 9.81 19.79 19.79 0 01.4 3.18 2 2 0 012 1h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L6.09 8.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"/></svg></div><div><div class="pd-lbl">Mobile</div><div class="pd-val" id="pd-mob">—</div></div></div>
-          <div class="pd-row"><div class="pd-ico"><svg width="15" height="15" fill="none" stroke="var(--t3)" stroke-width="2" viewBox="0 0 24 24"><path d="M21 10c0 7-9 13-9 13S3 17 3 10a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg></div><div><div class="pd-lbl">Region</div><div class="pd-val" id="pd-reg">—</div></div></div>
-          <div class="pd-row"><div class="pd-ico"><svg width="15" height="15" fill="none" stroke="var(--t3)" stroke-width="2" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg></div><div><div class="pd-lbl">Plan</div><div class="pd-val" id="pd-plan-v">Free (3 Tests)</div></div></div>
+        <div class=pd-body>
+          <div class=pd-row>
+            <div class=pd-ico><svg width=15 height=15 fill=none stroke="var(--t3)" stroke-width=2 viewbox="0 0 24 24"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg></div>
+            <div><div class=pd-lbl>Email</div><div class=pd-val id=pd-em>—</div></div>
+          </div>
+          <div class=pd-row>
+            <div class=pd-ico><svg width=15 height=15 fill=none stroke="var(--t3)" stroke-width=2 viewbox="0 0 24 24"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 9.81 19.79 19.79 0 01.4 3.18 2 2 0 012 1h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L6.09 8.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"/></svg></div>
+            <div><div class=pd-lbl>Mobile</div><div class=pd-val id=pd-mob>—</div></div>
+          </div>
+          <div class=pd-row>
+            <div class=pd-ico><svg width=15 height=15 fill=none stroke="var(--t3)" stroke-width=2 viewbox="0 0 24 24"><path d="M21 10c0 7-9 13-9 13S3 17 3 10a9 9 0 0118 0z"/><circle cx=12 cy=10 r=3/></svg></div>
+            <div><div class=pd-lbl>Region</div><div class=pd-val id=pd-reg>—</div></div>
+          </div>
+          <div class=pd-row>
+            <div class=pd-ico><svg width=15 height=15 fill=none stroke="var(--t3)" stroke-width=2 viewbox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg></div>
+            <div><div class=pd-lbl>Plan</div><div class=pd-val id=pd-plan-v>Free (4 Tests)</div></div>
+          </div>
         </div>
-        <div class="pd-ftr">
-          <button class="pd-btn-ed" onclick="openEditModal()">✏️ Edit Profile</button>
-          <button class="pd-btn-lo" onclick="logout()">🚪 Sign Out</button>
+        <div class=pd-ftr>
+          <button class=pd-btn-ed onclick="openEditModal()">✏️ Edit Profile</button>
+          <button class=pd-btn-lo onclick="logout()">🚪 Sign Out</button>
         </div>
       </div>
     </div>
@@ -285,106 +373,142 @@ body{background:var(--bg);color:var(--ink);font-family:'Open Sans',sans-serif;mi
 </div>
 
 <!-- Edit Profile Modal -->
-<div class="edit-overlay" id="edit-modal" onclick="if(event.target===this)closeEditModal()">
-  <div class="edit-box">
-    <div class="edit-hdr"><h2>Edit Profile</h2><button class="edit-cls" onclick="closeEditModal()">✕</button></div>
-    <div class="edit-bdy">
-      <div class="ef-err" id="ef-error"></div>
-      <div class="ef-row">
-        <div class="ef-grp"><label class="ef-lbl">Full Name *</label><input type="text" class="ef-inp" id="ef-name" placeholder="e.g. Rajesh Kumar"/></div>
-        <div class="ef-grp"><label class="ef-lbl">Email Address *</label><input type="email" class="ef-inp" id="ef-email" placeholder="you@example.com"/></div>
+<div class=edit-overlay id=edit-modal onclick="if(event.target===this)closeEditModal()">
+  <div class=edit-box>
+    <div class=edit-hdr><h2>Edit Profile</h2><button class=edit-cls onclick=closeEditModal()>✕</button></div>
+    <div class=edit-bdy>
+      <div class="ef-err" id=ef-error></div>
+      <div class=ef-row>
+        <div class=ef-grp><label class=ef-lbl>Full Name *</label><input type=text class=ef-inp id=ef-name placeholder="e.g. Rajesh Kumar"/></div>
+        <div class=ef-grp><label class=ef-lbl>Email Address *</label><input type=email class=ef-inp id=ef-email placeholder="you@example.com"/></div>
       </div>
-      <div class="ef-grp">
-        <label class="ef-lbl">Mobile Number <span id="ef-mob-badge" style="display:none;font-size:.68rem;font-weight:600;color:#991b1b;background:#fef2f2;border:1px solid #fecaca;border-radius:999px;padding:.1rem .5rem;margin-left:.3rem;">Update used — locked</span></label>
-        <div class="ef-ph-grp"><span class="ef-ph-pre">🇮🇳 +91</span><input type="tel" class="ef-inp" id="ef-mobile" placeholder="98765 43210" maxlength="10"/></div>
-        <div class="ef-hint" id="ef-mob-hint" style="color:#d97706;">⚠️ Mobile number can only be updated <strong>once</strong>.</div>
+      <div class=ef-grp>
+        <label class=ef-lbl>Mobile Number <span id=ef-mob-badge style="display:none;font-size:.68rem;font-weight:600;color:#991b1b;background:#fef2f2;border:1px solid #fecaca;border-radius:999px;padding:.1rem .5rem;margin-left:.3rem;">Update used — locked</span></label>
+        <div class=ef-ph-grp><span class=ef-ph-pre>🇮🇳 +91</span><input type=tel class=ef-inp id=ef-mobile placeholder="98765 43210" maxlength=10/></div>
+        <div class=ef-hint id=ef-mob-hint style="color:#d97706;">⚠️ Mobile number can only be updated <strong>once</strong>.</div>
       </div>
-      <div class="ef-grp">
-        <label class="ef-lbl">Select your Region</label>
-        <select class="ef-sel" id="ef-region">
+      <div class=ef-grp>
+        <label class=ef-lbl>Select your Region</label>
+        <select class=ef-sel id=ef-region>
           <option value="">— Select Region —</option>
           <optgroup label="🔵 North India"><option>Delhi</option><option>North West Region (NWR) – Chandigarh, Punjab, Haryana, HP, J&amp;K</option><option>UP West &amp; Uttarakhand – HQ Kanpur</option><option>UP East – HQ Lucknow</option></optgroup>
           <optgroup label="🟠 West India"><option>Mumbai</option><option>Pune – Covers rest of Maharashtra</option><option>Gujarat – HQ Ahmedabad</option></optgroup>
           <optgroup label="🟢 South India"><option>Tamil Nadu &amp; Puducherry – HQ Chennai</option><option>Karnataka &amp; Goa – HQ Bengaluru</option><option>Kerala – HQ Kochi</option><option>Andhra Pradesh &amp; Telangana – HQ Hyderabad</option></optgroup>
-          <optgroup label="🟡 East India"><option>West Bengal &amp; Sikkim – HQ Kolkata</option><option>North Eastern Region (NER) – Assam, Arunachal, Manipur, Meghalaya, Mizoram, Nagaland, Tripura</option><option>Odisha – HQ Bhubaneswar</option><option>Bihar &amp; Jharkhand – HQ Patna</option></optgroup>
+          <optgroup label="🟡 East India"><option>West Bengal &amp; Sikkim – HQ Kolkata</option><option>North Eastern Region (NER)</option><option>Odisha – HQ Bhubaneswar</option><option>Bihar &amp; Jharkhand – HQ Patna</option></optgroup>
           <optgroup label="🔴 Central India"><option>Madhya Pradesh &amp; Chhattisgarh – HQ Bhopal</option><option>Rajasthan – HQ Jaipur</option></optgroup>
         </select>
       </div>
-      <div class="ef-grp"><label class="ef-lbl">New Password <span style="font-weight:400;color:var(--muted)">(blank = keep current)</span></label><input type="password" class="ef-inp" id="ef-pass" placeholder="Min. 8 characters"/></div>
-      <div class="ef-grp"><label class="ef-lbl">Confirm New Password</label><input type="password" class="ef-inp" id="ef-pass2" placeholder="Repeat new password"/></div>
-      <button class="ef-save" onclick="saveProfile()">Save Changes</button>
+      <div class=ef-grp><label class=ef-lbl>New Password <span style="font-weight:400;color:var(--muted)">(blank = keep current)</span></label><input type=password class=ef-inp id=ef-pass placeholder="Min. 8 characters"/></div>
+      <div class=ef-grp><label class=ef-lbl>Confirm New Password</label><input type=password class=ef-inp id=ef-pass2 placeholder="Repeat new password"/></div>
+      <button class=ef-save onclick=saveProfile()>Save Changes</button>
     </div>
   </div>
 </div>
 
-<!-- HERO -->
-<div class="hero">
-  <div class="hero-inner">
+<!-- HERO — index-2 style with floating triangles -->
+<section class=hero>
+  <!-- Floating triangles (lighter version from index-2) -->
+  <div class="tri tri-tl">
+    <svg style="filter:drop-shadow(3px 6px 12px #00000050)" viewbox="0 0 120 120" xmlns=http://www.w3.org/2000/svg>
+      <defs><lineargradient id=h1a x1=0% x2=100% y1=0% y2=100%><stop offset=0% stop-color=#3ddbb0/><stop offset=100% stop-color=#00AB84/></lineargradient></defs>
+      <polygon points="60,10 15,95 60,78" fill=url(#h1a)/><polygon points="60,10 105,95 60,78" fill=#005a48/><polygon points="15,95 60,78 105,95" fill=#003d30 opacity=.75/><line stroke=rgba(255,255,255,0.3) stroke-width=1 x1=60 x2=60 y1=10 y2=78/>
+    </svg>
+  </div>
+  <div class="tri tri-tr">
+    <svg style="filter:drop-shadow(3px 6px 14px #00000050)" viewbox="0 0 120 120" xmlns=http://www.w3.org/2000/svg>
+      <defs><lineargradient id=h2a x1=0% x2=100% y1=0% y2=100%><stop offset=0% stop-color=#FFE97A/><stop offset=100% stop-color=#F5C518/></lineargradient></defs>
+      <polygon points="60,10 15,95 60,78" fill=url(#h2a)/><polygon points="60,10 105,95 60,78" fill=#b87800/><polygon points="15,95 60,78 105,95" fill=#8a5e00 opacity=.7/><line stroke=rgba(255,255,255,0.4) stroke-width=1 x1=60 x2=60 y1=10 y2=78/>
+    </svg>
+  </div>
+  <div class="tri tri-br">
+    <svg viewbox="0 0 120 120" xmlns=http://www.w3.org/2000/svg>
+      <polygon points="60,10 15,95 60,78" fill=rgba(255,255,255,0.15) stroke=rgba(255,255,255,0.4) stroke-width=1.5/><polygon points="60,10 105,95 60,78" fill=rgba(255,255,255,0.07)/>
+    </svg>
+  </div>
+  <div class=hero-inner>
     <div>
-      <div class="hero-title">🔍 ITI Exam</div>
-      <div class="hero-sub-text">Income Tax Inspector — 4 Subjects, 84 Tests</div>
+      <div class=hero-title>🔍 ITI — <em>Inspector Exam</em></div>
+      <div class=hero-sub-text>Income Tax Inspector · 4 Papers · 84 Mock Tests · PYQs Included</div>
     </div>
-    <div class="hero-badge">
-      <svg width="13" height="13" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
-      Exam: 08–15 Sep 2025
+    <div class=hero-badge-wrap>
+      <div class=hero-badge>
+        <svg width=13 height=13 fill=none stroke=currentColor stroke-width=2 viewbox="0 0 24 24"><rect x=3 y=4 width=18 height=18 rx=2/><line x1=16 y1=2 x2=16 y2=6/><line x1=8 y1=2 x2=8 y2=6/><line x1=3 y1=10 x2=21 y2=10/></svg>
+        Exam: 08–15 Sep 2025
+      </div>
+      <div class="hero-badge hero-badge-yellow">
+        <svg width=12 height=12 fill=none stroke=currentColor stroke-width=2.5 viewbox="0 0 24 24"><path d="M12 2L15.1 8.3 22 9.3 17 14.1 18.2 21 12 17.8 5.8 21 7 14.1 2 9.3 8.9 8.3 12 2z"/></svg>
+        4 Free PYQ Tests
+      </div>
     </div>
   </div>
-</div>
+</section>
 
-<!-- TABS -->
-<div class="tabs-bar"><div class="tabs-inner" id="tabs-inner"></div></div>
+<!-- TABS BAR -->
+<div class=tabs-bar><div class=tabs-inner id=tabs-inner></div></div>
 
 <!-- MAIN -->
-<div class="main">
-  <div class="unlock-bar" id="unlock-bar" style="display:none;">
-    <div class="ub-text"><strong>🔒 Unlock All 84 ITI Tests</strong>Complete access to all 4 subjects × 21 tests. One-time payment, instant activation.</div>
-    <button class="btn-unlock" onclick="openModal()">Unlock Full Access →</button>
+<div class=main>
+  <div class=unlock-bar id=unlock-bar style="display:none;">
+    <div class=ub-text>
+      <strong>🔒 Unlock All 84 ITI Tests</strong>
+      <span>Complete access to all 4 papers × 21 tests each. One-time payment, instant activation. Save ₹465 with the full bunch.</span>
+    </div>
+    <button class=btn-unlock onclick=openModal()>
+      <svg width=13 height=13 fill=none stroke=currentColor stroke-width=2.5 viewbox="0 0 24 24"><rect x=3 y=11 width=18 height=11 rx=2/><path d="M7 11V7a5 5 0 0110 0v4"/></svg>
+      Unlock Full Access →
+    </button>
   </div>
-  <div class="retest-notice">
-    <div class="rn-icon"><svg width="19" height="19" fill="none" stroke="#fff" stroke-width="2.2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg></div>
-    <div class="rn-body">
-      <div class="rn-title">⚡ 3 Attempts Per Assessment</div>
-      <div class="rn-msg">You have <strong>3 total attempts</strong> for each test in this series. Once all 3 attempts are used, the test will be marked <strong>Completed</strong>.</div>
+  <div class=retest-notice>
+    <div class=rn-icon><svg width=19 height=19 fill=none stroke=#fff stroke-width=2.2 viewbox="0 0 24 24"><circle cx=12 cy=12 r=10/><line x1=12 y1=8 x2=12 y2=12/><line x1=12 y1=16 x2=12.01 y2=16/></svg></div>
+    <div>
+      <div class=rn-title>⚡ 3 Attempts Per Assessment</div>
+      <div class=rn-msg>You have <strong>3 total attempts</strong> for each test in this series. Once all 3 attempts are used, the test will be marked <strong>Completed</strong>. This mirrors actual departmental exam rules.</div>
     </div>
   </div>
-  <div id="panels"></div>
+  <div id=panels></div>
 </div>
 
 <!-- PURCHASE MODAL -->
-<div class="overlay" id="overlay" onclick="overlayClick(event)">
-  <div class="modal">
-    <div class="mh"><h3>Unlock ITI Tests</h3><button class="btn-x" onclick="closeModal()">✕</button></div>
-    <div class="mb">
-      <div id="step1">
+<div class=overlay id=overlay onclick="overlayClick(event)">
+  <div class=modal>
+    <div class=mh><h3>Unlock ITI Tests</h3><button class=btn-x onclick=closeModal()>✕</button></div>
+    <div class=mb>
+      <div id=step1>
         <p style="font-size:.77rem;color:var(--muted);margin-bottom:.85rem;">Choose your plan:</p>
-        <div class="plan-cards" id="plan-cards"></div>
-        <button class="btn-cont" id="cont-btn" onclick="doContinue()">Continue →</button>
+        <div class=plan-cards id=plan-cards></div>
+        <button class=btn-cont id=cont-btn onclick=doContinue()>Continue →</button>
       </div>
-      <div id="step2" style="display:none;">
-        <div class="qr-box">
-          <div class="qr-lbl" id="qr-lbl">Scan &amp; Pay</div>
-          <div class="qr-img" id="qr-canvas"></div>
-          <div class="upi-row" onclick="copyUpi()"><span class="upi-txt" id="upi-disp"></span><button class="cp-btn" id="cp-btn">Copy</button></div>
-          <div style="font-size:.7rem;color:var(--muted);margin-bottom:.4rem;">Amount: <strong id="amt-lbl" style="color:var(--t3)"></strong></div>
-          <div class="upi-apps"><a class="app-a" id="gpay-a" href="#">GPay</a><a class="app-a" id="phonepe-a" href="#">PhonePe</a><a class="app-a" id="paytm-a" href="#">Paytm</a></div>
+      <div id=step2 style="display:none;">
+        <div class=qr-box>
+          <div class=qr-lbl id=qr-lbl>Scan &amp; Pay</div>
+          <div class=qr-img id=qr-canvas></div>
+          <div class=upi-row onclick=copyUpi()><span class=upi-txt id=upi-disp></span><button class=cp-btn id=cp-btn>Copy</button></div>
+          <div style="font-size:.7rem;color:var(--muted);margin-bottom:.4rem;">Amount: <strong id=amt-lbl style="color:var(--t3)"></strong></div>
+          <div class=upi-apps><a class=app-a id=gpay-a href=#>GPay</a><a class=app-a id=phonepe-a href=#>PhonePe</a><a class=app-a id=paytm-a href=#>Paytm</a></div>
           <div style="margin-top:.6rem;text-align:center;">
-            <button onclick="switchUpi()" style="font-size:.7rem;font-weight:600;color:var(--t3);background:#f0fdf8;border:1.5px solid #a7f3d0;border-radius:999px;padding:.28rem .75rem;cursor:pointer;">🔄 Payment failed? Try another UPI ID <span id="upi-switch-badge" style="opacity:.6;font-size:.62rem;">1/3</span></button>
+            <button onclick=switchUpi() style="font-size:.7rem;font-weight:600;color:var(--t3);background:#f0fdf8;border:1.5px solid #a7f3d0;border-radius:999px;padding:.28rem .75rem;cursor:pointer;">🔄 Payment failed? Try another UPI ID <span id=upi-switch-badge style="opacity:.6;font-size:.62rem;">1/3</span></button>
           </div>
         </div>
-        <div class="utr-box">
-          <div class="utr-ttl">✅ Paid? Activate Your Access</div>
-          <div class="utr-sub">Once you have completed the UPI payment above, tap the button below to instantly unlock all your tests.</div>
-          <div class="al-err" id="utr-err"></div>
-          <button class="btn-act" id="act-btn" onclick="activate()"><svg width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg>I've Paid — Activate My Access Now</button>
-          <div class="utr-note">🔒 Instant activation. Problem? WhatsApp <strong>Toppers11 Team</strong></div>
+        <div class=utr-box>
+          <div class=utr-ttl>✅ Paid? Activate Your Access</div>
+          <div class=utr-sub>Once you have completed the UPI payment above, tap the button below to instantly unlock all your tests.</div>
+          <div class="al-err" id=utr-err></div>
+          <button class=btn-act id=act-btn onclick=activate()>
+            <svg width=13 height=13 fill=none stroke=currentColor stroke-width=2.5 viewbox="0 0 24 24"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg>
+            I've Paid — Activate My Access Now
+          </button>
+          <div class=utr-note>🔒 Instant activation. Problem? WhatsApp <strong>Toppers11 Team</strong></div>
         </div>
-        <button class="btn-bk" onclick="backToPlan()">← Change Plan</button>
+        <button class=btn-bk onclick=backToPlan()>← Change Plan</button>
       </div>
     </div>
   </div>
 </div>
 
-<div class="toast" id="toast"><svg width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg><span id="toast-msg"></span></div>
+<div class=toast id=toast>
+  <svg width=13 height=13 fill=none stroke=currentColor stroke-width=2.5 viewbox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>
+  <span id=toast-msg></span>
+</div>
 
 <script>
 const SUPABASE_URL='https://tvstcvinatkokhmoeqlx.supabase.co';
@@ -399,99 +523,104 @@ let _upiIdx=Math.floor(Math.random()*UPI_POOL.length);
 function getUpiId(){return UPI_POOL[_upiIdx];}
 function nextUpiId(){_upiIdx=(_upiIdx+1)%UPI_POOL.length;return UPI_POOL[_upiIdx];}
 Object.defineProperty(window,'UPI_ID',{get:getUpiId});
-const PLANS={'single-iti':{label:'ITI Single Subject',amount:355,desc:'All 21 tests for 1 subject'},'bunch-iti':{label:'ITI Complete (All 4 Subjects)',amount:955,desc:'All 84 tests — best value',best:true}};
+
+const PLANS={
+  'single-iti':{label:'ITI Single Subject',amount:355,desc:'All 21 tests for 1 paper · Best for targeted prep'},
+  'bunch-iti':{label:'ITI Complete Bunch (All 4 Papers)',amount:955,desc:'All 84 tests — save ₹465 vs buying individually',best:true}
+};
+
 const PAPERS=[
-  {key:'p1',name:'IT Law & Computation',hasFree:true,tests:[
-    {id:'iti-p1-pyq25',lbl:'PYQ 2025',title:'ITI PAPER 1 2025 PYQ',free:true,pyq:true,qs:150,mins:180},
-    {id:'iti-p1-pyq24',lbl:'PYQ 2024',title:'ITI PAPER 1 2024 PYQ',free:false,pyq:true,qs:150,mins:180},
-    {id:'iti-p1-pyq23',lbl:'PYQ 2023',title:'ITI PAPER 1 2023 PYQ',free:false,pyq:true,qs:150,mins:180},
-    {id:'iti-p1-pyq22',lbl:'PYQ 2022',title:'ITI PAPER 1 2022 PYQ',free:false,pyq:true,qs:150,mins:180},
-    {id:'iti-p1-pyq21',lbl:'PYQ 2021',title:'ITI PAPER 1 2021 PYQ',free:false,pyq:true,qs:150,mins:180},
-    {id:'iti-p1-s06',lbl:'Series 06',title:'ITI PAPER 1 Test Series 06',free:false,pyq:false,qs:150,mins:180},
-    {id:'iti-p1-s07',lbl:'Series 07',title:'ITI PAPER 1 Test Series 07',free:false,pyq:false,qs:150,mins:180},
-    {id:'iti-p1-s08',lbl:'Series 08',title:'ITI PAPER 1 Test Series 08',free:false,pyq:false,qs:150,mins:180},
-    {id:'iti-p1-s09',lbl:'Series 09',title:'ITI PAPER 1 Test Series 09',free:false,pyq:false,qs:150,mins:180},
-    {id:'iti-p1-s10',lbl:'Series 10',title:'ITI PAPER 1 Test Series 10',free:false,pyq:false,qs:150,mins:180},
-    {id:'iti-p1-s11',lbl:'Series 11',title:'ITI PAPER 1 Test Series 11',free:false,pyq:false,qs:150,mins:180},
-    {id:'iti-p1-s12',lbl:'Series 12',title:'ITI PAPER 1 Test Series 12',free:false,pyq:false,qs:150,mins:180},
-    {id:'iti-p1-s13',lbl:'Series 13',title:'ITI PAPER 1 Test Series 13',free:false,pyq:false,qs:150,mins:180},
-    {id:'iti-p1-s14',lbl:'Series 14',title:'ITI PAPER 1 Test Series 14',free:false,pyq:false,qs:150,mins:180},
-    {id:'iti-p1-s15',lbl:'Series 15',title:'ITI PAPER 1 Test Series 15',free:false,pyq:false,qs:150,mins:180},
-    {id:'iti-p1-s16',lbl:'Series 16',title:'ITI PAPER 1 Test Series 16',free:false,pyq:false,qs:150,mins:180},
-    {id:'iti-p1-s17',lbl:'Series 17',title:'ITI PAPER 1 Test Series 17',free:false,pyq:false,qs:150,mins:180},
-    {id:'iti-p1-s18',lbl:'Series 18',title:'ITI PAPER 1 Test Series 18',free:false,pyq:false,qs:150,mins:180},
-    {id:'iti-p1-s19',lbl:'Series 19',title:'ITI PAPER 1 Test Series 19',free:false,pyq:false,qs:150,mins:180},
-    {id:'iti-p1-s20',lbl:'Series 20',title:'ITI PAPER 1 Test Series 20',free:false,pyq:false,qs:150,mins:180},
-    {id:'iti-p1-s21',lbl:'Series 21',title:'ITI PAPER 1 Test Series 21',free:false,pyq:false,qs:150,mins:180},
+  {key:'p1',name:'IT Law & Computation',hasFree:true,topics:'Income Tax Act 1961, heads of income, TDS, deductions, assessment, computation of total income.',type:'Objective',marks:150,tests:[
+    {id:'iti-p1-pyq25',lbl:'PYQ 2025',title:'IT Law & Computation — 2025 PYQ',free:true,pyq:true,qs:150,mins:180},
+    {id:'iti-p1-pyq24',lbl:'PYQ 2024',title:'IT Law & Computation — 2024 PYQ',free:false,pyq:true,qs:150,mins:180},
+    {id:'iti-p1-pyq23',lbl:'PYQ 2023',title:'IT Law & Computation — 2023 PYQ',free:false,pyq:true,qs:150,mins:180},
+    {id:'iti-p1-pyq22',lbl:'PYQ 2022',title:'IT Law & Computation — 2022 PYQ',free:false,pyq:true,qs:150,mins:180},
+    {id:'iti-p1-pyq21',lbl:'PYQ 2021',title:'IT Law & Computation — 2021 PYQ',free:false,pyq:true,qs:150,mins:180},
+    {id:'iti-p1-s06',lbl:'Series 06',title:'IT Law & Computation — Series 06',free:false,pyq:false,qs:150,mins:180},
+    {id:'iti-p1-s07',lbl:'Series 07',title:'IT Law & Computation — Series 07',free:false,pyq:false,qs:150,mins:180},
+    {id:'iti-p1-s08',lbl:'Series 08',title:'IT Law & Computation — Series 08',free:false,pyq:false,qs:150,mins:180},
+    {id:'iti-p1-s09',lbl:'Series 09',title:'IT Law & Computation — Series 09',free:false,pyq:false,qs:150,mins:180},
+    {id:'iti-p1-s10',lbl:'Series 10',title:'IT Law & Computation — Series 10',free:false,pyq:false,qs:150,mins:180},
+    {id:'iti-p1-s11',lbl:'Series 11',title:'IT Law & Computation — Series 11',free:false,pyq:false,qs:150,mins:180},
+    {id:'iti-p1-s12',lbl:'Series 12',title:'IT Law & Computation — Series 12',free:false,pyq:false,qs:150,mins:180},
+    {id:'iti-p1-s13',lbl:'Series 13',title:'IT Law & Computation — Series 13',free:false,pyq:false,qs:150,mins:180},
+    {id:'iti-p1-s14',lbl:'Series 14',title:'IT Law & Computation — Series 14',free:false,pyq:false,qs:150,mins:180},
+    {id:'iti-p1-s15',lbl:'Series 15',title:'IT Law & Computation — Series 15',free:false,pyq:false,qs:150,mins:180},
+    {id:'iti-p1-s16',lbl:'Series 16',title:'IT Law & Computation — Series 16',free:false,pyq:false,qs:150,mins:180},
+    {id:'iti-p1-s17',lbl:'Series 17',title:'IT Law & Computation — Series 17',free:false,pyq:false,qs:150,mins:180},
+    {id:'iti-p1-s18',lbl:'Series 18',title:'IT Law & Computation — Series 18',free:false,pyq:false,qs:150,mins:180},
+    {id:'iti-p1-s19',lbl:'Series 19',title:'IT Law & Computation — Series 19',free:false,pyq:false,qs:150,mins:180},
+    {id:'iti-p1-s20',lbl:'Series 20',title:'IT Law & Computation — Series 20',free:false,pyq:false,qs:150,mins:180},
+    {id:'iti-p1-s21',lbl:'Series 21',title:'IT Law & Computation — Series 21',free:false,pyq:false,qs:150,mins:180},
   ]},
-  {key:'p2',name:'Book-Keeping',hasFree:true,tests:[
-    {id:'iti-p2-pyq25',lbl:'PYQ 2025',title:'ITI PAPER 2 2025 PYQ',free:true,pyq:true,qs:100,mins:120},
-    {id:'iti-p2-pyq24',lbl:'PYQ 2024',title:'ITI PAPER 2 2024 PYQ',free:false,pyq:true,qs:100,mins:120},
-    {id:'iti-p2-pyq23',lbl:'PYQ 2023',title:'ITI PAPER 2 2023 PYQ',free:false,pyq:true,qs:100,mins:120},
-    {id:'iti-p2-pyq22',lbl:'PYQ 2022',title:'ITI PAPER 2 2022 PYQ',free:false,pyq:true,qs:100,mins:120},
-    {id:'iti-p2-pyq21',lbl:'PYQ 2021',title:'ITI PAPER 2 2021 PYQ',free:false,pyq:true,qs:100,mins:120},
-    {id:'iti-p2-s06',lbl:'Series 06',title:'ITI PAPER 2 Test Series 06',free:false,pyq:false,qs:100,mins:120},
-    {id:'iti-p2-s07',lbl:'Series 07',title:'ITI PAPER 2 Test Series 07',free:false,pyq:false,qs:100,mins:120},
-    {id:'iti-p2-s08',lbl:'Series 08',title:'ITI PAPER 2 Test Series 08',free:false,pyq:false,qs:100,mins:120},
-    {id:'iti-p2-s09',lbl:'Series 09',title:'ITI PAPER 2 Test Series 09',free:false,pyq:false,qs:100,mins:120},
-    {id:'iti-p2-s10',lbl:'Series 10',title:'ITI PAPER 2 Test Series 10',free:false,pyq:false,qs:100,mins:120},
-    {id:'iti-p2-s11',lbl:'Series 11',title:'ITI PAPER 2 Test Series 11',free:false,pyq:false,qs:100,mins:120},
-    {id:'iti-p2-s12',lbl:'Series 12',title:'ITI PAPER 2 Test Series 12',free:false,pyq:false,qs:100,mins:120},
-    {id:'iti-p2-s13',lbl:'Series 13',title:'ITI PAPER 2 Test Series 13',free:false,pyq:false,qs:100,mins:120},
-    {id:'iti-p2-s14',lbl:'Series 14',title:'ITI PAPER 2 Test Series 14',free:false,pyq:false,qs:100,mins:120},
-    {id:'iti-p2-s15',lbl:'Series 15',title:'ITI PAPER 2 Test Series 15',free:false,pyq:false,qs:100,mins:120},
-    {id:'iti-p2-s16',lbl:'Series 16',title:'ITI PAPER 2 Test Series 16',free:false,pyq:false,qs:100,mins:120},
-    {id:'iti-p2-s17',lbl:'Series 17',title:'ITI PAPER 2 Test Series 17',free:false,pyq:false,qs:100,mins:120},
-    {id:'iti-p2-s18',lbl:'Series 18',title:'ITI PAPER 2 Test Series 18',free:false,pyq:false,qs:100,mins:120},
-    {id:'iti-p2-s19',lbl:'Series 19',title:'ITI PAPER 2 Test Series 19',free:false,pyq:false,qs:100,mins:120},
-    {id:'iti-p2-s20',lbl:'Series 20',title:'ITI PAPER 2 Test Series 20',free:false,pyq:false,qs:100,mins:120},
-    {id:'iti-p2-s21',lbl:'Series 21',title:'ITI PAPER 2 Test Series 21',free:false,pyq:false,qs:100,mins:120},
+  {key:'p2',name:'Book-Keeping',hasFree:true,topics:'Double entry system, trial balance, final accounts, bank reconciliation, depreciation, partnership accounts.',type:'Objective',marks:100,tests:[
+    {id:'iti-p2-pyq25',lbl:'PYQ 2025',title:'Book-Keeping & Accountancy — 2025 PYQ',free:true,pyq:true,qs:100,mins:120},
+    {id:'iti-p2-pyq24',lbl:'PYQ 2024',title:'Book-Keeping & Accountancy — 2024 PYQ',free:false,pyq:true,qs:100,mins:120},
+    {id:'iti-p2-pyq23',lbl:'PYQ 2023',title:'Book-Keeping & Accountancy — 2023 PYQ',free:false,pyq:true,qs:100,mins:120},
+    {id:'iti-p2-pyq22',lbl:'PYQ 2022',title:'Book-Keeping & Accountancy — 2022 PYQ',free:false,pyq:true,qs:100,mins:120},
+    {id:'iti-p2-pyq21',lbl:'PYQ 2021',title:'Book-Keeping & Accountancy — 2021 PYQ',free:false,pyq:true,qs:100,mins:120},
+    {id:'iti-p2-s06',lbl:'Series 06',title:'Book-Keeping & Accountancy — Series 06',free:false,pyq:false,qs:100,mins:120},
+    {id:'iti-p2-s07',lbl:'Series 07',title:'Book-Keeping & Accountancy — Series 07',free:false,pyq:false,qs:100,mins:120},
+    {id:'iti-p2-s08',lbl:'Series 08',title:'Book-Keeping & Accountancy — Series 08',free:false,pyq:false,qs:100,mins:120},
+    {id:'iti-p2-s09',lbl:'Series 09',title:'Book-Keeping & Accountancy — Series 09',free:false,pyq:false,qs:100,mins:120},
+    {id:'iti-p2-s10',lbl:'Series 10',title:'Book-Keeping & Accountancy — Series 10',free:false,pyq:false,qs:100,mins:120},
+    {id:'iti-p2-s11',lbl:'Series 11',title:'Book-Keeping & Accountancy — Series 11',free:false,pyq:false,qs:100,mins:120},
+    {id:'iti-p2-s12',lbl:'Series 12',title:'Book-Keeping & Accountancy — Series 12',free:false,pyq:false,qs:100,mins:120},
+    {id:'iti-p2-s13',lbl:'Series 13',title:'Book-Keeping & Accountancy — Series 13',free:false,pyq:false,qs:100,mins:120},
+    {id:'iti-p2-s14',lbl:'Series 14',title:'Book-Keeping & Accountancy — Series 14',free:false,pyq:false,qs:100,mins:120},
+    {id:'iti-p2-s15',lbl:'Series 15',title:'Book-Keeping & Accountancy — Series 15',free:false,pyq:false,qs:100,mins:120},
+    {id:'iti-p2-s16',lbl:'Series 16',title:'Book-Keeping & Accountancy — Series 16',free:false,pyq:false,qs:100,mins:120},
+    {id:'iti-p2-s17',lbl:'Series 17',title:'Book-Keeping & Accountancy — Series 17',free:false,pyq:false,qs:100,mins:120},
+    {id:'iti-p2-s18',lbl:'Series 18',title:'Book-Keeping & Accountancy — Series 18',free:false,pyq:false,qs:100,mins:120},
+    {id:'iti-p2-s19',lbl:'Series 19',title:'Book-Keeping & Accountancy — Series 19',free:false,pyq:false,qs:100,mins:120},
+    {id:'iti-p2-s20',lbl:'Series 20',title:'Book-Keeping & Accountancy — Series 20',free:false,pyq:false,qs:100,mins:120},
+    {id:'iti-p2-s21',lbl:'Series 21',title:'Book-Keeping & Accountancy — Series 21',free:false,pyq:false,qs:100,mins:120},
   ]},
-  {key:'p3',name:'Allied Laws',hasFree:true,tests:[
-    {id:'iti-p3-pyq25',lbl:'PYQ 2025',title:'ITI PAPER 3 2025 PYQ',free:true,pyq:true,qs:100,mins:120},
-    {id:'iti-p3-pyq24',lbl:'PYQ 2024',title:'ITI PAPER 3 2024 PYQ',free:false,pyq:true,qs:100,mins:120},
-    {id:'iti-p3-pyq23',lbl:'PYQ 2023',title:'ITI PAPER 3 2023 PYQ',free:false,pyq:true,qs:100,mins:120},
-    {id:'iti-p3-pyq22',lbl:'PYQ 2022',title:'ITI PAPER 3 2022 PYQ',free:false,pyq:true,qs:100,mins:120},
-    {id:'iti-p3-pyq21',lbl:'PYQ 2021',title:'ITI PAPER 3 2021 PYQ',free:false,pyq:true,qs:100,mins:120},
-    {id:'iti-p3-s06',lbl:'Series 06',title:'ITI PAPER 3 Test Series 06',free:false,pyq:false,qs:100,mins:120},
-    {id:'iti-p3-s07',lbl:'Series 07',title:'ITI PAPER 3 Test Series 07',free:false,pyq:false,qs:100,mins:120},
-    {id:'iti-p3-s08',lbl:'Series 08',title:'ITI PAPER 3 Test Series 08',free:false,pyq:false,qs:100,mins:120},
-    {id:'iti-p3-s09',lbl:'Series 09',title:'ITI PAPER 3 Test Series 09',free:false,pyq:false,qs:100,mins:120},
-    {id:'iti-p3-s10',lbl:'Series 10',title:'ITI PAPER 3 Test Series 10',free:false,pyq:false,qs:100,mins:120},
-    {id:'iti-p3-s11',lbl:'Series 11',title:'ITI PAPER 3 Test Series 11',free:false,pyq:false,qs:100,mins:120},
-    {id:'iti-p3-s12',lbl:'Series 12',title:'ITI PAPER 3 Test Series 12',free:false,pyq:false,qs:100,mins:120},
-    {id:'iti-p3-s13',lbl:'Series 13',title:'ITI PAPER 3 Test Series 13',free:false,pyq:false,qs:100,mins:120},
-    {id:'iti-p3-s14',lbl:'Series 14',title:'ITI PAPER 3 Test Series 14',free:false,pyq:false,qs:100,mins:120},
-    {id:'iti-p3-s15',lbl:'Series 15',title:'ITI PAPER 3 Test Series 15',free:false,pyq:false,qs:100,mins:120},
-    {id:'iti-p3-s16',lbl:'Series 16',title:'ITI PAPER 3 Test Series 16',free:false,pyq:false,qs:100,mins:120},
-    {id:'iti-p3-s17',lbl:'Series 17',title:'ITI PAPER 3 Test Series 17',free:false,pyq:false,qs:100,mins:120},
-    {id:'iti-p3-s18',lbl:'Series 18',title:'ITI PAPER 3 Test Series 18',free:false,pyq:false,qs:100,mins:120},
-    {id:'iti-p3-s19',lbl:'Series 19',title:'ITI PAPER 3 Test Series 19',free:false,pyq:false,qs:100,mins:120},
-    {id:'iti-p3-s20',lbl:'Series 20',title:'ITI PAPER 3 Test Series 20',free:false,pyq:false,qs:100,mins:120},
-    {id:'iti-p3-s21',lbl:'Series 21',title:'ITI PAPER 3 Test Series 21',free:false,pyq:false,qs:100,mins:120},
+  {key:'p3',name:'Allied Laws',hasFree:true,topics:'Transfer of Property Act, Registration Act, Succession Act, Hindu Law, Trusts Act, RTI Act 2005.',type:'Objective',marks:100,tests:[
+    {id:'iti-p3-pyq25',lbl:'PYQ 2025',title:'Allied Laws — 2025 PYQ',free:true,pyq:true,qs:100,mins:120},
+    {id:'iti-p3-pyq24',lbl:'PYQ 2024',title:'Allied Laws — 2024 PYQ',free:false,pyq:true,qs:100,mins:120},
+    {id:'iti-p3-pyq23',lbl:'PYQ 2023',title:'Allied Laws — 2023 PYQ',free:false,pyq:true,qs:100,mins:120},
+    {id:'iti-p3-pyq22',lbl:'PYQ 2022',title:'Allied Laws — 2022 PYQ',free:false,pyq:true,qs:100,mins:120},
+    {id:'iti-p3-pyq21',lbl:'PYQ 2021',title:'Allied Laws — 2021 PYQ',free:false,pyq:true,qs:100,mins:120},
+    {id:'iti-p3-s06',lbl:'Series 06',title:'Allied Laws — Series 06',free:false,pyq:false,qs:100,mins:120},
+    {id:'iti-p3-s07',lbl:'Series 07',title:'Allied Laws — Series 07',free:false,pyq:false,qs:100,mins:120},
+    {id:'iti-p3-s08',lbl:'Series 08',title:'Allied Laws — Series 08',free:false,pyq:false,qs:100,mins:120},
+    {id:'iti-p3-s09',lbl:'Series 09',title:'Allied Laws — Series 09',free:false,pyq:false,qs:100,mins:120},
+    {id:'iti-p3-s10',lbl:'Series 10',title:'Allied Laws — Series 10',free:false,pyq:false,qs:100,mins:120},
+    {id:'iti-p3-s11',lbl:'Series 11',title:'Allied Laws — Series 11',free:false,pyq:false,qs:100,mins:120},
+    {id:'iti-p3-s12',lbl:'Series 12',title:'Allied Laws — Series 12',free:false,pyq:false,qs:100,mins:120},
+    {id:'iti-p3-s13',lbl:'Series 13',title:'Allied Laws — Series 13',free:false,pyq:false,qs:100,mins:120},
+    {id:'iti-p3-s14',lbl:'Series 14',title:'Allied Laws — Series 14',free:false,pyq:false,qs:100,mins:120},
+    {id:'iti-p3-s15',lbl:'Series 15',title:'Allied Laws — Series 15',free:false,pyq:false,qs:100,mins:120},
+    {id:'iti-p3-s16',lbl:'Series 16',title:'Allied Laws — Series 16',free:false,pyq:false,qs:100,mins:120},
+    {id:'iti-p3-s17',lbl:'Series 17',title:'Allied Laws — Series 17',free:false,pyq:false,qs:100,mins:120},
+    {id:'iti-p3-s18',lbl:'Series 18',title:'Allied Laws — Series 18',free:false,pyq:false,qs:100,mins:120},
+    {id:'iti-p3-s19',lbl:'Series 19',title:'Allied Laws — Series 19',free:false,pyq:false,qs:100,mins:120},
+    {id:'iti-p3-s20',lbl:'Series 20',title:'Allied Laws — Series 20',free:false,pyq:false,qs:100,mins:120},
+    {id:'iti-p3-s21',lbl:'Series 21',title:'Allied Laws — Series 21',free:false,pyq:false,qs:100,mins:120},
   ]},
-  {key:'p4',name:'Office Procedure',hasFree:true,tests:[
-    {id:'iti-p4-pyq25',lbl:'PYQ 2025',title:'ITI PAPER 4 2025 PYQ',free:true,pyq:true,qs:100,mins:120},
-    {id:'iti-p4-pyq24',lbl:'PYQ 2024',title:'ITI PAPER 4 2024 PYQ',free:false,pyq:true,qs:100,mins:120},
-    {id:'iti-p4-pyq23',lbl:'PYQ 2023',title:'ITI PAPER 4 2023 PYQ',free:false,pyq:true,qs:100,mins:120},
-    {id:'iti-p4-pyq22',lbl:'PYQ 2022',title:'ITI PAPER 4 2022 PYQ',free:false,pyq:true,qs:100,mins:120},
-    {id:'iti-p4-pyq21',lbl:'PYQ 2021',title:'ITI PAPER 4 2021 PYQ',free:false,pyq:true,qs:100,mins:120},
-    {id:'iti-p4-s06',lbl:'Series 06',title:'ITI PAPER 4 Test Series 06',free:false,pyq:false,qs:100,mins:120},
-    {id:'iti-p4-s07',lbl:'Series 07',title:'ITI PAPER 4 Test Series 07',free:false,pyq:false,qs:100,mins:120},
-    {id:'iti-p4-s08',lbl:'Series 08',title:'ITI PAPER 4 Test Series 08',free:false,pyq:false,qs:100,mins:120},
-    {id:'iti-p4-s09',lbl:'Series 09',title:'ITI PAPER 4 Test Series 09',free:false,pyq:false,qs:100,mins:120},
-    {id:'iti-p4-s10',lbl:'Series 10',title:'ITI PAPER 4 Test Series 10',free:false,pyq:false,qs:100,mins:120},
-    {id:'iti-p4-s11',lbl:'Series 11',title:'ITI PAPER 4 Test Series 11',free:false,pyq:false,qs:100,mins:120},
-    {id:'iti-p4-s12',lbl:'Series 12',title:'ITI PAPER 4 Test Series 12',free:false,pyq:false,qs:100,mins:120},
-    {id:'iti-p4-s13',lbl:'Series 13',title:'ITI PAPER 4 Test Series 13',free:false,pyq:false,qs:100,mins:120},
-    {id:'iti-p4-s14',lbl:'Series 14',title:'ITI PAPER 4 Test Series 14',free:false,pyq:false,qs:100,mins:120},
-    {id:'iti-p4-s15',lbl:'Series 15',title:'ITI PAPER 4 Test Series 15',free:false,pyq:false,qs:100,mins:120},
-    {id:'iti-p4-s16',lbl:'Series 16',title:'ITI PAPER 4 Test Series 16',free:false,pyq:false,qs:100,mins:120},
-    {id:'iti-p4-s17',lbl:'Series 17',title:'ITI PAPER 4 Test Series 17',free:false,pyq:false,qs:100,mins:120},
-    {id:'iti-p4-s18',lbl:'Series 18',title:'ITI PAPER 4 Test Series 18',free:false,pyq:false,qs:100,mins:120},
-    {id:'iti-p4-s19',lbl:'Series 19',title:'ITI PAPER 4 Test Series 19',free:false,pyq:false,qs:100,mins:120},
-    {id:'iti-p4-s20',lbl:'Series 20',title:'ITI PAPER 4 Test Series 20',free:false,pyq:false,qs:100,mins:120},
-    {id:'iti-p4-s21',lbl:'Series 21',title:'ITI PAPER 4 Test Series 21',free:false,pyq:false,qs:100,mins:120},
+  {key:'p4',name:'Office Procedure',hasFree:true,topics:'FR/SR, CCS Conduct Rules, Pension Rules, IT Records Management, RTI Act, leave rules, TA.',type:'Objective',marks:100,tests:[
+    {id:'iti-p4-pyq25',lbl:'PYQ 2025',title:'Office Procedure — 2025 PYQ',free:true,pyq:true,qs:100,mins:120},
+    {id:'iti-p4-pyq24',lbl:'PYQ 2024',title:'Office Procedure — 2024 PYQ',free:false,pyq:true,qs:100,mins:120},
+    {id:'iti-p4-pyq23',lbl:'PYQ 2023',title:'Office Procedure — 2023 PYQ',free:false,pyq:true,qs:100,mins:120},
+    {id:'iti-p4-pyq22',lbl:'PYQ 2022',title:'Office Procedure — 2022 PYQ',free:false,pyq:true,qs:100,mins:120},
+    {id:'iti-p4-pyq21',lbl:'PYQ 2021',title:'Office Procedure — 2021 PYQ',free:false,pyq:true,qs:100,mins:120},
+    {id:'iti-p4-s06',lbl:'Series 06',title:'Office Procedure — Series 06',free:false,pyq:false,qs:100,mins:120},
+    {id:'iti-p4-s07',lbl:'Series 07',title:'Office Procedure — Series 07',free:false,pyq:false,qs:100,mins:120},
+    {id:'iti-p4-s08',lbl:'Series 08',title:'Office Procedure — Series 08',free:false,pyq:false,qs:100,mins:120},
+    {id:'iti-p4-s09',lbl:'Series 09',title:'Office Procedure — Series 09',free:false,pyq:false,qs:100,mins:120},
+    {id:'iti-p4-s10',lbl:'Series 10',title:'Office Procedure — Series 10',free:false,pyq:false,qs:100,mins:120},
+    {id:'iti-p4-s11',lbl:'Series 11',title:'Office Procedure — Series 11',free:false,pyq:false,qs:100,mins:120},
+    {id:'iti-p4-s12',lbl:'Series 12',title:'Office Procedure — Series 12',free:false,pyq:false,qs:100,mins:120},
+    {id:'iti-p4-s13',lbl:'Series 13',title:'Office Procedure — Series 13',free:false,pyq:false,qs:100,mins:120},
+    {id:'iti-p4-s14',lbl:'Series 14',title:'Office Procedure — Series 14',free:false,pyq:false,qs:100,mins:120},
+    {id:'iti-p4-s15',lbl:'Series 15',title:'Office Procedure — Series 15',free:false,pyq:false,qs:100,mins:120},
+    {id:'iti-p4-s16',lbl:'Series 16',title:'Office Procedure — Series 16',free:false,pyq:false,qs:100,mins:120},
+    {id:'iti-p4-s17',lbl:'Series 17',title:'Office Procedure — Series 17',free:false,pyq:false,qs:100,mins:120},
+    {id:'iti-p4-s18',lbl:'Series 18',title:'Office Procedure — Series 18',free:false,pyq:false,qs:100,mins:120},
+    {id:'iti-p4-s19',lbl:'Series 19',title:'Office Procedure — Series 19',free:false,pyq:false,qs:100,mins:120},
+    {id:'iti-p4-s20',lbl:'Series 20',title:'Office Procedure — Series 20',free:false,pyq:false,qs:100,mins:120},
+    {id:'iti-p4-s21',lbl:'Series 21',title:'Office Procedure — Series 21',free:false,pyq:false,qs:100,mins:120},
   ]},
 ];
 
@@ -510,7 +639,7 @@ function buildTabs(){
   PAPERS.forEach((p,i)=>{
     const btn=document.createElement('button');
     btn.className='tab-btn'+(i===activeTab?' active':'');
-    btn.innerHTML=`<span class="tab-num">Paper ${i+1}</span><span class="tab-name">${p.name}${p.hasFree?' <span class="free-star">✦</span>':''}</span>`;
+    btn.innerHTML=`<span class="tab-num">Paper ${i+1} · ${p.marks} Marks</span><span class="tab-name">${p.name}${p.hasFree?' <span class="free-star">✦</span>':''}</span>`;
     btn.onclick=()=>switchTab(i);
     bar.appendChild(btn);
   });
@@ -525,34 +654,92 @@ function buildCards(p,i){
   const div=document.createElement('div');
   div.className='panel'+(i===0?' active':'');
   div.id='panel-'+p.key;
-  const qs=[...new Set(p.tests.map(t=>t.qs))];
-  const mn=[...new Set(p.tests.map(t=>t.mins))];
-  const qsStr=qs.length===1?qs[0]+' questions':''+Math.min(...qs)+'–'+Math.max(...qs)+' questions';
-  const mnStr=mn.length===1?mn[0]+' min':''+Math.min(...mn)+'–'+Math.max(...mn)+' min';
-  div.innerHTML=`<div class="ph"><div class="ph-left"><h2>Paper ${i+1} — ${p.name}</h2><p>${p.tests.length} tests &nbsp;·&nbsp; ${qsStr} &nbsp;·&nbsp; ${mnStr} each</p></div>${p.hasFree?'<span class="free-pill"><svg width="10" height="10" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>1 Free PYQ Included</span>':''}</div><div class="tests-grid" id="grid-${p.key}"></div>`;
+
+  // Bundle block (index-2 style)
+  const bundleHTML=`<div class="bundle"><div class="bundle-in"><div>
+    <div class="bundle-badge">⭐ Best Value</div>
+    <div class="bundle-title">ITI Paper ${i+1} — ${p.name}</div>
+    <div class="bundle-sub">21 Tests · 5 PYQs + 16 AI-Crafted Series · ${p.marks} Marks · Objective</div>
+    <div class="bundle-papers">
+      <div class="bp"><svg viewbox="0 0 24 24" fill=none height=11 stroke=rgba(255,255,255,.65) stroke-width=2 width=11><path d="M5 13l4 4L19 7"/></svg>5 Previous Year Question (PYQ) Tests — 2021 to 2025</div>
+      <div class="bp"><svg viewbox="0 0 24 24" fill=none height=11 stroke=rgba(255,255,255,.65) stroke-width=2 width=11><path d="M5 13l4 4L19 7"/></svg>16 AI-Leveled Practice Series (Series 06–21)</div>
+      <div class="bp"><svg viewbox="0 0 24 24" fill=none height=11 stroke=rgba(255,255,255,.65) stroke-width=2 width=11><path d="M5 13l4 4L19 7"/></svg>Topics: ${p.topics.substring(0,80)}…</div>
+      <div class="bp"><svg viewbox="0 0 24 24" fill=none height=11 stroke=rgba(255,255,255,.65) stroke-width=2 width=11><path d="M5 13l4 4L19 7"/></svg>1/8th negative marking · Timed auto-submit</div>
+    </div>
+  </div>
+  <div class="bundle-right">
+    <div><div class="bundle-strike">₹1420 (4 × ₹355)</div><div class="bundle-save">Save ₹465</div></div>
+    <div><div class="bundle-price">₹955</div><div class="bundle-psub">/ Calendar Year · All 4 Papers</div></div>
+    <button onclick="openModal()" class="btn-bunch">Get ITI Bunch →</button>
+  </div></div></div>`;
+
+  div.innerHTML=`
+    <div class="ph">
+      <div class="ph-left">
+        <h2>Paper ${i+1} — ${p.name}</h2>
+        <p>${p.tests.length} tests &nbsp;·&nbsp; ${p.qs||p.tests[0].qs} questions &nbsp;·&nbsp; ${p.tests[0].mins} min each &nbsp;·&nbsp; ${p.marks} marks &nbsp;·&nbsp; ${p.type}</p>
+      </div>
+      ${p.hasFree?'<span class="free-pill"><svg width="10" height="10" fill="none" stroke="currentColor" stroke-width="2.5" viewbox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>1 Free PYQ Included</span>':''}
+    </div>
+    ${!isPaid()?bundleHTML:''}
+    <div class="papers-lbl">All 21 Tests — ${p.tests.filter(t=>t.pyq).length} PYQs + ${p.tests.filter(t=>!t.pyq).length} Series</div>
+    <div class="tests-grid" id="grid-${p.key}"></div>`;
+
   document.getElementById('panels').appendChild(div);
   const grid=document.getElementById('grid-'+p.key);
+
   p.tests.forEach(t=>{
     const unlocked=isUnlocked(t);
     const score=getScore(t.id);
     const attempts=getAttempts(t.id);
     const maxed=unlocked&&score&&attempts>=3;
     const wrap=document.createElement('div');
-    if(t.free){wrap.className='free-wrap';wrap.innerHTML='<div class="free-ribbon">★ FREE PYQ</div>';}
+    wrap.style.position='relative';
+
+    if(t.free){
+      wrap.innerHTML='<div class="free-ribbon"><svg width="9" height="9" viewbox="0 0 24 24" fill="currentColor"><path d="M12 2L15.1 8.3 22 9.3 17 14.1 18.2 21 12 17.8 5.8 21 7 14.1 2 9.3 8.9 8.3 12 2z"/></svg> FREE PYQ</div>';
+    }
+
     let card;
-    if(unlocked&&!maxed){card=document.createElement('a');card.href='test-engine.html?id='+t.id;card.addEventListener('click',()=>recordAttempt(t.id));}
-    else{card=document.createElement('div');}
+    if(unlocked&&!maxed){
+      card=document.createElement('a');
+      card.href='test-engine.html?id='+t.id;
+      card.addEventListener('click',()=>recordAttempt(t.id));
+    } else {
+      card=document.createElement('div');
+    }
     card.className='card'+(maxed?' completed':unlocked?'':' locked');
+    if(t.free) card.style.cssText='border-radius:0 0 8px 8px';
+
     const sc=score?`<span class="cscore">${score.correct||0}/${score.total||t.qs}</span>`:'';
-    let ac;
-    if(maxed){ac=`<span class="ca ca-done"><svg width="10" height="10" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>Completed</span><span class="retest-badge">All 3 Used</span>${sc}`;}
-    else if(unlocked){ac=`<span class="ca"><svg width="10" height="10" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><polygon points="5 3 19 12 5 21 5 3"/></svg>${score?'Retake':'Start'}</span>${sc}`;}
-    else{ac=`<span class="ca ca-lock"><svg width="10" height="10" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0110 0v4"/></svg>Locked</span>`;}
-    const stTxt=t.free?'FREE':maxed?'DONE':unlocked?'OPEN':'LOCK';
-    const stCls=maxed||unlocked?'st-free':'st-lock';
-    card.innerHTML=`<div class="ct"><span class="lbl ${t.pyq?'lbl-pyq':'lbl-reg'}">${t.lbl}</span><span class="st ${stCls}">${stTxt}</span></div><div class="cb"><div class="ctitle">${t.title}</div><div class="cmeta"><span class="mi"><svg width="9" height="9" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>${t.mins} min</span><span class="mi"><svg width="9" height="9" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M9 11l3 3L22 4"/></svg>${t.qs} Qs</span></div></div><div class="cf">${ac}</div>`;
-    if(!unlocked)card.onclick=()=>openModal();
-    wrap.appendChild(card);grid.appendChild(wrap);
+    let bottomHTML;
+    if(maxed){
+      bottomHTML=`<div class="pc-btns"><span class="pb pb-done">✓ Done</span><span class="retest-badge">All 3 Used</span></div>${sc}`;
+    } else if(unlocked){
+      bottomHTML=`<div class="pc-btns"><span class="pb pb-free">${score?'Retake Test':'Free Test'}</span></div>${sc}`;
+    } else {
+      bottomHTML=`<div class="pc-btns"><button class="pb pb-lock" onclick="openModal()">🔒 Locked</button></div>`;
+    }
+
+    card.innerHTML=`
+      <div class="ct">
+        <span class="lbl ${t.pyq?'lbl-pyq':'lbl-reg'}">${t.lbl}</span>
+        <span class="st ${maxed?'st-done':unlocked?'st-open':'st-lock'}">${maxed?'DONE':unlocked?'OPEN':'LOCK'}</span>
+      </div>
+      <div class="cb">
+        <div class="ctitle">${t.title}</div>
+        <div class="ctopics">${p.topics.split(',').slice(0,2).join(', ')}${p.topics.split(',').length>2?'…':''}</div>
+        <div class="cmeta">
+          <span class="mi"><svg width="9" height="9" fill="none" stroke="currentColor" stroke-width="2" viewbox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>${t.mins} min</span>
+          <span class="mi"><svg width="9" height="9" fill="none" stroke="currentColor" stroke-width="2" viewbox="0 0 24 24"><path d="M9 11l3 3L22 4"/></svg>${t.qs} Qs</span>
+          <span class="pc-type type-obj">${p.type}</span>
+        </div>
+      </div>
+      <div class="cf">${bottomHTML}</div>`;
+
+    if(!unlocked) card.onclick=()=>openModal();
+    wrap.appendChild(card);
+    grid.appendChild(wrap);
   });
 }
 
@@ -567,8 +754,8 @@ let selPlan=null;
 function buildPlans(){
   const pc=document.getElementById('plan-cards');pc.innerHTML='';
   Object.entries(PLANS).forEach(([k,p])=>{
-    const d=document.createElement('div');d.className='pc'+(k===selPlan?' sel':'');d.onclick=()=>selectPlan(k);
-    d.innerHTML=`<div class="pr"><div class="pd"></div></div><div class="pi"><h4>${p.label}</h4><p>${p.desc}</p></div><div class="pp">₹${p.amount}</div>${p.best?'<span class="best">Best Value</span>':''}`;
+    const d=document.createElement('div');d.className='pc-m'+(k===selPlan?' sel':'');d.onclick=()=>selectPlan(k);
+    d.innerHTML=`<div class="pr"><div class="pd-dot"></div></div><div class="pi"><h4>${p.label}</h4><p>${p.desc}</p></div><div class="pp">₹${p.amount}</div>${p.best?'<span class="best-m">Best Value</span>':''}`;
     pc.appendChild(d);
   });
   document.getElementById('cont-btn').textContent=selPlan?`Pay ₹${PLANS[selPlan].amount} via UPI →`:'Select a plan to continue';
@@ -635,7 +822,7 @@ function populateProfile(user,users){
   const pe=document.getElementById('pd-em');if(pe)pe.textContent=user.email||'—';
   const pm=document.getElementById('pd-mob');if(pm)pm.textContent=s.mobile?'+91 '+s.mobile:'Not provided';
   const pr=document.getElementById('pd-reg');if(pr)pr.textContent=s.region||'Not selected';
-  const pp=document.getElementById('pd-plan-v');if(pp)pp.textContent=user.paid?(user.plan?user.plan.replace('bunch-','').replace('single-','').toUpperCase()+' Access':'Premium Access'):'Free (3 Tests)';
+  const pp=document.getElementById('pd-plan-v');if(pp)pp.textContent=user.paid?(user.plan?user.plan.replace('bunch-','').replace('single-','').toUpperCase()+' Access':'Premium Access'):'Free (4 Tests)';
 }
 function toggleProfile(){
   const wrap=document.getElementById('chip-wrap');const dd=document.getElementById('profile-dropdown');if(!dd)return;
@@ -681,6 +868,7 @@ function saveProfile(){
 window.addEventListener('scroll',()=>{
   const prog=document.getElementById('progress');const pct=scrollY/(document.documentElement.scrollHeight-innerHeight)*100;
   if(prog)prog.style.width=pct+'%';
+  const btt=document.getElementById('btt');if(btt)btt.classList.toggle('vis',scrollY>400);
 },{passive:true});
 </script>
 </body>
