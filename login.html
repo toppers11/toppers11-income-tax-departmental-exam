@@ -1,179 +1,221 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<!-- Google tag (gtag.js) -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-V2VM68RT43"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-  gtag('config', 'G-V2VM68RT43');
-</script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-V2VM68RT43');</script>
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 <title>Toppers11 — Login / Register</title>
 <meta name="robots" content="noindex, nofollow"/>
-<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600;700&family=Playfair+Display:wght@700;800&display=swap" rel="stylesheet"/>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@300;400;600;700;800;900&family=Open+Sans:wght@400;600;700&family=Dancing+Script:wght@600;700&family=Righteous&display=swap" rel="stylesheet"/>
 <style>
 :root{
-  --green:#10B981;--green-dark:#059669;--green-deeper:#065F46;
-  --green-pale:#ECFDF5;--green-light:#D1FAE5;
-  --ink:#111827;--muted:#6B7280;--border:#E5E7EB;--bg:#F0FDF4;
+  --t1:#006d5b;--t2:#25a36f;--t3:#00ab84;--t-dark:#004d3f;--t-mid:#008c6e;
+  --yellow:#f5c518;--yellow2:#e8a900;
+  --dark:#1a1a2e;--dark2:#2d2d44;
+  --ink:#222;--muted:#555;--bg:#f7f7f7;--wh:#fff;--bdr:#ddd;
 }
 *{box-sizing:border-box;margin:0;padding:0;}
-body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--ink);min-height:100vh;display:flex;flex-direction:column;}
-.top-nav{background:#fff;border-bottom:1px solid var(--border);padding:0 1.5rem;height:60px;display:flex;align-items:center;justify-content:space-between;position:relative;z-index:200;}
-.nav-home{font-size:0.8rem;font-weight:500;color:var(--muted);text-decoration:none;display:flex;align-items:center;gap:0.3rem;}
-.nav-home:hover{color:var(--green-dark);}
+html{scroll-behavior:smooth;}
+body{font-family:'Open Sans',sans-serif;background:var(--bg);color:var(--ink);min-height:100vh;display:flex;flex-direction:column;overflow-x:hidden;}
 
-/* USER CHIP */
-.user-chip-wrap{position:relative;display:none;align-items:center;gap:0.5rem;}
-.user-chip-wrap.visible{display:flex;}
-.user-chip{display:flex;align-items:center;gap:0.5rem;background:var(--green-pale);border:1px solid var(--green-light);border-radius:999px;padding:0.3rem 0.8rem 0.3rem 0.35rem;cursor:pointer;transition:box-shadow 0.15s;}
-.user-chip:hover{box-shadow:0 2px 10px rgba(16,185,129,0.2);}
-.avatar{width:28px;height:28px;border-radius:50%;background:linear-gradient(135deg,#065F46,#10B981);display:grid;place-items:center;font-size:0.7rem;font-weight:700;color:#fff;flex-shrink:0;}
-.user-name-chip{font-size:0.8rem;font-weight:600;color:var(--green-deeper);}
-.chevron-icon{transition:transform 0.2s;}
-.user-chip-wrap.open .chevron-icon{transform:rotate(180deg);}
+/* ── TOP BAR ── */
+.top-bar{border-bottom:2px solid var(--t3);background:#fff;padding:.6rem 0;flex-shrink:0;}
+.top-inner{display:flex;justify-content:space-between;align-items:center;gap:1rem;max-width:1200px;margin:0 auto;padding:0 1.2rem;}
+.logo-box{display:inline-flex;flex-direction:column;gap:0;text-decoration:none;line-height:1;position:relative;flex-shrink:0;padding:.4rem 0;}
+.logo-box .logo-eyebrow{display:block;font-family:'Dancing Script',cursive;font-size:1.3rem;font-weight:400;color:var(--t3);line-height:1.4;letter-spacing:.04em;}
+.logo-box .site-name{display:block;font-family:'Nunito',sans-serif;font-size:42px;font-weight:100;color:#1a1a2e;letter-spacing:.02em;text-transform:lowercase;line-height:1;margin-bottom:.2rem;}
+.logo-box .site-name .num{color:var(--t3);font-family:'Righteous',cursive;font-size:42px;}
+.logo-box .site-tag{display:flex;align-items:center;gap:.4rem;font-size:.52rem;font-weight:700;letter-spacing:.18em;text-transform:uppercase;color:#555;}
+.logo-box .site-tag:before,.logo-box .site-tag:after{content:'';display:inline-block;flex:1;min-width:14px;height:1.5px;background:var(--t3);}
+.logo-box:hover .site-name{color:var(--t3);}
+.nav-home{display:flex;align-items:center;gap:.35rem;font-size:.78rem;font-weight:600;color:var(--muted);text-decoration:none;padding:.45rem .9rem;border:1.5px solid var(--bdr);border-radius:6px;transition:all .15s;}
+.nav-home:hover{color:var(--t1);border-color:var(--t3);background:#00ab840a;}
+.nav-home svg{flex-shrink:0;}
 
-/* PROFILE DROPDOWN */
-.profile-dropdown{position:absolute;top:calc(100% + 10px);right:0;width:340px;background:#fff;border:1px solid var(--border);border-radius:16px;box-shadow:0 16px 48px rgba(0,0,0,0.12);z-index:1000;overflow:hidden;display:none;}
-.profile-dropdown.open{display:block;animation:dropIn 0.2s ease;}
-@keyframes dropIn{from{opacity:0;transform:translateY(-8px);}to{opacity:1;transform:translateY(0);}}
-.pd-header{background:linear-gradient(135deg,#065F46,#059669);padding:1.2rem 1.4rem;display:flex;align-items:center;gap:0.9rem;}
-.pd-avatar-lg{width:46px;height:46px;border-radius:50%;background:rgba(255,255,255,0.2);display:grid;place-items:center;font-size:1.1rem;font-weight:700;color:#fff;flex-shrink:0;border:2px solid rgba(255,255,255,0.35);}
-.pd-header-info h3{font-size:0.95rem;font-weight:700;color:#fff;margin-bottom:0.1rem;}
-.pd-header-info p{font-size:0.75rem;color:rgba(255,255,255,0.72);}
-.pd-body{padding:1rem 1.4rem 1.2rem;}
-.pd-row{display:flex;align-items:flex-start;gap:0.7rem;padding:0.5rem 0;border-bottom:1px solid var(--border);}
-.pd-row:last-child{border-bottom:none;}
-.pd-icon{width:32px;height:32px;border-radius:8px;background:var(--green-pale);display:grid;place-items:center;flex-shrink:0;margin-top:2px;}
-.pd-label{font-size:0.7rem;font-weight:600;color:var(--muted);letter-spacing:0.04em;text-transform:uppercase;margin-bottom:0.15rem;}
-.pd-value{font-size:0.84rem;font-weight:500;color:var(--ink);line-height:1.4;}
-.pd-footer{padding:0.8rem 1.4rem;border-top:1px solid var(--border);display:flex;gap:0.6rem;}
-.pd-btn-edit{flex:1;padding:0.55rem;font-size:0.78rem;font-weight:600;background:var(--green-pale);color:var(--green-deeper);border:none;border-radius:8px;cursor:pointer;transition:background 0.15s;}
-.pd-btn-edit:hover{background:var(--green-light);}
-.pd-btn-logout{flex:1;padding:0.55rem;font-size:0.78rem;font-weight:600;background:#FEF2F2;color:#991B1B;border:none;border-radius:8px;cursor:pointer;transition:background 0.15s;}
-.pd-btn-logout:hover{background:#FEE2E2;}
+/* ── HERO / BACKGROUND ── */
+.auth-bg{flex:1;display:flex;align-items:center;justify-content:center;padding:2.5rem 1rem 3rem;position:relative;background:linear-gradient(160deg,#f0fdfb 0%,#f7f7f7 60%);overflow:hidden;}
+.auth-bg:before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at 15% 20%,rgba(0,171,132,.10) 0%,transparent 55%),radial-gradient(ellipse at 85% 80%,rgba(245,197,24,.08) 0%,transparent 50%);pointer-events:none;}
 
-/* EDIT MODAL */
-.modal-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,0.45);z-index:500;align-items:center;justify-content:center;padding:1rem;}
-.modal-overlay.open{display:flex;}
-.modal-box{background:#fff;border-radius:20px;width:100%;max-width:520px;max-height:90vh;overflow-y:auto;box-shadow:0 24px 64px rgba(0,0,0,0.18);}
-.modal-header{background:linear-gradient(135deg,#065F46,#059669);padding:1.4rem 1.75rem;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;}
-.modal-header h2{font-family:'Playfair Display',serif;font-size:1.3rem;font-weight:700;color:#fff;}
-.modal-close{background:rgba(255,255,255,0.18);border:none;color:#fff;width:32px;height:32px;border-radius:8px;cursor:pointer;font-size:1.1rem;display:grid;place-items:center;}
-.modal-close:hover{background:rgba(255,255,255,0.28);}
-.modal-body{padding:1.5rem 1.75rem 2rem;}
+/* Floating triangles */
+.tri{position:absolute;pointer-events:none;z-index:0;}
+@keyframes floatA{0%,100%{transform:rotate(-20deg) translateY(0)}50%{transform:rotate(-20deg) translateY(-14px)}}
+@keyframes floatB{0%,100%{transform:rotate(50deg) translateY(0)}50%{transform:rotate(50deg) translateY(-10px)}}
+@keyframes floatC{0%,100%{transform:rotate(130deg) translateY(0)}50%{transform:rotate(130deg) translateY(-12px)}}
+@keyframes floatD{0%,100%{transform:rotate(-60deg) translateY(0)}50%{transform:rotate(-60deg) translateY(-8px)}}
+.tri-1{top:6%;left:3%;width:72px;height:72px;animation:floatA 7s ease-in-out infinite;}
+.tri-2{top:12%;right:5%;width:95px;height:95px;animation:floatB 9s ease-in-out .8s infinite;}
+.tri-3{bottom:10%;left:7%;width:60px;height:60px;animation:floatC 8s ease-in-out 1.5s infinite;}
+.tri-4{bottom:14%;right:4%;width:50px;height:50px;animation:floatD 6s ease-in-out 2s infinite;opacity:.6;}
+.tri-5{top:45%;left:1%;width:38px;height:38px;animation:floatB 10s ease-in-out 3s infinite;opacity:.5;filter:blur(1px);}
 
-/* AUTH */
-.auth-wrap{flex:1;display:flex;align-items:center;justify-content:center;padding:2rem 1rem;}
-.auth-card{background:#fff;border-radius:20px;border:1px solid var(--border);box-shadow:0 8px 40px rgba(0,0,0,0.08);width:100%;max-width:490px;overflow:hidden;}
-.auth-header{background:linear-gradient(135deg,#065F46,#059669 55%,#10B981);padding:2rem 2rem 1.75rem;text-align:center;}
-.auth-header h1{font-family:'Playfair Display',serif;font-size:1.8rem;font-weight:800;color:#fff;margin-bottom:0.3rem;}
-.auth-header p{font-size:0.82rem;color:rgba(255,255,255,0.78);margin-bottom:0.9rem;}
-.free-pills{display:flex;justify-content:center;gap:0.4rem;flex-wrap:wrap;}
-.free-pill{display:inline-flex;align-items:center;gap:0.3rem;background:rgba(255,255,255,0.18);border:1px solid rgba(255,255,255,0.3);border-radius:999px;padding:0.22rem 0.7rem;font-size:0.68rem;font-weight:700;color:#fff;letter-spacing:0.04em;}
-.auth-tabs{display:flex;border-bottom:1px solid var(--border);}
-.auth-tab{flex:1;padding:0.85rem;font-size:0.85rem;font-weight:600;text-align:center;cursor:pointer;border:none;background:none;color:var(--muted);border-bottom:3px solid transparent;transition:all 0.15s;}
-.auth-tab.active{color:var(--green-dark);border-bottom-color:var(--green);}
+/* ── AUTH CARD ── */
+.auth-card{position:relative;z-index:1;background:#fff;border-radius:20px;border:1px solid var(--bdr);box-shadow:0 12px 48px rgba(0,109,91,.12),0 2px 8px rgba(0,0,0,.05);width:100%;max-width:500px;overflow:hidden;}
+
+/* Card header */
+.auth-header{background:linear-gradient(135deg,var(--t-dark) 0%,var(--t1) 40%,var(--t3) 100%);padding:2.2rem 2rem 1.8rem;text-align:center;position:relative;overflow:hidden;}
+.auth-header:before{content:'';position:absolute;inset:0;background:repeating-linear-gradient(90deg,transparent,transparent 80px,rgba(255,255,255,.04) 80px 160px);pointer-events:none;}
+.auth-header h1{font-family:'Nunito',sans-serif;font-size:2rem;font-weight:800;color:#fff;margin-bottom:.3rem;letter-spacing:-.01em;}
+.auth-header p{font-size:.82rem;color:rgba(255,255,255,.78);margin-bottom:1rem;}
+.free-pills{display:flex;justify-content:center;gap:.4rem;flex-wrap:wrap;}
+.free-pill{display:inline-flex;align-items:center;gap:.3rem;background:rgba(255,255,255,.18);border:1px solid rgba(255,255,255,.32);border-radius:999px;padding:.22rem .75rem;font-size:.68rem;font-weight:700;color:#fff;letter-spacing:.04em;}
+
+/* Tabs */
+.auth-tabs{display:flex;border-bottom:2px solid var(--bdr);}
+.auth-tab{flex:1;padding:.9rem;font-size:.86rem;font-weight:700;text-align:center;cursor:pointer;border:none;background:none;color:var(--muted);border-bottom:3px solid transparent;margin-bottom:-2px;transition:all .18s;font-family:'Open Sans',sans-serif;letter-spacing:.02em;}
+.auth-tab:hover{color:var(--t1);background:#00ab840a;}
+.auth-tab.active{color:var(--t1);border-bottom-color:var(--t3);}
+
+/* Body */
 .auth-body{padding:1.75rem 2rem 2rem;}
-.free-notice{background:var(--green-pale);border:1px solid #A7F3D0;border-radius:10px;padding:0.85rem 1rem;margin-bottom:1.2rem;font-size:0.8rem;color:var(--green-deeper);line-height:1.6;}
-.free-notice strong{display:block;margin-bottom:0.15rem;font-size:0.83rem;}
-.form-row{display:grid;grid-template-columns:1fr 1fr;gap:0.75rem;}
+.free-notice{background:linear-gradient(135deg,#e6faf5,#f0fdfb);border:1px solid #a7f3d0;border-radius:10px;padding:.9rem 1rem;margin-bottom:1.2rem;font-size:.8rem;color:var(--t1);line-height:1.6;}
+.free-notice strong{display:block;font-size:.84rem;margin-bottom:.2rem;color:var(--t-dark);}
+
+/* Form */
+.form-row{display:grid;grid-template-columns:1fr 1fr;gap:.75rem;}
 @media(max-width:480px){.form-row{grid-template-columns:1fr;}}
 .form-group{margin-bottom:1rem;}
-.form-label{display:block;font-size:0.78rem;font-weight:600;color:var(--ink);margin-bottom:0.4rem;}
-.form-input,.form-select{width:100%;padding:0.72rem 0.9rem;border:1.5px solid var(--border);border-radius:9px;font-family:'DM Sans',sans-serif;font-size:0.875rem;color:var(--ink);background:#fff;outline:none;transition:border-color 0.15s,box-shadow 0.15s;}
-.form-input:focus,.form-select:focus{border-color:var(--green);box-shadow:0 0 0 3px rgba(16,185,129,0.1);}
-.form-select{appearance:none;background-image:url("data:image/svg+xml,%3Csvg width='12' height='8' fill='none' stroke='%236B7280' stroke-width='1.5' viewBox='0 0 12 8' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M1 1l5 5 5-5'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 0.9rem center;padding-right:2.2rem;}
-.form-hint{font-size:0.72rem;color:var(--muted);margin-top:0.3rem;}
+.form-label{display:block;font-size:.78rem;font-weight:700;color:var(--ink);margin-bottom:.42rem;letter-spacing:.01em;}
+.form-input,.form-select{width:100%;padding:.72rem .95rem;border:1.5px solid var(--bdr);border-radius:9px;font-family:'Open Sans',sans-serif;font-size:.875rem;color:var(--ink);background:#fff;outline:none;transition:border-color .18s,box-shadow .18s;}
+.form-input:focus,.form-select:focus{border-color:var(--t3);box-shadow:0 0 0 3px rgba(0,171,132,.12);}
+.form-select{appearance:none;background-image:url("data:image/svg+xml,%3Csvg width='12' height='8' fill='none' stroke='%23555' stroke-width='1.5' viewBox='0 0 12 8' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M1 1l5 5 5-5'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right .9rem center;padding-right:2.4rem;}
+.form-hint{font-size:.72rem;color:var(--muted);margin-top:.3rem;}
 .phone-group{display:flex;}
-.phone-prefix{display:flex;align-items:center;padding:0.72rem 0.75rem;background:#F9FAFB;border:1.5px solid var(--border);border-right:none;border-radius:9px 0 0 9px;font-size:0.875rem;color:var(--muted);font-weight:600;white-space:nowrap;}
+.phone-prefix{display:flex;align-items:center;padding:.72rem .8rem;background:#f7f7f7;border:1.5px solid var(--bdr);border-right:none;border-radius:9px 0 0 9px;font-size:.875rem;color:var(--muted);font-weight:600;white-space:nowrap;}
 .phone-group .form-input{border-radius:0 9px 9px 0;flex:1;}
-.btn-primary{width:100%;padding:0.82rem;border:none;border-radius:10px;font-family:'DM Sans',sans-serif;font-size:0.9rem;font-weight:700;letter-spacing:0.03em;cursor:pointer;transition:all 0.2s;background:linear-gradient(135deg,#059669,#10B981);color:#fff;box-shadow:0 4px 14px rgba(16,185,129,0.3);margin-top:0.4rem;}
-.btn-primary:hover{transform:translateY(-1px);box-shadow:0 6px 20px rgba(16,185,129,0.4);}
-.btn-primary:disabled{opacity:0.5;cursor:not-allowed;transform:none;box-shadow:none;}
-.btn-outline{width:100%;padding:0.78rem;border:1.5px solid var(--border);border-radius:10px;font-family:'DM Sans',sans-serif;font-size:0.875rem;font-weight:600;cursor:pointer;background:#fff;color:var(--ink);transition:all 0.15s;}
-.btn-outline:hover{border-color:var(--green);color:var(--green-dark);}
-.divider{display:flex;align-items:center;gap:0.75rem;margin:1.1rem 0;color:var(--muted);font-size:0.75rem;}
-.divider::before,.divider::after{content:'';flex:1;height:1px;background:var(--border);}
-.alert{padding:0.7rem 1rem;border-radius:9px;font-size:0.8rem;font-weight:500;margin-bottom:1rem;display:none;}
+
+/* Buttons */
+.btn-primary{width:100%;padding:.85rem;border:none;border-radius:10px;font-family:'Open Sans',sans-serif;font-size:.9rem;font-weight:700;letter-spacing:.04em;cursor:pointer;transition:all .2s;background:linear-gradient(135deg,var(--t1),var(--t3));color:#fff;box-shadow:0 4px 16px rgba(0,171,132,.3);margin-top:.4rem;}
+.btn-primary:hover{transform:translateY(-1px);box-shadow:0 6px 22px rgba(0,171,132,.42);}
+.btn-primary:disabled{opacity:.5;cursor:not-allowed;transform:none;box-shadow:none;}
+.btn-outline{width:100%;padding:.8rem;border:1.5px solid var(--bdr);border-radius:10px;font-family:'Open Sans',sans-serif;font-size:.875rem;font-weight:600;cursor:pointer;background:#fff;color:var(--ink);transition:all .18s;}
+.btn-outline:hover{border-color:var(--t3);color:var(--t1);background:#00ab840a;}
+.divider{display:flex;align-items:center;gap:.75rem;margin:1.1rem 0;color:var(--muted);font-size:.75rem;}
+.divider::before,.divider::after{content:'';flex:1;height:1px;background:var(--bdr);}
+.alert{padding:.72rem 1rem;border-radius:9px;font-size:.8rem;font-weight:500;margin-bottom:1rem;display:none;}
 .alert.show{display:block;}
-.alert-error{background:#FEF2F2;border:1px solid #FECACA;color:#991B1B;}
-.spinner{display:inline-block;width:15px;height:15px;border:2px solid rgba(255,255,255,0.35);border-top-color:#fff;border-radius:50%;animation:spin 0.6s linear infinite;vertical-align:middle;}
+.alert-error{background:#fff0f0;border:1px solid #fecaca;color:#991b1b;}
+.spinner{display:inline-block;width:14px;height:14px;border:2px solid rgba(255,255,255,.35);border-top-color:#fff;border-radius:50%;animation:spin .6s linear infinite;vertical-align:middle;}
 @keyframes spin{to{transform:rotate(360deg);}}
+
+/* Success panel */
 #success-panel{display:none;text-align:center;padding:2.5rem 2rem;}
-.success-icon{width:68px;height:68px;background:var(--green-pale);border-radius:50%;display:grid;place-items:center;margin:0 auto 1rem;animation:popIn 0.4s cubic-bezier(0.34,1.56,0.64,1);}
-@keyframes popIn{from{transform:scale(0.5);opacity:0;}to{transform:scale(1);opacity:1;}}
-#success-panel h2{font-family:'Playfair Display',serif;font-size:1.4rem;font-weight:700;margin-bottom:0.5rem;}
-#success-panel p{font-size:0.85rem;color:var(--muted);margin-bottom:1.5rem;line-height:1.6;}
-.btn-go-dash{display:inline-flex;align-items:center;gap:0.5rem;background:linear-gradient(135deg,#059669,#10B981);color:#fff;font-size:0.9rem;font-weight:700;letter-spacing:0.03em;padding:0.82rem 2rem;border-radius:10px;border:none;cursor:pointer;box-shadow:0 4px 14px rgba(16,185,129,0.3);transition:all 0.2s;text-decoration:none;}
-.btn-go-dash:hover{transform:translateY(-1px);box-shadow:0 6px 20px rgba(16,185,129,0.4);}
-.auth-footer{text-align:center;padding:1rem 2rem 1.5rem;font-size:0.75rem;color:var(--muted);}
-.auth-footer a{color:var(--green-dark);font-weight:600;text-decoration:none;}
-.already-logged{flex:1;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:1.2rem;padding:3rem 1.5rem;text-align:center;}
-.already-logged p{font-size:1.05rem;font-weight:600;color:var(--green-deeper);}
-/* ─── LOGO ─── */
-.logo-wrap{display:flex;align-items:center;gap:0;text-decoration:none;line-height:1;}
-.logo-block{display:flex;flex-direction:column;align-items:flex-start;gap:0;}
-.logo-since{font-family:'Dancing Script','Segoe Script','Brush Script MT',cursive;font-size:0.88rem;font-weight:600;color:#1a6b42;letter-spacing:0.02em;margin-bottom:-2px;line-height:1.1;}
-.logo-main{font-family:'DM Sans','Arial Black',sans-serif;font-size:1.62rem;font-weight:800;color:#111;letter-spacing:-0.02em;line-height:1;text-transform:uppercase;}
-.logo-main span{color:#1a9e6e;}
-.logo-sub{font-size:0.52rem;font-weight:700;letter-spacing:0.18em;text-transform:uppercase;color:#111827;margin-top:1px;}
+.success-icon{width:70px;height:70px;background:linear-gradient(135deg,#e6faf5,#d1fae5);border-radius:50%;display:grid;place-items:center;margin:0 auto 1rem;animation:popIn .4s cubic-bezier(.34,1.56,.64,1);}
+@keyframes popIn{from{transform:scale(.5);opacity:0;}to{transform:scale(1);opacity:1;}}
+#success-panel h2{font-family:'Nunito',sans-serif;font-size:1.5rem;font-weight:800;margin-bottom:.5rem;color:var(--ink);}
+#success-panel p{font-size:.85rem;color:var(--muted);margin-bottom:1.5rem;line-height:1.6;}
+.btn-go-dash{display:inline-flex;align-items:center;gap:.5rem;background:linear-gradient(135deg,var(--t1),var(--t3));color:#fff;font-size:.9rem;font-weight:700;letter-spacing:.04em;padding:.82rem 2rem;border-radius:10px;border:none;cursor:pointer;box-shadow:0 4px 16px rgba(0,171,132,.3);transition:all .2s;text-decoration:none;}
+.btn-go-dash:hover{transform:translateY(-1px);box-shadow:0 6px 22px rgba(0,171,132,.42);}
+
+.auth-footer{text-align:center;padding:.9rem 2rem 1.5rem;font-size:.74rem;color:var(--muted);}
+.auth-footer a{color:var(--t1);font-weight:600;text-decoration:none;}
+.auth-footer a:hover{text-decoration:underline;}
+
+/* ── USER CHIP / DROPDOWN ── */
+.user-chip-wrap{position:relative;display:none;align-items:center;gap:.5rem;}
+.user-chip-wrap.visible{display:flex;}
+.user-chip{display:flex;align-items:center;gap:.5rem;background:#e6faf5;border:1px solid #a7f3d0;border-radius:999px;padding:.3rem .85rem .3rem .35rem;cursor:pointer;transition:box-shadow .15s;}
+.user-chip:hover{box-shadow:0 2px 12px rgba(0,171,132,.25);}
+.avatar{width:28px;height:28px;border-radius:50%;background:linear-gradient(135deg,var(--t-dark),var(--t3));display:grid;place-items:center;font-size:.7rem;font-weight:700;color:#fff;flex-shrink:0;}
+.user-name-chip{font-size:.8rem;font-weight:700;color:var(--t-dark);}
+.chevron-icon{transition:transform .2s;}
+.user-chip-wrap.open .chevron-icon{transform:rotate(180deg);}
+
+.profile-dropdown{position:absolute;top:calc(100% + 10px);right:0;width:340px;background:#fff;border:1px solid var(--bdr);border-radius:16px;box-shadow:0 16px 48px rgba(0,0,0,.12);z-index:1000;overflow:hidden;display:none;}
+.profile-dropdown.open{display:block;animation:dropIn .2s ease;}
+@keyframes dropIn{from{opacity:0;transform:translateY(-8px);}to{opacity:1;transform:translateY(0);}}
+.pd-header{background:linear-gradient(135deg,var(--t-dark),var(--t1));padding:1.2rem 1.4rem;display:flex;align-items:center;gap:.9rem;}
+.pd-avatar-lg{width:46px;height:46px;border-radius:50%;background:rgba(255,255,255,.2);display:grid;place-items:center;font-size:1.1rem;font-weight:700;color:#fff;flex-shrink:0;border:2px solid rgba(255,255,255,.35);}
+.pd-header-info h3{font-size:.95rem;font-weight:700;color:#fff;margin-bottom:.1rem;}
+.pd-header-info p{font-size:.75rem;color:rgba(255,255,255,.7);}
+.pd-body{padding:1rem 1.4rem 1.2rem;}
+.pd-row{display:flex;align-items:flex-start;gap:.7rem;padding:.5rem 0;border-bottom:1px solid var(--bdr);}
+.pd-row:last-child{border-bottom:none;}
+.pd-icon{width:32px;height:32px;border-radius:8px;background:#e6faf5;display:grid;place-items:center;flex-shrink:0;margin-top:2px;}
+.pd-label{font-size:.7rem;font-weight:700;color:var(--muted);letter-spacing:.06em;text-transform:uppercase;margin-bottom:.15rem;}
+.pd-value{font-size:.84rem;font-weight:500;color:var(--ink);line-height:1.4;}
+.pd-footer{padding:.8rem 1.4rem;border-top:1px solid var(--bdr);display:flex;gap:.6rem;}
+.pd-btn-edit{flex:1;padding:.55rem;font-size:.78rem;font-weight:700;background:#e6faf5;color:var(--t-dark);border:none;border-radius:8px;cursor:pointer;transition:background .15s;}
+.pd-btn-edit:hover{background:#a7f3d0;}
+.pd-btn-logout{flex:1;padding:.55rem;font-size:.78rem;font-weight:700;background:#fff0f0;color:#991b1b;border:none;border-radius:8px;cursor:pointer;transition:background .15s;}
+.pd-btn-logout:hover{background:#fee2e2;}
+
+/* ── EDIT MODAL ── */
+.modal-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.45);z-index:500;align-items:center;justify-content:center;padding:1rem;}
+.modal-overlay.open{display:flex;}
+.modal-box{background:#fff;border-radius:20px;width:100%;max-width:520px;max-height:90vh;overflow-y:auto;box-shadow:0 24px 64px rgba(0,0,0,.18);}
+.modal-header{background:linear-gradient(135deg,var(--t-dark),var(--t1));padding:1.4rem 1.75rem;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;}
+.modal-header h2{font-family:'Nunito',sans-serif;font-size:1.3rem;font-weight:800;color:#fff;}
+.modal-close{background:rgba(255,255,255,.18);border:none;color:#fff;width:32px;height:32px;border-radius:8px;cursor:pointer;font-size:1.1rem;display:grid;place-items:center;}
+.modal-close:hover{background:rgba(255,255,255,.3);}
+.modal-body{padding:1.5rem 1.75rem 2rem;}
+
+/* ── RESPONSIVE ── */
+@media(max-width:520px){
+  .auth-header h1{font-size:1.6rem;}
+  .auth-body{padding:1.4rem 1.25rem 1.75rem;}
+  .modal-body{padding:1.2rem 1.25rem 1.75rem;}
+}
 </style>
-  <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@600;700&display=swap" rel="stylesheet"/>
 </head>
 <body>
 
-<nav class="top-nav">
-  <a href="index.html" class="logo-wrap"><div class="logo-block"><span class="logo-since">Employee Choice</span><span class="logo-main">TOPPERS<span>11</span></span><span class="logo-sub">AI-Powered Test Series</span></div></a>
+<!-- TOP BAR -->
+<div class="top-bar">
+  <div class="top-inner">
+    <a class="logo-box" href="index.html">
+      <span class="logo-eyebrow">Employee Choice</span>
+      <span class="site-name">toppers<span class="num">11</span></span>
+      <span class="site-tag">AI-Powered Test Series</span>
+    </a>
 
-  <div class="user-chip-wrap" id="user-chip-wrap">
-    <div class="user-chip" onclick="toggleProfile()">
-      <div class="avatar" id="nav-avatar">U</div>
-      <span class="user-name-chip" id="nav-user-name">User</span>
-      <svg class="chevron-icon" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg>
+    <div class="user-chip-wrap" id="user-chip-wrap">
+      <div class="user-chip" onclick="toggleProfile()">
+        <div class="avatar" id="nav-avatar">U</div>
+        <span class="user-name-chip" id="nav-user-name">User</span>
+        <svg class="chevron-icon" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg>
+      </div>
+      <div class="profile-dropdown" id="profile-dropdown">
+        <div class="pd-header">
+          <div class="pd-avatar-lg" id="pd-avatar-lg">U</div>
+          <div class="pd-header-info">
+            <h3 id="pd-name">—</h3>
+            <p id="pd-email-hdr">—</p>
+          </div>
+        </div>
+        <div class="pd-body">
+          <div class="pd-row">
+            <div class="pd-icon"><svg width="16" height="16" fill="none" stroke="var(--t3)" stroke-width="2" viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 9.81a19.79 19.79 0 01-3.07-8.63A2 2 0 012 1h3a2 2 0 012 1.72 12.84 12.84 0 00.7 2.81 2 2 0 01-.45 2.11L6.09 8.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45 12.84 12.84 0 002.81.7A2 2 0 0122 16.92z"/></svg></div>
+            <div><div class="pd-label">Mobile</div><div class="pd-value" id="pd-mobile">—</div></div>
+          </div>
+          <div class="pd-row">
+            <div class="pd-icon"><svg width="16" height="16" fill="none" stroke="var(--t3)" stroke-width="2" viewBox="0 0 24 24"><path d="M21 10c0 7-9 13-9 13S3 17 3 10a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg></div>
+            <div><div class="pd-label">Region</div><div class="pd-value" id="pd-region">—</div></div>
+          </div>
+          <div class="pd-row">
+            <div class="pd-icon"><svg width="16" height="16" fill="none" stroke="var(--t3)" stroke-width="2" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg></div>
+            <div><div class="pd-label">Member Since</div><div class="pd-value" id="pd-since">—</div></div>
+          </div>
+          <div class="pd-row">
+            <div class="pd-icon"><svg width="16" height="16" fill="none" stroke="var(--t3)" stroke-width="2" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg></div>
+            <div><div class="pd-label">Plan</div><div class="pd-value" id="pd-plan">Free (3 Tests)</div></div>
+          </div>
+        </div>
+        <div class="pd-footer">
+          <button class="pd-btn-edit" onclick="openEditModal()">✏️ Edit Profile</button>
+          <button class="pd-btn-logout" onclick="logout()">🚪 Sign Out</button>
+        </div>
+      </div>
     </div>
-    <div class="profile-dropdown" id="profile-dropdown">
-      <div class="pd-header">
-        <div class="pd-avatar-lg" id="pd-avatar-lg">U</div>
-        <div class="pd-header-info">
-          <h3 id="pd-name">—</h3>
 
-        </div>
-      </div>
-      <div class="pd-body">
-
-        <div class="pd-row">
-          <div class="pd-icon"><svg width="16" height="16" fill="none" stroke="#059669" stroke-width="2" viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 9.81a19.79 19.79 0 01-3.07-8.63A2 2 0 012 1h3a2 2 0 012 1.72 12.84 12.84 0 00.7 2.81 2 2 0 01-.45 2.11L6.09 8.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45 12.84 12.84 0 002.81.7A2 2 0 0122 16.92z"/></svg></div>
-          <div><div class="pd-label">Mobile</div><div class="pd-value" id="pd-mobile">—</div></div>
-        </div>
-        <div class="pd-row">
-          <div class="pd-icon"><svg width="16" height="16" fill="none" stroke="#059669" stroke-width="2" viewBox="0 0 24 24"><path d="M21 10c0 7-9 13-9 13S3 17 3 10a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg></div>
-          <div><div class="pd-label">Region</div><div class="pd-value" id="pd-region">—</div></div>
-        </div>
-        <div class="pd-row">
-          <div class="pd-icon"><svg width="16" height="16" fill="none" stroke="#059669" stroke-width="2" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg></div>
-          <div><div class="pd-label">Member Since</div><div class="pd-value" id="pd-since">—</div></div>
-        </div>
-        <div class="pd-row">
-          <div class="pd-icon"><svg width="16" height="16" fill="none" stroke="#059669" stroke-width="2" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg></div>
-          <div><div class="pd-label">Plan</div><div class="pd-value" id="pd-plan">Free (3 Tests)</div></div>
-        </div>
-      </div>
-      <div class="pd-footer">
-        <button class="pd-btn-edit" onclick="openEditModal()">✏️ Edit Profile</button>
-        <button class="pd-btn-logout" onclick="logout()">🚪 Sign Out</button>
-      </div>
-    </div>
+    <a href="index.html" class="nav-home" id="nav-home-link">
+      <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+      Back to Home
+    </a>
   </div>
-
-  <a href="index.html" class="nav-home" id="nav-home-link">
-    <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
-    Back to Home
-  </a>
-</nav>
+</div>
 
 <!-- Edit Profile Modal -->
 <div class="modal-overlay" id="edit-modal" onclick="closeEditIfOutside(event)">
@@ -189,47 +231,25 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--ink);min-
           <label class="form-label">Full Name *</label>
           <input type="text" class="form-input" id="edit-name" placeholder="e.g. Rajesh Kumar"/>
         </div>
-
+        <div class="form-group"></div>
       </div>
       <div class="form-group">
-        <label class="form-label">Mobile Number <span id="mobile-update-badge" style="display:none;font-size:0.68rem;font-weight:600;color:#991B1B;background:#FEF2F2;border:1px solid #FECACA;border-radius:999px;padding:0.1rem 0.5rem;margin-left:0.3rem;">Update used — locked</span></label>
+        <label class="form-label">Mobile Number <span id="mobile-update-badge" style="display:none;font-size:.68rem;font-weight:600;color:#991b1b;background:#fff0f0;border:1px solid #fecaca;border-radius:999px;padding:.1rem .5rem;margin-left:.3rem;">Update used — locked</span></label>
         <div class="phone-group">
           <span class="phone-prefix">🇮🇳 +91</span>
           <input type="tel" class="form-input" id="edit-mobile" placeholder="98765 43210" maxlength="10"/>
         </div>
-        <div class="form-hint" id="mobile-update-hint" style="color:#D97706;">⚠️ Mobile number can only be updated <strong>once</strong>. Choose carefully.</div>
+        <div class="form-hint" id="mobile-update-hint" style="color:#d97706;">⚠️ Mobile number can only be updated <strong>once</strong>. Choose carefully.</div>
       </div>
       <div class="form-group">
         <label class="form-label">Select your Region</label>
         <select class="form-select" id="edit-region">
           <option value="">— Select Region —</option>
-          <optgroup label="🔵 North India">
-            <option>Delhi</option>
-            <option>North West Region (NWR) – Chandigarh, Punjab, Haryana, HP, J&amp;K</option>
-            <option>UP West &amp; Uttarakhand – HQ Kanpur</option>
-            <option>UP East – HQ Lucknow</option>
-          </optgroup>
-          <optgroup label="🟠 West India">
-            <option>Mumbai</option>
-            <option>Pune – Covers rest of Maharashtra</option>
-            <option>Gujarat – HQ Ahmedabad</option>
-          </optgroup>
-          <optgroup label="🟢 South India">
-            <option>Tamil Nadu &amp; Puducherry – HQ Chennai</option>
-            <option>Karnataka &amp; Goa – HQ Bengaluru</option>
-            <option>Kerala – HQ Kochi</option>
-            <option>Andhra Pradesh &amp; Telangana – HQ Hyderabad</option>
-          </optgroup>
-          <optgroup label="🟡 East India">
-            <option>West Bengal &amp; Sikkim – HQ Kolkata</option>
-            <option>North Eastern Region (NER) – Assam, Arunachal, Manipur, Meghalaya, Mizoram, Nagaland, Tripura</option>
-            <option>Odisha – HQ Bhubaneswar</option>
-            <option>Bihar &amp; Jharkhand – HQ Patna</option>
-          </optgroup>
-          <optgroup label="🔴 Central India">
-            <option>Madhya Pradesh &amp; Chhattisgarh – HQ Bhopal</option>
-            <option>Rajasthan – HQ Jaipur</option>
-          </optgroup>
+          <optgroup label="🔵 North India"><option>Delhi</option><option>North West Region (NWR) – Chandigarh, Punjab, Haryana, HP, J&amp;K</option><option>UP West &amp; Uttarakhand – HQ Kanpur</option><option>UP East – HQ Lucknow</option></optgroup>
+          <optgroup label="🟠 West India"><option>Mumbai</option><option>Pune – Covers rest of Maharashtra</option><option>Gujarat – HQ Ahmedabad</option></optgroup>
+          <optgroup label="🟢 South India"><option>Tamil Nadu &amp; Puducherry – HQ Chennai</option><option>Karnataka &amp; Goa – HQ Bengaluru</option><option>Kerala – HQ Kochi</option><option>Andhra Pradesh &amp; Telangana – HQ Hyderabad</option></optgroup>
+          <optgroup label="🟡 East India"><option>West Bengal &amp; Sikkim – HQ Kolkata</option><option>North Eastern Region (NER)</option><option>Odisha – HQ Bhubaneswar</option><option>Bihar &amp; Jharkhand – HQ Patna</option></optgroup>
+          <optgroup label="🔴 Central India"><option>Madhya Pradesh &amp; Chhattisgarh – HQ Bhopal</option><option>Rajasthan – HQ Jaipur</option></optgroup>
         </select>
       </div>
       <div class="form-group">
@@ -240,12 +260,31 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--ink);min-
         <label class="form-label">Confirm New Password</label>
         <input type="password" class="form-input" id="edit-pass2" placeholder="Repeat new password"/>
       </div>
-      <button class="btn-primary" onclick="saveProfile()" style="margin-top:0.75rem;">Save Changes</button>
+      <button class="btn-primary" onclick="saveProfile()" style="margin-top:.75rem;">Save Changes</button>
     </div>
   </div>
 </div>
 
-<div class="auth-wrap" id="auth-wrap">
+<!-- MAIN AUTH AREA -->
+<div class="auth-bg" id="auth-wrap">
+
+  <!-- Floating triangles -->
+  <div class="tri tri-1">
+    <svg viewBox="0 0 90 90" xmlns="http://www.w3.org/2000/svg"><defs><linearGradient id="lg1a" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#3ddbb0"/><stop offset="100%" stop-color="#00AB84"/></linearGradient><linearGradient id="lg1b" x1="100%" y1="0%" x2="0%" y2="100%"><stop offset="0%" stop-color="#006D5B"/><stop offset="100%" stop-color="#003d30"/></linearGradient></defs><polygon points="45,8 12,72 45,58" fill="url(#lg1a)"/><polygon points="45,8 78,72 45,58" fill="url(#lg1b)"/><polygon points="12,72 45,58 78,72" fill="#004D3F" opacity=".7"/><line stroke="rgba(255,255,255,.3)" stroke-width="1" x1="45" y1="8" x2="45" y2="58"/></svg>
+  </div>
+  <div class="tri tri-2">
+    <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"><defs><linearGradient id="lg2a" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#FFE97A"/><stop offset="100%" stop-color="#F5C518"/></linearGradient><linearGradient id="lg2b" x1="100%" y1="0%" x2="0%" y2="100%"><stop offset="0%" stop-color="#c9920a"/><stop offset="100%" stop-color="#8a5e00"/></linearGradient></defs><polygon points="50,8 14,80 50,64" fill="url(#lg2a)"/><polygon points="50,8 86,80 50,64" fill="url(#lg2b)"/><polygon points="14,80 50,64 86,80" fill="#b87800" opacity=".7"/><line stroke="rgba(255,255,255,.4)" stroke-width="1" x1="50" y1="8" x2="50" y2="64"/></svg>
+  </div>
+  <div class="tri tri-3">
+    <svg viewBox="0 0 75 75" xmlns="http://www.w3.org/2000/svg"><polygon points="38,6 10,62 38,50" fill="rgba(0,171,132,.25)" stroke="rgba(0,171,132,.5)" stroke-width="1.5"/><polygon points="38,6 66,62 38,50" fill="rgba(0,109,91,.15)"/><polygon points="10,62 38,50 66,62" fill="rgba(0,109,91,.1)"/></svg>
+  </div>
+  <div class="tri tri-4">
+    <svg viewBox="0 0 65 65" xmlns="http://www.w3.org/2000/svg"><defs><linearGradient id="lg4a" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#2ecfa3"/><stop offset="100%" stop-color="#006D5B"/></linearGradient></defs><polygon points="33,6 8,56 33,44" fill="url(#lg4a)"/><polygon points="33,6 58,56 33,44" fill="#004D3F"/><polygon points="8,56 33,44 58,56" fill="#003830" opacity=".8"/></svg>
+  </div>
+  <div class="tri tri-5">
+    <svg viewBox="0 0 50 50" xmlns="http://www.w3.org/2000/svg"><polygon points="25,4 6,42 25,34" fill="rgba(245,197,24,.3)" stroke="rgba(245,197,24,.6)" stroke-width="1.5"/><polygon points="25,4 44,42 25,34" fill="rgba(200,146,10,.2)"/></svg>
+  </div>
+
   <div class="auth-card">
     <div class="auth-header">
       <h1>Welcome to Toppers11</h1>
@@ -269,7 +308,6 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--ink);min-
         After login you'll get 1 free test each for ITI, ITO and MS — no card required.
       </div>
       <div class="alert alert-error" id="login-error"></div>
-      <!-- Honeypot field — hidden from real users, catches bots -->
       <div style="position:absolute;left:-9999px;top:-9999px;width:1px;height:1px;overflow:hidden;" aria-hidden="true" tabindex="-1">
         <label for="hp-website">Website</label>
         <input type="text" id="hp-website" name="website" autocomplete="off" tabindex="-1" value=""/>
@@ -292,7 +330,7 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--ink);min-
     <div id="register-panel" class="auth-body" style="display:none;">
       <div class="free-notice">
         <strong>🎉 Register free — 3 tests unlocked instantly!</strong>
-        1 free test each for ITI, ITO and MS. The remaining 20 tests per exam require payment.
+        1 free test each for ITI, ITO and MS. The remaining tests per exam require payment.
       </div>
       <div class="alert alert-error" id="reg-error"></div>
       <div class="form-row">
@@ -300,9 +338,7 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--ink);min-
           <label class="form-label">Full Name *</label>
           <input type="text" class="form-input" id="reg-name" placeholder="e.g. Rajesh Kumar"/>
         </div>
-        <div class="form-group">
-
-        </div>
+        <div class="form-group"></div>
       </div>
       <div class="form-group">
         <label class="form-label">Mobile Number *</label>
@@ -316,33 +352,11 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--ink);min-
         <label class="form-label">Select your Region *</label>
         <select class="form-select" id="reg-region">
           <option value="">— Select Region —</option>
-          <optgroup label="🔵 North India">
-            <option>Delhi</option>
-            <option>North West Region (NWR) – Chandigarh, Punjab, Haryana, HP, J&amp;K</option>
-            <option>UP West &amp; Uttarakhand – HQ Kanpur</option>
-            <option>UP East – HQ Lucknow</option>
-          </optgroup>
-          <optgroup label="🟠 West India">
-            <option>Mumbai</option>
-            <option>Pune – Covers rest of Maharashtra</option>
-            <option>Gujarat – HQ Ahmedabad</option>
-          </optgroup>
-          <optgroup label="🟢 South India">
-            <option>Tamil Nadu &amp; Puducherry – HQ Chennai</option>
-            <option>Karnataka &amp; Goa – HQ Bengaluru</option>
-            <option>Kerala – HQ Kochi</option>
-            <option>Andhra Pradesh &amp; Telangana – HQ Hyderabad</option>
-          </optgroup>
-          <optgroup label="🟡 East India">
-            <option>West Bengal &amp; Sikkim – HQ Kolkata</option>
-            <option>North Eastern Region (NER) – Assam, Arunachal, Manipur, Meghalaya, Mizoram, Nagaland, Tripura</option>
-            <option>Odisha – HQ Bhubaneswar</option>
-            <option>Bihar &amp; Jharkhand – HQ Patna</option>
-          </optgroup>
-          <optgroup label="🔴 Central India">
-            <option>Madhya Pradesh &amp; Chhattisgarh – HQ Bhopal</option>
-            <option>Rajasthan – HQ Jaipur</option>
-          </optgroup>
+          <optgroup label="🔵 North India"><option>Delhi</option><option>North West Region (NWR) – Chandigarh, Punjab, Haryana, HP, J&amp;K</option><option>UP West &amp; Uttarakhand – HQ Kanpur</option><option>UP East – HQ Lucknow</option></optgroup>
+          <optgroup label="🟠 West India"><option>Mumbai</option><option>Pune – Covers rest of Maharashtra</option><option>Gujarat – HQ Ahmedabad</option></optgroup>
+          <optgroup label="🟢 South India"><option>Tamil Nadu &amp; Puducherry – HQ Chennai</option><option>Karnataka &amp; Goa – HQ Bengaluru</option><option>Kerala – HQ Kochi</option><option>Andhra Pradesh &amp; Telangana – HQ Hyderabad</option></optgroup>
+          <optgroup label="🟡 East India"><option>West Bengal &amp; Sikkim – HQ Kolkata</option><option>North Eastern Region (NER)</option><option>Odisha – HQ Bhubaneswar</option><option>Bihar &amp; Jharkhand – HQ Patna</option></optgroup>
+          <optgroup label="🔴 Central India"><option>Madhya Pradesh &amp; Chhattisgarh – HQ Bhopal</option><option>Rajasthan – HQ Jaipur</option></optgroup>
         </select>
       </div>
       <div class="form-row">
@@ -364,7 +378,7 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--ink);min-
     <!-- SUCCESS -->
     <div id="success-panel">
       <div class="success-icon">
-        <svg width="34" height="34" fill="none" stroke="#10B981" stroke-width="2.5" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>
+        <svg width="34" height="34" fill="none" stroke="var(--t3)" stroke-width="2.5" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>
       </div>
       <h2 id="success-title">You're in! 🎉</h2>
       <p id="success-msg">Redirecting to your dashboard…</p>
@@ -380,303 +394,33 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--ink);min-
   </div>
 </div>
 
-
 <script>
+const SUPABASE_URL      = 'https://tvstcvinatkokhmoeqlx.supabase.co';
+const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InR2c3RjdmluYXRrb2tobW9lcWx4Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3Nzc5MzU5NDMsImV4cCI6MjA5MzUxMTk0M30.MNT5dOgqeCmJmgQPgmh8t5ivKnTZ90nB8UzQhfqquh8';
 
-// ══════════════════════════════════════════════════════════════════════════
-//  SUPABASE CONFIG — fill in your real project URL and anon key below
-//  Find them at: https://supabase.com/dashboard → Settings → API
-// ══════════════════════════════════════════════════════════════════════════
-const SUPABASE_URL      = 'https://tvstcvinatkokhmoeqlx.supabase.co';      // e.g. https://xyzxyz.supabase.co
-const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InR2c3RjdmluYXRrb2tobW9lcWx4Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3Nzc5MzU5NDMsImV4cCI6MjA5MzUxMTk0M30.MNT5dOgqeCmJmgQPgmh8t5ivKnTZ90nB8UzQhfqquh8'; // eyJhbGciOiJIUzI1NiIs...
-
-// ── Supabase REST helpers ─────────────────────────────────────────────────
-async function sbRequest(method, table, body, params) {
-  let url = SUPABASE_URL + '/rest/v1/' + table;
-  if (params) url += '?' + params;
-  const opts = {
-    method,
-    headers: {
-      'Content-Type' : 'application/json',
-      'apikey'       : SUPABASE_ANON_KEY,
-      'Authorization': 'Bearer ' + SUPABASE_ANON_KEY,
-      'Prefer'       : method === 'POST' ? 'return=representation' : 'return=minimal'
-    }
-  };
-  if (body) opts.body = JSON.stringify(body);
-  const res = await fetch(url, opts);
-  const text = await res.text();
-  let data = null;
-  try { data = JSON.parse(text); } catch(e) {}
-  if (!res.ok) throw new Error((data && (data.message || data.details || data.error)) || ('HTTP ' + res.status));
-  return data;
-}
-async function sbSelect(table, params) { return sbRequest('GET', table, null, params); }
-async function sbInsert(table, row)    { return sbRequest('POST', table, row); }
-// ─────────────────────────────────────────────────────────────────────────
-
-// ── Password hash (SHA-256) ───────────────────────────────────────────────
-async function hashPass(pass) {
-  const buf = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(pass));
-  return Array.from(new Uint8Array(buf)).map(b => b.toString(16).padStart(2,'0')).join('');
-}
-
-// ── Session helpers ───────────────────────────────────────────────────────
-function saveUser(u){ localStorage.setItem('t11_user', JSON.stringify(u)); }
-function loadUser(){ try{ return JSON.parse(localStorage.getItem('t11_user')); }catch(e){ return null; } }
-// Legacy local store — kept for profile display compatibility
-function getUsers(){ try{ return JSON.parse(localStorage.getItem('t11_registered_users') || '{}'); }catch(e){ return {}; } }
-function saveUsers(obj){ localStorage.setItem('t11_registered_users', JSON.stringify(obj)); }
-
-function showError(id, msg){ const el=document.getElementById(id); if(el){el.textContent=msg;el.classList.add('show');} }
-function clearErrors(){ document.querySelectorAll('.alert-error').forEach(e=>{e.classList.remove('show');e.textContent='';}); }
-
-function switchTab(tab){
-  clearErrors();
-  document.getElementById('tab-login').classList.toggle('active', tab==='login');
-  document.getElementById('tab-register').classList.toggle('active', tab==='register');
-  document.getElementById('login-panel').style.display = tab==='login' ? '' : 'none';
-  document.getElementById('register-panel').style.display = tab==='register' ? '' : 'none';
-}
-
-function showSuccess(name, isNew){
-  document.getElementById('auth-tabs').style.display='none';
-  document.getElementById('login-panel').style.display='none';
-  document.getElementById('register-panel').style.display='none';
-  document.getElementById('auth-footer').style.display='none';
-  document.getElementById('success-title').textContent = isNew ? ('Welcome, '+name+'! 🎉') : ('Welcome back, '+name+'!');
-  document.getElementById('success-msg').textContent = isNew
-    ? 'Account created! 3 free tests are ready — 1 each for ITI, ITO and MS.'
-    : 'Logged in successfully. Heading to your dashboard now…';
-  document.getElementById('success-panel').style.display='';
-  setTimeout(function(){ window.location.href='exam-select.html'; }, 1600);
-}
-
-/* Profile dropdown */
-function toggleProfile(){
-  const wrap = document.getElementById('user-chip-wrap');
-  const dd   = document.getElementById('profile-dropdown');
-  const isOpen = dd.classList.contains('open');
-  dd.classList.toggle('open', !isOpen);
-  wrap.classList.toggle('open', !isOpen);
-}
-document.addEventListener('click', e => {
-  const wrap = document.getElementById('user-chip-wrap');
-  if(wrap && !wrap.contains(e.target)){
-    document.getElementById('profile-dropdown').classList.remove('open');
-    wrap.classList.remove('open');
-  }
-});
-
-function populateProfile(user, users){
-  const key = (user.email||'').toLowerCase();
-  const stored = users[key] || {};
-  const initials = (user.name||'U').charAt(0).toUpperCase();
-  document.getElementById('nav-avatar').textContent = initials;
-  document.getElementById('nav-user-name').textContent = (user.name||'User').split(' ')[0];
-  document.getElementById('pd-avatar-lg').textContent = initials;
-  document.getElementById('pd-name').textContent = user.name || '—';
-  document.getElementById('pd-email-hdr').textContent = user.email || '—';
-  document.getElementById('pd-email').textContent = user.email || '—';
-  document.getElementById('pd-mobile').textContent = stored.mobile ? '+91 '+stored.mobile : 'Not provided';
-  document.getElementById('pd-region').textContent = stored.region || 'Not selected';
-  document.getElementById('pd-since').textContent = stored.registeredAt
-    ? new Date(stored.registeredAt).toLocaleDateString('en-IN',{day:'numeric',month:'short',year:'numeric'})
-    : '—';
-  document.getElementById('pd-plan').textContent = user.paid ? (user.plan ? user.plan.replace('bunch-','').replace('single-','').replace('ito','ITO').replace('iti','ITI').replace('ms','MS').toUpperCase() + ' Access' : 'Premium Access') : 'Free (3 Tests)';
-}
-
-/* Edit modal */
-function openEditModal(){
-  document.getElementById('profile-dropdown').classList.remove('open');
-  document.getElementById('user-chip-wrap').classList.remove('open');
-  const user  = loadUser();
-  const users = getUsers();
-  const key   = (user?.email||'').toLowerCase();
-  const stored = users[key] || {};
-  document.getElementById('edit-name').value   = user?.name || '';
-  document.getElementById('edit-email').value  = user?.email || '';
-  document.getElementById('edit-mobile').value = stored.mobile || '';
-  document.getElementById('edit-region').value = stored.region || '';
-  const mobileLocked = stored.mobileUpdateUsed === true;
-  const mobileBadge = document.getElementById('mobile-update-badge');
-  const mobileHint  = document.getElementById('mobile-update-hint');
-  const mobileInput = document.getElementById('edit-mobile');
-  if(mobileLocked){
-    mobileBadge.style.display = 'inline';
-    mobileHint.innerHTML = '🔒 Mobile number update already used. Contact support to change.';
-    mobileHint.style.color = '#991B1B';
-    mobileInput.disabled = true;
-    mobileInput.style.background = '#F9FAFB';
-    mobileInput.style.cursor = 'not-allowed';
-  } else {
-    mobileBadge.style.display = 'none';
-    mobileHint.innerHTML = '⚠️ Mobile number can only be updated <strong>once</strong>. Choose carefully.';
-    mobileHint.style.color = '#D97706';
-    mobileInput.disabled = false;
-    mobileInput.style.background = '';
-    mobileInput.style.cursor = '';
-  }
-  document.getElementById('edit-pass').value  = '';
-  document.getElementById('edit-pass2').value = '';
-  document.getElementById('edit-modal').classList.add('open');
-}
-function closeEditModal(){ document.getElementById('edit-modal').classList.remove('open'); clearErrors(); }
-function closeEditIfOutside(e){ if(e.target===document.getElementById('edit-modal')) closeEditModal(); }
-
-function saveProfile(){
-  clearErrors();
-  const name   = document.getElementById('edit-name').value.trim();
-  const email  = document.getElementById('edit-email').value.trim();
-  const mobile = document.getElementById('edit-mobile').value.trim();
-  const region = document.getElementById('edit-region').value;
-  const pass   = document.getElementById('edit-pass').value;
-  const pass2  = document.getElementById('edit-pass2').value;
-  if(!name)              { showError('edit-error','Full name is required.'); return; }
-  if(!email||!email.includes('@')){ showError('edit-error','Valid email is required.'); return; }
-  if(mobile && !/^\d{10}$/.test(mobile)){ showError('edit-error','Mobile must be 10 digits.'); return; }
-  if(pass && pass.length<8){ showError('edit-error','New password must be at least 8 characters.'); return; }
-  if(pass && pass!==pass2){ showError('edit-error','Passwords do not match.'); return; }
-  const user   = loadUser();
-  const users  = getUsers();
-  const oldKey = (user?.email||'').toLowerCase();
-  const newKey = email.toLowerCase();
-  if(!users[oldKey]){ showError('edit-error','Session error. Please log in again.'); return; }
-  const existingRecord = users[oldKey];
-  if(mobile && existingRecord.mobile && existingRecord.mobile !== mobile){
-    if(existingRecord.mobileUpdateUsed){
-      showError('edit-error','Mobile number can only be updated once. Your mobile number cannot be changed again.');
-      return;
-    }
-  }
-  const mobileChanged = mobile && existingRecord.mobile && existingRecord.mobile !== mobile;
-  const record = {...existingRecord, name, mobile, region};
-  if(mobileChanged) record.mobileUpdateUsed = true;
-  if(pass) record.pass = btoa(pass);
-  if(newKey !== oldKey){
-    if(users[newKey]){ showError('edit-error','That email is already registered.'); return; }
-    delete users[oldKey];
-  }
-  users[newKey] = record;
-  saveUsers(users);
-  const updatedUser = {...user, name, email};
-  saveUser(updatedUser);
-  populateProfile(updatedUser, users);
-  closeEditModal();
-  alert('✓ Profile updated successfully!');
-}
-
-function logout(){ localStorage.removeItem('t11_user'); window.location.href='login.html'; }
-
-// ══════════════════════════════════════════════════════════════════════════
-//  LOGIN — reads from Supabase users table
-// ══════════════════════════════════════════════════════════════════════════
-async function doLogin(){
-  clearErrors();
-  // Honeypot bot check
-  if(document.getElementById('hp-website') && document.getElementById('hp-website').value !== ''){
-    const btn = document.getElementById('login-btn');
-    btn.disabled=true; btn.innerHTML='<span class="spinner"></span> Logging in…';
-    setTimeout(()=>{ btn.disabled=false; btn.innerHTML='Log In &amp; Go to Dashboard →'; showError('login-error','Login failed. Please try again.'); }, 2000);
-    return;
-  }
-  const identifier = document.getElementById('login-email').value.trim();
-  const pass       = document.getElementById('login-pass').value;
-  if(!identifier){ showError('login-error','Please enter your mobile number or email address.'); return; }
-  if(!pass)      { showError('login-error','Please enter your password.');                       return; }
-  const btn = document.getElementById('login-btn');
-  btn.disabled=true; btn.innerHTML='<span class="spinner"></span> Logging in…';
-  try {
-    const isMobile = /^\d{10}$/.test(identifier);
-    // Query Supabase for the user
-    const filterParam = isMobile
-      ? 'mobile=eq.' + encodeURIComponent(identifier) + '&select=*&limit=1'
-      : 'email=eq.'  + encodeURIComponent(identifier.toLowerCase()) + '&select=*&limit=1';
-    const rows = await sbSelect('users', filterParam);
-    if (!rows || rows.length === 0) {
-      throw new Error(isMobile
-        ? 'No account found with this mobile number. Please register first.'
-        : 'No account found with this email. Please register first.');
-    }
-    const rec = rows[0];
-    // Verify password — support both legacy btoa and new SHA-256 hashes
-    const hashInput = await hashPass(pass);
-    const legacyHash = btoa(pass);
-    if (rec.pass_hash !== hashInput && rec.pass_hash !== legacyHash) {
-      throw new Error('Incorrect password. Please try again.');
-    }
-    // Cache a lightweight local copy for profile display
-    const users = getUsers();
-    const key = (rec.email||'').toLowerCase();
-    users[key] = { name: rec.full_name, mobile: rec.mobile, region: rec.region, paid: rec.paid, plan: rec.plan, registeredAt: rec.registered_at };
-    saveUsers(users);
-    saveUser({ email: rec.email, name: rec.full_name, token: 'sb_' + Date.now(), paid: rec.paid||false, plan: rec.plan||null });
-    showSuccess(rec.full_name.split(' ')[0], false);
-  } catch(e) {
-    showError('login-error', e.message || 'Login failed.');
-    btn.disabled=false; btn.innerHTML='Log In &amp; Go to Dashboard →';
-  }
-}
-
-// ══════════════════════════════════════════════════════════════════════════
-//  REGISTER — writes to Supabase users table
-// ══════════════════════════════════════════════════════════════════════════
-async function doRegister(){
-  clearErrors();
-  const name   = document.getElementById('reg-name').value.trim();
-  const email  = document.getElementById('reg-email').value.trim();
-  const mobile = document.getElementById('reg-mobile').value.trim();
-  const region = document.getElementById('reg-region').value;
-  const pass   = document.getElementById('reg-pass').value;
-  const pass2  = document.getElementById('reg-pass2').value;
-  if(!name)                       { showError('reg-error','Please enter your full name.'); return; }
-  if(!email||!email.includes('@')){ showError('reg-error','Please enter a valid email address.'); return; }
-  if(!mobile)                     { showError('reg-error','Please enter your mobile number.'); return; }
-  if(!/^\d{10}$/.test(mobile))   { showError('reg-error','Mobile must be exactly 10 digits.'); return; }
-  if(!region)                     { showError('reg-error','Please select your region.'); return; }
-  if(pass.length<8)               { showError('reg-error','Password must be at least 8 characters.'); return; }
-  if(pass!==pass2)                { showError('reg-error','Passwords do not match.'); return; }
-  const btn = document.getElementById('reg-btn');
-  btn.disabled=true; btn.innerHTML='<span class="spinner"></span> Creating account…';
-  try {
-    // Check if email already registered in Supabase
-    const existing = await sbSelect('users', 'email=eq.' + encodeURIComponent(email.toLowerCase()) + '&select=id&limit=1');
-    if (existing && existing.length > 0) throw new Error('An account with this email already exists. Please log in.');
-    const registeredAt = new Date().toISOString();
-    const passHash = await hashPass(pass);
-    // Insert into Supabase
-    await sbInsert('users', {
-      email        : email.toLowerCase(),
-      full_name    : name,
-      mobile       : mobile,
-      region       : region,
-      pass_hash    : passHash,
-      paid         : false,
-      plan         : null,
-      registered_at: registeredAt,
-    });
-    // Also cache locally for profile display
-    const users = getUsers();
-    users[email.toLowerCase()] = { name, mobile, region, paid: false, plan: null, registeredAt };
-    saveUsers(users);
-    saveUser({ email: email.toLowerCase(), name, token: 'sb_' + Date.now(), paid: false, plan: null });
-    showSuccess(name.split(' ')[0], true);
-  } catch(e) {
-    showError('reg-error', e.message || 'Registration failed.');
-    btn.disabled=false; btn.innerHTML='Create Account &amp; Start Free →';
-  }
-}
-
-window.addEventListener('DOMContentLoaded',()=>{
-  const user = loadUser();
-  if(user && user.token){
-    window.location.replace('exam-select.html');
-    return;
-  }
-  document.getElementById('user-chip-wrap').style.display='none';
-  const p = new URLSearchParams(window.location.search);
-  if(p.get('tab')==='register') switchTab('register');
-});
+async function sbRequest(method,table,body,params){let url=SUPABASE_URL+'/rest/v1/'+table;if(params)url+='?'+params;const opts={method,headers:{'Content-Type':'application/json','apikey':SUPABASE_ANON_KEY,'Authorization':'Bearer '+SUPABASE_ANON_KEY,'Prefer':method==='POST'?'return=representation':'return=minimal'}};if(body)opts.body=JSON.stringify(body);const res=await fetch(url,opts);const text=await res.text();let data=null;try{data=JSON.parse(text);}catch(e){}if(!res.ok)throw new Error((data&&(data.message||data.details||data.error))||('HTTP '+res.status));return data;}
+async function sbSelect(table,params){return sbRequest('GET',table,null,params);}
+async function sbInsert(table,row){return sbRequest('POST',table,row);}
+async function hashPass(pass){const buf=await crypto.subtle.digest('SHA-256',new TextEncoder().encode(pass));return Array.from(new Uint8Array(buf)).map(b=>b.toString(16).padStart(2,'0')).join('');}
+function saveUser(u){localStorage.setItem('t11_user',JSON.stringify(u));}
+function loadUser(){try{return JSON.parse(localStorage.getItem('t11_user'));}catch(e){return null;}}
+function getUsers(){try{return JSON.parse(localStorage.getItem('t11_registered_users')||'{}');}catch(e){return{};}}
+function saveUsers(obj){localStorage.setItem('t11_registered_users',JSON.stringify(obj));}
+function showError(id,msg){const el=document.getElementById(id);if(el){el.textContent=msg;el.classList.add('show');}}
+function clearErrors(){document.querySelectorAll('.alert-error').forEach(e=>{e.classList.remove('show');e.textContent='';});}
+function switchTab(tab){clearErrors();document.getElementById('tab-login').classList.toggle('active',tab==='login');document.getElementById('tab-register').classList.toggle('active',tab==='register');document.getElementById('login-panel').style.display=tab==='login'?'':'none';document.getElementById('register-panel').style.display=tab==='register'?'':'none';}
+function showSuccess(name,isNew){document.getElementById('auth-tabs').style.display='none';document.getElementById('login-panel').style.display='none';document.getElementById('register-panel').style.display='none';document.getElementById('auth-footer').style.display='none';document.getElementById('success-title').textContent=isNew?('Welcome, '+name+'! 🎉'):('Welcome back, '+name+'!');document.getElementById('success-msg').textContent=isNew?'Account created! 3 free tests are ready — 1 each for ITI, ITO and MS.':'Logged in successfully. Heading to your dashboard now…';document.getElementById('success-panel').style.display='';setTimeout(function(){window.location.href='exam-select.html';},1600);}
+function toggleProfile(){const wrap=document.getElementById('user-chip-wrap');const dd=document.getElementById('profile-dropdown');const isOpen=dd.classList.contains('open');dd.classList.toggle('open',!isOpen);wrap.classList.toggle('open',!isOpen);}
+document.addEventListener('click',e=>{const wrap=document.getElementById('user-chip-wrap');if(wrap&&!wrap.contains(e.target)){document.getElementById('profile-dropdown').classList.remove('open');wrap.classList.remove('open');}});
+function populateProfile(user,users){const key=(user.email||'').toLowerCase();const stored=users[key]||{};const initials=(user.name||'U').charAt(0).toUpperCase();document.getElementById('nav-avatar').textContent=initials;document.getElementById('nav-user-name').textContent=(user.name||'User').split(' ')[0];document.getElementById('pd-avatar-lg').textContent=initials;document.getElementById('pd-name').textContent=user.name||'—';if(document.getElementById('pd-email-hdr'))document.getElementById('pd-email-hdr').textContent=user.email||'—';document.getElementById('pd-mobile').textContent=stored.mobile?'+91 '+stored.mobile:'Not provided';document.getElementById('pd-region').textContent=stored.region||'Not selected';document.getElementById('pd-since').textContent=stored.registeredAt?new Date(stored.registeredAt).toLocaleDateString('en-IN',{day:'numeric',month:'short',year:'numeric'}):'—';document.getElementById('pd-plan').textContent=user.paid?(user.plan?user.plan.toUpperCase()+' Access':'Premium Access'):'Free (3 Tests)';}
+function openEditModal(){document.getElementById('profile-dropdown').classList.remove('open');document.getElementById('user-chip-wrap').classList.remove('open');const user=loadUser();const users=getUsers();const key=(user?.email||'').toLowerCase();const stored=users[key]||{};document.getElementById('edit-name').value=user?.name||'';document.getElementById('edit-mobile').value=stored.mobile||'';document.getElementById('edit-region').value=stored.region||'';const mobileLocked=stored.mobileUpdateUsed===true;const mobileBadge=document.getElementById('mobile-update-badge');const mobileHint=document.getElementById('mobile-update-hint');const mobileInput=document.getElementById('edit-mobile');if(mobileLocked){mobileBadge.style.display='inline';mobileHint.innerHTML='🔒 Mobile number update already used. Contact support to change.';mobileHint.style.color='#991B1B';mobileInput.disabled=true;mobileInput.style.background='#f9fafb';mobileInput.style.cursor='not-allowed';}else{mobileBadge.style.display='none';mobileHint.innerHTML='⚠️ Mobile number can only be updated <strong>once</strong>. Choose carefully.';mobileHint.style.color='#d97706';mobileInput.disabled=false;mobileInput.style.background='';mobileInput.style.cursor='';}document.getElementById('edit-pass').value='';document.getElementById('edit-pass2').value='';document.getElementById('edit-modal').classList.add('open');}
+function closeEditModal(){document.getElementById('edit-modal').classList.remove('open');clearErrors();}
+function closeEditIfOutside(e){if(e.target===document.getElementById('edit-modal'))closeEditModal();}
+function saveProfile(){clearErrors();const name=document.getElementById('edit-name').value.trim();const mobile=document.getElementById('edit-mobile').value.trim();const region=document.getElementById('edit-region').value;const pass=document.getElementById('edit-pass').value;const pass2=document.getElementById('edit-pass2').value;if(!name){showError('edit-error','Full name is required.');return;}if(mobile&&!/^\d{10}$/.test(mobile)){showError('edit-error','Mobile must be 10 digits.');return;}if(pass&&pass.length<8){showError('edit-error','New password must be at least 8 characters.');return;}if(pass&&pass!==pass2){showError('edit-error','Passwords do not match.');return;}const user=loadUser();const users=getUsers();const oldKey=(user?.email||'').toLowerCase();if(!users[oldKey]){showError('edit-error','Session error. Please log in again.');return;}const existingRecord=users[oldKey];if(mobile&&existingRecord.mobile&&existingRecord.mobile!==mobile&&existingRecord.mobileUpdateUsed){showError('edit-error','Mobile number can only be updated once.');return;}const mobileChanged=mobile&&existingRecord.mobile&&existingRecord.mobile!==mobile;const record={...existingRecord,name,mobile,region};if(mobileChanged)record.mobileUpdateUsed=true;if(pass)record.pass=btoa(pass);users[oldKey]=record;saveUsers(users);const updatedUser={...user,name};saveUser(updatedUser);populateProfile(updatedUser,users);closeEditModal();alert('✓ Profile updated successfully!');}
+function logout(){localStorage.removeItem('t11_user');window.location.href='login.html';}
+async function doLogin(){clearErrors();if(document.getElementById('hp-website')&&document.getElementById('hp-website').value!==''){const btn=document.getElementById('login-btn');btn.disabled=true;btn.innerHTML='<span class="spinner"></span> Logging in…';setTimeout(()=>{btn.disabled=false;btn.innerHTML='Log In &amp; Go to Dashboard →';showError('login-error','Login failed. Please try again.');},2000);return;}const identifier=document.getElementById('login-email').value.trim();const pass=document.getElementById('login-pass').value;if(!identifier){showError('login-error','Please enter your mobile number or email address.');return;}if(!pass){showError('login-error','Please enter your password.');return;}const btn=document.getElementById('login-btn');btn.disabled=true;btn.innerHTML='<span class="spinner"></span> Logging in…';try{const isMobile=/^\d{10}$/.test(identifier);const filterParam=isMobile?'mobile=eq.'+encodeURIComponent(identifier)+'&select=*&limit=1':'email=eq.'+encodeURIComponent(identifier.toLowerCase())+'&select=*&limit=1';const rows=await sbSelect('users',filterParam);if(!rows||rows.length===0)throw new Error(isMobile?'No account found with this mobile number.':'No account found with this email.');const rec=rows[0];const hashInput=await hashPass(pass);const legacyHash=btoa(pass);if(rec.pass_hash!==hashInput&&rec.pass_hash!==legacyHash)throw new Error('Incorrect password. Please try again.');const users=getUsers();const key=(rec.email||'').toLowerCase();users[key]={name:rec.full_name,mobile:rec.mobile,region:rec.region,paid:rec.paid,plan:rec.plan,registeredAt:rec.registered_at};saveUsers(users);saveUser({email:rec.email,name:rec.full_name,token:'sb_'+Date.now(),paid:rec.paid||false,plan:rec.plan||null});showSuccess(rec.full_name.split(' ')[0],false);}catch(e){showError('login-error',e.message||'Login failed.');btn.disabled=false;btn.innerHTML='Log In &amp; Go to Dashboard →';}}
+async function doRegister(){clearErrors();const name=document.getElementById('reg-name').value.trim();const mobile=document.getElementById('reg-mobile').value.trim();const region=document.getElementById('reg-region').value;const pass=document.getElementById('reg-pass').value;const pass2=document.getElementById('reg-pass2').value;if(!name){showError('reg-error','Please enter your full name.');return;}if(!mobile){showError('reg-error','Please enter your mobile number.');return;}if(!/^\d{10}$/.test(mobile)){showError('reg-error','Mobile must be exactly 10 digits.');return;}if(!region){showError('reg-error','Please select your region.');return;}if(pass.length<8){showError('reg-error','Password must be at least 8 characters.');return;}if(pass!==pass2){showError('reg-error','Passwords do not match.');return;}const btn=document.getElementById('reg-btn');btn.disabled=true;btn.innerHTML='<span class="spinner"></span> Creating account…';try{const registeredAt=new Date().toISOString();const passHash=await hashPass(pass);await sbInsert('users',{mobile,full_name:name,region,pass_hash:passHash,paid:false,plan:null,registered_at:registeredAt});const users=getUsers();users[mobile]=users[mobile]||{};users[mobile]={name,mobile,region,paid:false,plan:null,registeredAt};saveUsers(users);saveUser({email:mobile,name,token:'sb_'+Date.now(),paid:false,plan:null});showSuccess(name.split(' ')[0],true);}catch(e){showError('reg-error',e.message||'Registration failed.');btn.disabled=false;btn.innerHTML='Create Account &amp; Start Free →';}}
+window.addEventListener('DOMContentLoaded',()=>{const user=loadUser();if(user&&user.token){window.location.replace('exam-select.html');return;}document.getElementById('user-chip-wrap').style.display='none';const p=new URLSearchParams(window.location.search);if(p.get('tab')==='register')switchTab('register');});
 </script>
 </body>
 </html>
