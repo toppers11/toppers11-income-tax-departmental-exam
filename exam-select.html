@@ -439,7 +439,7 @@ body {
           My Tests
         </a>
         <div class="dd-sep"></div>
-        <a class="dd-item danger" href="logout.html">
+        <a class="dd-item danger" href="javascript:void(0)" onclick="logout()">
           <svg width="15" height="15" viewBox="0 0 16 16" fill="none"><path d="M6 2H3a1 1 0 0 0-1 1v10a1 1 0 0 0 1 1h3" stroke="#c0392b" stroke-width="1.4" stroke-linecap="round"/><path d="M11 11l3-3-3-3M14 8H6" stroke="#c0392b" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
           Logout
         </a>
@@ -492,7 +492,7 @@ body {
         </div>
 
         <div class="card-actions">
-          <button class="btn-main" onclick="window.location.href='purchase.html?exam=ms&type=bunch'">GET ITI BUNCH →</button>
+          <button class="btn-main" onclick="window.location.href='purchase.html?exam=ms&type=bunch'">GET MS BUNCH →</button>
           <button class="btn-free" onclick="window.location.href='test.html?exam=ms&type=free'">✦ FREE TEST</button>
         </div>
       </div>
@@ -591,6 +591,14 @@ body {
 </button>
 
 <script>
+// Auth guard — redirect to login if no valid session
+(function(){
+  try {
+    var user = JSON.parse(localStorage.getItem('t11_user') || 'null');
+    if (!user || !user.token) { window.location.href = 'login.html'; return; }
+  } catch(e) { window.location.href = 'login.html'; }
+})();
+
 function toggleDD() {
   document.getElementById('pb').classList.toggle('open');
   document.getElementById('dd').classList.toggle('open');
@@ -604,6 +612,7 @@ document.addEventListener('click', function(e) {
 window.addEventListener('scroll', () => {
   document.getElementById('btt').classList.toggle('vis', scrollY > 300);
 }, { passive: true });
+function logout(){ localStorage.removeItem('t11_user'); window.location.href='login.html'; }
 </script>
 </body>
 </html>
