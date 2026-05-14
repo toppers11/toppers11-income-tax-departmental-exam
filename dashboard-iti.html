@@ -34,16 +34,18 @@ body{background:var(--bg);color:var(--ink);font-family:Open Sans,sans-serif;over
 .logo-box:hover .logo-eyebrow{opacity:.7}
 
 /* Back link */
-.btn-back{display:inline-flex;align-items:center;gap:.3rem;font-size:.75rem;font-weight:600;color:var(--muted);text-decoration:none;background:none;border:none;cursor:pointer;padding:.35rem .65rem;border-radius:5px;transition:color .15s;letter-spacing:.03em;text-transform:uppercase}
-.btn-back:hover{color:var(--t3)}
+.btn-back{display:inline-flex;align-items:center;gap:.35rem;font-size:.75rem;font-weight:700;color:#555;text-decoration:none;background:#fff;border:1.5px solid #dde8e4;border-radius:999px;cursor:pointer;padding:.38rem .95rem;transition:all .18s;letter-spacing:.02em;white-space:nowrap;box-shadow:0 1px 4px rgba(0,0,0,.06)}
+.btn-back:hover{color:var(--t3);border-color:#a7f3d0;box-shadow:0 2px 10px rgba(0,171,132,.15)}
+.btn-back svg{opacity:.65}
+.btn-back:hover svg{opacity:1}
 
 /* User chip */
 .user-chip-wrap{position:relative;display:flex;align-items:center}
-.chip{display:flex;align-items:center;gap:.45rem;cursor:pointer;background:#f0fdf8;border:1.5px solid #a7f3d0;border-radius:999px;padding:.28rem .75rem .28rem .3rem;transition:box-shadow .15s}
-.chip:hover{box-shadow:0 2px 10px rgba(0,171,132,.2)}
-.av{width:28px;height:28px;border-radius:50%;background:linear-gradient(135deg,var(--t-dark),var(--t3));display:grid;place-items:center;font-size:.68rem;font-weight:700;color:#fff}
-.uname{font-size:.78rem;font-weight:600;color:var(--t-dark)}
-.chevron-d{transition:transform .2s;margin-left:.2rem}
+.chip{display:flex;align-items:center;gap:.5rem;cursor:pointer;background:#fff;border:1.5px solid #dde8e4;border-radius:999px;padding:.3rem .9rem .3rem .3rem;transition:all .18s;box-shadow:0 1px 4px rgba(0,0,0,.06)}
+.chip:hover{box-shadow:0 2px 10px rgba(0,171,132,.2);border-color:#a7f3d0}
+.av{width:30px;height:30px;border-radius:50%;background:linear-gradient(135deg,var(--t-dark),var(--t3));display:grid;place-items:center;font-size:.72rem;font-weight:800;color:#fff;flex-shrink:0}
+.uname{font-size:.8rem;font-weight:600;color:#1a1a2e}
+.chevron-d{transition:transform .2s;margin-left:.1rem;color:#555}
 .user-chip-wrap.open .chevron-d{transform:rotate(180deg)}
 
 /* Profile dropdown */
@@ -288,12 +290,12 @@ body{background:var(--bg);color:var(--ink);font-family:Open Sans,sans-serif;over
 @keyframes wap{0%{opacity:.7;transform:scale(1)}70%,to{opacity:0;transform:scale(1.45)}}
 
 /* Floating triangle decorations from hero */
-@keyframes floatT-tl{0%,to{transform:rotate(-22deg)translateY(0)}50%{transform:rotate(-22deg)translateY(-10px)}}
-@keyframes floatT-tr{0%,to{transform:rotate(18deg)translateY(0)}50%{transform:rotate(18deg)translateY(-12px)}}
-@keyframes floatT-br{0%,to{transform:rotate(-15deg)translateY(0)}50%{transform:rotate(-15deg)translateY(-8px)}}
-.tri-tl{width:70px;height:70px;animation:5s ease-in-out infinite floatT-tl;top:20px;left:6%}
-.tri-tr{width:85px;height:85px;animation:7s ease-in-out .5s infinite floatT-tr;top:10px;right:7%}
-.tri-br{opacity:.7;width:55px;height:55px;animation:9s ease-in-out 2s infinite floatT-br;bottom:15px;right:18%}
+@keyframes floatT-tl{0%,to{transform:rotate(-15deg)translateY(0)}50%{transform:rotate(-15deg)translateY(-8px)}}
+@keyframes floatT-tr{0%,to{transform:rotate(12deg)translateY(0)}50%{transform:rotate(12deg)translateY(-12px)}}
+@keyframes floatT-br{0%,to{transform:rotate(-10deg)translateY(0)}50%{transform:rotate(-10deg)translateY(-7px)}}
+.tri-tl{width:55px;height:55px;animation:6s ease-in-out 1s infinite floatT-tl;top:25px;left:8%}
+.tri-tr{width:110px;height:110px;animation:7s ease-in-out .5s infinite floatT-tr;top:8px;right:9%}
+.tri-br{opacity:.85;width:65px;height:65px;animation:9s ease-in-out 2s infinite floatT-br;bottom:10px;right:22%}
 
 /* ── RESPONSIVE ── */
 @media(max-width:640px){
@@ -346,8 +348,8 @@ body{background:var(--bg);color:var(--ink);font-family:Open Sans,sans-serif;over
     </div>
     <div style="display:flex;align-items:center;gap:.75rem;">
       <a href=exam-select.html class=btn-back>
-        <svg width=13 height=13 fill=none stroke=currentColor stroke-width=2.5 viewbox="0 0 24 24"><polyline points="15 18 9 12 15 6"/></svg>
-        All Exams
+        <svg width=11 height=11 fill=none stroke=currentColor stroke-width=2.5 viewbox="0 0 24 24"><polyline points="15 18 9 12 15 6"/></svg>
+        ALL EXAMS
       </a>
     <div class=user-chip-wrap id=chip-wrap>
       <div class=chip onclick="toggleProfile()">
@@ -424,56 +426,54 @@ body{background:var(--bg);color:var(--ink);font-family:Open Sans,sans-serif;over
 <!-- HERO — index-2 style with floating triangles -->
 <section class=hero>
   <!-- 3D Floating triangles -->
+  <!-- Left: wireframe/outline triangle (smaller, ghost style) -->
   <div class="tri tri-tl">
-    <svg style="filter:drop-shadow(4px 10px 18px #00000060)" viewbox="0 0 130 130" xmlns=http://www.w3.org/2000/svg width=130 height=130>
-      <defs>
-        <lineargradient id=t3d1a x1=0% y1=0% x2=100% y2=100%><stop offset=0% stop-color=#4fe8bb/><stop offset=100% stop-color=#00AB84/></lineargradient>
-        <lineargradient id=t3d1b x1=0% y1=0% x2=100% y2=100%><stop offset=0% stop-color=#007a5e/><stop offset=100% stop-color=#004d3f/></lineargradient>
-        <lineargradient id=t3d1c x1=0% y1=0% x2=0% y2=100%><stop offset=0% stop-color=#003d30/><stop offset=100% stop-color=#002820/></lineargradient>
-      </defs>
-      <!-- Front-left face (light) -->
-      <polygon points="65,8 18,100 65,80" fill=url(#t3d1a)/>
-      <!-- Front-right face (mid) -->
-      <polygon points="65,8 112,100 65,80" fill=url(#t3d1b)/>
-      <!-- Bottom face (dark) -->
-      <polygon points="18,100 65,80 112,100" fill=url(#t3d1c) opacity=.9/>
-      <!-- Edge highlight -->
-      <line x1=65 y1=8 x2=65 y2=80 stroke=rgba(255,255,255,0.35) stroke-width=1.2/>
-      <!-- Rim light on left edge -->
-      <line x1=65 y1=8 x2=18 y2=100 stroke=rgba(255,255,255,0.18) stroke-width=0.8/>
+    <svg style="filter:drop-shadow(2px 6px 12px rgba(0,0,0,0.25))" viewbox="0 0 110 110" xmlns=http://www.w3.org/2000/svg width=110 height=110>
+      <!-- Wireframe outline 3D tetrahedron — ghost style -->
+      <polygon points="55,10 15,90 55,72" fill=rgba(255,255,255,0.08) stroke=rgba(255,255,255,0.55) stroke-width=1.8 stroke-linejoin=round/>
+      <polygon points="55,10 95,90 55,72" fill=rgba(255,255,255,0.03) stroke=rgba(255,255,255,0.3) stroke-width=1.2 stroke-linejoin=round/>
+      <polygon points="15,90 55,72 95,90" fill=rgba(0,0,0,0.08) stroke=rgba(255,255,255,0.2) stroke-width=1 stroke-linejoin=round/>
+      <line x1=55 y1=10 x2=55 y2=72 stroke=rgba(255,255,255,0.3) stroke-width=1 stroke-dasharray="3,3"/>
     </svg>
   </div>
+  <!-- Right: large solid 3D teal+yellow tetrahedron (main hero triangle) -->
   <div class="tri tri-tr">
-    <svg style="filter:drop-shadow(4px 10px 18px #00000060)" viewbox="0 0 130 130" xmlns=http://www.w3.org/2000/svg width=130 height=130>
+    <svg style="filter:drop-shadow(6px 14px 28px rgba(0,0,0,0.45))" viewbox="0 0 180 200" xmlns=http://www.w3.org/2000/svg width=180 height=200>
       <defs>
-        <lineargradient id=t3d2a x1=0% y1=0% x2=100% y2=100%><stop offset=0% stop-color=#FFE97A/><stop offset=100% stop-color=#F5C518/></lineargradient>
-        <lineargradient id=t3d2b x1=100% y1=0% x2=0% y2=100%><stop offset=0% stop-color=#c88800/><stop offset=100% stop-color=#8a5e00/></lineargradient>
-        <lineargradient id=t3d2c x1=0% y1=0% x2=0% y2=100%><stop offset=0% stop-color=#7a4e00/><stop offset=100% stop-color=#4a3000/></lineargradient>
+        <!-- Yellow cap face -->
+        <lineargradient id=tcap x1=0% y1=0% x2=100% y2=100%><stop offset=0% stop-color=#FFE97A/><stop offset=100% stop-color=#F5C518/></lineargradient>
+        <!-- Left face (light teal) -->
+        <lineargradient id=tleft x1=0% y1=0% x2=100% y2=100%><stop offset=0% stop-color=#2dd4a4/><stop offset=100% stop-color=#009e78/></lineargradient>
+        <!-- Right face (dark teal) -->
+        <lineargradient id=tright x1=0% y1=0% x2=100% y2=100%><stop offset=0% stop-color=#007a5e/><stop offset=100% stop-color=#004d3f/></lineargradient>
+        <!-- Bottom face -->
+        <lineargradient id=tbot x1=0% y1=0% x2=0% y2=100%><stop offset=0% stop-color=#003d30/><stop offset=100% stop-color=#002820/></lineargradient>
       </defs>
-      <!-- Front-left face (light) -->
-      <polygon points="65,8 18,100 65,80" fill=url(#t3d2a)/>
-      <!-- Front-right face (mid) -->
-      <polygon points="65,8 112,100 65,80" fill=url(#t3d2b)/>
-      <!-- Bottom face (dark) -->
-      <polygon points="18,100 65,80 112,100" fill=url(#t3d2c) opacity=.9/>
-      <!-- Edge highlight -->
-      <line x1=65 y1=8 x2=65 y2=80 stroke=rgba(255,255,255,0.4) stroke-width=1.2/>
-      <line x1=65 y1=8 x2=18 y2=100 stroke=rgba(255,255,255,0.2) stroke-width=0.8/>
+      <!-- Small yellow apex triangle (top cap) -->
+      <polygon points="90,8 62,55 118,55" fill=url(#tcap)/>
+      <!-- Left main face -->
+      <polygon points="62,55 18,165 90,135" fill=url(#tleft)/>
+      <!-- Right main face -->
+      <polygon points="118,55 162,165 90,135" fill=url(#tright)/>
+      <!-- Bottom base face -->
+      <polygon points="18,165 90,135 162,165" fill=url(#tbot) opacity=.92/>
+      <!-- Inner edge highlight (spine) -->
+      <line x1=90 y1=55 x2=90 y2=135 stroke=rgba(255,255,255,0.4) stroke-width=1.5/>
+      <!-- Cap left edge highlight -->
+      <line x1=90 y1=8 x2=62 y2=55 stroke=rgba(255,255,255,0.5) stroke-width=1.2/>
+      <!-- Cap right edge -->
+      <line x1=90 y1=8 x2=118 y2=55 stroke=rgba(255,255,255,0.25) stroke-width=0.8/>
+      <!-- Left edge glow -->
+      <line x1=62 y1=55 x2=18 y2=165 stroke=rgba(255,255,255,0.2) stroke-width=0.8/>
     </svg>
   </div>
+  <!-- Bottom-right: small wireframe triangle -->
   <div class="tri tri-br">
     <svg viewbox="0 0 100 100" xmlns=http://www.w3.org/2000/svg width=100 height=100>
-      <defs>
-        <lineargradient id=t3d3a x1=0% y1=0% x2=100% y2=100%><stop offset=0% stop-color=rgba(255,255,255,0.25)/><stop offset=100% stop-color=rgba(255,255,255,0.1)/></lineargradient>
-      </defs>
-      <!-- Front-left face -->
-      <polygon points="50,8 12,85 50,68" fill=rgba(255,255,255,0.18) stroke=rgba(255,255,255,0.35) stroke-width=1.2/>
-      <!-- Front-right face -->
-      <polygon points="50,8 88,85 50,68" fill=rgba(255,255,255,0.07) stroke=rgba(255,255,255,0.15) stroke-width=0.8/>
-      <!-- Bottom face -->
-      <polygon points="12,85 50,68 88,85" fill=rgba(0,0,0,0.12)/>
-      <!-- Edge highlight -->
-      <line x1=50 y1=8 x2=50 y2=68 stroke=rgba(255,255,255,0.25) stroke-width=1/>
+      <polygon points="50,8 12,85 50,68" fill=rgba(255,255,255,0.12) stroke=rgba(255,255,255,0.4) stroke-width=1.5 stroke-linejoin=round/>
+      <polygon points="50,8 88,85 50,68" fill=rgba(255,255,255,0.05) stroke=rgba(255,255,255,0.18) stroke-width=1 stroke-linejoin=round/>
+      <polygon points="12,85 50,68 88,85" fill=rgba(0,0,0,0.1) stroke=rgba(255,255,255,0.12) stroke-width=0.8 stroke-linejoin=round/>
+      <line x1=50 y1=8 x2=50 y2=68 stroke=rgba(255,255,255,0.22) stroke-width=1/>
     </svg>
   </div>
   <div class=hero-inner>
@@ -501,7 +501,6 @@ body{background:var(--bg);color:var(--ink);font-family:Open Sans,sans-serif;over
 <div class=main>
 
   <div class=retest-notice>
-    <div class=rn-icon><svg width=19 height=19 fill=none stroke=#fff stroke-width=2.2 viewbox="0 0 24 24"><circle cx=12 cy=12 r=10/><line x1=12 y1=8 x2=12 y2=12/><line x1=12 y1=16 x2=12.01 y2=16/></svg></div>
     <div>
       <div class=rn-title>⚡ 3 Attempts Per Assessment</div>
       <div class=rn-msg>You have <strong>3 total attempts</strong> for each test in this series. Once all 3 attempts are used, the test will be marked <strong>Completed</strong>. This mirrors actual departmental exam rules.</div>
