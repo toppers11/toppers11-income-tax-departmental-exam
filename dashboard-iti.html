@@ -68,31 +68,32 @@ body{background:var(--bg);color:var(--ink);font-family:Open Sans,sans-serif;over
 .pd-btn-lo{flex:1;padding:.55rem;font-size:.78rem;font-weight:600;background:#fef2f2;color:#991b1b;border:none;border-radius:8px;cursor:pointer;transition:background .15s}
 .pd-btn-lo:hover{background:#fee2e2}
 
-/* ── HERO — Reference image style with rich green background ── */
-.hero{
-  background:linear-gradient(135deg,#009b77 0%,#00ab84 40%,#00c49a 70%,#00ab84 100%);
-  min-height:160px;padding:2.5rem 0 2rem;position:relative;overflow:hidden
-}
-/* Dot mesh overlay matching reference */
-.hero::before{
-  content:'';pointer-events:none;position:absolute;inset:0;z-index:0;
-  background-image:radial-gradient(circle,rgba(255,255,255,0.07) 1px,transparent 1px);
-  background-size:28px 28px
-}
-/* Subtle radial vignette for depth */
-.hero::after{
-  content:'';pointer-events:none;position:absolute;inset:0;z-index:0;
-  background:radial-gradient(ellipse at 50% 0%,rgba(0,180,140,0.3) 0%,transparent 70%),
-             radial-gradient(ellipse at 100% 100%,rgba(0,60,45,0.25) 0%,transparent 60%)
-}
-.tri{pointer-events:none;z-index:1;position:absolute}
-.hero-inner{z-index:2;position:relative;max-width:1200px;margin:0 auto;padding:0 1.2rem;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:1rem}
-.hero-title{font-family:Nunito,sans-serif;font-size:clamp(1.5rem,3vw,2rem);font-weight:900;color:#fff;line-height:1.1}
-.hero-title em{color:#fff;font-family:Playfair Display,serif;font-size:1.05em;font-style:italic;font-weight:800}
-.hero-sub-text{font-size:.85rem;color:rgba(255,255,255,.82);margin-top:.3rem;font-style:italic}
-.hero-badge-wrap{display:flex;gap:.6rem;flex-wrap:wrap;align-items:center}
-.hero-badge{background:rgba(255,255,255,.15);border:1px solid rgba(255,255,255,.3);border-radius:8px;padding:.45rem .9rem;font-size:.72rem;font-weight:600;color:#fff;display:flex;align-items:center;gap:.4rem}
-.hero-badge-yellow{background:rgba(245,197,24,.15);border-color:rgba(245,197,24,.4);color:var(--yellow)}
+/* ── HERO ── */
+.hero{background:var(--t3);padding:2.5rem 1.2rem 2.2rem;position:relative;overflow:hidden;}
+.hero-inner{position:relative;z-index:2;max-width:1100px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:.8rem;}
+.hero-title{font-family:'Open Sans',sans-serif;font-size:clamp(1.5rem,3vw,2.2rem);font-weight:800;color:#fff;line-height:1.1;letter-spacing:-.01em;}
+.hero-title em{font-family:'Playfair Display',Georgia,serif;font-style:italic;font-weight:800;font-size:1.05em;color:#fff;}
+.hero-sub-text{font-size:.82rem;color:rgba(255,255,255,.82);margin-top:.35rem;font-style:italic;}
+.hero-badge{background:rgba(255,255,255,.18);border:1px solid rgba(255,255,255,.32);border-radius:8px;padding:.45rem .9rem;font-size:.72rem;font-weight:700;color:#fff;display:flex;align-items:center;gap:.4rem;letter-spacing:.03em;}
+/* floating triangles */
+.tri{pointer-events:none;z-index:0;position:absolute;}
+@keyframes floatA{0%,100%{transform:rotate(-22deg) translateY(0)}50%{transform:rotate(-22deg) translateY(-14px)}}
+@keyframes floatB{0%,100%{transform:rotate(55deg) translateY(0)}50%{transform:rotate(55deg) translateY(-12px)}}
+@keyframes floatC{0%,100%{transform:rotate(18deg) translateY(0)}50%{transform:rotate(18deg) translateY(-16px)}}
+@keyframes floatD{0%,100%{transform:rotate(-40deg) translateY(0)}50%{transform:rotate(-40deg) translateY(-10px)}}
+@keyframes floatE{0%,100%{transform:rotate(135deg) translateY(0)}50%{transform:rotate(135deg) translateY(-13px)}}
+@keyframes floatF{0%,100%{transform:translate(-50%) rotate(30deg) translateY(0)}50%{transform:translate(-50%) rotate(30deg) translateY(-14px)}}
+@keyframes floatG{0%,100%{transform:rotate(-15deg) translateY(0)}50%{transform:rotate(-15deg) translateY(-11px)}}
+@keyframes floatH{0%,100%{transform:rotate(80deg) translateY(0)}50%{transform:rotate(80deg) translateY(-15px)}}
+.tri-tl{width:80px;height:80px;top:40px;left:5%;animation:7s ease-in-out infinite floatA;}
+.tri-tl2{opacity:.65;filter:blur(2px);width:48px;height:48px;top:18px;left:16%;animation:9s ease-in-out 1s infinite floatB;}
+.tri-tr{width:100px;height:100px;top:22px;right:6%;animation:7.5s ease-in-out .5s infinite floatC;}
+.tri-tr2{opacity:.7;filter:blur(1.5px);width:60px;height:60px;top:12px;right:20%;animation:9s ease-in-out 2s infinite floatD;}
+.tri-bl{width:70px;height:70px;bottom:30px;left:8%;animation:8s ease-in-out 1.5s infinite floatE;}
+.tri-bc{width:90px;height:90px;bottom:8px;left:50%;animation:7s ease-in-out .8s infinite floatF;}
+.tri-br{opacity:.65;width:58px;height:58px;bottom:40px;right:8%;animation:9.5s ease-in-out 2.5s infinite floatG;}
+.tri-mr{opacity:.6;filter:blur(1.5px);width:65px;height:65px;top:40%;right:2%;animation:10s ease-in-out 1s infinite floatH;}
+
 
 /* ── TABS BAR — index-2 nav style ── */
 .tabs-bar{z-index:200;background:#fff;border-bottom:2px solid var(--bdr);position:sticky;top:0}
@@ -450,102 +451,31 @@ body{background:var(--bg);color:var(--ink);font-family:Open Sans,sans-serif;over
   </div>
 </div>
 
-<!-- HERO — Reference image style with rich floating triangles -->
-<section class=hero>
-  <!-- TOP LEFT: Dark teal solid 3D triangle (reference: dark teal top-left) -->
-  <div class="tri tri-tl">
-    <svg style="filter:drop-shadow(3px 8px 16px rgba(0,0,0,0.35))" viewBox="0 0 110 120" xmlns="http://www.w3.org/2000/svg" width=110 height=120>
-      <defs>
-        <linearGradient id=tl_left x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#1a6b54"/><stop offset="100%" stop-color="#0d4a3a"/></linearGradient>
-        <linearGradient id=tl_right x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#0f3d2e"/><stop offset="100%" stop-color="#072418"/></linearGradient>
-      </defs>
-      <polygon points="55,8 14,90 55,70" fill="url(#tl_left)"/>
-      <polygon points="55,8 96,90 55,70" fill="url(#tl_right)"/>
-      <polygon points="14,90 55,70 96,90" fill="#051f15" opacity="0.9"/>
-      <line x1="55" y1="8" x2="55" y2="70" stroke="rgba(255,255,255,0.25)" stroke-width="1"/>
-      <line x1="55" y1="8" x2="14" y2="90" stroke="rgba(255,255,255,0.15)" stroke-width="0.8"/>
-    </svg>
-  </div>
-  <!-- TOP RIGHT: Large 3D yellow+teal tetrahedron (main hero piece from reference) -->
-  <div class="tri tri-tr">
-    <svg style="filter:drop-shadow(6px 14px 28px rgba(0,0,0,0.5))" viewBox="0 0 200 220" xmlns="http://www.w3.org/2000/svg" width=200 height=220>
-      <defs>
-        <linearGradient id=tcap2 x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#FFE97A"/><stop offset="100%" stop-color="#F5C518"/></linearGradient>
-        <linearGradient id=tleft2 x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#2dd4a4"/><stop offset="100%" stop-color="#00a076"/></linearGradient>
-        <linearGradient id=tright2 x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#007a5e"/><stop offset="100%" stop-color="#004d3f"/></linearGradient>
-        <linearGradient id=tbot2 x1="0%" y1="0%" x2="0%" y2="100%"><stop offset="0%" stop-color="#003d30"/><stop offset="100%" stop-color="#001f18"/></linearGradient>
-      </defs>
-      <!-- Yellow cap -->
-      <polygon points="100,6 68,60 132,60" fill="url(#tcap2)"/>
-      <!-- Left face teal -->
-      <polygon points="68,60 16,182 100,148" fill="url(#tleft2)"/>
-      <!-- Right face dark teal -->
-      <polygon points="132,60 184,182 100,148" fill="url(#tright2)"/>
-      <!-- Bottom base -->
-      <polygon points="16,182 100,148 184,182" fill="url(#tbot2)" opacity=".92"/>
-      <!-- Highlights -->
-      <line x1="100" y1="60" x2="100" y2="148" stroke="rgba(255,255,255,0.4)" stroke-width="1.5"/>
-      <line x1="100" y1="6" x2="68" y2="60" stroke="rgba(255,255,255,0.55)" stroke-width="1.3"/>
-      <line x1="100" y1="6" x2="132" y2="60" stroke="rgba(255,255,255,0.2)" stroke-width="0.9"/>
-      <line x1="68" y1="60" x2="16" y2="182" stroke="rgba(255,255,255,0.18)" stroke-width="0.8"/>
-    </svg>
-  </div>
-  <!-- LEFT SIDE LOWER: Second dark teal small triangle -->
-  <div class="tri tri-tl2">
-    <svg style="filter:drop-shadow(2px 5px 10px rgba(0,0,0,0.3))" viewBox="0 0 80 90" xmlns="http://www.w3.org/2000/svg" width=80 height=90>
-      <defs>
-        <linearGradient id=tl2_l x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#1a7a60"/><stop offset="100%" stop-color="#0e5244"/></linearGradient>
-        <linearGradient id=tl2_r x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#0a3d2e"/><stop offset="100%" stop-color="#051f18"/></linearGradient>
-      </defs>
-      <polygon points="40,6 10,72 40,56" fill="url(#tl2_l)"/>
-      <polygon points="40,6 70,72 40,56" fill="url(#tl2_r)"/>
-      <polygon points="10,72 40,56 70,72" fill="#030e09" opacity="0.85"/>
-      <line x1="40" y1="6" x2="40" y2="56" stroke="rgba(255,255,255,0.2)" stroke-width="0.8"/>
-    </svg>
-  </div>
-  <!-- RIGHT SIDE: Small yellow accent triangle -->
-  <div class="tri tri-tr2">
-    <svg style="filter:drop-shadow(3px 7px 14px rgba(0,0,0,0.35))" viewBox="0 0 90 100" xmlns="http://www.w3.org/2000/svg" width=90 height=100>
-      <defs>
-        <linearGradient id=ty_l x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#FFE97A"/><stop offset="100%" stop-color="#F5C518"/></linearGradient>
-        <linearGradient id=ty_r x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#D4A017"/><stop offset="100%" stop-color="#A07810"/></linearGradient>
-      </defs>
-      <polygon points="45,6 12,80 45,62" fill="url(#ty_l)"/>
-      <polygon points="45,6 78,80 45,62" fill="url(#ty_r)"/>
-      <polygon points="12,80 45,62 78,80" fill="#6b4e08" opacity="0.85"/>
-      <line x1="45" y1="6" x2="45" y2="62" stroke="rgba(255,255,255,0.4)" stroke-width="1"/>
-      <line x1="45" y1="6" x2="12" y2="80" stroke="rgba(255,255,255,0.25)" stroke-width="0.7"/>
-    </svg>
-  </div>
-  <!-- BOTTOM RIGHT: wireframe ghost triangle -->
-  <div class="tri tri-br">
-    <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg" width=100 height=100>
-      <polygon points="50,8 12,85 50,68" fill="rgba(255,255,255,0.1)" stroke="rgba(255,255,255,0.38)" stroke-width="1.5" stroke-linejoin="round"/>
-      <polygon points="50,8 88,85 50,68" fill="rgba(255,255,255,0.04)" stroke="rgba(255,255,255,0.16)" stroke-width="1" stroke-linejoin="round"/>
-      <polygon points="12,85 50,68 88,85" fill="rgba(0,0,0,0.1)" stroke="rgba(255,255,255,0.1)" stroke-width="0.8" stroke-linejoin="round"/>
-      <line x1="50" y1="8" x2="50" y2="68" stroke="rgba(255,255,255,0.2)" stroke-width="1"/>
-    </svg>
-  </div>
-  <!-- BOTTOM LEFT: tiny ghost triangle -->
-  <div class="tri tri-bl">
-    <svg viewBox="0 0 70 70" xmlns="http://www.w3.org/2000/svg" width=70 height=70>
-      <polygon points="35,6 8,60 35,46" fill="rgba(255,255,255,0.08)" stroke="rgba(255,255,255,0.3)" stroke-width="1.2" stroke-linejoin="round"/>
-      <polygon points="35,6 62,60 35,46" fill="rgba(255,255,255,0.03)" stroke="rgba(255,255,255,0.12)" stroke-width="0.8" stroke-linejoin="round"/>
-    </svg>
-  </div>
-  <div class=hero-inner>
-    <div>
-      <div class=hero-title>📋 <span style="font-family:Open Sans,sans-serif;font-weight:800;letter-spacing:.01em">MS</span> <em>Exam Dashboard</em></div>
-      <div class=hero-sub-text>Ministerial Staff — 4 Papers, 84 Subjective Tests</div>
-    </div>
-    <div class=hero-badge-wrap>
-      <div class=hero-badge>
-        <svg width=13 height=13 fill=none stroke=currentColor stroke-width=2 viewbox="0 0 24 24"><rect x=3 y=4 width=18 height=18 rx=2/><line x1=16 y1=2 x2=16 y2=6/><line x1=8 y1=2 x2=8 y2=6/><line x1=3 y1=10 x2=21 y2=10/></svg>
-        Exam: 08–15 Sep 2025
-      </div>
-    </div>
-  </div>
-</section>
+/* ── HERO ── */
+.hero{background:var(--t3);padding:2.5rem 1.2rem 2.2rem;position:relative;overflow:hidden;}
+.hero-inner{position:relative;z-index:2;max-width:1100px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:.8rem;}
+.hero-title{font-family:'Open Sans',sans-serif;font-size:clamp(1.5rem,3vw,2.2rem);font-weight:800;color:#fff;line-height:1.1;letter-spacing:-.01em;}
+.hero-title em{font-family:'Playfair Display',Georgia,serif;font-style:italic;font-weight:800;font-size:1.05em;color:#fff;}
+.hero-sub-text{font-size:.82rem;color:rgba(255,255,255,.82);margin-top:.35rem;font-style:italic;}
+.hero-badge{background:rgba(255,255,255,.18);border:1px solid rgba(255,255,255,.32);border-radius:8px;padding:.45rem .9rem;font-size:.72rem;font-weight:700;color:#fff;display:flex;align-items:center;gap:.4rem;letter-spacing:.03em;}
+/* floating triangles */
+.tri{pointer-events:none;z-index:0;position:absolute;}
+@keyframes floatA{0%,100%{transform:rotate(-22deg) translateY(0)}50%{transform:rotate(-22deg) translateY(-14px)}}
+@keyframes floatB{0%,100%{transform:rotate(55deg) translateY(0)}50%{transform:rotate(55deg) translateY(-12px)}}
+@keyframes floatC{0%,100%{transform:rotate(18deg) translateY(0)}50%{transform:rotate(18deg) translateY(-16px)}}
+@keyframes floatD{0%,100%{transform:rotate(-40deg) translateY(0)}50%{transform:rotate(-40deg) translateY(-10px)}}
+@keyframes floatE{0%,100%{transform:rotate(135deg) translateY(0)}50%{transform:rotate(135deg) translateY(-13px)}}
+@keyframes floatF{0%,100%{transform:translate(-50%) rotate(30deg) translateY(0)}50%{transform:translate(-50%) rotate(30deg) translateY(-14px)}}
+@keyframes floatG{0%,100%{transform:rotate(-15deg) translateY(0)}50%{transform:rotate(-15deg) translateY(-11px)}}
+@keyframes floatH{0%,100%{transform:rotate(80deg) translateY(0)}50%{transform:rotate(80deg) translateY(-15px)}}
+.tri-tl{width:80px;height:80px;top:40px;left:5%;animation:7s ease-in-out infinite floatA;}
+.tri-tl2{opacity:.65;filter:blur(2px);width:48px;height:48px;top:18px;left:16%;animation:9s ease-in-out 1s infinite floatB;}
+.tri-tr{width:100px;height:100px;top:22px;right:6%;animation:7.5s ease-in-out .5s infinite floatC;}
+.tri-tr2{opacity:.7;filter:blur(1.5px);width:60px;height:60px;top:12px;right:20%;animation:9s ease-in-out 2s infinite floatD;}
+.tri-bl{width:70px;height:70px;bottom:30px;left:8%;animation:8s ease-in-out 1.5s infinite floatE;}
+.tri-bc{width:90px;height:90px;bottom:8px;left:50%;animation:7s ease-in-out .8s infinite floatF;}
+.tri-br{opacity:.65;width:58px;height:58px;bottom:40px;right:8%;animation:9.5s ease-in-out 2.5s infinite floatG;}
+.tri-mr{opacity:.6;filter:blur(1.5px);width:65px;height:65px;top:40%;right:2%;animation:10s ease-in-out 1s infinite floatH;}
 
 <!-- TABS BAR -->
 <div class=tabs-bar><div class=tabs-inner id=tabs-inner></div></div>
