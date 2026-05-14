@@ -325,7 +325,6 @@ body{background:var(--bg);color:var(--ink);font-family:Open Sans,sans-serif;over
   <div class=top-inner>
     <div style="display:flex;align-items:center;gap:1rem;">
       <a class=logo-box href=index.html>
-        <span class=logo-eyebrow>Employee Choice</span>
         <span class=site-name>toppers<span style="color:var(--t3);font-family:Righteous,cursive;font-size:48px">11</span></span>
         <span class=site-tag>AI-Powered Test Series</span>
       </a>
@@ -407,27 +406,62 @@ body{background:var(--bg);color:var(--ink);font-family:Open Sans,sans-serif;over
 
 <!-- HERO — index-2 style with floating triangles -->
 <section class=hero>
-  <!-- Floating triangles (lighter version from index-2) -->
+  <!-- 3D Floating triangles -->
   <div class="tri tri-tl">
-    <svg style="filter:drop-shadow(3px 6px 12px #00000050)" viewbox="0 0 120 120" xmlns=http://www.w3.org/2000/svg>
-      <defs><lineargradient id=h1a x1=0% x2=100% y1=0% y2=100%><stop offset=0% stop-color=#3ddbb0/><stop offset=100% stop-color=#00AB84/></lineargradient></defs>
-      <polygon points="60,10 15,95 60,78" fill=url(#h1a)/><polygon points="60,10 105,95 60,78" fill=#005a48/><polygon points="15,95 60,78 105,95" fill=#003d30 opacity=.75/><line stroke=rgba(255,255,255,0.3) stroke-width=1 x1=60 x2=60 y1=10 y2=78/>
+    <svg style="filter:drop-shadow(4px 10px 18px #00000060)" viewbox="0 0 130 130" xmlns=http://www.w3.org/2000/svg width=130 height=130>
+      <defs>
+        <lineargradient id=t3d1a x1=0% y1=0% x2=100% y2=100%><stop offset=0% stop-color=#4fe8bb/><stop offset=100% stop-color=#00AB84/></lineargradient>
+        <lineargradient id=t3d1b x1=0% y1=0% x2=100% y2=100%><stop offset=0% stop-color=#007a5e/><stop offset=100% stop-color=#004d3f/></lineargradient>
+        <lineargradient id=t3d1c x1=0% y1=0% x2=0% y2=100%><stop offset=0% stop-color=#003d30/><stop offset=100% stop-color=#002820/></lineargradient>
+      </defs>
+      <!-- Front-left face (light) -->
+      <polygon points="65,8 18,100 65,80" fill=url(#t3d1a)/>
+      <!-- Front-right face (mid) -->
+      <polygon points="65,8 112,100 65,80" fill=url(#t3d1b)/>
+      <!-- Bottom face (dark) -->
+      <polygon points="18,100 65,80 112,100" fill=url(#t3d1c) opacity=.9/>
+      <!-- Edge highlight -->
+      <line x1=65 y1=8 x2=65 y2=80 stroke=rgba(255,255,255,0.35) stroke-width=1.2/>
+      <!-- Rim light on left edge -->
+      <line x1=65 y1=8 x2=18 y2=100 stroke=rgba(255,255,255,0.18) stroke-width=0.8/>
     </svg>
   </div>
   <div class="tri tri-tr">
-    <svg style="filter:drop-shadow(3px 6px 14px #00000050)" viewbox="0 0 120 120" xmlns=http://www.w3.org/2000/svg>
-      <defs><lineargradient id=h2a x1=0% x2=100% y1=0% y2=100%><stop offset=0% stop-color=#FFE97A/><stop offset=100% stop-color=#F5C518/></lineargradient></defs>
-      <polygon points="60,10 15,95 60,78" fill=url(#h2a)/><polygon points="60,10 105,95 60,78" fill=#b87800/><polygon points="15,95 60,78 105,95" fill=#8a5e00 opacity=.7/><line stroke=rgba(255,255,255,0.4) stroke-width=1 x1=60 x2=60 y1=10 y2=78/>
+    <svg style="filter:drop-shadow(4px 10px 18px #00000060)" viewbox="0 0 130 130" xmlns=http://www.w3.org/2000/svg width=130 height=130>
+      <defs>
+        <lineargradient id=t3d2a x1=0% y1=0% x2=100% y2=100%><stop offset=0% stop-color=#FFE97A/><stop offset=100% stop-color=#F5C518/></lineargradient>
+        <lineargradient id=t3d2b x1=100% y1=0% x2=0% y2=100%><stop offset=0% stop-color=#c88800/><stop offset=100% stop-color=#8a5e00/></lineargradient>
+        <lineargradient id=t3d2c x1=0% y1=0% x2=0% y2=100%><stop offset=0% stop-color=#7a4e00/><stop offset=100% stop-color=#4a3000/></lineargradient>
+      </defs>
+      <!-- Front-left face (light) -->
+      <polygon points="65,8 18,100 65,80" fill=url(#t3d2a)/>
+      <!-- Front-right face (mid) -->
+      <polygon points="65,8 112,100 65,80" fill=url(#t3d2b)/>
+      <!-- Bottom face (dark) -->
+      <polygon points="18,100 65,80 112,100" fill=url(#t3d2c) opacity=.9/>
+      <!-- Edge highlight -->
+      <line x1=65 y1=8 x2=65 y2=80 stroke=rgba(255,255,255,0.4) stroke-width=1.2/>
+      <line x1=65 y1=8 x2=18 y2=100 stroke=rgba(255,255,255,0.2) stroke-width=0.8/>
     </svg>
   </div>
   <div class="tri tri-br">
-    <svg viewbox="0 0 120 120" xmlns=http://www.w3.org/2000/svg>
-      <polygon points="60,10 15,95 60,78" fill=rgba(255,255,255,0.15) stroke=rgba(255,255,255,0.4) stroke-width=1.5/><polygon points="60,10 105,95 60,78" fill=rgba(255,255,255,0.07)/>
+    <svg viewbox="0 0 100 100" xmlns=http://www.w3.org/2000/svg width=100 height=100>
+      <defs>
+        <lineargradient id=t3d3a x1=0% y1=0% x2=100% y2=100%><stop offset=0% stop-color=rgba(255,255,255,0.25)/><stop offset=100% stop-color=rgba(255,255,255,0.1)/></lineargradient>
+      </defs>
+      <!-- Front-left face -->
+      <polygon points="50,8 12,85 50,68" fill=rgba(255,255,255,0.18) stroke=rgba(255,255,255,0.35) stroke-width=1.2/>
+      <!-- Front-right face -->
+      <polygon points="50,8 88,85 50,68" fill=rgba(255,255,255,0.07) stroke=rgba(255,255,255,0.15) stroke-width=0.8/>
+      <!-- Bottom face -->
+      <polygon points="12,85 50,68 88,85" fill=rgba(0,0,0,0.12)/>
+      <!-- Edge highlight -->
+      <line x1=50 y1=8 x2=50 y2=68 stroke=rgba(255,255,255,0.25) stroke-width=1/>
     </svg>
   </div>
   <div class=hero-inner>
     <div>
-      <div class=hero-title>🔍 ITI — <em>Inspector Exam</em></div>
+      <div class=hero-title>🔍 <span style="font-family:Open Sans,sans-serif;font-weight:800;letter-spacing:.01em">ITI</span> — <em>Inspector Exam</em></div>
       <div class=hero-sub-text>Income Tax Inspector · 4 Papers · 84 Mock Tests · PYQs Included</div>
     </div>
     <div class=hero-badge-wrap>
@@ -448,16 +482,7 @@ body{background:var(--bg);color:var(--ink);font-family:Open Sans,sans-serif;over
 
 <!-- MAIN -->
 <div class=main>
-  <div class=unlock-bar id=unlock-bar style="display:none;">
-    <div class=ub-text>
-      <strong>🔒 Unlock All 84 ITI Tests</strong>
-      <span>Complete access to all 4 papers × 21 tests each. One-time payment, instant activation. Save ₹465 with the full bunch.</span>
-    </div>
-    <button class=btn-unlock onclick=openModal()>
-      <svg width=13 height=13 fill=none stroke=currentColor stroke-width=2.5 viewbox="0 0 24 24"><rect x=3 y=11 width=18 height=11 rx=2/><path d="M7 11V7a5 5 0 0110 0v4"/></svg>
-      Unlock Full Access →
-    </button>
-  </div>
+
   <div class=retest-notice>
     <div class=rn-icon><svg width=19 height=19 fill=none stroke=#fff stroke-width=2.2 viewbox="0 0 24 24"><circle cx=12 cy=12 r=10/><line x1=12 y1=8 x2=12 y2=12/><line x1=12 y1=16 x2=12.01 y2=16/></svg></div>
     <div>
@@ -744,7 +769,7 @@ function buildCards(p,i){
 }
 
 function render(){
-  document.getElementById('unlock-bar').style.display=isPaid()?'none':'';
+  const ub=document.getElementById('unlock-bar');if(ub)ub.style.display=isPaid()?'none':'';
   document.getElementById('panels').innerHTML='';
   PAPERS.forEach((p,i)=>buildCards(p,i));
   buildTabs();
