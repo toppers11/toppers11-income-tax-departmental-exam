@@ -68,10 +68,24 @@ body{background:var(--bg);color:var(--ink);font-family:Open Sans,sans-serif;over
 .pd-btn-lo{flex:1;padding:.55rem;font-size:.78rem;font-weight:600;background:#fef2f2;color:#991b1b;border:none;border-radius:8px;cursor:pointer;transition:background .15s}
 .pd-btn-lo:hover{background:#fee2e2}
 
-/* ── HERO — 3D triangle design ── */
-.hero{background:linear-gradient(135deg,#00c896 0%,#00ab84 35%,#009070 65%,#007a5e 100%);min-height:160px;padding:2.5rem 0 2rem;position:relative;overflow:hidden}
-.hero::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at 30% 50%,rgba(255,255,255,0.08) 0%,transparent 60%),radial-gradient(ellipse at 80% 20%,rgba(0,80,60,0.3) 0%,transparent 50%);pointer-events:none;z-index:0}
-.tri{pointer-events:none;z-index:0;position:absolute}
+/* ── HERO — Reference image style with rich green background ── */
+.hero{
+  background:linear-gradient(135deg,#009b77 0%,#00ab84 40%,#00c49a 70%,#00ab84 100%);
+  min-height:160px;padding:2.5rem 0 2rem;position:relative;overflow:hidden
+}
+/* Dot mesh overlay matching reference */
+.hero::before{
+  content:'';pointer-events:none;position:absolute;inset:0;z-index:0;
+  background-image:radial-gradient(circle,rgba(255,255,255,0.07) 1px,transparent 1px);
+  background-size:28px 28px
+}
+/* Subtle radial vignette for depth */
+.hero::after{
+  content:'';pointer-events:none;position:absolute;inset:0;z-index:0;
+  background:radial-gradient(ellipse at 50% 0%,rgba(0,180,140,0.3) 0%,transparent 70%),
+             radial-gradient(ellipse at 100% 100%,rgba(0,60,45,0.25) 0%,transparent 60%)
+}
+.tri{pointer-events:none;z-index:1;position:absolute}
 .hero-inner{z-index:2;position:relative;max-width:1200px;margin:0 auto;padding:0 1.2rem;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:1rem}
 .hero-title{font-family:Nunito,sans-serif;font-size:clamp(1.5rem,3vw,2rem);font-weight:900;color:#fff;line-height:1.1}
 .hero-title em{color:#fff;font-family:Playfair Display,serif;font-size:1.05em;font-style:italic;font-weight:800}
@@ -290,15 +304,25 @@ body{background:var(--bg);color:var(--ink);font-family:Open Sans,sans-serif;over
 #wa span{border:2px solid #25d366;border-radius:50%;animation:2s ease-out 3s infinite wap;position:absolute;inset:-4px}
 @keyframes wap{0%{opacity:.7;transform:scale(1)}70%,to{opacity:0;transform:scale(1.45)}}
 
-/* Floating triangle decorations from hero */
-@keyframes floatT-tl{0%,to{transform:rotate(-8deg) translateY(0) scale(1)}50%{transform:rotate(-8deg) translateY(-10px) scale(1.02)}}
-@keyframes floatT-tr{0%,to{transform:rotate(6deg) translateY(0)}50%{transform:rotate(6deg) translateY(-14px)}}
-@keyframes floatT-br{0%,to{transform:rotate(-5deg) translateY(0)}50%{transform:rotate(-5deg) translateY(-8px)}}
-@keyframes floatT-bl{0%,to{transform:rotate(18deg) translateY(0)}50%{transform:rotate(18deg) translateY(-6px)}}
-.tri-tl{width:80px;height:90px;animation:7s ease-in-out 1s infinite floatT-tl;top:18px;left:6%}
-.tri-tr{width:150px;height:170px;animation:8s ease-in-out .5s infinite floatT-tr;top:-10px;right:7%}
-.tri-br{opacity:.9;width:90px;height:100px;animation:10s ease-in-out 2s infinite floatT-br;bottom:4px;right:20%}
-.tri-bl{opacity:.7;width:50px;height:55px;animation:9s ease-in-out 3s infinite floatT-bl;bottom:8px;left:18%}
+/* Floating triangle decorations from hero — reference image style */
+@keyframes floatT-tl{0%,to{transform:rotate(-15deg)translateY(0)}50%{transform:rotate(-15deg)translateY(-8px)}}
+@keyframes floatT-tl2{0%,to{transform:rotate(20deg)translateY(0)}50%{transform:rotate(20deg)translateY(-6px)}}
+@keyframes floatT-tr{0%,to{transform:rotate(12deg)translateY(0)}50%{transform:rotate(12deg)translateY(-12px)}}
+@keyframes floatT-tr2{0%,to{transform:rotate(-8deg)translateY(0)}50%{transform:rotate(-8deg)translateY(-9px)}}
+@keyframes floatT-br{0%,to{transform:rotate(-10deg)translateY(0)}50%{transform:rotate(-10deg)translateY(-7px)}}
+@keyframes floatT-bl{0%,to{transform:rotate(15deg)translateY(0)}50%{transform:rotate(15deg)translateY(-5px)}}
+/* Main large triangle — top right (yellow+teal 3D tetrahedron) */
+.tri-tr{width:110px;height:110px;animation:7s ease-in-out .5s infinite floatT-tr;top:8px;right:9%}
+/* Dark teal triangle — top left cluster */
+.tri-tl{width:55px;height:55px;animation:6s ease-in-out 1s infinite floatT-tl;top:25px;left:8%}
+/* Second dark teal triangle — left side lower */
+.tri-tl2{width:40px;height:40px;animation:8s ease-in-out 2.5s infinite floatT-tl2;top:55%;left:3%}
+/* Yellow accent triangle — right side lower */
+.tri-tr2{width:50px;height:50px;animation:5.5s ease-in-out 1.2s infinite floatT-tr2;top:50%;right:5%}
+/* Small triangle bottom right */
+.tri-br{opacity:.85;width:65px;height:65px;animation:9s ease-in-out 2s infinite floatT-br;bottom:10px;right:22%}
+/* Small triangle bottom left */
+.tri-bl{opacity:.7;width:35px;height:35px;animation:7s ease-in-out 3s infinite floatT-bl;bottom:8px;left:15%}
 
 /* ── RESPONSIVE ── */
 @media(max-width:640px){
@@ -426,88 +450,87 @@ body{background:var(--bg);color:var(--ink);font-family:Open Sans,sans-serif;over
   </div>
 </div>
 
-<!-- HERO — 3D triangle design -->
+<!-- HERO — Reference image style with rich floating triangles -->
 <section class=hero>
-  <!-- 3D Floating triangles -->
-
-  <!-- Left: medium solid 3D teal tetrahedron (ghost/wireframe style like reference small-left) -->
+  <!-- TOP LEFT: Dark teal solid 3D triangle (reference: dark teal top-left) -->
   <div class="tri tri-tl">
-    <svg style="filter:drop-shadow(3px 8px 16px rgba(0,0,0,0.3))" viewBox="0 0 110 130" xmlns="http://www.w3.org/2000/svg" width="110" height="130">
+    <svg style="filter:drop-shadow(3px 8px 16px rgba(0,0,0,0.35))" viewBox="0 0 110 120" xmlns="http://www.w3.org/2000/svg" width=110 height=120>
       <defs>
-        <linearGradient id="tl-left" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="rgba(255,255,255,0.22)"/><stop offset="100%" stop-color="rgba(255,255,255,0.06)"/></linearGradient>
-        <linearGradient id="tl-right" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="rgba(255,255,255,0.06)"/><stop offset="100%" stop-color="rgba(255,255,255,0.02)"/></linearGradient>
+        <linearGradient id=tl_left x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#1a6b54"/><stop offset="100%" stop-color="#0d4a3a"/></linearGradient>
+        <linearGradient id=tl_right x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#0f3d2e"/><stop offset="100%" stop-color="#072418"/></linearGradient>
       </defs>
-      <!-- Wireframe ghost tetrahedron — outline only like reference left small triangle -->
-      <polygon points="55,8 14,100 55,80" fill="url(#tl-left)" stroke="rgba(255,255,255,0.7)" stroke-width="2" stroke-linejoin="round"/>
-      <polygon points="55,8 96,100 55,80" fill="url(#tl-right)" stroke="rgba(255,255,255,0.35)" stroke-width="1.3" stroke-linejoin="round"/>
-      <polygon points="14,100 55,80 96,100" fill="rgba(0,0,0,0.12)" stroke="rgba(255,255,255,0.2)" stroke-width="1" stroke-linejoin="round"/>
-      <line x1="55" y1="8" x2="55" y2="80" stroke="rgba(255,255,255,0.4)" stroke-width="1.2" stroke-dasharray="4,3"/>
+      <polygon points="55,8 14,90 55,70" fill="url(#tl_left)"/>
+      <polygon points="55,8 96,90 55,70" fill="url(#tl_right)"/>
+      <polygon points="14,90 55,70 96,90" fill="#051f15" opacity="0.9"/>
+      <line x1="55" y1="8" x2="55" y2="70" stroke="rgba(255,255,255,0.25)" stroke-width="1"/>
+      <line x1="55" y1="8" x2="14" y2="90" stroke="rgba(255,255,255,0.15)" stroke-width="0.8"/>
     </svg>
   </div>
-
-  <!-- Right: large solid 3D tetrahedron — main hero piece with yellow cap (matches reference big right triangle) -->
+  <!-- TOP RIGHT: Large 3D yellow+teal tetrahedron (main hero piece from reference) -->
   <div class="tri tri-tr">
-    <svg style="filter:drop-shadow(8px 18px 36px rgba(0,0,0,0.5))" viewBox="0 0 200 230" xmlns="http://www.w3.org/2000/svg" width="200" height="230">
+    <svg style="filter:drop-shadow(6px 14px 28px rgba(0,0,0,0.5))" viewBox="0 0 200 220" xmlns="http://www.w3.org/2000/svg" width=200 height=220>
       <defs>
-        <linearGradient id="tr-cap" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#FFF176"/><stop offset="50%" stop-color="#F5C518"/><stop offset="100%" stop-color="#D4A017"/></linearGradient>
-        <linearGradient id="tr-left" x1="0%" y1="0%" x2="80%" y2="100%"><stop offset="0%" stop-color="#3de8c0"/><stop offset="100%" stop-color="#00a07c"/></linearGradient>
-        <linearGradient id="tr-right" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#006e55"/><stop offset="100%" stop-color="#003d2e"/></linearGradient>
-        <linearGradient id="tr-base" x1="0%" y1="0%" x2="0%" y2="100%"><stop offset="0%" stop-color="#004d3a"/><stop offset="100%" stop-color="#002418"/></linearGradient>
-        <filter id="tr-glow"><feGaussianBlur stdDeviation="3" result="blur"/><feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+        <linearGradient id=tcap2 x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#FFE97A"/><stop offset="100%" stop-color="#F5C518"/></linearGradient>
+        <linearGradient id=tleft2 x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#2dd4a4"/><stop offset="100%" stop-color="#00a076"/></linearGradient>
+        <linearGradient id=tright2 x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#007a5e"/><stop offset="100%" stop-color="#004d3f"/></linearGradient>
+        <linearGradient id=tbot2 x1="0%" y1="0%" x2="0%" y2="100%"><stop offset="0%" stop-color="#003d30"/><stop offset="100%" stop-color="#001f18"/></linearGradient>
       </defs>
-      <!-- Yellow apex cap -->
-      <polygon points="100,6 68,62 132,62" fill="url(#tr-cap)" stroke="rgba(255,230,0,0.4)" stroke-width="1"/>
-      <!-- Left face (light teal) -->
-      <polygon points="68,62 16,188 96,152" fill="url(#tr-left)"/>
-      <!-- Right face (dark teal/navy) -->
-      <polygon points="132,62 184,188 96,152" fill="url(#tr-right)"/>
-      <!-- Base face (very dark) -->
-      <polygon points="16,188 96,152 184,188" fill="url(#tr-base)" opacity="0.95"/>
-      <!-- Central spine highlight -->
-      <line x1="100" y1="62" x2="96" y2="152" stroke="rgba(255,255,255,0.5)" stroke-width="1.8"/>
-      <!-- Left cap edge shine -->
-      <line x1="100" y1="6" x2="68" y2="62" stroke="rgba(255,255,255,0.65)" stroke-width="1.5"/>
-      <!-- Right cap edge -->
-      <line x1="100" y1="6" x2="132" y2="62" stroke="rgba(255,230,0,0.4)" stroke-width="1"/>
-      <!-- Left outer edge glow -->
-      <line x1="68" y1="62" x2="16" y2="188" stroke="rgba(255,255,255,0.25)" stroke-width="1"/>
-      <!-- Right outer edge -->
-      <line x1="132" y1="62" x2="184" y2="188" stroke="rgba(0,0,0,0.3)" stroke-width="0.8"/>
-      <!-- Left face rim highlight -->
-      <polygon points="68,62 16,188 96,152" fill="none" stroke="rgba(255,255,255,0.15)" stroke-width="0.8"/>
+      <!-- Yellow cap -->
+      <polygon points="100,6 68,60 132,60" fill="url(#tcap2)"/>
+      <!-- Left face teal -->
+      <polygon points="68,60 16,182 100,148" fill="url(#tleft2)"/>
+      <!-- Right face dark teal -->
+      <polygon points="132,60 184,182 100,148" fill="url(#tright2)"/>
+      <!-- Bottom base -->
+      <polygon points="16,182 100,148 184,182" fill="url(#tbot2)" opacity=".92"/>
+      <!-- Highlights -->
+      <line x1="100" y1="60" x2="100" y2="148" stroke="rgba(255,255,255,0.4)" stroke-width="1.5"/>
+      <line x1="100" y1="6" x2="68" y2="60" stroke="rgba(255,255,255,0.55)" stroke-width="1.3"/>
+      <line x1="100" y1="6" x2="132" y2="60" stroke="rgba(255,255,255,0.2)" stroke-width="0.9"/>
+      <line x1="68" y1="60" x2="16" y2="182" stroke="rgba(255,255,255,0.18)" stroke-width="0.8"/>
     </svg>
   </div>
-
-  <!-- Bottom-right: medium solid 3D teal tetrahedron (matches reference medium-right triangle) -->
+  <!-- LEFT SIDE LOWER: Second dark teal small triangle -->
+  <div class="tri tri-tl2">
+    <svg style="filter:drop-shadow(2px 5px 10px rgba(0,0,0,0.3))" viewBox="0 0 80 90" xmlns="http://www.w3.org/2000/svg" width=80 height=90>
+      <defs>
+        <linearGradient id=tl2_l x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#1a7a60"/><stop offset="100%" stop-color="#0e5244"/></linearGradient>
+        <linearGradient id=tl2_r x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#0a3d2e"/><stop offset="100%" stop-color="#051f18"/></linearGradient>
+      </defs>
+      <polygon points="40,6 10,72 40,56" fill="url(#tl2_l)"/>
+      <polygon points="40,6 70,72 40,56" fill="url(#tl2_r)"/>
+      <polygon points="10,72 40,56 70,72" fill="#030e09" opacity="0.85"/>
+      <line x1="40" y1="6" x2="40" y2="56" stroke="rgba(255,255,255,0.2)" stroke-width="0.8"/>
+    </svg>
+  </div>
+  <!-- RIGHT SIDE: Small yellow accent triangle -->
+  <div class="tri tri-tr2">
+    <svg style="filter:drop-shadow(3px 7px 14px rgba(0,0,0,0.35))" viewBox="0 0 90 100" xmlns="http://www.w3.org/2000/svg" width=90 height=100>
+      <defs>
+        <linearGradient id=ty_l x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#FFE97A"/><stop offset="100%" stop-color="#F5C518"/></linearGradient>
+        <linearGradient id=ty_r x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#D4A017"/><stop offset="100%" stop-color="#A07810"/></linearGradient>
+      </defs>
+      <polygon points="45,6 12,80 45,62" fill="url(#ty_l)"/>
+      <polygon points="45,6 78,80 45,62" fill="url(#ty_r)"/>
+      <polygon points="12,80 45,62 78,80" fill="#6b4e08" opacity="0.85"/>
+      <line x1="45" y1="6" x2="45" y2="62" stroke="rgba(255,255,255,0.4)" stroke-width="1"/>
+      <line x1="45" y1="6" x2="12" y2="80" stroke="rgba(255,255,255,0.25)" stroke-width="0.7"/>
+    </svg>
+  </div>
+  <!-- BOTTOM RIGHT: wireframe ghost triangle -->
   <div class="tri tri-br">
-    <svg style="filter:drop-shadow(4px 10px 20px rgba(0,0,0,0.4))" viewBox="0 0 120 140" xmlns="http://www.w3.org/2000/svg" width="120" height="140">
-      <defs>
-        <linearGradient id="br-left" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#2dcfac"/><stop offset="100%" stop-color="#008c6e"/></linearGradient>
-        <linearGradient id="br-right" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#005a46"/><stop offset="100%" stop-color="#003328"/></linearGradient>
-        <linearGradient id="br-base" x1="0%" y1="0%" x2="0%" y2="100%"><stop offset="0%" stop-color="#004035"/><stop offset="100%" stop-color="#001a12"/></linearGradient>
-      </defs>
-      <!-- Left face -->
-      <polygon points="60,8 12,115 58,92" fill="url(#br-left)"/>
-      <!-- Right face -->
-      <polygon points="60,8 108,115 58,92" fill="url(#br-right)"/>
-      <!-- Base -->
-      <polygon points="12,115 58,92 108,115" fill="url(#br-base)" opacity="0.95"/>
-      <!-- Spine -->
-      <line x1="60" y1="8" x2="58" y2="92" stroke="rgba(255,255,255,0.45)" stroke-width="1.5"/>
-      <!-- Left edge -->
-      <line x1="60" y1="8" x2="12" y2="115" stroke="rgba(255,255,255,0.3)" stroke-width="1"/>
-      <!-- Right edge -->
-      <line x1="60" y1="8" x2="108" y2="115" stroke="rgba(0,0,0,0.2)" stroke-width="0.8"/>
+    <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg" width=100 height=100>
+      <polygon points="50,8 12,85 50,68" fill="rgba(255,255,255,0.1)" stroke="rgba(255,255,255,0.38)" stroke-width="1.5" stroke-linejoin="round"/>
+      <polygon points="50,8 88,85 50,68" fill="rgba(255,255,255,0.04)" stroke="rgba(255,255,255,0.16)" stroke-width="1" stroke-linejoin="round"/>
+      <polygon points="12,85 50,68 88,85" fill="rgba(0,0,0,0.1)" stroke="rgba(255,255,255,0.1)" stroke-width="0.8" stroke-linejoin="round"/>
+      <line x1="50" y1="8" x2="50" y2="68" stroke="rgba(255,255,255,0.2)" stroke-width="1"/>
     </svg>
   </div>
-
-  <!-- Bottom-left: tiny wireframe accent triangle -->
+  <!-- BOTTOM LEFT: tiny ghost triangle -->
   <div class="tri tri-bl">
-    <svg viewBox="0 0 70 80" xmlns="http://www.w3.org/2000/svg" width="70" height="80">
-      <polygon points="35,6 8,65 35,52" fill="rgba(255,255,255,0.1)" stroke="rgba(255,255,255,0.5)" stroke-width="1.5" stroke-linejoin="round"/>
-      <polygon points="35,6 62,65 35,52" fill="rgba(255,255,255,0.04)" stroke="rgba(255,255,255,0.22)" stroke-width="1" stroke-linejoin="round"/>
-      <polygon points="8,65 35,52 62,65" fill="rgba(0,0,0,0.1)" stroke="rgba(255,255,255,0.12)" stroke-width="0.8" stroke-linejoin="round"/>
-      <line x1="35" y1="6" x2="35" y2="52" stroke="rgba(255,255,255,0.3)" stroke-width="1" stroke-dasharray="3,3"/>
+    <svg viewBox="0 0 70 70" xmlns="http://www.w3.org/2000/svg" width=70 height=70>
+      <polygon points="35,6 8,60 35,46" fill="rgba(255,255,255,0.08)" stroke="rgba(255,255,255,0.3)" stroke-width="1.2" stroke-linejoin="round"/>
+      <polygon points="35,6 62,60 35,46" fill="rgba(255,255,255,0.03)" stroke="rgba(255,255,255,0.12)" stroke-width="0.8" stroke-linejoin="round"/>
     </svg>
   </div>
   <div class=hero-inner>
