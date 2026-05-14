@@ -486,24 +486,24 @@ body{background:var(--bg);color:var(--ink);font-family:Open Sans,sans-serif;over
     </svg>
   </div>
 
-  <!-- TRI-TR: large yellow+teal 3D tetrahedron, top-right -->
+  <!-- TRI-TR: new all-teal 3D tetrahedron, top-right (no yellow) -->
   <div class="tri tri-tr">
-    <svg viewBox="0 0 110 120" width=110 height=120 xmlns="http://www.w3.org/2000/svg" style="filter:drop-shadow(5px 12px 24px rgba(0,0,0,.45))">
+    <svg viewBox="0 0 110 122" width=110 height=122 xmlns="http://www.w3.org/2000/svg" style="filter:drop-shadow(5px 12px 24px rgba(0,0,0,.50))">
       <defs>
-        <linearGradient id=tr_cap x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#FFF07A"/><stop offset="50%" stop-color="#F5C518"/><stop offset="100%" stop-color="#D4A010"/></linearGradient>
-        <linearGradient id=tr_lft x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#35e8b4"/><stop offset="100%" stop-color="#00b882"/></linearGradient>
-        <linearGradient id=tr_rgt x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#008c64"/><stop offset="100%" stop-color="#004d38"/></linearGradient>
-        <linearGradient id=tr_bot x1="0%" y1="0%" x2="100%" y2="0%"><stop offset="0%" stop-color="#001a10"/><stop offset="100%" stop-color="#002e1c"/></linearGradient>
+        <linearGradient id=tr_lit  x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#3ef0bc"/><stop offset="100%" stop-color="#00cc8a"/></linearGradient>
+        <linearGradient id=tr_mid  x1="100%" y1="0%" x2="0%" y2="100%"><stop offset="0%" stop-color="#009966"/><stop offset="100%" stop-color="#006644"/></linearGradient>
+        <linearGradient id=tr_dark x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#004d33"/><stop offset="100%" stop-color="#002a1a"/></linearGradient>
+        <linearGradient id=tr_base x1="0%" y1="0%" x2="100%" y2="0%"><stop offset="0%" stop-color="#001208"/><stop offset="100%" stop-color="#002214"/></linearGradient>
       </defs>
-      <!-- apex=55,5  shoulder-L=32,38  shoulder-R=78,38  base-L=8,100  base-C=55,80  base-R=102,100 -->
-      <polygon points="55,5 32,38 78,38"     fill="url(#tr_cap)"/>
-      <polygon points="32,38 8,100 55,80"    fill="url(#tr_lft)"/>
-      <polygon points="78,38 102,100 55,80"  fill="url(#tr_rgt)"/>
-      <polygon points="8,100 55,80 102,100"  fill="url(#tr_bot)" opacity=".92"/>
-      <!-- highlight edges -->
-      <line x1="55" y1="5"  x2="55" y2="80"  stroke="rgba(255,255,255,.45)" stroke-width="1.4"/>
-      <line x1="55" y1="5"  x2="32" y2="38"  stroke="rgba(255,255,255,.55)" stroke-width="1.1"/>
-      <line x1="55" y1="5"  x2="78" y2="38"  stroke="rgba(255,200,0,.35)"   stroke-width=".8"/>
+      <!-- 4-face tetrahedron: apex=55,5  left-shoulder=22,48  right-shoulder=88,48  base-L=8,106  base-C=55,84  base-R=102,106 -->
+      <polygon points="55,5 22,48 55,84"    fill="url(#tr_lit)"/>
+      <polygon points="55,5 88,48 55,84"    fill="url(#tr_mid)"/>
+      <polygon points="22,48 8,106 55,84"   fill="url(#tr_dark)"/>
+      <polygon points="88,48 102,106 55,84" fill="url(#tr_dark)" opacity=".7"/>
+      <polygon points="8,106 55,84 102,106" fill="url(#tr_base)" opacity=".95"/>
+      <line x1="55" y1="5"  x2="55" y2="84"  stroke="rgba(255,255,255,.50)" stroke-width="1.6"/>
+      <line x1="55" y1="5"  x2="22" y2="48"  stroke="rgba(255,255,255,.30)" stroke-width="1.0"/>
+      <line x1="55" y1="5"  x2="88" y2="48"  stroke="rgba(255,255,255,.18)" stroke-width="0.8"/>
     </svg>
   </div>
 
@@ -581,8 +581,8 @@ body{background:var(--bg);color:var(--ink);font-family:Open Sans,sans-serif;over
 
   <div class=hero-inner>
     <div>
-      <div class=hero-title>&#x1F4CB; <span style="font-family:Open Sans,sans-serif;font-weight:800;letter-spacing:.01em">MS</span> <em>Exam Dashboard</em></div>
-      <div class=hero-sub-text>Ministerial Staff &#8212; 4 Papers, 84 Subjective Tests</div>
+      <div class=hero-title>&#x1F4CB; <span style="font-family:Open Sans,sans-serif;font-weight:800;letter-spacing:.01em">ITI</span> <em>Exam Dashboard</em></div>
+      <div class=hero-sub-text>Income Tax Inspector &#8212; 4 Papers, 84 Tests</div>
     </div>
     <div style="display:flex;gap:.6rem;flex-wrap:wrap;align-items:center;">
       <div class=hero-badge>
@@ -795,37 +795,42 @@ function buildCards(p,i){
   div.id='panel-'+p.key;
 
   // Bundle block (index-2 style)
-  const bundleHTML=`<div class="bundle"><div class="bundle-in"><div>
+  const bundleHTML=`<div class="bundle" style="position:relative;overflow:hidden;">
+  <div style="position:absolute;inset:0;z-index:0;pointer-events:none;overflow:hidden;">
+    <!-- BG tri 1: large teal 3D, top-right -->
+    <svg viewBox="0 0 130 150" width=130 height=150 style="position:absolute;top:-20px;right:-10px;filter:drop-shadow(4px 10px 20px rgba(0,0,0,.4));opacity:.55" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <linearGradient id=bg1_a x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#3ef0bc"/><stop offset="100%" stop-color="#00cc8a"/></linearGradient>
+        <linearGradient id=bg1_b x1="100%" y1="0%" x2="0%" y2="100%"><stop offset="0%" stop-color="#007a52"/><stop offset="100%" stop-color="#003828"/></linearGradient>
+        <linearGradient id=bg1_c x1="0%" y1="0%" x2="100%" y2="0%"><stop offset="0%" stop-color="#001508"/><stop offset="100%" stop-color="#002510"/></linearGradient>
+      </defs>
+      <polygon points="65,6 18,110 65,86"    fill="url(#bg1_a)"/>
+      <polygon points="65,6 112,110 65,86"   fill="url(#bg1_b)"/>
+      <polygon points="18,110 65,86 112,110" fill="url(#bg1_c)" opacity=".95"/>
+      <line x1="65" y1="6" x2="65" y2="86" stroke="rgba(255,255,255,.35)" stroke-width="1.2"/>
+    </svg>
+    <!-- BG tri 2: medium teal 3D, bottom-left -->
+    <svg viewBox="0 0 90 100" width=90 height=100 style="position:absolute;bottom:-15px;left:-10px;filter:drop-shadow(3px 8px 14px rgba(0,0,0,.35));opacity:.4" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <linearGradient id=bg2_a x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#23c492"/><stop offset="100%" stop-color="#0d8a60"/></linearGradient>
+        <linearGradient id=bg2_b x1="100%" y1="0%" x2="0%" y2="100%"><stop offset="0%" stop-color="#0b6644"/><stop offset="100%" stop-color="#042e1e"/></linearGradient>
+        <linearGradient id=bg2_c x1="0%" y1="0%" x2="100%" y2="0%"><stop offset="0%" stop-color="#021208"/><stop offset="100%" stop-color="#041e0e"/></linearGradient>
+      </defs>
+      <polygon points="45,6 10,88 45,68"   fill="url(#bg2_a)"/>
+      <polygon points="45,6 80,88 45,68"   fill="url(#bg2_b)"/>
+      <polygon points="10,88 45,68 80,88"  fill="url(#bg2_c)" opacity=".9"/>
+      <line x1="45" y1="6" x2="45" y2="68" stroke="rgba(255,255,255,.25)" stroke-width=".9"/>
+    </svg>
+    <!-- BG tri 3: small ghost wireframe, mid-centre -->
+    <svg viewBox="0 0 60 68" width=60 height=68 style="position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);opacity:.18" xmlns="http://www.w3.org/2000/svg">
+      <polygon points="30,4 5,62 30,46"  fill="rgba(255,255,255,.15)" stroke="rgba(255,255,255,.4)" stroke-width="1.2" stroke-linejoin="round"/>
+      <polygon points="30,4 55,62 30,46" fill="rgba(255,255,255,.06)" stroke="rgba(255,255,255,.2)"  stroke-width=".8"  stroke-linejoin="round"/>
+      <polygon points="5,62 30,46 55,62" fill="rgba(255,255,255,.03)" stroke="rgba(255,255,255,.12)" stroke-width=".6"  stroke-linejoin="round"/>
+    </svg>
+  </div>
+  <div class="bundle-in" style="position:relative;z-index:2;"><div>
     <div class="bundle-badge">⭐ Best Value</div>
-    <div class="bundle-title" style="display:flex;align-items:center;gap:.6rem;">
-      <span style="display:inline-flex;gap:5px;align-items:center;flex-shrink:0;">
-        <svg viewBox="0 0 36 40" width=36 height=40 xmlns="http://www.w3.org/2000/svg" style="filter:drop-shadow(2px 5px 8px rgba(0,0,0,.45))">
-          <defs>
-            <linearGradient id=b_cap x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#FFF07A"/><stop offset="100%" stop-color="#F5C518"/></linearGradient>
-            <linearGradient id=b_lft x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#35e8b4"/><stop offset="100%" stop-color="#00b882"/></linearGradient>
-            <linearGradient id=b_rgt x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#006644"/><stop offset="100%" stop-color="#003828"/></linearGradient>
-            <linearGradient id=b_bot x1="0%" y1="0%" x2="100%" y2="0%"><stop offset="0%" stop-color="#001208"/><stop offset="100%" stop-color="#002210"/></linearGradient>
-          </defs>
-          <polygon points="18,2 12,14 24,14"    fill="url(#b_cap)"/>
-          <polygon points="12,14 3,36 18,28"    fill="url(#b_lft)"/>
-          <polygon points="24,14 33,36 18,28"   fill="url(#b_rgt)"/>
-          <polygon points="3,36 18,28 33,36"    fill="url(#b_bot)" opacity=".92"/>
-          <line x1="18" y1="2" x2="18" y2="28" stroke="rgba(255,255,255,.4)" stroke-width=".8"/>
-        </svg>
-        <svg viewBox="0 0 28 32" width=28 height=32 xmlns="http://www.w3.org/2000/svg" style="filter:drop-shadow(1px 3px 6px rgba(0,0,0,.3));opacity:.82">
-          <defs>
-            <linearGradient id=b2_a x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#23c492"/><stop offset="100%" stop-color="#0d8a60"/></linearGradient>
-            <linearGradient id=b2_b x1="100%" y1="0%" x2="0%" y2="100%"><stop offset="0%" stop-color="#0b6644"/><stop offset="100%" stop-color="#042e1e"/></linearGradient>
-            <linearGradient id=b2_c x1="0%" y1="0%" x2="100%" y2="0%"><stop offset="0%" stop-color="#021208"/><stop offset="100%" stop-color="#052918"/></linearGradient>
-          </defs>
-          <polygon points="14,2 4,28 14,21"  fill="url(#b2_a)"/>
-          <polygon points="14,2 24,28 14,21" fill="url(#b2_b)"/>
-          <polygon points="4,28 14,21 24,28" fill="url(#b2_c)" opacity=".9"/>
-          <line x1="14" y1="2" x2="14" y2="21" stroke="rgba(255,255,255,.25)" stroke-width=".6"/>
-        </svg>
-      </span>
-      ITI Paper ${i+1} &#8212; ${p.name}
-    </div>
+    <div class="bundle-title">ITI Paper ${i+1} — ${p.name}</div>
     <div class="bundle-sub">21 Tests · 5 PYQs + 16 AI-Crafted Series · ${p.marks} Marks · Objective</div>
     <div class="bundle-papers">
       <div class="bp"><svg viewbox="0 0 24 24" fill=none height=11 stroke=rgba(255,255,255,.65) stroke-width=2 width=11><path d="M5 13l4 4L19 7"/></svg>5 Previous Year Question (PYQ) Tests — 2021 to 2025</div>
@@ -852,35 +857,7 @@ function buildCards(p,i){
   div.innerHTML=`
     <div class="ph">
       <div class="ph-left">
-        <h2 style="display:flex;align-items:center;gap:.5rem;">
-          <span style="display:inline-flex;gap:4px;align-items:center;flex-shrink:0;">
-            <svg viewBox="0 0 28 32" width=28 height=32 xmlns="http://www.w3.org/2000/svg" style="filter:drop-shadow(1px 4px 7px rgba(0,120,80,.45))">
-              <defs>
-                <linearGradient id=ph_cap_${i} x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#FFF07A"/><stop offset="100%" stop-color="#E8A800"/></linearGradient>
-                <linearGradient id=ph_lft_${i} x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#2dd4a4"/><stop offset="100%" stop-color="#009e6e"/></linearGradient>
-                <linearGradient id=ph_rgt_${i} x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#006a48"/><stop offset="100%" stop-color="#003824"/></linearGradient>
-                <linearGradient id=ph_bot_${i} x1="0%" y1="0%" x2="100%" y2="0%"><stop offset="0%" stop-color="#00100a"/><stop offset="100%" stop-color="#001e0e"/></linearGradient>
-              </defs>
-              <polygon points="14,2 9,13 19,13"   fill="url(#ph_cap_${i})"/>
-              <polygon points="9,13 3,30 14,23"   fill="url(#ph_lft_${i})"/>
-              <polygon points="19,13 25,30 14,23" fill="url(#ph_rgt_${i})"/>
-              <polygon points="3,30 14,23 25,30"  fill="url(#ph_bot_${i})" opacity=".9"/>
-              <line x1="14" y1="2" x2="14" y2="23" stroke="rgba(255,255,255,.35)" stroke-width=".7"/>
-            </svg>
-            <svg viewBox="0 0 22 26" width=22 height=26 xmlns="http://www.w3.org/2000/svg" style="filter:drop-shadow(1px 3px 5px rgba(0,100,70,.38));opacity:.75">
-              <defs>
-                <linearGradient id=ph2_a_${i} x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#1dbf8a"/><stop offset="100%" stop-color="#0a7a52"/></linearGradient>
-                <linearGradient id=ph2_b_${i} x1="100%" y1="0%" x2="0%" y2="100%"><stop offset="0%" stop-color="#075e3c"/><stop offset="100%" stop-color="#021408"/></linearGradient>
-                <linearGradient id=ph2_c_${i} x1="0%" y1="0%" x2="100%" y2="0%"><stop offset="0%" stop-color="#010a05"/><stop offset="100%" stop-color="#031408"/></linearGradient>
-              </defs>
-              <polygon points="11,2 3,24 11,18"  fill="url(#ph2_a_${i})"/>
-              <polygon points="11,2 19,24 11,18" fill="url(#ph2_b_${i})"/>
-              <polygon points="3,24 11,18 19,24" fill="url(#ph2_c_${i})" opacity=".88"/>
-              <line x1="11" y1="2" x2="11" y2="18" stroke="rgba(255,255,255,.2)" stroke-width=".55"/>
-            </svg>
-          </span>
-          Paper ${i+1} &#8212; ${p.name}
-        </h2>
+        <h2>Paper ${i+1} — ${p.name}</h2>
         <p>${p.tests.length} tests &nbsp;·&nbsp; ${p.qs||p.tests[0].qs} questions &nbsp;·&nbsp; ${p.tests[0].mins} min each &nbsp;·&nbsp; ${p.marks} marks &nbsp;·&nbsp; ${p.type}</p>
       </div>
       ${p.hasFree?'<span class="free-pill"><svg width="10" height="10" fill="none" stroke="currentColor" stroke-width="2.5" viewbox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>1 Free PYQ Included</span>':''}
