@@ -136,6 +136,21 @@ body{background:var(--bg);color:var(--ink);font-family:Open Sans,sans-serif;over
 .btn-bunch{letter-spacing:.04em;cursor:pointer;background:#fff;color:var(--t1);border:none;border-radius:6px;align-items:center;gap:.4rem;padding:.58rem 1.15rem;font-family:Open Sans,sans-serif;font-size:.74rem;font-weight:700;transition:all .2s;display:inline-flex}
 .btn-bunch:hover{transform:translateY(-1px);box-shadow:0 6px 18px rgba(0,0,0,.25)}
 
+/* Inline plan cards inside bundle */
+.bundle-plans{display:flex;flex-direction:column;gap:.45rem;flex-shrink:0;min-width:220px}
+.bpc{border:2px solid rgba(255,255,255,.25);border-radius:10px;padding:.7rem .9rem;cursor:pointer;display:flex;align-items:center;gap:.6rem;transition:all .15s;background:rgba(255,255,255,.08);position:relative}
+.bpc:hover{border-color:rgba(255,255,255,.55);background:rgba(255,255,255,.14)}
+.bpc.bpc-best{border-color:var(--yellow);background:rgba(245,197,24,.1)}
+.bpc-radio{width:15px;height:15px;border:2px solid rgba(255,255,255,.5);border-radius:50%;flex-shrink:0;display:grid;place-items:center}
+.bpc.bpc-best .bpc-radio{border-color:var(--yellow)}
+.bpc-info h4{font-size:.78rem;font-weight:700;color:#fff;margin-bottom:.05rem;font-family:Open Sans,sans-serif}
+.bpc-info p{font-size:.62rem;color:rgba(255,255,255,.65);line-height:1.4}
+.bpc-price{margin-left:auto;font-size:1.05rem;font-weight:800;color:#fff;white-space:nowrap;font-family:Open Sans,sans-serif}
+.bpc.bpc-best .bpc-price{color:var(--yellow)}
+.bpc-badge{position:absolute;top:-7px;right:8px;background:var(--yellow);color:#1a1a2e;font-size:.5rem;font-weight:800;letter-spacing:.08em;text-transform:uppercase;padding:.1rem .4rem;border-radius:999px}
+.btn-bpc-go{width:100%;padding:.6rem;border:none;border-radius:8px;font-size:.76rem;font-weight:700;cursor:pointer;background:#fff;color:var(--t1);font-family:Open Sans,sans-serif;letter-spacing:.02em;transition:all .15s;margin-top:.1rem}
+.btn-bpc-go:hover{background:var(--yellow);color:#1a1a2e}
+
 /* Papers label */
 .papers-lbl{letter-spacing:.1em;text-transform:uppercase;color:#aaa;margin-bottom:.75rem;font-size:.63rem;font-weight:700}
 
@@ -242,12 +257,12 @@ body{background:var(--bg);color:var(--ink);font-family:Open Sans,sans-serif;over
 .edit-overlay.open{display:flex}
 .edit-box{background:#fff;border-radius:20px;width:100%;max-width:520px;max-height:90vh;overflow-y:auto;box-shadow:0 24px 64px rgba(0,0,0,.18)}
 .edit-hdr{background:linear-gradient(135deg,var(--t-dark),var(--t3));padding:1.4rem 1.75rem;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0}
-.edit-hdr h2{font-family:Nunito,sans-serif;font-size:1.3rem;font-weight:800;color:#fff}
+.edit-hdr h2{font-family:Open Sans,sans-serif;font-size:1.3rem;font-weight:800;color:#fff}
 .edit-cls{background:rgba(255,255,255,.18);border:none;color:#fff;width:32px;height:32px;border-radius:8px;cursor:pointer;font-size:1.1rem;display:grid;place-items:center}
 .edit-cls:hover{background:rgba(255,255,255,.28)}
 .edit-bdy{padding:1.5rem 1.75rem 2rem}
 .ef-grp{margin-bottom:1rem}
-.ef-lbl{display:block;font-size:.78rem;font-weight:600;color:var(--ink);margin-bottom:.4rem}
+.ef-lbl{display:block;font-size:.78rem;font-weight:600;color:var(--ink);margin-bottom:.4rem;font-family:Open Sans,sans-serif}
 .ef-inp,.ef-sel{width:100%;padding:.72rem .9rem;border:1.5px solid var(--bdr);border-radius:9px;font-family:Open Sans,sans-serif;font-size:.875rem;color:var(--ink);background:#fff;outline:none;transition:border-color .15s,box-shadow .15s}
 .ef-inp:focus,.ef-sel:focus{border-color:var(--t3);box-shadow:0 0 0 3px rgba(0,171,132,.1)}
 .ef-sel{appearance:none;background-image:url("data:image/svg+xml,%3Csvg width='12' height='8' fill='none' stroke='%236B7280' stroke-width='1.5' viewBox='0 0 12 8' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M1 1l5 5 5-5'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right .9rem center;padding-right:2.2rem}
@@ -323,16 +338,17 @@ body{background:var(--bg);color:var(--ink);font-family:Open Sans,sans-serif;over
 <!-- TOP BAR -->
 <div class=top-bar>
   <div class=top-inner>
-    <div style="display:flex;align-items:center;gap:1rem;">
+    <div>
       <a class=logo-box href=index.html>
         <span class=site-name>toppers<span style="color:var(--t3);font-family:Righteous,cursive;font-size:48px">11</span></span>
         <span class=site-tag>AI-Powered Test Series</span>
       </a>
+    </div>
+    <div style="display:flex;align-items:center;gap:.75rem;">
       <a href=exam-select.html class=btn-back>
         <svg width=13 height=13 fill=none stroke=currentColor stroke-width=2.5 viewbox="0 0 24 24"><polyline points="15 18 9 12 15 6"/></svg>
         All Exams
       </a>
-    </div>
     <div class=user-chip-wrap id=chip-wrap>
       <div class=chip onclick="toggleProfile()">
         <div class=av id=uav>U</div>
@@ -367,6 +383,7 @@ body{background:var(--bg);color:var(--ink);font-family:Open Sans,sans-serif;over
           <button class=pd-btn-lo onclick="logout()">🚪 Sign Out</button>
         </div>
       </div>
+    </div>
     </div>
   </div>
 </div>
@@ -692,10 +709,19 @@ function buildCards(p,i){
       <div class="bp"><svg viewbox="0 0 24 24" fill=none height=11 stroke=rgba(255,255,255,.65) stroke-width=2 width=11><path d="M5 13l4 4L19 7"/></svg>1/8th negative marking · Timed auto-submit</div>
     </div>
   </div>
-  <div class="bundle-right">
-    <div><div class="bundle-strike">₹1420 (4 × ₹355)</div><div class="bundle-save">Save ₹465</div></div>
-    <div><div class="bundle-price">₹955</div><div class="bundle-psub">/ Calendar Year · All 4 Papers</div></div>
-    <button onclick="openModal()" class="btn-bunch">Get ITI Bunch →</button>
+  <div class="bundle-plans">
+    <div class="bpc" onclick="selPlan='single-iti';openModal()">
+      <div class="bpc-radio"></div>
+      <div class="bpc-info"><h4>ITI Single Subject</h4><p>All 21 tests for 1 paper · Best for targeted prep</p></div>
+      <div class="bpc-price">₹355</div>
+    </div>
+    <div class="bpc bpc-best" onclick="selPlan='bunch-iti';openModal()">
+      <div class="bpc-badge">Best Value</div>
+      <div class="bpc-radio"></div>
+      <div class="bpc-info"><h4>ITI Complete Bunch (All 4 Papers)</h4><p>All 84 tests — save ₹465 vs buying individually</p></div>
+      <div class="bpc-price">₹955</div>
+    </div>
+    <button class="btn-bpc-go" onclick="openModal()">Choose Your Plan →</button>
   </div></div></div>`;
 
   div.innerHTML=`
