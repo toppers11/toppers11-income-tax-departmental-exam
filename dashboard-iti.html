@@ -389,25 +389,175 @@ body{background:var(--bg);color:var(--ink);font-family:Open Sans,sans-serif;over
 .best-m{position:absolute;top:-7px;right:8px;background:var(--t3);color:#fff;font-size:.52rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;padding:.12rem .45rem;border-radius:999px}
 .btn-cont{width:100%;padding:.78rem;border:none;border-radius:9px;font-size:.88rem;font-weight:700;cursor:pointer;background:linear-gradient(135deg,var(--t1),var(--t3));color:#fff;margin-top:.5rem;font-family:Open Sans,sans-serif}
 .btn-cont:hover{background:var(--t1)}
-.qr-box{background:#fff;border:2px solid #a7f3d0;border-radius:12px;padding:1rem;text-align:center;margin-bottom:.9rem}
-.qr-lbl{font-size:.72rem;font-weight:700;color:var(--t-dark);margin-bottom:.6rem;text-transform:uppercase;letter-spacing:.05em}
-.qr-img{width:150px;height:150px;margin:0 auto .6rem;border:2px solid #a7f3d0;border-radius:8px;overflow:hidden;background:#fff;display:flex;align-items:center;justify-content:center}
-.upi-row{display:flex;align-items:center;justify-content:center;gap:.4rem;background:#f0fdf8;border-radius:7px;padding:.38rem .7rem;margin-bottom:.35rem;cursor:pointer}
-.upi-txt{font-family:monospace;font-size:.82rem;font-weight:700;color:var(--t-dark)}
-.cp-btn{font-size:.58rem;font-weight:700;background:var(--t3);color:#fff;border:none;border-radius:4px;padding:.14rem .38rem;cursor:pointer}
-.upi-apps{display:flex;gap:.35rem;justify-content:center;flex-wrap:wrap;margin-top:.4rem}
-.app-a{display:inline-flex;align-items:center;padding:.28rem .6rem;border-radius:999px;border:1.5px solid var(--bdr);font-size:.65rem;font-weight:600;color:var(--ink);background:#fff;text-decoration:none}
-.app-a:hover{border-color:#a7f3d0;color:var(--t3)}
-.utr-box{background:#f0fdf8;border:2px solid #a7f3d0;border-radius:10px;padding:1rem}
-.utr-ttl{font-size:.8rem;font-weight:700;color:var(--t-dark);margin-bottom:.12rem}
-.utr-sub{font-size:.7rem;color:var(--muted);margin-bottom:.65rem;line-height:1.5}
+/* ── REDESIGNED PAYMENT STEP ── */
+.qr-box{
+  background:var(--t-dark);
+  border-radius:14px;
+  padding:0;
+  margin-bottom:.85rem;
+  overflow:hidden;
+  position:relative;
+  box-shadow:0 4px 24px rgba(0,77,63,.22);
+}
+.qr-box::before{
+  content:'';
+  pointer-events:none;
+  background-image:radial-gradient(circle,rgba(255,255,255,.07) 1px,transparent 1px);
+  background-size:18px 18px;
+  position:absolute;inset:0;
+  z-index:0;
+}
+.qr-top{
+  position:relative;z-index:1;
+  padding:1rem 1rem .75rem;
+  display:flex;flex-direction:column;align-items:center;
+}
+.qr-lbl{
+  display:inline-flex;align-items:center;gap:.35rem;
+  background:rgba(255,255,255,.14);
+  border:1px solid rgba(255,255,255,.25);
+  border-radius:999px;
+  padding:.22rem .75rem;
+  font-size:.6rem;font-weight:800;
+  color:#fff;
+  letter-spacing:.1em;text-transform:uppercase;
+  margin-bottom:.75rem;
+}
+.qr-img{
+  width:160px;height:160px;
+  margin:0 auto .7rem;
+  border:3px solid rgba(255,255,255,.22);
+  border-radius:12px;
+  overflow:hidden;background:#fff;
+  display:flex;align-items:center;justify-content:center;
+  box-shadow:0 8px 32px rgba(0,0,0,.3);
+}
+.qr-amount-pill{
+  background:rgba(255,255,255,.12);
+  border:1.5px solid rgba(255,255,255,.25);
+  border-radius:999px;
+  padding:.3rem .95rem;
+  font-size:.8rem;font-weight:800;
+  color:#fff;
+  display:inline-flex;align-items:center;gap:.35rem;
+  margin-bottom:.7rem;
+}
+.qr-amount-pill span{color:var(--yellow);font-size:1.05rem;font-weight:900;}
+.qr-bottom{
+  position:relative;z-index:1;
+  background:rgba(0,0,0,.18);
+  border-top:1px solid rgba(255,255,255,.1);
+  padding:.75rem 1rem;
+}
+.upi-row{
+  display:flex;align-items:center;justify-content:center;gap:.5rem;
+  background:rgba(255,255,255,.1);
+  border:1px solid rgba(255,255,255,.2);
+  border-radius:8px;
+  padding:.45rem .8rem;
+  margin-bottom:.55rem;
+  cursor:pointer;
+  transition:background .15s;
+}
+.upi-row:hover{background:rgba(255,255,255,.16)}
+.upi-txt{font-family:monospace;font-size:.82rem;font-weight:700;color:#fff;letter-spacing:.02em}
+.cp-btn{
+  font-size:.58rem;font-weight:800;
+  background:var(--t3);color:#fff;
+  border:none;border-radius:4px;
+  padding:.18rem .45rem;cursor:pointer;
+  letter-spacing:.04em;text-transform:uppercase;
+  transition:background .15s;
+}
+.cp-btn:hover{background:var(--t1)}
+.upi-apps{display:flex;gap:.4rem;justify-content:center;flex-wrap:wrap;}
+.app-a{
+  display:inline-flex;align-items:center;gap:.3rem;
+  padding:.3rem .65rem;
+  border-radius:999px;
+  border:1.5px solid rgba(255,255,255,.2);
+  font-size:.64rem;font-weight:600;
+  color:rgba(255,255,255,.85);
+  background:rgba(255,255,255,.08);
+  text-decoration:none;
+  transition:all .15s;
+}
+.app-a:hover{border-color:var(--yellow);color:var(--yellow);background:rgba(245,197,24,.1)}
+.upi-switch-wrap{
+  margin-top:.55rem;text-align:center;
+}
+.upi-switch-btn{
+  font-size:.68rem;font-weight:600;
+  color:rgba(255,255,255,.7);
+  background:rgba(255,255,255,.08);
+  border:1px solid rgba(255,255,255,.15);
+  border-radius:999px;
+  padding:.3rem .8rem;cursor:pointer;
+  transition:all .15s;
+  display:inline-flex;align-items:center;gap:.3rem;
+}
+.upi-switch-btn:hover{color:#fff;background:rgba(255,255,255,.14);border-color:rgba(255,255,255,.28)}
+
+/* Activate box — redesigned */
+.utr-box{
+  background:#fff;
+  border:2px solid #c6ede0;
+  border-radius:14px;
+  padding:1.1rem 1.15rem 1rem;
+  box-shadow:0 2px 12px rgba(0,109,91,.07);
+}
+.utr-hdr{
+  display:flex;align-items:center;gap:.6rem;
+  margin-bottom:.45rem;
+}
+.utr-ico{
+  width:34px;height:34px;border-radius:9px;
+  background:linear-gradient(135deg,var(--t-dark),var(--t3));
+  display:grid;place-items:center;flex-shrink:0;
+}
+.utr-ttl{font-size:.92rem;font-weight:800;color:var(--ink);}
+.utr-sub{font-size:.72rem;color:var(--muted);margin-bottom:.8rem;line-height:1.6;padding-left:0;}
 .al-err{padding:.55rem .8rem;border-radius:8px;font-size:.75rem;font-weight:500;margin-bottom:.75rem;display:none;background:#fef2f2;border:1px solid #fecaca;color:#991b1b}
 .al-err.show{display:block}
-.btn-act{width:100%;padding:.75rem;border:none;border-radius:9px;font-size:.85rem;font-weight:700;cursor:pointer;background:linear-gradient(135deg,var(--t1),var(--t3));color:#fff;display:flex;align-items:center;justify-content:center;gap:.4rem;font-family:Open Sans,sans-serif}
-.btn-act:disabled{opacity:.55;cursor:not-allowed}
-.utr-note{font-size:.66rem;color:var(--muted);text-align:center;margin-top:.5rem;line-height:1.5}
-.utr-note strong{color:var(--t3)}
-.btn-bk{background:none;border:none;color:var(--muted);font-size:.74rem;cursor:pointer;display:block;text-align:center;padding:.4rem;margin-top:.4rem;width:100%}
+.btn-act{
+  width:100%;padding:.82rem;
+  border:none;border-radius:10px;
+  font-size:.88rem;font-weight:800;
+  cursor:pointer;
+  background:linear-gradient(135deg,var(--t1),var(--t3));
+  color:#fff;
+  display:flex;align-items:center;justify-content:center;gap:.45rem;
+  font-family:'Open Sans',sans-serif;
+  letter-spacing:.01em;
+  box-shadow:0 4px 18px rgba(0,109,91,.25);
+  transition:all .2s;
+  position:relative;overflow:hidden;
+}
+.btn-act::before{
+  content:'';position:absolute;inset:0;
+  background:linear-gradient(90deg,transparent,rgba(255,255,255,.08),transparent);
+  transform:translateX(-100%);
+  transition:transform .5s;
+}
+.btn-act:hover::before{transform:translateX(100%)}
+.btn-act:hover{box-shadow:0 6px 24px rgba(0,109,91,.35);transform:translateY(-1px)}
+.btn-act:disabled{opacity:.55;cursor:not-allowed;transform:none}
+.utr-note{
+  font-size:.65rem;color:var(--muted);
+  text-align:center;margin-top:.65rem;line-height:1.6;
+  display:flex;align-items:center;justify-content:center;gap:.3rem;
+}
+.utr-note strong{color:var(--t3);font-weight:700;}
+.btn-bk{
+  background:none;border:none;
+  color:var(--muted);font-size:.74rem;
+  cursor:pointer;display:block;
+  text-align:center;padding:.5rem;
+  margin-top:.5rem;width:100%;
+  transition:color .15s;
+  display:flex;align-items:center;justify-content:center;gap:.3rem;
+}
+.btn-bk:hover{color:var(--ink)}
 .spin{display:inline-block;width:13px;height:13px;border:2px solid rgba(255,255,255,.35);border-top-color:#fff;border-radius:50%;animation:sp .6s linear infinite}
 @keyframes sp{to{transform:rotate(360deg)}}
 .toast{position:fixed;bottom:1.5rem;right:1.5rem;background:var(--t-dark);color:#fff;padding:.72rem 1rem;border-radius:10px;font-size:.8rem;font-weight:600;box-shadow:0 6px 22px rgba(0,0,0,.18);z-index:999;display:none;align-items:center;gap:.4rem}
@@ -825,27 +975,71 @@ body{background:var(--bg);color:var(--ink);font-family:Open Sans,sans-serif;over
         <button class=btn-cont id=cont-btn onclick=doContinue()>Continue →</button>
       </div>
       <div id=step2 style="display:none;">
+        <!-- QR Payment Card -->
         <div class=qr-box>
-          <div class=qr-lbl id=qr-lbl>Scan &amp; Pay</div>
-          <div class=qr-img id=qr-canvas></div>
-          <div class=upi-row onclick=copyUpi()><span class=upi-txt id=upi-disp></span><button class=cp-btn id=cp-btn>Copy</button></div>
-          <div style="font-size:.7rem;color:var(--muted);margin-bottom:.4rem;">Amount: <strong id=amt-lbl style="color:var(--t3)"></strong></div>
-          <div class=upi-apps><a class=app-a id=gpay-a href=#>GPay</a><a class=app-a id=phonepe-a href=#>PhonePe</a><a class=app-a id=paytm-a href=#>Paytm</a></div>
-          <div style="margin-top:.6rem;text-align:center;">
-            <button onclick=switchUpi() style="font-size:.7rem;font-weight:600;color:var(--t3);background:#f0fdf8;border:1.5px solid #a7f3d0;border-radius:999px;padding:.28rem .75rem;cursor:pointer;">🔄 Payment failed? Try another UPI ID <span id=upi-switch-badge style="opacity:.6;font-size:.62rem;">1/3</span></button>
+          <div class=qr-top>
+            <div class=qr-lbl>
+              <svg width=9 height=9 viewbox="0 0 24 24" fill="rgba(255,255,255,.8)"><circle cx=12 cy=12 r=10/></svg>
+              <span id=qr-lbl>Scan &amp; Pay</span>
+            </div>
+            <div class=qr-img id=qr-canvas></div>
+            <div class=qr-amount-pill>
+              Amount: <span id=amt-lbl>₹355</span>
+            </div>
+          </div>
+          <div class=qr-bottom>
+            <div class=upi-row onclick=copyUpi()>
+              <svg width=13 height=13 fill=none stroke="rgba(255,255,255,.6)" stroke-width=2 viewbox="0 0 24 24"><rect x=9 y=9 width=13 height=13 rx=2/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/></svg>
+              <span class=upi-txt id=upi-disp></span>
+              <button class=cp-btn id=cp-btn>Copy</button>
+            </div>
+            <div class=upi-apps>
+              <a class=app-a id=gpay-a href=#>
+                <svg width=11 height=11 viewbox="0 0 24 24" fill=none stroke=currentColor stroke-width=2><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2z"/></svg>
+                GPay
+              </a>
+              <a class=app-a id=phonepe-a href=#>
+                <svg width=11 height=11 viewbox="0 0 24 24" fill=none stroke=currentColor stroke-width=2><circle cx=12 cy=12 r=10/><path d="M8 12h8M12 8v8"/></svg>
+                PhonePe
+              </a>
+              <a class=app-a id=paytm-a href=#>
+                <svg width=11 height=11 viewbox="0 0 24 24" fill=none stroke=currentColor stroke-width=2><rect x=2 y=5 width=20 height=14 rx=2/><path d="M2 10h20"/></svg>
+                Paytm
+              </a>
+            </div>
+            <div class=upi-switch-wrap>
+              <button onclick=switchUpi() class=upi-switch-btn>
+                <svg width=11 height=11 fill=none stroke=currentColor stroke-width=2.2 viewbox="0 0 24 24"><path d="M1 4v6h6M23 20v-6h-6"/><path d="M20.49 9A9 9 0 005.64 5.64L1 10M23 14l-4.64 4.36A9 9 0 013.51 15"/></svg>
+                Payment failed? Try another UPI ID
+                <span id=upi-switch-badge style="opacity:.55;font-size:.6rem;background:rgba(255,255,255,.12);padding:.05rem .3rem;border-radius:999px;">1/3</span>
+              </button>
+            </div>
           </div>
         </div>
+
+        <!-- Activate box -->
         <div class=utr-box>
-          <div class=utr-ttl>✅ Paid? Activate Your Access</div>
-          <div class=utr-sub>Once you have completed the UPI payment above, tap the button below to instantly unlock all your tests.</div>
+          <div class=utr-hdr>
+            <div class=utr-ico>
+              <svg width=16 height=16 fill=none stroke=#fff stroke-width=2.2 viewbox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>
+            </div>
+            <div class=utr-ttl>Paid? Activate Your Access</div>
+          </div>
+          <div class=utr-sub>Once you've completed the UPI payment above, tap the button below to instantly unlock all your tests.</div>
           <div class="al-err" id=utr-err></div>
           <button class=btn-act id=act-btn onclick=activate()>
-            <svg width=13 height=13 fill=none stroke=currentColor stroke-width=2.5 viewbox="0 0 24 24"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg>
+            <svg width=14 height=14 fill=none stroke=currentColor stroke-width=2.5 viewbox="0 0 24 24"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg>
             I've Paid — Activate My Access Now
           </button>
-          <div class=utr-note>🔒 Instant activation. Problem? WhatsApp <strong>Toppers11 Team</strong></div>
+          <div class=utr-note>
+            <svg width=11 height=11 fill=none stroke="var(--muted)" stroke-width=2 viewbox="0 0 24 24"><rect x=3 y=11 width=18 height=11 rx=2/><path d="M7 11V7a5 5 0 0110 0v4"/></svg>
+            Instant activation. Problem? WhatsApp <strong>Toppers11 Team</strong>
+          </div>
         </div>
-        <button class=btn-bk onclick=backToPlan()>← Change Plan</button>
+        <button class=btn-bk onclick=backToPlan()>
+          <svg width=13 height=13 fill=none stroke=currentColor stroke-width=2 viewbox="0 0 24 24"><path d="M19 12H5M12 5l-7 7 7 7"/></svg>
+          Change Plan
+        </button>
       </div>
     </div>
   </div>
@@ -1180,7 +1374,7 @@ function overlayClick(e){if(e.target===document.getElementById('overlay'))closeM
 function doContinue(){
   if(!selPlan)return;const p=PLANS[selPlan];
   document.getElementById('step1').style.display='none';document.getElementById('step2').style.display='';
-  document.getElementById('qr-lbl').textContent=`Scan & Pay ₹${p.amount}`;
+  document.getElementById('qr-lbl').textContent=`Scan & Pay`;
   document.getElementById('amt-lbl').textContent='₹'+p.amount;
   renderUpiStep();
 }
@@ -1192,7 +1386,7 @@ function renderUpiStep(){
   document.getElementById('phonepe-a').href=upiStr;
   document.getElementById('paytm-a').href=`paytmmp://pay?pa=${uid}&pn=${encodeURIComponent(UPI_NAME)}&am=${p.amount}&cu=INR`;
   const qc=document.getElementById('qr-canvas');qc.innerHTML='';
-  try{new QRCode(qc,{text:upiStr,width:142,height:142,colorDark:'#006d5b',colorLight:'#fff',correctLevel:QRCode.CorrectLevel.M})}catch(e){qc.innerHTML='<div style="padding:1rem;font-size:.7rem;color:#6b7280">Use UPI ID below</div>';}
+  try{new QRCode(qc,{text:upiStr,width:154,height:154,colorDark:'#004d3f',colorLight:'#fff',correctLevel:QRCode.CorrectLevel.M})}catch(e){qc.innerHTML='<div style="padding:1rem;font-size:.7rem;color:#6b7280">Use UPI ID below</div>';}
   const badge=document.getElementById('upi-switch-badge');if(badge)badge.textContent=`${_upiIdx+1}/${UPI_POOL.length}`;
 }
 function switchUpi(){nextUpiId();renderUpiStep();showToast('🔄 Switched to UPI ID '+(_upiIdx+1)+' of '+UPI_POOL.length);}
