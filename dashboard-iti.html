@@ -398,9 +398,9 @@ body{background:var(--bg);color:var(--ink);font-family:Open Sans,sans-serif;over
         <span class=nav-tile-sub>Switch Exam</span>
       </a>
     <div class=user-chip-wrap id=chip-wrap>
-      <!-- R Ranjana profile tile button -->
+      <!-- User profile tile button with person icon -->
       <div class="nav-tile-btn nav-tile-dark" onclick="toggleProfile()" style="cursor:pointer;position:relative;">
-        <div class=nav-tile-av id=uav>U</div>
+        <div class=nav-tile-icon style="background:linear-gradient(135deg,var(--t-dark),var(--t3));border-radius:50%;"><svg width=15 height=15 fill=none stroke=#fff stroke-width=2 viewbox="0 0 24 24"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx=12 cy=7 r=4/></svg></div>
         <span class=nav-tile-label id=uname>User</span>
         <span class=nav-tile-sub>My Account</span>
         <svg style="position:absolute;top:5px;right:5px;opacity:.5" width=8 height=8 fill=none stroke=currentColor stroke-width=2.5 viewbox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg>
@@ -787,7 +787,7 @@ function buildTabs(){
   PAPERS.forEach((p,i)=>{
     const btn=document.createElement('button');
     btn.className='tab-btn'+(i===activeTab?' active':'');
-    btn.innerHTML=`<span class="tab-num">Paper ${i+1}</span><span class="tab-paper-mark">${p.marks} Marks</span><span class="tab-name">${p.name}${p.hasFree?' <span class="free-star">✦</span>':''}</span>`;
+    btn.innerHTML=`<span class="tab-num">Paper ${i+1}</span><span class="tab-name">${p.name}</span>`;
     btn.onclick=()=>switchTab(i);
     bar.appendChild(btn);
   });
@@ -1029,7 +1029,6 @@ function getUsers(){try{return JSON.parse(localStorage.getItem('t11_users')||'{}
 function saveUsers(u){localStorage.setItem('t11_users',JSON.stringify(u))}
 function populateProfile(user,users){
   const key=(user.email||'').toLowerCase();const s=users[key]||{};const init=(user.name||'U').charAt(0).toUpperCase();
-  const av=document.getElementById('uav');if(av){av.textContent=init;}
   const un=document.getElementById('uname');if(un)un.textContent=(user.name||'User').split(' ')[0];
   const pl=document.getElementById('pd-av-lg');if(pl)pl.textContent=init;
   const pn=document.getElementById('pd-nm');if(pn)pn.textContent=user.name||'—';
