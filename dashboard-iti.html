@@ -20,33 +20,66 @@ body{background:var(--bg);color:var(--ink);font-family:Open Sans,sans-serif;over
 /* ── PROGRESS BAR ── */
 #progress{background:linear-gradient(90deg,var(--t1),var(--t3));position:fixed;top:0;left:0;width:0%;height:3px;z-index:9999;transition:width .15s}
 
-/* ── TOP BAR ── */
-.top-bar{border-bottom:2px solid var(--t3);background:#fff;padding:.6rem 0}
-.top-inner{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:center;gap:1rem;max-width:1200px;margin:0 auto;padding:0 1.2rem}
+/* ── TOP BAR / NAVBAR ── */
+.top-bar{background:#fff;border-bottom:2px solid var(--t3);padding:0;}
+.top-inner{max-width:1400px;margin:0 auto;padding:0 1.2rem;display:flex;align-items:stretch;justify-content:space-between;gap:0;}
 
-/* Logo — exact from index-2 */
-.logo-box{flex-direction:column;flex-shrink:0;gap:0;min-width:160px;padding:.4rem 0;line-height:1;text-decoration:none;display:inline-flex;position:relative}
-.logo-box .logo-eyebrow{letter-spacing:.04em;color:var(--t3);text-transform:none;font-family:Great Vibes,Dancing Script,cursive;font-size:1.3rem;font-weight:400;line-height:1;margin-bottom:10px;display:block}
-.logo-box .site-name{color:#1a1a2e;letter-spacing:.02em;text-transform:lowercase;margin-bottom:.25rem;padding-bottom:.18rem;font-family:Nunito,sans-serif;font-size:48px;font-weight:100;line-height:1;display:block}
-.logo-box .site-tag{letter-spacing:.18em;text-transform:uppercase;color:#555;align-items:center;gap:.4rem;font-size:.52rem;font-weight:700;display:flex}
-.logo-box .site-tag:before,.logo-box .site-tag:after{content:'';background:var(--t3);flex:1;min-width:14px;height:1.5px;display:inline-block}
-.logo-box:hover .site-name{color:var(--t3)}
-.logo-box:hover .logo-eyebrow{opacity:.7}
+/* ── LOGO ── */
+.logo-box{flex-shrink:0;display:inline-flex;align-items:center;text-decoration:none;padding:.55rem 1.2rem .55rem 0;border-right:1px solid #eee;margin-right:.5rem;}
+.logo-box .site-name{color:#1a1a2e;letter-spacing:.02em;text-transform:lowercase;font-family:Nunito,sans-serif;font-size:26px;font-weight:700;line-height:1;display:block;}
+.logo-box .site-name span{color:var(--t3);font-family:Righteous,cursive;}
+.logo-box:hover .site-name{color:var(--t3);}
 
-/* Back link */
-.btn-back{display:inline-flex;align-items:center;gap:.35rem;font-size:.75rem;font-weight:700;color:#555;text-decoration:none;background:#fff;border:1.5px solid #dde8e4;border-radius:999px;cursor:pointer;padding:.38rem .95rem;transition:all .18s;letter-spacing:.02em;white-space:nowrap;box-shadow:0 1px 4px rgba(0,0,0,.06)}
-.btn-back:hover{color:var(--t3);border-color:#a7f3d0;box-shadow:0 2px 10px rgba(0,171,132,.15)}
-.btn-back svg{opacity:.65}
-.btn-back:hover svg{opacity:1}
+/* ── NAV LINKS (horizontal, image-style) ── */
+.nav-links{display:flex;align-items:stretch;flex:1;gap:0;list-style:none;margin:0;padding:0;}
+.nav-links li{display:flex;align-items:stretch;}
+.nav-links li a,.nav-links li button{display:inline-flex;align-items:center;gap:.28rem;padding:.7rem .85rem;font-family:'Open Sans',sans-serif;font-size:.68rem;font-weight:700;letter-spacing:.07em;text-transform:uppercase;color:#444;text-decoration:none;background:none;border:none;border-bottom:3px solid transparent;cursor:pointer;white-space:nowrap;transition:color .15s,border-color .15s;position:relative;margin-bottom:-2px;}
+.nav-links li a:hover,.nav-links li button:hover{color:var(--t3);border-bottom-color:var(--t3);}
+.nav-links li.active a,.nav-links li.active button{color:var(--t3);border-bottom-color:var(--t3);}
+.nav-links li a svg,.nav-links li button svg{flex-shrink:0;transition:transform .2s;}
+.nav-links li button:hover svg{transform:rotate(180deg);}
 
-/* User chip */
-.user-chip-wrap{position:relative;display:flex;align-items:center}
-.chip{display:flex;align-items:center;gap:.5rem;cursor:pointer;background:#fff;border:1.5px solid #dde8e4;border-radius:999px;padding:.3rem .9rem .3rem .3rem;transition:all .18s;box-shadow:0 1px 4px rgba(0,0,0,.06)}
-.chip:hover{box-shadow:0 2px 10px rgba(0,171,132,.2);border-color:#a7f3d0}
-.av{width:30px;height:30px;border-radius:50%;background:linear-gradient(135deg,var(--t-dark),var(--t3));display:grid;place-items:center;font-size:.72rem;font-weight:800;color:#fff;flex-shrink:0}
-.uname{font-size:.8rem;font-weight:600;color:#1a1a2e}
-.chevron-d{transition:transform .2s;margin-left:.1rem;color:#555}
-.user-chip-wrap.open .chevron-d{transform:rotate(180deg)}
+/* ── RIGHT SIDE ACTIONS ── */
+.nav-actions{display:flex;align-items:stretch;gap:0;margin-left:auto;border-left:1px solid #eee;padding-left:.5rem;}
+
+/* ALL EXAMS tile */
+.nav-tile-btn{display:inline-flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;padding:.45rem .9rem;text-decoration:none;border:none;background:none;cursor:pointer;border-left:1px solid #eee;transition:background .15s;flex-shrink:0;}
+.nav-tile-btn:hover{background:#f0fdf8;}
+.nav-tile-icon{display:flex;align-items:center;justify-content:center;width:24px;height:24px;border-radius:6px;background:#e8f5f0;margin-bottom:1px;flex-shrink:0;color:var(--t3);}
+.nav-tile-btn:hover .nav-tile-icon{background:#c6edd9;}
+.nav-tile-label{font-family:'Open Sans',sans-serif;font-size:.58rem;font-weight:800;letter-spacing:.07em;text-transform:uppercase;line-height:1;color:#1a1a2e;}
+.nav-tile-sub{font-size:.49rem;font-weight:600;letter-spacing:.04em;text-transform:uppercase;line-height:1;color:#888;}
+
+/* User tile */
+.user-chip-wrap{position:relative;display:flex;align-items:stretch;}
+.nav-user-btn{display:inline-flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;padding:.45rem .9rem;border:none;background:none;cursor:pointer;border-left:1px solid #eee;transition:background .15s;flex-shrink:0;}
+.nav-user-btn:hover{background:#f0fdf8;}
+.nav-user-av{width:26px;height:26px;border-radius:50%;background:linear-gradient(135deg,var(--t-dark),var(--t3));display:grid;place-items:center;flex-shrink:0;margin-bottom:1px;}
+.nav-user-btn:hover .nav-user-av{box-shadow:0 0 0 2px rgba(0,171,132,.35);}
+.nav-user-label{font-family:'Open Sans',sans-serif;font-size:.58rem;font-weight:800;letter-spacing:.07em;text-transform:uppercase;line-height:1;color:#1a1a2e;}
+.nav-user-sub{font-size:.49rem;font-weight:600;letter-spacing:.04em;text-transform:uppercase;line-height:1;color:#888;}
+
+/* Back link (kept for compatibility) */
+.btn-back{display:inline-flex;align-items:center;gap:.35rem;font-size:.75rem;font-weight:700;color:#555;text-decoration:none;background:#fff;border:1.5px solid #dde8e4;border-radius:999px;cursor:pointer;padding:.38rem .95rem;transition:all .18s;letter-spacing:.02em;white-space:nowrap;}
+.btn-back:hover{color:var(--t3);border-color:#a7f3d0;}
+
+/* User chip (kept for profile dropdown compat) */
+.user-chip-wrap{position:relative;display:flex;align-items:center;}
+.uname{font-size:.58rem;font-weight:800;letter-spacing:.07em;text-transform:uppercase;color:#1a1a2e;}
+.chevron-d{transition:transform .2s;margin-left:.1rem;color:#555;}
+.user-chip-wrap.open .chevron-d{transform:rotate(180deg);}
+
+/* Mobile nav toggle */
+.nav-hamburger{display:none;align-items:center;justify-content:center;width:38px;height:38px;border:1.5px solid #dde8e4;border-radius:8px;background:#fff;cursor:pointer;color:#444;flex-shrink:0;}
+.nav-hamburger:hover{border-color:var(--t3);color:var(--t3);}
+@media(max-width:900px){
+  .nav-links{display:none;position:absolute;top:100%;left:0;right:0;background:#fff;border-top:2px solid var(--t3);border-bottom:1px solid #eee;flex-direction:column;z-index:800;box-shadow:0 8px 24px rgba(0,0,0,.1);}
+  .nav-links.open{display:flex;}
+  .nav-links li a,.nav-links li button{padding:.85rem 1.4rem;font-size:.75rem;border-bottom:1px solid #f0f0f0;border-left:3px solid transparent;margin-bottom:0;}
+  .nav-links li.active a,.nav-links li a:hover,.nav-links li button:hover{border-left-color:var(--t3);border-bottom-color:transparent;background:#f0fdf8;}
+  .nav-hamburger{display:flex;}
+  .top-bar{position:relative;}
+}
 
 /* Profile dropdown */
 .profile-dropdown{position:absolute;top:calc(100% + 10px);right:0;width:300px;background:#fff;border:1px solid var(--bdr);border-radius:16px;box-shadow:0 16px 48px rgba(0,0,0,.12);z-index:500;overflow:hidden;display:none}
@@ -330,14 +363,7 @@ body{background:var(--bg);color:var(--ink);font-family:Open Sans,sans-serif;over
 /* Small triangle bottom left */
 .tri-bl{opacity:.7;width:35px;height:35px;animation:7s ease-in-out 3s infinite floatT-bl;bottom:8px;left:15%}
 
-/* ── NAV TILE BUTTONS (Login/Register card style) ── */
-.nav-tile-btn{display:inline-flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;min-width:90px;padding:.5rem .85rem;border-radius:10px;text-decoration:none;border:1.5px solid #e2e8f0;background:#f8f9fa;color:#374151;transition:all .18s;position:relative;box-shadow:0 1px 3px rgba(0,0,0,.07);flex-shrink:0;cursor:pointer;}
-.nav-tile-btn:hover{box-shadow:0 4px 14px rgba(0,0,0,.12);background:#fff;border-color:#c8d0d8;transform:translateY(-1px);}
-.nav-tile-icon{display:flex;align-items:center;justify-content:center;width:28px;height:28px;border-radius:50%;background:#e8edf2;margin-bottom:1px;flex-shrink:0;color:#555;}
-.nav-tile-btn:hover .nav-tile-icon{background:#dde4eb;}
-.nav-tile-label{font-family:Open Sans,sans-serif;font-size:.6rem;font-weight:800;letter-spacing:.06em;text-transform:uppercase;line-height:1;color:#1a1a2e;}
-.nav-tile-sub{font-size:.5rem;font-weight:600;letter-spacing:.04em;text-transform:uppercase;line-height:1;color:#888;}
-.nav-tile-av{width:28px;height:28px;border-radius:50%;background:linear-gradient(135deg,var(--t-dark),var(--t3));border:2px solid rgba(0,171,132,.3);display:grid;place-items:center;font-size:.7rem;font-weight:800;color:#fff;flex-shrink:0;margin-bottom:1px;}
+/* nav-tile styles defined above */
 
 /* ── RESPONSIVE ── */
 @media(max-width:640px){
@@ -379,33 +405,59 @@ body{background:var(--bg);color:var(--ink);font-family:Open Sans,sans-serif;over
   <span></span>
 </a>
 
-<!-- TOP BAR -->
+<!-- TOP BAR / NAVBAR -->
 <div class=top-bar>
   <div class=top-inner>
-    <div>
-      <a class=logo-box href=index.html>
-        <span class=site-name>toppers<span style="color:var(--t3);font-family:Righteous,cursive;font-size:48px">11</span></span>
-        <span class=site-tag>AI-Powered Test Series</span>
-      </a>
-    </div>
-    <div style="display:flex;align-items:center;gap:.5rem;">
-      <!-- ALL EXAMS tile button -->
+
+    <!-- LOGO -->
+    <a class=logo-box href=index.html>
+      <span class=site-name>toppers<span>11</span></span>
+    </a>
+
+    <!-- HAMBURGER (mobile) -->
+    <button class=nav-hamburger aria-label="Toggle menu" onclick="document.getElementById('nav-links').classList.toggle('open')">
+      <svg width=18 height=18 fill=none stroke=currentColor stroke-width=2.2 viewbox="0 0 24 24"><line x1=3 y1=6 x2=21 y2=6/><line x1=3 y1=12 x2=21 y2=12/><line x1=3 y1=18 x2=21 y2=18/></svg>
+    </button>
+
+    <!-- NAV LINKS -->
+    <ul class=nav-links id=nav-links>
+      <li class=active><a href=index.html>Home</a></li>
+      <li><a href=#>About Us</a></li>
+      <li>
+        <button onclick="this.parentElement.classList.toggle('open')">
+          Test Series
+          <svg width=10 height=10 fill=none stroke=currentColor stroke-width=2.5 viewbox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg>
+        </button>
+      </li>
+      <li><a href=#>Ministrial Staff Syllabus</a></li>
+      <li><a href=#>Inspector Syllabus</a></li>
+      <li><a href=#>Income Tax Officer Syllabus</a></li>
+      <li><a href=#>Contact Us</a></li>
+      <li><a href=#>Notifications</a></li>
+      <li><a href=#>FAQ</a></li>
+    </ul>
+
+    <!-- RIGHT ACTIONS -->
+    <div class=nav-actions>
+      <!-- ALL EXAMS -->
       <a href="https://incometax.toppers11.com/exam-select.html" class=nav-tile-btn>
         <div class=nav-tile-icon>
-          <svg width=15 height=15 fill=none stroke=currentColor stroke-width=2 viewbox="0 0 24 24"><rect x=3 y=3 width=7 height=7 rx=1/><rect x=14 y=3 width=7 height=7 rx=1/><rect x=3 y=14 width=7 height=7 rx=1/><rect x=14 y=14 width=7 height=7 rx=1/></svg>
+          <svg width=13 height=13 fill=none stroke=currentColor stroke-width=2 viewbox="0 0 24 24"><rect x=3 y=3 width=7 height=7 rx=1/><rect x=14 y=3 width=7 height=7 rx=1/><rect x=3 y=14 width=7 height=7 rx=1/><rect x=14 y=14 width=7 height=7 rx=1/></svg>
         </div>
-        <span class=nav-tile-label>ALL EXAMS</span>
+        <span class=nav-tile-label>All Exams</span>
         <span class=nav-tile-sub>Switch Exam</span>
       </a>
-    <div class=user-chip-wrap id=chip-wrap>
-      <!-- User profile tile button with person icon -->
-      <div class="nav-tile-btn nav-tile-dark" onclick="toggleProfile()" style="cursor:pointer;position:relative;">
-        <div class=nav-tile-icon style="background:linear-gradient(135deg,var(--t-dark),var(--t3));border-radius:50%;"><svg width=15 height=15 fill=none stroke=#fff stroke-width=2 viewbox="0 0 24 24"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx=12 cy=7 r=4/></svg></div>
-        <span class=nav-tile-label id=uname>User</span>
-        <span class=nav-tile-sub>My Account</span>
-        <svg style="position:absolute;top:5px;right:5px;opacity:.5" width=8 height=8 fill=none stroke=currentColor stroke-width=2.5 viewbox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg>
-      </div>
-      <div class="profile-dropdown" id=profile-dropdown>
+
+      <!-- USER -->
+      <div class=user-chip-wrap id=chip-wrap>
+        <button class=nav-user-btn onclick="toggleProfile()">
+          <div class=nav-user-av>
+            <svg width=14 height=14 fill=none stroke=#fff stroke-width=2 viewbox="0 0 24 24"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx=12 cy=7 r=4/></svg>
+          </div>
+          <span class=nav-user-label id=uname>User</span>
+          <span class=nav-user-sub>My Account</span>
+        </button>
+        <div class="profile-dropdown" id=profile-dropdown>
         <div class=pd-hdr>
           <div class=pd-av-lg id=pd-av-lg>U</div>
           <div class=pd-hdr-info><h3 id=pd-nm>—</h3><p id=pd-em-hdr>—</p></div>
@@ -432,11 +484,11 @@ body{background:var(--bg);color:var(--ink);font-family:Open Sans,sans-serif;over
           <button class=pd-btn-ed onclick="openEditModal()">✏️ Edit Profile</button>
           <button class=pd-btn-lo onclick="logout()">🚪 Sign Out</button>
         </div>
-      </div>
-    </div>
-    </div>
-  </div>
-</div>
+      </div><!-- /profile-dropdown -->
+      </div><!-- /user-chip-wrap -->
+    </div><!-- /nav-actions -->
+  </div><!-- /top-inner -->
+</div><!-- /top-bar -->
 
 <!-- Edit Profile Modal -->
 <div class=edit-overlay id=edit-modal onclick="if(event.target===this)closeEditModal()">
