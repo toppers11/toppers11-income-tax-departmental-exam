@@ -819,12 +819,12 @@ function buildCards(p,i){
     </div>
   </div>
   <div class="bundle-plans">
-    <div class="bpc" onclick="selPlan='single-iti';openModal()">
+    <div class="bpc" onclick="openModalWithPlan('single-iti')">
       <div class="bpc-radio"></div>
       <div class="bpc-info"><h4>ITI Single Subject</h4><p>All 21 tests for 1 paper · Best for targeted prep</p></div>
       <div class="bpc-price">₹355</div>
     </div>
-    <div class="bpc bpc-best" onclick="selPlan='bunch-iti';openModal()">
+    <div class="bpc bpc-best" onclick="openModalWithPlan('bunch-iti')">
       <div class="bpc-badge">Best Value</div>
       <div class="bpc-radio"></div>
       <div class="bpc-info"><h4>ITI Complete Bunch (All 4 Papers)</h4><p>All 84 tests — save ₹465 vs buying individually</p></div>
@@ -921,7 +921,20 @@ function buildPlans(){
   document.getElementById('cont-btn').textContent=selPlan?`Pay ₹${PLANS[selPlan].amount} via UPI →`:'Select a plan to continue';
 }
 function selectPlan(k){selPlan=k;buildPlans();}
-function openModal(){document.getElementById('overlay').classList.add('show');buildPlans();}
+function openModal(){
+  selPlan=null;
+  document.getElementById('overlay').classList.add('show');
+  document.getElementById('step1').style.display='';
+  document.getElementById('step2').style.display='none';
+  buildPlans();
+}
+function openModalWithPlan(k){
+  selPlan=k;
+  document.getElementById('overlay').classList.add('show');
+  document.getElementById('step1').style.display='none';
+  document.getElementById('step2').style.display='';
+  doContinue();
+}
 function closeModal(){document.getElementById('overlay').classList.remove('show');}
 function overlayClick(e){if(e.target===document.getElementById('overlay'))closeModal();}
 function doContinue(){
