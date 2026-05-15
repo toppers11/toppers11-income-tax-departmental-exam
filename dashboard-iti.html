@@ -194,7 +194,17 @@ body{background:var(--bg);color:var(--ink);font-family:Open Sans,sans-serif;over
   background:linear-gradient(180deg,var(--t3) 0%,var(--t-dark) 100%);
   border-radius:0;
 }
-
+.rn-icon{
+  width:48px;height:48px;
+  border-radius:12px;
+  flex-shrink:0;
+  background:linear-gradient(135deg,var(--t-dark),var(--t3));
+  display:grid;place-items:center;
+  position:relative;z-index:1;
+  align-self:center;
+  border:none;
+  margin:0;
+}
 .rn-body{
   flex:1;
   padding:1rem 1.3rem 1rem 1.1rem;
@@ -458,14 +468,49 @@ body{background:var(--bg);color:var(--ink);font-family:Open Sans,sans-serif;over
 /* Small triangle bottom left */
 .tri-bl{opacity:.7;width:35px;height:35px;animation:7s ease-in-out 3s infinite floatT-bl;bottom:8px;left:15%}
 
-/* ── NAV TILE BUTTONS (Login/Register card style) ── */
-.nav-tile-btn{display:inline-flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;min-width:90px;padding:.5rem .85rem;border-radius:10px;text-decoration:none;border:1.5px solid #e2e8f0;background:#f8f9fa;color:#374151;transition:all .18s;position:relative;box-shadow:0 1px 3px rgba(0,0,0,.07);flex-shrink:0;cursor:pointer;}
-.nav-tile-btn:hover{box-shadow:0 4px 14px rgba(0,0,0,.12);background:#fff;border-color:#c8d0d8;transform:translateY(-1px);}
-.nav-tile-icon{display:flex;align-items:center;justify-content:center;width:28px;height:28px;border-radius:50%;background:#e8edf2;margin-bottom:1px;flex-shrink:0;color:#555;}
-.nav-tile-btn:hover .nav-tile-icon{background:#dde4eb;}
-.nav-tile-label{font-family:Open Sans,sans-serif;font-size:.6rem;font-weight:800;letter-spacing:.06em;text-transform:uppercase;line-height:1;color:#1a1a2e;}
-.nav-tile-sub{font-size:.5rem;font-weight:600;letter-spacing:.04em;text-transform:uppercase;line-height:1;color:#888;}
-.nav-tile-av{width:28px;height:28px;border-radius:50%;background:linear-gradient(135deg,var(--t-dark),var(--t3));border:2px solid rgba(0,171,132,.3);display:grid;place-items:center;font-size:.7rem;font-weight:800;color:#fff;flex-shrink:0;margin-bottom:1px;}
+/* ── NAV TILE BUTTONS — exact match of screenshot ── */
+.nav-tile-btn{
+  display:inline-flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  gap:3px;
+  min-width:88px;
+  padding:.55rem .8rem .5rem;
+  border-radius:12px;
+  text-decoration:none;
+  border:none;
+  background:#eaecef;
+  color:#3c4043;
+  transition:background .15s;
+  flex-shrink:0;
+  cursor:pointer;
+}
+.nav-tile-btn:hover{background:#dadce0;}
+.nav-tile-icon{
+  display:flex;align-items:center;justify-content:center;
+  width:26px;height:26px;
+  color:#5f6368;
+  margin-bottom:2px;
+  flex-shrink:0;
+}
+.nav-tile-label{
+  font-family:'Open Sans',sans-serif;
+  font-size:.6rem;
+  font-weight:700;
+  letter-spacing:.07em;
+  text-transform:uppercase;
+  line-height:1;
+  color:#1a1a2e;
+}
+.nav-tile-sub{
+  font-size:.5rem;
+  font-weight:600;
+  letter-spacing:.05em;
+  text-transform:uppercase;
+  line-height:1;
+  color:#80868b;
+}
 
 /* ── RESPONSIVE ── */
 @media(max-width:640px){
@@ -517,22 +562,30 @@ body{background:var(--bg);color:var(--ink);font-family:Open Sans,sans-serif;over
       </a>
     </div>
     <div style="display:flex;align-items:center;gap:.5rem;">
-      <!-- ALL EXAMS tile button -->
+      <!-- ALL EXAMS tile -->
       <a href="https://incometax.toppers11.com/exam-select.html" class=nav-tile-btn>
         <div class=nav-tile-icon>
-          <svg width=15 height=15 fill=none stroke=currentColor stroke-width=2 viewbox="0 0 24 24"><rect x=3 y=3 width=7 height=7 rx=1/><rect x=14 y=3 width=7 height=7 rx=1/><rect x=3 y=14 width=7 height=7 rx=1/><rect x=14 y=14 width=7 height=7 rx=1/></svg>
+          <svg width=20 height=20 fill=none stroke=currentColor stroke-width=1.8 viewbox="0 0 24 24">
+            <rect x=3 y=3 width=7 height=7 rx=1.5/><rect x=14 y=3 width=7 height=7 rx=1.5/>
+            <rect x=3 y=14 width=7 height=7 rx=1.5/><rect x=14 y=14 width=7 height=7 rx=1.5/>
+          </svg>
         </div>
-        <span class=nav-tile-label>ALL EXAMS</span>
+        <span class=nav-tile-label>All Exams</span>
         <span class=nav-tile-sub>Switch Exam</span>
       </a>
-    <div class=user-chip-wrap id=chip-wrap>
-      <!-- User profile tile button with person icon -->
-      <div class="nav-tile-btn nav-tile-dark" onclick="toggleProfile()" style="cursor:pointer;position:relative;">
-        <div class=nav-tile-icon style="background:linear-gradient(135deg,var(--t-dark),var(--t3));border-radius:50%;"><svg width=15 height=15 fill=none stroke=#fff stroke-width=2 viewbox="0 0 24 24"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx=12 cy=7 r=4/></svg></div>
-        <span class=nav-tile-label id=uname>User</span>
-        <span class=nav-tile-sub>My Account</span>
-        <svg style="position:absolute;top:5px;right:5px;opacity:.5" width=8 height=8 fill=none stroke=currentColor stroke-width=2.5 viewbox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg>
-      </div>
+
+      <!-- USER tile -->
+      <div class=user-chip-wrap id=chip-wrap>
+        <div class=nav-tile-btn onclick="toggleProfile()" style="cursor:pointer;">
+          <div class=nav-tile-icon>
+            <svg width=22 height=22 fill=none stroke=currentColor stroke-width=1.8 viewbox="0 0 24 24">
+              <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/>
+              <circle cx=12 cy=7 r=4/>
+            </svg>
+          </div>
+          <span class=nav-tile-label id=uname>User</span>
+          <span class=nav-tile-sub>My Account</span>
+        </div>
       <div class="profile-dropdown" id=profile-dropdown>
         <div class=pd-hdr>
           <div class=pd-av-lg id=pd-av-lg>U</div>
@@ -738,7 +791,12 @@ body{background:var(--bg);color:var(--ink);font-family:Open Sans,sans-serif;over
   <div class=retest-notice>
     <div class=rn-accent></div>
     <div class=rn-body>
-           <div class=rn-body-text>
+      <div class=rn-icon>
+        <svg width=22 height=22 fill=none stroke=#fff stroke-width=2.2 viewbox="0 0 24 24">
+          <circle cx=12 cy=12 r=10/><polyline points="12 6 12 12 16 14"/>
+        </svg>
+      </div>
+      <div class=rn-body-text>
         <div class=rn-badge>
           <svg width=7 height=7 viewbox="0 0 24 24" fill="var(--t3)"><circle cx=12 cy=12 r=10/></svg>
           Exam Rule
