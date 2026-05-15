@@ -194,7 +194,17 @@ body{background:var(--bg);color:var(--ink);font-family:Open Sans,sans-serif;over
   background:linear-gradient(180deg,var(--t3) 0%,var(--t-dark) 100%);
   border-radius:0;
 }
-
+.rn-icon{
+  width:48px;height:48px;
+  border-radius:12px;
+  flex-shrink:0;
+  background:linear-gradient(135deg,var(--t-dark),var(--t3));
+  display:grid;place-items:center;
+  position:relative;z-index:1;
+  align-self:center;
+  border:none;
+  margin:0;
+}
 .rn-body{
   flex:1;
   padding:1rem 1.3rem 1rem 1.1rem;
@@ -552,25 +562,32 @@ body{background:var(--bg);color:var(--ink);font-family:Open Sans,sans-serif;over
       </a>
     </div>
     <div style="display:flex;align-items:center;gap:.5rem;">
-      <!-- ALL EXAMS tile -->
+      <!-- ALL EXAMS tile — compass/switch icon -->
       <a href="https://incometax.toppers11.com/exam-select.html" class=nav-tile-btn>
         <div class=nav-tile-icon>
-          <svg width=20 height=20 fill=none stroke=currentColor stroke-width=1.8 viewbox="0 0 24 24">
-            <rect x=3 y=3 width=7 height=7 rx=1.5/><rect x=14 y=3 width=7 height=7 rx=1.5/>
-            <rect x=3 y=14 width=7 height=7 rx=1.5/><rect x=14 y=14 width=7 height=7 rx=1.5/>
+          <svg width=22 height=22 fill=none stroke=currentColor stroke-width=1.8 viewbox="0 0 24 24">
+            <!-- Compass rose: outer circle + needle -->
+            <circle cx=12 cy=12 r=9/>
+            <polygon points="12,4 14.5,11.5 12,10 9.5,11.5" fill=currentColor stroke=none opacity=".85"/>
+            <polygon points="12,20 9.5,12.5 12,14 14.5,12.5" fill=currentColor stroke=none opacity=".35"/>
+            <circle cx=12 cy=12 r=1.5 fill=currentColor stroke=none/>
           </svg>
         </div>
         <span class=nav-tile-label>All Exams</span>
         <span class=nav-tile-sub>Switch Exam</span>
       </a>
 
-      <!-- USER tile -->
+      <!-- USER tile — person + checkmark badge icon -->
       <div class=user-chip-wrap id=chip-wrap>
         <div class=nav-tile-btn onclick="toggleProfile()" style="cursor:pointer;">
           <div class=nav-tile-icon>
             <svg width=22 height=22 fill=none stroke=currentColor stroke-width=1.8 viewbox="0 0 24 24">
-              <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/>
-              <circle cx=12 cy=7 r=4/>
+              <!-- Person body -->
+              <path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"/>
+              <circle cx=12 cy=7 r=3.5/>
+              <!-- Small verified badge bottom-right -->
+              <circle cx=18.5 cy=18.5 r=3.5 fill="#eaecef" stroke=currentColor stroke-width=1.5/>
+              <path d="M17 18.5l1 1 1.8-1.8" stroke=currentColor stroke-width=1.6 stroke-linecap=round stroke-linejoin=round/>
             </svg>
           </div>
           <span class=nav-tile-label id=uname>User</span>
@@ -781,7 +798,12 @@ body{background:var(--bg);color:var(--ink);font-family:Open Sans,sans-serif;over
   <div class=retest-notice>
     <div class=rn-accent></div>
     <div class=rn-body>
-           <div class=rn-body-text>
+      <div class=rn-icon>
+        <svg width=22 height=22 fill=none stroke=#fff stroke-width=2.2 viewbox="0 0 24 24">
+          <circle cx=12 cy=12 r=10/><polyline points="12 6 12 12 16 14"/>
+        </svg>
+      </div>
+      <div class=rn-body-text>
         <div class=rn-badge>
           <svg width=7 height=7 viewbox="0 0 24 24" fill="var(--t3)"><circle cx=12 cy=12 r=10/></svg>
           Exam Rule
