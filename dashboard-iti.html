@@ -95,18 +95,18 @@ body{background:var(--bg);color:var(--ink);font-family:Open Sans,sans-serif;over
 .tri-mr{opacity:.6;filter:blur(1.5px);width:65px;height:65px;top:40%;right:2%;animation:10s ease-in-out 1s infinite floatH;}
 
 
-/* ── TABS BAR — index-2 nav style ── */
+/* ── TABS BAR — reference site nav-link pill style ── */
 .tabs-bar{z-index:200;background:#fff;border-bottom:2px solid var(--bdr);position:sticky;top:0}
-.tabs-inner{max-width:1200px;margin:0 auto;padding:0 1.2rem;display:flex;overflow-x:auto;scrollbar-width:none}
+.tabs-inner{max-width:1200px;margin:0 auto;padding:0 1rem;display:flex;align-items:center;gap:.35rem;overflow-x:auto;scrollbar-width:none;height:56px;}
 .tabs-inner::-webkit-scrollbar{display:none}
-.tab-btn{flex-shrink:0;padding:0 1.1rem;height:52px;font-family:Open Sans,sans-serif;letter-spacing:.04em;text-transform:uppercase;color:#444;white-space:nowrap;border-bottom:3px solid transparent;background:none;border-top:none;border-left:none;border-right:none;cursor:pointer;display:flex;flex-direction:column;align-items:flex-start;justify-content:center;gap:.06rem;transition:all .15s}
-.tab-num{font-size:.55rem;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:var(--muted)}
-.tab-name{font-size:.72rem;font-weight:700}
-.tab-btn:hover .tab-name{color:var(--t3)}
-.tab-btn.active{border-bottom-color:var(--t3)}
-.tab-btn.active .tab-name{color:var(--t3)}
-.tab-btn.active .tab-num{color:var(--t3)}
-.free-star{color:var(--t3);font-size:.62rem}
+.tab-btn{flex-shrink:0;display:inline-flex;flex-direction:column;align-items:center;justify-content:center;gap:1px;padding:.38rem .85rem;border-radius:7px;background:none;border:1.5px solid transparent;cursor:pointer;transition:all .18s;white-space:nowrap;font-family:Open Sans,sans-serif;color:var(--ink);}
+.tab-btn:hover{background:#f0fdf8;border-color:#a7f3d0;color:var(--t3);}
+.tab-btn.active{background:var(--t3);border-color:var(--t3);color:#fff;box-shadow:0 3px 10px rgba(0,171,132,.32);}
+.tab-num{font-size:.5rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;opacity:.75;line-height:1;}
+.tab-name{font-size:.7rem;font-weight:700;letter-spacing:.02em;line-height:1;}
+.tab-btn.active .tab-num,.tab-btn.active .tab-name{color:#fff;opacity:1;}
+.tab-btn:hover .tab-num,.tab-btn:hover .tab-name{color:var(--t3);}
+.free-star{font-size:.6rem;margin-left:2px;color:inherit;}
 
 /* ── MAIN CONTENT ── */
 .main{max-width:1200px;margin:0 auto;padding:1.5rem 1.2rem 5rem}
@@ -772,7 +772,7 @@ function buildTabs(){
   PAPERS.forEach((p,i)=>{
     const btn=document.createElement('button');
     btn.className='tab-btn'+(i===activeTab?' active':'');
-    btn.innerHTML=`<span class="tab-num">Paper ${i+1} · ${p.marks} Marks</span><span class="tab-name">${p.name}${p.hasFree?' <span class="free-star">✦</span>':''}</span>`;
+    btn.innerHTML=`<span class="tab-num">Paper ${i+1} &middot; ${p.marks} Marks</span><span class="tab-name">${p.name}${p.hasFree?' <span class="free-star">✦</span>':''}</span>`;
     btn.onclick=()=>switchTab(i);
     bar.appendChild(btn);
   });
