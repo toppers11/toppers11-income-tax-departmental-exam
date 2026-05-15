@@ -70,7 +70,7 @@ body{background:var(--bg);color:var(--ink);font-family:Open Sans,sans-serif;over
 
 /* ── HERO ── */
 .hero{background:var(--t3);padding:2.5rem 1.2rem 2.2rem;position:relative;overflow:hidden;}
-.hero-inner{position:relative;z-index:2;max-width:1100px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:.8rem;}
+.hero-inner{position:relative;z-index:2;max-width:1100px;margin:0 auto;display:flex;align-items:center;justify-content:flex-start;flex-wrap:wrap;gap:.8rem;padding-left:0;}
 .hero-title{font-family:'Open Sans',sans-serif;font-size:clamp(1.5rem,3vw,2.2rem);font-weight:800;color:#fff;line-height:1.1;letter-spacing:-.01em;}
 .hero-title em{font-family:'Playfair Display',Georgia,serif;font-style:italic;font-weight:800;font-size:1.05em;color:#fff;}
 .hero-sub-text{font-size:.82rem;color:rgba(255,255,255,.82);margin-top:.35rem;font-style:italic;}
@@ -95,18 +95,18 @@ body{background:var(--bg);color:var(--ink);font-family:Open Sans,sans-serif;over
 .tri-mr{opacity:.6;filter:blur(1.5px);width:65px;height:65px;top:40%;right:2%;animation:10s ease-in-out 1s infinite floatH;}
 
 
-/* ── TABS BAR — reference site nav-link pill style ── */
+/* ── TABS BAR — nav-link style matching index.html ── */
 .tabs-bar{z-index:200;background:#fff;border-bottom:2px solid var(--bdr);position:sticky;top:0}
-.tabs-inner{max-width:1200px;margin:0 auto;padding:0 1rem;display:flex;align-items:center;gap:.35rem;overflow-x:auto;scrollbar-width:none;height:56px;}
+.tabs-inner{max-width:1200px;margin:0 auto;padding:0 1rem;display:flex;align-items:center;gap:.2rem;overflow-x:auto;scrollbar-width:none;height:52px;}
 .tabs-inner::-webkit-scrollbar{display:none}
-.tab-btn{flex-shrink:0;display:inline-flex;flex-direction:column;align-items:center;justify-content:center;gap:1px;padding:.38rem .85rem;border-radius:7px;background:none;border:1.5px solid transparent;cursor:pointer;transition:all .18s;white-space:nowrap;font-family:Open Sans,sans-serif;color:var(--ink);}
-.tab-btn:hover{background:#f0fdf8;border-color:#a7f3d0;color:var(--t3);}
-.tab-btn.active{background:var(--t3);border-color:var(--t3);color:#fff;box-shadow:0 3px 10px rgba(0,171,132,.32);}
-.tab-num{font-size:.5rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;opacity:.75;line-height:1;}
-.tab-name{font-size:.7rem;font-weight:700;letter-spacing:.02em;line-height:1;}
-.tab-btn.active .tab-num,.tab-btn.active .tab-name{color:#fff;opacity:1;}
+.tab-btn{flex-shrink:0;display:inline-flex;flex-direction:column;align-items:flex-start;justify-content:center;gap:0;padding:.45rem 1rem;border-radius:0;background:none;border:none;border-bottom:3px solid transparent;cursor:pointer;transition:all .18s;white-space:nowrap;font-family:'Open Sans',sans-serif;color:#555;position:relative;margin-bottom:-2px;}
+.tab-btn:hover{color:var(--t3);border-bottom-color:var(--t3);background:rgba(0,171,132,.05);}
+.tab-btn.active{color:var(--t3);border-bottom-color:var(--t3);font-weight:700;}
+.tab-num{font-size:.62rem;font-weight:600;letter-spacing:.04em;color:inherit;opacity:.65;line-height:1;margin-bottom:.08rem;}
+.tab-name{font-size:.82rem;font-weight:700;letter-spacing:.01em;color:inherit;line-height:1;}
+.tab-btn.active .tab-num,.tab-btn.active .tab-name{color:var(--t3);opacity:1;}
 .tab-btn:hover .tab-num,.tab-btn:hover .tab-name{color:var(--t3);}
-.free-star{font-size:.6rem;margin-left:2px;color:inherit;}
+.free-star{font-size:.65rem;margin-left:2px;color:var(--yellow2);}
 
 /* ── MAIN CONTENT ── */
 .main{max-width:1200px;margin:0 auto;padding:1.5rem 1.2rem 5rem}
@@ -319,7 +319,7 @@ body{background:var(--bg);color:var(--ink);font-family:Open Sans,sans-serif;over
 /* Main large triangle — top right (yellow+teal 3D tetrahedron) */
 .tri-tr{width:110px;height:110px;animation:7s ease-in-out .5s infinite floatT-tr;top:8px;right:9%}
 /* Dark teal triangle — top left cluster */
-.tri-tl{width:55px;height:55px;animation:6s ease-in-out 1s infinite floatT-tl;top:25px;left:8%}
+.tri-tl{width:55px;height:55px;animation:6s ease-in-out 1s infinite floatT-tl;top:25px;left:0;}
 /* Second dark teal triangle — left side lower */
 .tri-tl2{width:40px;height:40px;animation:8s ease-in-out 2.5s infinite floatT-tl2;top:55%;left:3%}
 /* Yellow accent triangle — right side lower */
@@ -330,11 +330,11 @@ body{background:var(--bg);color:var(--ink);font-family:Open Sans,sans-serif;over
 .tri-bl{opacity:.7;width:35px;height:35px;animation:7s ease-in-out 3s infinite floatT-bl;bottom:8px;left:15%}
 
 /* ── NAV TILE BUTTONS (sample image style) ── */
-.nav-tile-btn{display:inline-flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;min-width:80px;padding:.45rem .7rem;border-radius:8px;text-decoration:none;border:none;transition:all .18s;position:relative;box-shadow:0 2px 8px rgba(0,0,0,.15);flex-shrink:0;}
-.nav-tile-btn:hover{transform:translateY(-2px);box-shadow:0 5px 16px rgba(0,0,0,.22);}
-.nav-tile-label{font-family:Open Sans,sans-serif;font-size:.62rem;font-weight:800;letter-spacing:.04em;text-transform:uppercase;line-height:1;margin-top:1px;}
-.nav-tile-sub{font-size:.5rem;font-weight:600;letter-spacing:.03em;opacity:.8;text-transform:uppercase;line-height:1;}
-.nav-tile-av{width:22px;height:22px;border-radius:50%;background:rgba(255,255,255,.25);border:1.5px solid rgba(255,255,255,.5);display:grid;place-items:center;font-size:.68rem;font-weight:800;color:#fff;flex-shrink:0;}
+.nav-tile-btn{display:inline-flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;min-width:100px;width:100px;height:52px;padding:.4rem .6rem;border-radius:8px;text-decoration:none;border:1.5px solid #d1d5db;background:#f3f4f6;color:#374151;transition:all .18s;position:relative;box-shadow:0 1px 4px rgba(0,0,0,.08);flex-shrink:0;}
+.nav-tile-btn:hover{transform:translateY(-2px);box-shadow:0 4px 14px rgba(0,0,0,.15);background:#e5e7eb;border-color:#9ca3af;}
+.nav-tile-label{font-family:Open Sans,sans-serif;font-size:.62rem;font-weight:800;letter-spacing:.04em;text-transform:uppercase;line-height:1;margin-top:1px;color:inherit;}
+.nav-tile-sub{font-size:.5rem;font-weight:600;letter-spacing:.03em;opacity:.75;text-transform:uppercase;line-height:1;color:inherit;}
+.nav-tile-av{width:22px;height:22px;border-radius:50%;background:rgba(55,65,81,.2);border:1.5px solid rgba(55,65,81,.35);display:grid;place-items:center;font-size:.68rem;font-weight:800;color:#374151;flex-shrink:0;}
 
 /* ── RESPONSIVE ── */
 @media(max-width:640px){
@@ -387,15 +387,15 @@ body{background:var(--bg);color:var(--ink);font-family:Open Sans,sans-serif;over
     </div>
     <div style="display:flex;align-items:center;gap:.5rem;">
       <!-- ALL EXAMS tile button -->
-      <a href="https://incometax.toppers11.com/exam-select.html" class=nav-tile-btn style="background:var(--t3);color:#fff;">
+      <a href="https://incometax.toppers11.com/exam-select.html" class=nav-tile-btn>
         <svg width=18 height=18 fill=none stroke=currentColor stroke-width=2 viewbox="0 0 24 24"><rect x=3 y=3 width=7 height=7 rx=1/><rect x=14 y=3 width=7 height=7 rx=1/><rect x=3 y=14 width=7 height=7 rx=1/><rect x=14 y=14 width=7 height=7 rx=1/></svg>
         <span class=nav-tile-label>ALL EXAMS</span>
         <span class=nav-tile-sub>Switch Exam</span>
       </a>
     <div class=user-chip-wrap id=chip-wrap>
       <!-- R Ranjana profile tile button -->
-      <div class="nav-tile-btn nav-tile-dark" onclick="toggleProfile()" style="cursor:pointer;background:#1a1a2e;color:#fff;position:relative;">
-        <div class=nav-tile-av id=uav>U</div>
+      <div class="nav-tile-btn nav-tile-dark" onclick="toggleProfile()" style="cursor:pointer;position:relative;">
+        <div class=nav-tile-av id=uav style="background:linear-gradient(135deg,var(--t-dark),var(--t3));border-color:var(--t3);color:#fff;">U</div>
         <span class=nav-tile-label id=uname>User</span>
         <span class=nav-tile-sub>My Account</span>
         <svg style="position:absolute;top:6px;right:6px;opacity:.6" width=9 height=9 fill=none stroke=currentColor stroke-width=2.5 viewbox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg>
@@ -580,8 +580,23 @@ body{background:var(--bg);color:var(--ink);font-family:Open Sans,sans-serif;over
     </div>    
     </div>
   </div>
+
+  <!-- Yellow 3D triangle — decorative, left area -->
+  <div class="tri" style="width:72px;height:80px;bottom:18px;left:2%;animation:8s ease-in-out 1.8s infinite floatT-bl;z-index:1;">
+    <svg viewBox="0 0 72 80" width=72 height=80 xmlns="http://www.w3.org/2000/svg" style="filter:drop-shadow(3px 8px 18px rgba(0,0,0,.4))">
+      <defs>
+        <linearGradient id=yl_a x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#FFE55A"/><stop offset="100%" stop-color="#F5C518"/></linearGradient>
+        <linearGradient id=yl_b x1="100%" y1="0%" x2="0%" y2="100%"><stop offset="0%" stop-color="#C88A00"/><stop offset="100%" stop-color="#7a5200"/></linearGradient>
+        <linearGradient id=yl_c x1="0%" y1="0%" x2="100%" y2="0%"><stop offset="0%" stop-color="#5a3c00"/><stop offset="100%" stop-color="#7a5200"/></linearGradient>
+      </defs>
+      <polygon points="36,5 8,72 36,54"   fill="url(#yl_a)"/>
+      <polygon points="36,5 64,72 36,54"  fill="url(#yl_b)"/>
+      <polygon points="8,72 36,54 64,72"  fill="url(#yl_c)" opacity=".9"/>
+      <line x1="36" y1="5" x2="36" y2="54" stroke="rgba(255,255,255,.45)" stroke-width="1.2"/>
+      <line x1="36" y1="5" x2="8"  y2="72" stroke="rgba(255,255,255,.15)" stroke-width=".6"/>
+    </svg>
+  </div>
 </section>
-<!-- TABS BAR -->
 <div class=tabs-bar><div class=tabs-inner id=tabs-inner></div></div>
 
 <!-- MAIN -->
@@ -849,7 +864,7 @@ function buildCards(p,i){
         <h2>Paper ${i+1} — ${p.name}</h2>
         <p>${p.tests.length} tests &nbsp;·&nbsp; ${p.qs||p.tests[0].qs} questions &nbsp;·&nbsp; ${p.tests[0].mins} min each &nbsp;·&nbsp; ${p.marks} marks &nbsp;·&nbsp; ${p.type}</p>
       </div>
-      ${p.hasFree?'<span class="free-pill"><svg width="10" height="10" fill="none" stroke="currentColor" stroke-width="2.5" viewbox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>1 Free PYQ Included</span>':''}
+      ${''/* free pill removed */}
     </div>
     ${!isPaid()?bundleHTML:''}
     <div class="papers-lbl">All 21 Tests — ${p.tests.filter(t=>t.pyq).length} PYQs + ${p.tests.filter(t=>!t.pyq).length} Series</div>
