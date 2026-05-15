@@ -8,8 +8,8 @@
 <meta content=#00AB84 name=theme-color>
 <link href=https://fonts.googleapis.com rel=preconnect>
 <link crossorigin href=https://fonts.gstatic.com rel=preconnect>
-<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@300;400;600;700;800;900&family=Open+Sans:wght@400;600;700&family=Dancing+Script:wght@600;700&family=Playfair+Display:ital,wght@1,700;1,800&family=Righteous&display=swap" onload="this.onload=null;this.rel='stylesheet'" as=style rel=preload>
-<noscript><link href="https://fonts.googleapis.com/css2?family=Nunito:wght@300;400;600;700;800;900&family=Open+Sans:wght@400;600;700&family=Dancing+Script:wght@600;700&family=Playfair+Display:ital,wght@1,700;1,800&family=Righteous&display=swap" rel=stylesheet></noscript>
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@300;400;600;700;800;900&family=Open+Sans:wght@400;600;700&family=Dancing+Script:wght@600;700&family=Playfair+Display:ital,wght@1,700;1,800&family=Righteous&family=Barlow+Condensed:wght@700;800;900&display=swap" onload="this.onload=null;this.rel='stylesheet'" as=style rel=preload>
+<noscript><link href="https://fonts.googleapis.com/css2?family=Nunito:wght@300;400;600;700;800;900&family=Open+Sans:wght@400;600;700&family=Dancing+Script:wght@600;700&family=Playfair+Display:ital,wght@1,700;1,800&family=Righteous&family=Barlow+Condensed:wght@700;800;900&display=swap" rel=stylesheet></noscript>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
 <style>
 :root{--t1:#006d5b;--t2:#25a36f;--t3:#00ab84;--t-dark:#004d3f;--t-mid:#008c6e;--yellow:#f5c518;--yellow2:#e8a900;--dark:#1a1a2e;--dark2:#2d2d44;--ink:#222;--muted:#555;--bg:#f7f7f7;--wh:#fff;--bdr:#ddd}
@@ -70,7 +70,7 @@ body{background:var(--bg);color:var(--ink);font-family:Open Sans,sans-serif;over
 
 /* ── HERO ── */
 .hero{background:var(--t3);padding:2.5rem 1.2rem 2.2rem;position:relative;overflow:hidden;}
-.hero-inner{position:relative;z-index:2;max-width:1100px;margin:0 auto;display:flex;align-items:center;justify-content:flex-start;flex-wrap:wrap;padding-left:0;}
+.hero-inner{position:relative;z-index:2;max-width:1200px;margin:0 auto;display:flex;align-items:center;justify-content:flex-start;flex-wrap:wrap;gap:.8rem;padding:0 1.2rem;}
 .hero-title{font-family:'Open Sans',sans-serif;font-size:clamp(1.5rem,3vw,2.2rem);font-weight:800;color:#fff;line-height:1.1;letter-spacing:-.01em;}
 .hero-title em{font-family:'Playfair Display',Georgia,serif;font-style:italic;font-weight:800;font-size:1.05em;color:#fff;}
 .hero-sub-text{font-size:.82rem;color:rgba(255,255,255,.82);margin-top:.35rem;font-style:italic;}
@@ -95,17 +95,18 @@ body{background:var(--bg);color:var(--ink);font-family:Open Sans,sans-serif;over
 .tri-mr{opacity:.6;filter:blur(1.5px);width:65px;height:65px;top:40%;right:2%;animation:10s ease-in-out 1s infinite floatH;}
 
 
-/* ── TABS BAR — nav-link style matching index.html ── */
+/* ── TABS BAR — Paper card style with Capslock font ── */
 .tabs-bar{z-index:200;background:#fff;border-bottom:2px solid var(--bdr);position:sticky;top:0}
-.tabs-inner{max-width:1200px;margin:0 auto;padding:0 1rem;display:flex;align-items:center;gap:.2rem;overflow-x:auto;scrollbar-width:none;height:52px;}
+.tabs-inner{max-width:1200px;margin:0 auto;padding:0 1rem;display:flex;align-items:stretch;gap:.35rem;overflow-x:auto;scrollbar-width:none;min-height:62px;}
 .tabs-inner::-webkit-scrollbar{display:none}
-.tab-btn{flex-shrink:0;display:inline-flex;flex-direction:column;align-items:flex-start;justify-content:center;gap:0;padding:.45rem 1rem;border-radius:0;background:none;border:none;border-bottom:3px solid transparent;cursor:pointer;transition:all .18s;white-space:nowrap;font-family:'Open Sans',sans-serif;color:#555;position:relative;margin-bottom:-2px;}
-.tab-btn:hover{color:var(--t3);border-bottom-color:var(--t3);background:rgba(0,171,132,.05);}
-.tab-btn.active{color:var(--t3);border-bottom-color:var(--t3);font-weight:700;}
-.tab-num{font-size:.62rem;font-weight:600;letter-spacing:.04em;color:inherit;opacity:.65;line-height:1;margin-bottom:.08rem;}
-.tab-name{font-size:.82rem;font-weight:700;letter-spacing:.01em;color:inherit;line-height:1;}
-.tab-btn.active .tab-num,.tab-btn.active .tab-name{color:var(--t3);opacity:1;}
-.tab-btn:hover .tab-num,.tab-btn:hover .tab-name{color:var(--t3);}
+.tab-btn{flex-shrink:0;display:inline-flex;flex-direction:column;align-items:flex-start;justify-content:center;gap:0;padding:.5rem 1.1rem;border-radius:0;background:none;border:none;border-bottom:3px solid transparent;cursor:pointer;transition:all .18s;white-space:nowrap;color:#666;position:relative;margin-bottom:-2px;}
+.tab-btn:hover{color:var(--t3);border-bottom-color:var(--t3);background:rgba(0,171,132,.04);}
+.tab-btn.active{color:var(--t3);border-bottom-color:var(--t3);background:rgba(0,171,132,.05);}
+.tab-num{font-family:'Barlow Condensed','Open Sans',sans-serif;font-size:.58rem;font-weight:700;letter-spacing:.12em;color:inherit;opacity:.6;line-height:1;margin-bottom:.1rem;text-transform:uppercase;}
+.tab-paper-mark{font-family:'Barlow Condensed','Open Sans',sans-serif;font-size:.68rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:inherit;opacity:.72;line-height:1;margin-bottom:.05rem;}
+.tab-name{font-family:'Barlow Condensed','Open Sans',sans-serif;font-size:1.05rem;font-weight:900;letter-spacing:.04em;text-transform:uppercase;color:inherit;line-height:1.1;}
+.tab-btn.active .tab-num,.tab-btn.active .tab-name,.tab-btn.active .tab-paper-mark{color:var(--t3);opacity:1;}
+.tab-btn:hover .tab-num,.tab-btn:hover .tab-name,.tab-btn:hover .tab-paper-mark{color:var(--t3);}
 .free-star{font-size:.65rem;margin-left:2px;color:var(--yellow2);}
 
 /* ── MAIN CONTENT ── */
@@ -318,10 +319,10 @@ body{background:var(--bg);color:var(--ink);font-family:Open Sans,sans-serif;over
 @keyframes floatT-bl{0%,to{transform:rotate(15deg)translateY(0)}50%{transform:rotate(15deg)translateY(-5px)}}
 /* Main large triangle — top right (yellow+teal 3D tetrahedron) */
 .tri-tr{width:110px;height:110px;animation:7s ease-in-out .5s infinite floatT-tr;top:8px;right:9%}
-/* Dark teal triangle — top left cluster */
-.tri-tl{width:55px;height:55px;animation:6s ease-in-out 1s infinite floatT-tl;top:25px;left:0;}
-/* Second dark teal triangle — left side lower */
-.tri-tl2{width:40px;height:40px;animation:8s ease-in-out 2.5s infinite floatT-tl2;top:55%;left:3%}
+/* Dark teal triangle — top left cluster — HIDDEN */
+.tri-tl{display:none;}
+/* Second dark teal triangle — left side lower — HIDDEN */
+.tri-tl2{display:none;}
 /* Yellow accent triangle — right side lower */
 .tri-tr2{width:50px;height:50px;animation:5.5s ease-in-out 1.2s infinite floatT-tr2;top:50%;right:5%}
 /* Small triangle bottom right */
@@ -329,12 +330,14 @@ body{background:var(--bg);color:var(--ink);font-family:Open Sans,sans-serif;over
 /* Small triangle bottom left */
 .tri-bl{opacity:.7;width:35px;height:35px;animation:7s ease-in-out 3s infinite floatT-bl;bottom:8px;left:15%}
 
-/* ── NAV TILE BUTTONS (sample image style) ── */
-.nav-tile-btn{display:inline-flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;min-width:100px;width:100px;height:52px;padding:.4rem .6rem;border-radius:8px;text-decoration:none;border:1.5px solid #d1d5db;background:#f3f4f6;color:#374151;transition:all .18s;position:relative;box-shadow:0 1px 4px rgba(0,0,0,.08);flex-shrink:0;}
-.nav-tile-btn:hover{transform:translateY(-2px);box-shadow:0 4px 14px rgba(0,0,0,.15);background:#e5e7eb;border-color:#9ca3af;}
-.nav-tile-label{font-family:Open Sans,sans-serif;font-size:.62rem;font-weight:800;letter-spacing:.04em;text-transform:uppercase;line-height:1;margin-top:1px;color:inherit;}
-.nav-tile-sub{font-size:.5rem;font-weight:600;letter-spacing:.03em;opacity:.75;text-transform:uppercase;line-height:1;color:inherit;}
-.nav-tile-av{width:22px;height:22px;border-radius:50%;background:rgba(55,65,81,.2);border:1.5px solid rgba(55,65,81,.35);display:grid;place-items:center;font-size:.68rem;font-weight:800;color:#374151;flex-shrink:0;}
+/* ── NAV TILE BUTTONS (Login/Register card style) ── */
+.nav-tile-btn{display:inline-flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;min-width:90px;padding:.5rem .85rem;border-radius:10px;text-decoration:none;border:1.5px solid #e2e8f0;background:#f8f9fa;color:#374151;transition:all .18s;position:relative;box-shadow:0 1px 3px rgba(0,0,0,.07);flex-shrink:0;cursor:pointer;}
+.nav-tile-btn:hover{box-shadow:0 4px 14px rgba(0,0,0,.12);background:#fff;border-color:#c8d0d8;transform:translateY(-1px);}
+.nav-tile-icon{display:flex;align-items:center;justify-content:center;width:28px;height:28px;border-radius:50%;background:#e8edf2;margin-bottom:1px;flex-shrink:0;color:#555;}
+.nav-tile-btn:hover .nav-tile-icon{background:#dde4eb;}
+.nav-tile-label{font-family:Open Sans,sans-serif;font-size:.6rem;font-weight:800;letter-spacing:.06em;text-transform:uppercase;line-height:1;color:#1a1a2e;}
+.nav-tile-sub{font-size:.5rem;font-weight:600;letter-spacing:.04em;text-transform:uppercase;line-height:1;color:#888;}
+.nav-tile-av{width:28px;height:28px;border-radius:50%;background:linear-gradient(135deg,var(--t-dark),var(--t3));border:2px solid rgba(0,171,132,.3);display:grid;place-items:center;font-size:.7rem;font-weight:800;color:#fff;flex-shrink:0;margin-bottom:1px;}
 
 /* ── RESPONSIVE ── */
 @media(max-width:640px){
@@ -388,17 +391,19 @@ body{background:var(--bg);color:var(--ink);font-family:Open Sans,sans-serif;over
     <div style="display:flex;align-items:center;gap:.5rem;">
       <!-- ALL EXAMS tile button -->
       <a href="https://incometax.toppers11.com/exam-select.html" class=nav-tile-btn>
-        <svg width=18 height=18 fill=none stroke=currentColor stroke-width=2 viewbox="0 0 24 24"><rect x=3 y=3 width=7 height=7 rx=1/><rect x=14 y=3 width=7 height=7 rx=1/><rect x=3 y=14 width=7 height=7 rx=1/><rect x=14 y=14 width=7 height=7 rx=1/></svg>
+        <div class=nav-tile-icon>
+          <svg width=15 height=15 fill=none stroke=currentColor stroke-width=2 viewbox="0 0 24 24"><rect x=3 y=3 width=7 height=7 rx=1/><rect x=14 y=3 width=7 height=7 rx=1/><rect x=3 y=14 width=7 height=7 rx=1/><rect x=14 y=14 width=7 height=7 rx=1/></svg>
+        </div>
         <span class=nav-tile-label>ALL EXAMS</span>
         <span class=nav-tile-sub>Switch Exam</span>
       </a>
     <div class=user-chip-wrap id=chip-wrap>
       <!-- R Ranjana profile tile button -->
       <div class="nav-tile-btn nav-tile-dark" onclick="toggleProfile()" style="cursor:pointer;position:relative;">
-        <div class=nav-tile-av id=uav style="background:linear-gradient(135deg,var(--t-dark),var(--t3));border-color:var(--t3);color:#fff;">U</div>
+        <div class=nav-tile-av id=uav>U</div>
         <span class=nav-tile-label id=uname>User</span>
         <span class=nav-tile-sub>My Account</span>
-        <svg style="position:absolute;top:6px;right:6px;opacity:.6" width=9 height=9 fill=none stroke=currentColor stroke-width=2.5 viewbox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg>
+        <svg style="position:absolute;top:5px;right:5px;opacity:.5" width=8 height=8 fill=none stroke=currentColor stroke-width=2.5 viewbox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg>
       </div>
       <div class="profile-dropdown" id=profile-dropdown>
         <div class=pd-hdr>
@@ -782,7 +787,7 @@ function buildTabs(){
   PAPERS.forEach((p,i)=>{
     const btn=document.createElement('button');
     btn.className='tab-btn'+(i===activeTab?' active':'');
-    btn.innerHTML=`<span class="tab-num">Paper ${i+1} &middot; ${p.marks} Marks</span><span class="tab-name">${p.name}${p.hasFree?' <span class="free-star">✦</span>':''}</span>`;
+    btn.innerHTML=`<span class="tab-num">Paper ${i+1}</span><span class="tab-paper-mark">${p.marks} Marks</span><span class="tab-name">${p.name}${p.hasFree?' <span class="free-star">✦</span>':''}</span>`;
     btn.onclick=()=>switchTab(i);
     bar.appendChild(btn);
   });
