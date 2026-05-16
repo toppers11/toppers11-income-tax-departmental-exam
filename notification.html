@@ -1,232 +1,345 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-<!-- Google tag (gtag.js) -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-V2VM68RT43"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-  gtag('config', 'G-V2VM68RT43');
-</script>
-<meta charset="UTF-8"/>
-<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<script src="https://www.googletagmanager.com/gtag/js?id=G-V2VM68RT43" defer></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-V2VM68RT43');</script>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
 <title>Official Notification — Departmental Examinations 2025 | Toppers11</title>
-<meta name="robots" content="index, follow"/>
-<link rel="canonical" href="https://incometax.toppers11.com/notification.html"/>
-<meta property="og:url" content="https://incometax.toppers11.com/notification.html"/>
-<meta name="description" content="Official Notification-II for Departmental Examinations 2025 for Income Tax Officers (ITOs) & Income Tax Inspectors (ITIs). Schedule, eligibility, application process."/>
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;800&family=DM+Sans:wght@300;400;500;600;700&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet"/>
+<meta name="description" content="Official Notification-II for Departmental Examinations 2025 for Income Tax Officers (ITOs) & Income Tax Inspectors (ITIs). Schedule, eligibility, application process.">
+<meta name="robots" content="index, follow">
+<link rel="canonical" href="https://incometax.toppers11.com/notification.html">
+<meta name="theme-color" content="#00AB84">
+<link href="https://fonts.googleapis.com" rel="preconnect">
+<link crossorigin href="https://fonts.gstatic.com" rel="preconnect">
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@300;400;600;700;800;900&family=Open+Sans:wght@400;600;700&family=Playfair+Display:ital,wght@0,700;0,800;1,700;1,800&family=Righteous&display=swap" rel="stylesheet">
 <style>
-:root{
-  --green:#10B981;--green-dark:#059669;--green-deeper:#065F46;
-  --green-pale:#ECFDF5;--green-light:#D1FAE5;
-  --amber:#D97706;--amber-pale:#FEF3C7;
-  --blue:#3B82F6;--blue-pale:#EFF6FF;
-  --ink:#111827;--muted:#6B7280;--border:#E5E7EB;--bg:#FAFAFA;
+:root{--t1:#006d5b;--t2:#25a36f;--t3:#00ab84;--t-dark:#004d3f;--t-mid:#008c6e;--yellow:#f5c518;--yellow2:#e8a900;--dark:#1a1a2e;--dark2:#2d2d44;--ink:#222;--muted:#555;--bg:#f7f7f7;--wh:#fff;--bdr:#ddd;--blue:#3B82F6;--blue-pale:#EFF6FF;--amber:#D97706;--amber-pale:#FEF3C7;--green-pale:#ECFDF5;--green-light:#D1FAE5;--green-deeper:#065F46}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--ink);font-family:'Open Sans',sans-serif;overflow-x:hidden}
+
+/* ── PROGRESS BAR ── */
+#progress{background:linear-gradient(90deg,var(--t1),var(--t3));z-index:9999;width:0%;height:3px;transition:width .15s;position:fixed;top:0;left:0}
+
+/* ── BACK TO TOP ── */
+#btt{background:var(--t1);color:#fff;cursor:pointer;opacity:0;z-index:400;border:none;border-radius:50%;place-items:center;width:40px;height:40px;transition:opacity .3s,transform .3s;display:grid;position:fixed;bottom:1.8rem;right:1.6rem;transform:translateY(12px);box-shadow:0 4px 14px #006d5b66}
+#btt.vis{opacity:1;transform:translateY(0)}
+#btt:hover{background:var(--t-dark)}
+
+/* ── WHATSAPP ── */
+#wa{z-index:400;background:#25d366;border-radius:50%;place-items:center;width:48px;height:48px;text-decoration:none;transition:transform .2s;display:grid;position:fixed;bottom:5rem;right:1.6rem;box-shadow:0 4px 16px #25d36673}
+#wa:hover{transform:scale(1.1)}
+#wa span{border:2px solid #25d366;border-radius:50%;animation:2s ease-out 3s infinite wap;position:absolute;inset:-4px}
+@keyframes wap{0%{opacity:.7;transform:scale(1)}70%,to{opacity:0;transform:scale(1.45)}}
+
+/* ── TOP BAR ── */
+.top-bar{border-bottom:2px solid var(--t3);background:#fff;padding:.6rem 0}
+.top-inner{flex-wrap:wrap;justify-content:space-between;align-items:center;gap:1rem;max-width:1200px;margin:0 auto;padding:0 1.2rem;display:flex}
+.logo-box{flex-direction:column;flex-shrink:0;gap:0;min-width:160px;padding:.4rem 0;line-height:1;text-decoration:none;display:inline-flex;position:relative}
+.logo-box .site-name{color:#1a1a2e;letter-spacing:.02em;text-transform:lowercase;margin-bottom:.25rem;padding-bottom:.18rem;font-family:Nunito,sans-serif;font-size:48px;font-weight:100;line-height:1;display:block}
+.logo-box .site-tag{letter-spacing:.18em;text-transform:uppercase;color:#555;align-items:center;gap:.4rem;font-size:.52rem;font-weight:700;display:flex}
+.logo-box .site-tag:before,.logo-box .site-tag:after{content:"";background:var(--t3);flex:1;min-width:14px;height:1.5px;display:inline-block}
+.logo-box:hover .site-name{color:var(--t3)}
+.action-cards{flex-wrap:wrap;justify-content:flex-end;gap:.4rem;display:flex}
+.ac{cursor:pointer;border:none;border-radius:5px;flex-direction:column;justify-content:center;align-items:center;gap:.18rem;min-width:80px;padding:.45rem .7rem;font-family:'Open Sans',sans-serif;text-decoration:none;transition:filter .15s;display:flex}
+.ac:hover{filter:brightness(1.1)}
+.ac svg{width:28px;height:28px}
+.ac-title{letter-spacing:.08em;text-transform:uppercase;text-align:center;font-size:.56rem;font-weight:800;line-height:1.2}
+.ac-sub{letter-spacing:.05em;text-transform:uppercase;opacity:.85;text-align:center;font-size:.5rem;font-weight:600}
+.ac-eq{background:var(--t3);color:#fff}
+.ac-wq{background:var(--dark);color:#fff}
+.ac-login,.ac-reg{color:#555;background:#e8e8e8}
+.ac-wt{background:var(--t2);color:#fff;position:relative}
+.free-badge{background:var(--yellow);color:#111;letter-spacing:.08em;text-transform:uppercase;border-radius:3px;padding:.1rem .3rem;font-size:.46rem;font-weight:800;position:absolute;top:-6px;right:-6px}
+
+/* ── NAV ── */
+nav{z-index:200;background:#fff;border-bottom:none;position:sticky;top:0}
+.nav-inner{justify-content:space-evenly;align-items:stretch;max-width:1200px;margin:0 auto;padding:0 1.2rem;display:flex}
+.nav-link{letter-spacing:.04em;text-transform:uppercase;color:#444;white-space:nowrap;border-bottom:3px solid transparent;flex:none;justify-content:center;align-items:center;gap:.2rem;padding:.85rem .4rem;font-size:.72rem;font-weight:600;text-decoration:none;transition:all .15s;display:inline-flex}
+.nav-link:hover,.nav-link.active{color:var(--t3);border-bottom-color:var(--t3)}
+#mob-toggle{cursor:pointer;background:none;border:none;flex-shrink:0;margin-left:auto;padding:.5rem;display:none}
+#mob-menu{border-top:1px solid var(--bdr);background:#fff;padding:.5rem 1.2rem 1rem;display:none}
+#mob-menu.open{display:block}
+.mob-nav-link{color:#444;text-transform:uppercase;letter-spacing:.04em;border-bottom:1px solid #f0f0f0;padding:.65rem 1rem;font-size:.84rem;font-weight:600;text-decoration:none;display:block}
+.mob-nav-link:hover{color:var(--t3);background:#00ab840a}
+
+/* ── ALERT BAR ── */
+.alert-bar{background:#FEF3C7;border-bottom:2px solid #FDE68A;padding:.55rem 0}
+.alert-inner{max-width:1200px;margin:0 auto;padding:0 1.2rem;display:flex;align-items:center;gap:.6rem;font-size:.78rem;font-weight:700;color:#92400E;flex-wrap:wrap}
+
+/* ── HERO WITH TRIANGLES ── */
+.hero{background:var(--t3);min-height:300px;padding:52px 0 60px;position:relative;overflow:hidden}
+.tri{pointer-events:none;z-index:0;position:absolute}
+.hero-inner{z-index:2;position:relative;text-align:center;max-width:1200px;margin:0 auto;padding:0 1.2rem}
+
+@keyframes floatT-tl{0%,to{transform:rotate(-22deg)translateY(0)}50%{transform:rotate(-22deg)translateY(-14px)}}
+@keyframes floatT-tl2{0%,to{transform:rotate(55deg)translateY(0)}50%{transform:rotate(55deg)translateY(-12px)}}
+@keyframes floatT-tr{0%,to{transform:rotate(18deg)translateY(0)}50%{transform:rotate(18deg)translateY(-16px)}}
+@keyframes floatT-tr2{0%,to{transform:rotate(-40deg)translateY(0)}50%{transform:rotate(-40deg)translateY(-10px)}}
+@keyframes floatT-tr3{0%,to{transform:rotate(72deg)translateY(0)}50%{transform:rotate(72deg)translateY(-8px)}}
+@keyframes floatT-bl{0%,to{transform:rotate(135deg)translateY(0)}50%{transform:rotate(135deg)translateY(-13px)}}
+@keyframes floatT-bl2{0%,to{transform:rotate(-60deg)translateY(0)}50%{transform:rotate(-60deg)translateY(-9px)}}
+@keyframes floatT-bc{0%,to{transform:translate(-50%)rotate(30deg)translateY(0)}50%{transform:translate(-50%)rotate(30deg)translateY(-14px)}}
+@keyframes floatT-br{0%,to{transform:rotate(-15deg)translateY(0)}50%{transform:rotate(-15deg)translateY(-11px)}}
+@keyframes floatT-mr{0%,to{transform:rotate(80deg)translateY(0)}50%{transform:rotate(80deg)translateY(-15px)}}
+
+.tri-tl{width:90px;height:90px;animation:6s ease-in-out infinite floatT-tl;top:55px;left:6%}
+.tri-tl2{opacity:.7;filter:blur(2.5px);width:55px;height:55px;animation:8s ease-in-out 1s infinite floatT-tl2;top:25px;left:15%}
+.tri-tr{width:110px;height:110px;animation:7s ease-in-out .5s infinite floatT-tr;top:30px;right:7%}
+.tri-tr2{opacity:.75;filter:blur(1.5px);width:70px;height:70px;animation:9s ease-in-out 2s infinite floatT-tr2;top:18px;right:19%}
+.tri-tr3{opacity:.6;filter:blur(3px);width:45px;height:45px;animation:7s ease-in-out 3s infinite floatT-tr3;top:85px;right:13%}
+.tri-bl{width:80px;height:80px;animation:8s ease-in-out 1.5s infinite floatT-bl;bottom:45px;left:9%}
+.tri-bl2{opacity:.55;filter:blur(2px);width:40px;height:40px;animation:6s ease-in-out 3.5s infinite floatT-bl2;bottom:28px;left:21%}
+.tri-bc{width:100px;height:100px;animation:7s ease-in-out .8s infinite floatT-bc;bottom:15px;left:50%}
+.tri-br{opacity:.7;width:65px;height:65px;animation:9s ease-in-out 2.5s infinite floatT-br;bottom:55px;right:9%}
+.tri-mr{opacity:.65;filter:blur(1.8px);width:75px;height:75px;animation:10s ease-in-out 1s infinite floatT-mr;top:42%;right:3%}
+
+.hero-eyebrow{display:inline-flex;align-items:center;gap:.5rem;background:rgba(255,255,255,.15);border:1px solid rgba(255,255,255,.25);border-radius:999px;padding:.3rem .9rem;font-size:.68rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:rgba(255,255,255,.9);margin-bottom:1rem}
+.hero-tagline{color:#fff;letter-spacing:.01em;margin-bottom:.5rem;font-family:'Playfair Display',serif;font-size:clamp(1.6rem,3vw,2.5rem);font-weight:800;font-style:italic}
+.hero-sub{color:rgba(255,255,255,.82);margin-bottom:1rem;font-size:.88rem;font-style:italic}
+.hero-badges{display:flex;flex-wrap:wrap;justify-content:center;gap:.6rem;margin-top:.8rem}
+.hero-badge{display:inline-flex;align-items:center;gap:.4rem;background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.22);border-radius:8px;padding:.35rem .75rem;font-size:.73rem;font-weight:600;color:rgba(255,255,255,.9)}
+
+/* ── INFO STRIP ── */
+.info-strip{background:var(--t1);padding:1.4rem 0;margin-bottom:2.5rem}
+.info-strip-inner{max-width:1200px;margin:0 auto;padding:0 1.2rem;display:grid;grid-template-columns:repeat(4,1fr);gap:1.2rem}
+@media(max-width:800px){.info-strip-inner{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:480px){.info-strip-inner{grid-template-columns:1fr}}
+.info-strip-item{display:flex;align-items:center;gap:.75rem}
+.info-strip-icon{background:rgba(255,255,255,.15);border-radius:8px;width:40px;height:40px;display:grid;place-items:center;flex-shrink:0}
+.info-strip-title{color:#fff;font-size:.78rem;font-weight:700;line-height:1.3}
+.info-strip-sub{color:rgba(255,255,255,.65);font-size:.67rem;margin-top:.1rem}
+
+/* ── MAIN LAYOUT ── */
+.main-wrap{max-width:1200px;margin:0 auto;padding:0 1.2rem 4rem}
+.layout{display:grid;grid-template-columns:260px 1fr;gap:2rem;align-items:start}
+@media(max-width:900px){.layout{grid-template-columns:1fr}}
+
+/* ── SIDEBAR ── */
+.sidebar{position:sticky;top:64px}
+.sidebar-card{background:#fff;border:1px solid var(--bdr);border-radius:14px;overflow:hidden;margin-bottom:1rem;box-shadow:0 2px 10px rgba(0,0,0,.04)}
+.sidebar-head{padding:.8rem 1.1rem;background:var(--t-dark);font-size:.65rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:rgba(255,255,255,.85)}
+.sidebar-body{padding:.4rem}
+.sidebar-link{display:flex;align-items:center;gap:.5rem;padding:.52rem .8rem;border-radius:8px;font-size:.78rem;font-weight:500;color:var(--ink);text-decoration:none;transition:background .15s,color .15s}
+.sidebar-link:hover,.sidebar-link.active{background:var(--green-pale);color:var(--t1)}
+.sidebar-link .dot{width:5px;height:5px;border-radius:50%;background:var(--t3);flex-shrink:0}
+
+.download-card{background:linear-gradient(135deg,var(--t-dark),var(--t1));border-radius:14px;padding:1.2rem;margin-bottom:1rem}
+.download-card h4{font-size:.82rem;font-weight:700;color:#fff;margin-bottom:.35rem}
+.download-card p{font-size:.72rem;color:rgba(255,255,255,.65);margin-bottom:.85rem}
+.btn-download{display:flex;align-items:center;justify-content:center;gap:.4rem;background:#fff;color:var(--t-dark);font-size:.72rem;font-weight:700;letter-spacing:.04em;padding:.5rem .9rem;border-radius:8px;text-decoration:none;transition:all .2s}
+.btn-download:hover{transform:translateY(-1px);box-shadow:0 4px 14px rgba(0,0,0,.18)}
+
+/* ── MOBILE SIDEBAR TOGGLE ── */
+.sidebar-toggle{display:none;width:100%;background:var(--t-dark);color:#fff;border:none;border-radius:12px;padding:.7rem 1rem;font-family:'Open Sans',sans-serif;font-size:.8rem;font-weight:700;letter-spacing:.04em;cursor:pointer;align-items:center;justify-content:space-between;margin-bottom:1rem}
+.sidebar-toggle svg{transition:transform .25s}
+.sidebar-toggle.open svg{transform:rotate(180deg)}
+.sidebar-collapsible{display:contents}
+@media(max-width:900px){
+  .sidebar{position:static;order:2;margin-top:2rem}
+  .sidebar-toggle{display:flex}
+  .sidebar-collapsible{display:none;flex-direction:column}
+  .sidebar-collapsible.open{display:flex}
 }
-*{box-sizing:border-box;margin:0;padding:0;}
-body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--ink);}
-nav{position:sticky;top:0;z-index:100;background:rgba(250,250,250,0.94);backdrop-filter:blur(12px);border-bottom:1px solid var(--border);}
-.nav-inner{max-width:1152px;margin:0 auto;padding:0 1.5rem;height:64px;display:flex;align-items:center;justify-content:space-between;}
-.nav-links{display:flex;align-items:center;gap:1.5rem;}
-.nav-link{font-size:0.82rem;font-weight:500;color:var(--muted);text-decoration:none;letter-spacing:0.04em;text-transform:uppercase;transition:color 0.15s;}
-.nav-link:hover,.nav-link.active{color:var(--green-dark);}
-.btn-primary{background:var(--green);color:#fff;font-size:0.8rem;font-weight:700;letter-spacing:0.06em;text-transform:uppercase;padding:0.55rem 1.3rem;border-radius:8px;border:none;text-decoration:none;display:inline-flex;align-items:center;gap:0.4rem;transition:all 0.2s;}
-.btn-primary:hover{background:var(--green-dark);transform:translateY(-1px);}
 
-/* HERO */
-.hero{background:linear-gradient(135deg,#065F46,#059669 55%,#10B981);padding:56px 0 48px;position:relative;overflow:hidden;}
-.hero::before{content:'';position:absolute;top:-80px;right:-80px;width:320px;height:320px;border-radius:50%;background:rgba(255,255,255,0.05);}
-.hero::after{content:'';position:absolute;bottom:-40px;left:5%;width:180px;height:180px;border-radius:50%;background:rgba(255,255,255,0.04);}
-.hero-inner{max-width:860px;margin:0 auto;padding:0 1.5rem;position:relative;z-index:1;}
-.eyebrow{display:inline-flex;align-items:center;gap:0.4rem;background:rgba(255,255,255,0.15);border:1px solid rgba(255,255,255,0.25);border-radius:999px;padding:0.25rem 0.8rem;font-size:0.68rem;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:rgba(255,255,255,0.9);margin-bottom:1rem;}
-.hero h1{font-family:'Playfair Display',serif;font-size:clamp(1.8rem,4vw,2.8rem);font-weight:800;color:#fff;line-height:1.2;margin-bottom:0.6rem;}
-.hero p{font-size:0.9rem;color:rgba(255,255,255,0.78);line-height:1.7;max-width:600px;}
-.hero-meta{display:flex;flex-wrap:wrap;gap:1rem;margin-top:1.2rem;}
-.hero-badge{display:inline-flex;align-items:center;gap:0.4rem;background:rgba(255,255,255,0.12);border:1px solid rgba(255,255,255,0.2);border-radius:8px;padding:0.35rem 0.7rem;font-size:0.75rem;font-weight:600;color:rgba(255,255,255,0.88);}
+/* ── CONTENT SECTIONS ── */
+.content{min-width:0}
+.section{margin-bottom:2.5rem}
+.section-head{display:flex;align-items:center;gap:.65rem;margin-bottom:1.2rem;padding-bottom:.8rem;border-bottom:2px solid var(--green-light)}
+.section-num{width:34px;height:34px;border-radius:9px;background:var(--t3);color:#fff;font-size:.8rem;font-weight:700;display:grid;place-items:center;flex-shrink:0}
+.section-head h2{font-family:'Playfair Display',serif;font-size:1.3rem;font-weight:700;color:var(--ink)}
 
-/* ALERT BANNER */
-.alert-bar{background:#FEF3C7;border-bottom:1px solid #FDE68A;padding:0.6rem 0;}
-.alert-inner{max-width:1100px;margin:0 auto;padding:0 1.5rem;display:flex;align-items:center;gap:0.6rem;font-size:0.8rem;font-weight:600;color:#92400E;}
+.info-card{background:#fff;border:1px solid var(--bdr);border-radius:14px;padding:1.4rem;margin-bottom:1rem;box-shadow:0 2px 10px rgba(0,0,0,.04)}
+.info-card p{font-size:.875rem;color:#374151;line-height:1.75}
+.info-card p+p{margin-top:.7rem}
 
-/* MAIN LAYOUT */
-.main{max-width:1100px;margin:0 auto;padding:3rem 1.5rem 5rem;}
-.layout{display:grid;grid-template-columns:260px 1fr;gap:2.5rem;align-items:start;}
-@media(max-width:900px){.layout{grid-template-columns:1fr;}}
+.highlight{background:var(--green-pale);border-left:3px solid var(--t3);border-radius:0 8px 8px 0;padding:.9rem 1.1rem;margin:1rem 0;font-size:.84rem;color:var(--t-dark);font-weight:500}
+.warning{background:var(--amber-pale);border-left:3px solid var(--amber);border-radius:0 8px 8px 0;padding:.9rem 1.1rem;margin:1rem 0;font-size:.84rem;color:#92400E;font-weight:500}
+.highlight strong,.warning strong{font-weight:700}
 
-/* SIDEBAR */
-.sidebar{position:sticky;top:84px;}
-.sidebar-card{background:#fff;border:1px solid var(--border);border-radius:16px;overflow:hidden;margin-bottom:1.2rem;}
-.sidebar-head{padding:0.9rem 1.2rem;background:var(--green-deeper);font-size:0.72rem;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;color:rgba(255,255,255,0.85);}
-.sidebar-body{padding:0.5rem 0.4rem;}
-.sidebar-link{display:flex;align-items:center;gap:0.5rem;padding:0.55rem 0.8rem;border-radius:8px;font-size:0.8rem;font-weight:500;color:var(--ink);text-decoration:none;transition:background 0.15s,color 0.15s;}
-.sidebar-link:hover,.sidebar-link.active{background:var(--green-pale);color:var(--green-dark);}
-.sidebar-link .dot{width:5px;height:5px;border-radius:50%;background:var(--green);flex-shrink:0;}
+/* ── KEY DATES GRID ── */
+.dates-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:1rem}
+.date-card{background:#fff;border:1px solid var(--bdr);border-radius:13px;padding:1.1rem;transition:border-color .2s,box-shadow .2s;box-shadow:0 2px 8px rgba(0,0,0,.04)}
+.date-card:hover{border-color:var(--t3);box-shadow:0 6px 20px rgba(0,171,132,.12)}
+.date-label{font-size:.68rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);margin-bottom:.3rem}
+.date-val{font-family:'Playfair Display',serif;font-size:1.18rem;font-weight:700;color:var(--ink);margin-bottom:.2rem}
+.date-desc{font-size:.72rem;color:var(--muted);line-height:1.4}
+.date-card.urgent{border-color:#FCA5A5;background:#FFF5F5}
+.date-card.urgent .date-val{color:#DC2626}
+.date-card.done{border-color:var(--green-light);background:var(--green-pale)}
+.date-card.done .date-val{color:var(--t1)}
 
-.download-card{background:linear-gradient(135deg,#064E3B,#065F46);border-radius:16px;padding:1.3rem;}
-.download-card h4{font-size:0.85rem;font-weight:700;color:#fff;margin-bottom:0.4rem;}
-.download-card p{font-size:0.75rem;color:rgba(255,255,255,0.65);margin-bottom:0.9rem;}
-.btn-download{display:flex;align-items:center;justify-content:center;gap:0.4rem;background:#fff;color:var(--green-deeper);font-size:0.75rem;font-weight:700;letter-spacing:0.04em;padding:0.55rem 1rem;border-radius:8px;text-decoration:none;transition:all 0.2s;}
-.btn-download:hover{transform:translateY(-1px);box-shadow:0 4px 12px rgba(0,0,0,0.2);}
+/* ── TIMETABLE ── */
+.table-scroll{overflow-x:auto;-webkit-overflow-scrolling:touch;border-radius:14px}
+.timetable{width:100%;border-collapse:collapse;border-radius:14px;overflow:hidden;box-shadow:0 2px 12px rgba(0,0,0,.06)}
+.timetable thead tr{background:var(--t-dark);color:#fff}
+.timetable th{padding:.85rem 1rem;font-size:.72rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase;text-align:left}
+.timetable td{padding:.85rem 1rem;font-size:.8rem;color:#374151;border-bottom:1px solid var(--bdr);vertical-align:top}
+.timetable tr:last-child td{border-bottom:none}
+.timetable tr:nth-child(even) td{background:#F9FAFB}
+.timetable tr:hover td{background:var(--green-pale)}
+.t-date{font-weight:700;color:var(--ink);white-space:nowrap;font-size:.82rem}
+.t-ito{color:var(--t1);font-weight:600}
+.t-iti{color:var(--blue);font-weight:600}
+.session-tag{display:inline-block;font-size:.62rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase;padding:.15rem .5rem;border-radius:999px;margin-bottom:.3rem}
+.tag-ito{background:var(--green-pale);color:var(--t1)}
+.tag-iti{background:var(--blue-pale);color:var(--blue)}
+.t-time{font-family:monospace;font-size:.73rem;font-weight:700;color:var(--t1);margin-top:.3rem}
 
-/* CONTENT */
-.section{margin-bottom:2.5rem;}
-.section-head{display:flex;align-items:center;gap:0.6rem;margin-bottom:1.2rem;padding-bottom:0.8rem;border-bottom:2px solid var(--green-light);}
-.section-num{width:32px;height:32px;border-radius:8px;background:var(--green);color:#fff;font-size:0.78rem;font-weight:700;display:grid;place-items:center;flex-shrink:0;}
-.section-head h2{font-family:'Playfair Display',serif;font-size:1.3rem;font-weight:700;color:var(--ink);}
+/* ── ELIGIBILITY CARDS ── */
+.elig-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1rem}
+@media(max-width:650px){.elig-grid{grid-template-columns:1fr}}
+.elig-card{background:#fff;border:1px solid var(--bdr);border-radius:13px;overflow:hidden;box-shadow:0 2px 8px rgba(0,0,0,.04)}
+.elig-card-head{padding:.8rem 1rem;font-size:.72rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase}
+.head-ms{background:#EFF6FF;color:#1D4ED8}
+.head-iti{background:var(--green-pale);color:var(--t-dark)}
+.head-ito{background:var(--amber-pale);color:#92400E}
+.elig-card-body{padding:1rem}
+.elig-card-body ul{list-style:none;padding:0;display:flex;flex-direction:column;gap:.5rem}
+.elig-card-body li{font-size:.78rem;color:#374151;display:flex;align-items:flex-start;gap:.5rem;line-height:1.5}
+.elig-card-body li::before{content:"→";color:var(--t3);font-weight:700;flex-shrink:0}
 
-.info-card{background:#fff;border:1px solid var(--border);border-radius:14px;padding:1.4rem;margin-bottom:1rem;}
-.info-card p{font-size:0.875rem;color:#374151;line-height:1.75;}
-.info-card p + p{margin-top:0.7rem;}
-.highlight{background:var(--green-pale);border-left:3px solid var(--green);border-radius:0 8px 8px 0;padding:0.9rem 1.1rem;margin:1rem 0;font-size:0.85rem;color:var(--green-deeper);font-weight:500;}
-.warning{background:var(--amber-pale);border-left:3px solid var(--amber);border-radius:0 8px 8px 0;padding:0.9rem 1.1rem;margin:1rem 0;font-size:0.85rem;color:#92400E;font-weight:500;}
-.warning strong,.highlight strong{font-weight:700;}
+/* ── CHECKLIST ── */
+.checklist{list-style:none;padding:0;display:flex;flex-direction:column;gap:.65rem}
+.checklist li{display:flex;align-items:flex-start;gap:.7rem;font-size:.875rem;color:#374151;line-height:1.65}
+.check-circle{width:20px;height:20px;border-radius:50%;background:var(--green-pale);border:1.5px solid var(--green-light);display:grid;place-items:center;flex-shrink:0;margin-top:3px}
 
-/* TIMETABLE */
-.timetable{width:100%;border-collapse:collapse;border-radius:14px;overflow:hidden;box-shadow:0 2px 12px rgba(0,0,0,0.06);}
-.timetable thead tr{background:var(--green-deeper);color:#fff;}
-.timetable th{padding:0.85rem 1rem;font-size:0.75rem;font-weight:700;letter-spacing:0.06em;text-transform:uppercase;text-align:left;}
-.timetable td{padding:0.85rem 1rem;font-size:0.82rem;color:#374151;border-bottom:1px solid var(--border);vertical-align:top;}
-.timetable tr:last-child td{border-bottom:none;}
-.timetable tr:nth-child(even) td{background:#F9FAFB;}
-.timetable tr:hover td{background:var(--green-pale);}
-.t-date{font-weight:600;color:var(--ink);white-space:nowrap;}
-.t-ito{color:var(--green-deeper);}
-.t-iti{color:var(--blue);}
-.session-tag{display:inline-block;font-size:0.65rem;font-weight:700;letter-spacing:0.06em;text-transform:uppercase;padding:0.15rem 0.5rem;border-radius:999px;margin-bottom:0.3rem;}
-.tag-ito{background:var(--green-pale);color:var(--green-dark);}
-.tag-iti{background:var(--blue-pale);color:var(--blue);}
-.t-time{font-family:'DM Mono',monospace;font-size:0.75rem;font-weight:600;color:var(--green-dark);margin-top:0.2rem;}
+/* ── CTA ── */
+.cta-banner{background:linear-gradient(135deg,var(--t-dark),var(--t1));border-radius:20px;padding:2rem;text-align:center}
+.cta-banner .eyebrow-small{font-size:.68rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:rgba(255,255,255,.55);margin-bottom:.4rem}
+.cta-banner h3{font-family:'Playfair Display',serif;font-size:1.65rem;font-weight:800;color:#fff;margin-bottom:.5rem;font-style:italic}
+.cta-banner p{font-size:.84rem;color:rgba(255,255,255,.72);margin-bottom:1.2rem}
+.cta-btns{display:flex;gap:.8rem;justify-content:center;flex-wrap:wrap}
+.cta-btn-primary{background:#fff;color:var(--t1);font-size:.8rem;font-weight:700;letter-spacing:.05em;text-transform:uppercase;padding:.65rem 1.4rem;border-radius:9px;text-decoration:none;display:inline-flex;align-items:center;gap:.4rem;transition:all .2s}
+.cta-btn-primary:hover{transform:translateY(-1px);box-shadow:0 6px 18px rgba(0,0,0,.2)}
+.cta-btn-sec{background:rgba(255,255,255,.14);color:#fff;font-size:.8rem;font-weight:600;padding:.65rem 1.4rem;border-radius:9px;text-decoration:none;border:1px solid rgba(255,255,255,.28);transition:all .2s}
+.cta-btn-sec:hover{background:rgba(255,255,255,.22)}
 
-/* CHECKLIST */
-.checklist{list-style:none;padding:0;display:flex;flex-direction:column;gap:0.6rem;}
-.checklist li{display:flex;align-items:flex-start;gap:0.7rem;font-size:0.875rem;color:#374151;line-height:1.6;}
-.check-circle{width:20px;height:20px;border-radius:50%;background:var(--green-pale);border:1.5px solid var(--green-light);display:grid;place-items:center;flex-shrink:0;margin-top:2px;}
+/* ── FOOTER ── */
+footer{background:var(--dark);padding:2.8rem 0 0;position:relative;overflow:hidden}
+.foot-tris{pointer-events:none;z-index:0;opacity:.35;position:absolute;inset:0}
+.foot-inner{z-index:1;max-width:1200px;margin:0 auto;padding:0 1.2rem;position:relative}
+.foot-top{flex-wrap:wrap;justify-content:space-between;gap:2rem;padding-bottom:2rem;display:flex}
+.foot-brand .site-name{color:#fff;letter-spacing:.02em;font-family:Nunito,sans-serif;font-size:2.8rem;font-weight:100;line-height:1}
+.foot-brand .site-name span{color:var(--t3);font-family:Righteous,cursive}
+.foot-brand .tag{letter-spacing:.15em;text-transform:uppercase;color:rgba(255,255,255,.35);margin-top:3px;font-size:.52rem;font-weight:700}
+.foot-desc{color:rgba(255,255,255,.38);max-width:220px;margin-top:.6rem;font-size:.7rem;line-height:1.65}
+.foot-col-title{letter-spacing:.12em;text-transform:uppercase;color:var(--t3);margin-bottom:.85rem;font-size:.58rem;font-weight:700}
+.foot-col ul{flex-direction:column;gap:.48rem;list-style:none;display:flex}
+.foot-col a{color:rgba(255,255,255,.5);font-size:.73rem;text-decoration:none;transition:color .15s}
+.foot-col a:hover{color:var(--t3)}
+.foot-bottom{text-align:center;border-top:1px solid rgba(255,255,255,.07);padding:1rem 0}
+.foot-bottom p{color:rgba(255,255,255,.25);font-size:.65rem}
 
-/* ELIGIBILITY TABLE */
-.elig-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:1rem;}
-@media(max-width:650px){.elig-grid{grid-template-columns:1fr;}}
-.elig-card{background:#fff;border:1px solid var(--border);border-radius:14px;overflow:hidden;}
-.elig-card-head{padding:0.8rem 1rem;font-size:0.75rem;font-weight:700;letter-spacing:0.06em;text-transform:uppercase;}
-.head-ms{background:#EFF6FF;color:#1D4ED8;}
-.head-iti{background:var(--green-pale);color:var(--green-deeper);}
-.head-ito{background:var(--amber-pale);color:#92400E;}
-.elig-card-body{padding:1rem;}
-.elig-card-body ul{list-style:none;padding:0;display:flex;flex-direction:column;gap:0.5rem;}
-.elig-card-body li{font-size:0.8rem;color:#374151;display:flex;align-items:flex-start;gap:0.5rem;line-height:1.5;}
-.elig-card-body li::before{content:'→';color:var(--green);font-weight:700;flex-shrink:0;}
-
-/* KEY DATES */
-.dates-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:1rem;}
-.date-card{background:#fff;border:1px solid var(--border);border-radius:12px;padding:1.1rem;transition:border-color 0.2s,box-shadow 0.2s;}
-.date-card:hover{border-color:var(--green-light);box-shadow:0 4px 16px rgba(16,185,129,0.1);}
-.date-label{font-size:0.7rem;font-weight:600;letter-spacing:0.07em;text-transform:uppercase;color:var(--muted);margin-bottom:0.3rem;}
-.date-val{font-family:'Playfair Display',serif;font-size:1.2rem;font-weight:700;color:var(--ink);margin-bottom:0.2rem;}
-.date-desc{font-size:0.75rem;color:var(--muted);}
-.date-card.urgent{border-color:#FCA5A5;background:#FFF5F5;}
-.date-card.urgent .date-val{color:#DC2626;}
-
-footer{background:#fff;border-top:1px solid var(--border);padding:2rem 0;}
-.footer-inner{max-width:1152px;margin:0 auto;padding:0 1.5rem;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:1rem;}
-.footer-links{display:flex;gap:1.5rem;flex-wrap:wrap;}
-.footer-link{font-size:0.8rem;color:var(--muted);text-decoration:none;transition:color 0.15s;}
-.footer-link:hover{color:var(--green-dark);}
-
-/* ── HAMBURGER ── */
-.nav-toggle{display:none;background:none;border:none;cursor:pointer;padding:0.35rem;border-radius:6px;color:var(--ink);}
-.nav-toggle:hover{background:var(--green-pale);}
-
-/* ── SIDEBAR TOGGLE (mobile) ── */
-.sidebar-toggle{display:none;width:100%;background:var(--green-deeper);color:#fff;border:none;border-radius:12px;padding:0.75rem 1.1rem;font-family:'DM Sans',sans-serif;font-size:0.82rem;font-weight:700;letter-spacing:0.04em;cursor:pointer;align-items:center;justify-content:space-between;margin-bottom:1.2rem;}
-.sidebar-toggle svg{transition:transform 0.25s;}
-.sidebar-toggle.open svg{transform:rotate(180deg);}
-.sidebar-collapsible{display:contents;}
-
-/* ── MOBILE ── */
-@media(max-width:768px){
-  .nav-toggle{display:flex;align-items:center;justify-content:center;}
-  .nav-links{
-    display:none;flex-direction:column;align-items:stretch;gap:0;
-    position:absolute;top:64px;left:0;right:0;
-    background:rgba(250,250,250,0.98);backdrop-filter:blur(12px);
-    border-bottom:1px solid var(--border);
-    padding:0.75rem 1.25rem 1rem;
-    box-shadow:0 8px 24px rgba(0,0,0,0.08);
-  }
-  .nav-links.open{display:flex;}
-  .nav-link{padding:0.7rem 0;border-bottom:1px solid var(--border);font-size:0.88rem;}
-  .nav-link:last-of-type{border-bottom:none;}
-  .btn-primary{margin-top:0.75rem;justify-content:center;padding:0.7rem 1rem;font-size:0.85rem;}
-
-  .hero{padding:40px 0 36px;}
-  .hero h1{font-size:clamp(1.55rem,6vw,2.2rem);}
-  .hero-meta{gap:0.6rem;}
-  .hero-badge{font-size:0.7rem;padding:0.3rem 0.6rem;}
-
-  .alert-inner{flex-wrap:wrap;gap:0.3rem;font-size:0.75rem;}
-
-  .layout{display:flex!important;flex-direction:column;}
-  .sidebar{position:static;order:2;margin-top:2rem;}
-  .sidebar-toggle{display:flex;}
-  .sidebar-collapsible{display:none;flex-direction:column;}
-  .sidebar-collapsible.open{display:flex;}
-
-  .table-scroll{overflow-x:auto;-webkit-overflow-scrolling:touch;border-radius:14px;}
-  .timetable{min-width:520px;}
-  .timetable th,.timetable td{padding:0.65rem 0.75rem;font-size:0.75rem;}
-
-  .main{padding:2rem 1rem 3.5rem;}
-
-  footer{padding:1.5rem 0;}
-  .footer-inner{flex-direction:column;align-items:flex-start;gap:1.25rem;}
-  .footer-links{gap:1rem;}
-}
-/* ─── LOGO ─── */
-.logo-wrap{display:flex;align-items:center;gap:0;text-decoration:none;line-height:1;}
-.logo-block{display:flex;flex-direction:column;align-items:flex-start;gap:0;}
-.logo-since{font-family:'Dancing Script','Segoe Script','Brush Script MT',cursive;font-size:0.88rem;font-weight:600;color:#1a6b42;letter-spacing:0.02em;margin-bottom:-2px;line-height:1.1;}
-.logo-main{font-family:'DM Sans','Arial Black',sans-serif;font-size:1.62rem;font-weight:800;color:#111;letter-spacing:-0.02em;line-height:1;text-transform:uppercase;}
-.logo-main span{color:#1a9e6e;}
-.logo-sub{font-size:0.52rem;font-weight:700;letter-spacing:0.18em;text-transform:uppercase;color:#111827;margin-top:1px;}
+/* ── RESPONSIVE ── */
+@media(max-width:768px){nav .nav-link{display:none}#mob-toggle{justify-content:center;align-items:center;display:flex}.nav-inner{padding:.4rem 1.2rem}}
+@media(max-width:640px){.top-inner{flex-direction:column;align-items:center;gap:0;padding:.7rem 0 0}.logo-box{text-align:center;align-items:center}.logo-box .site-name{font-size:32px}.hero{padding:36px 0 44px}.hero-tagline{font-size:1.3rem}.foot-top{flex-direction:column}.foot-brand .site-name{font-size:2rem}.timetable th,.timetable td{padding:.65rem .75rem;font-size:.72rem}.timetable{min-width:500px}}
+@media(max-width:480px){.logo-box .site-name{font-size:26px}.elig-grid{grid-template-columns:1fr}.dates-grid{grid-template-columns:1fr 1fr}}
 </style>
-  <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@600;700&display=swap" rel="stylesheet"/>
 </head>
 <body>
+<div id="progress"></div>
+<button aria-label="Back to top" onclick="scrollTo({top:0,behavior:'smooth'})" id="btt">
+  <svg viewBox="0 0 24 24" fill="none" height="15" stroke="currentColor" stroke-width="2.5" width="15"><path d="M5 15l7-7 7 7"/></svg>
+</button>
+<a href="https://wa.me/918743865551?text=Hi%20Toppers11%20Team" aria-label="WhatsApp" id="wa" rel="noopener" target="_blank">
+  <svg viewBox="0 0 24 24" fill="#fff" height="25" width="25"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+  <span></span>
+</a>
 
+<!-- TOP BAR -->
+<div class="top-bar">
+  <div class="top-inner">
+    <a class="logo-box" href="index.html">
+      <span class="site-name">toppers<span style="color:var(--t3);font-family:Righteous,cursive;font-size:48px">11</span></span>
+      <span class="site-tag">AI-Powered Test Series</span>
+    </a>
+    <div class="action-cards">
+      <a class="ac ac-eq" href="login.html">
+        <svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
+        <span class="ac-title">Everyday Quiz</span><span class="ac-sub">Win Everyday</span>
+      </a>
+      <a class="ac ac-wq" href="login.html">
+        <svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2"><rect height="18" rx="2" width="18" x="3" y="4"/><line x1="16" x2="16" y1="2" y2="6"/><line x1="8" x2="8" y1="2" y2="6"/><line x1="3" x2="21" y1="10" y2="10"/></svg>
+        <span class="ac-title">Weekend Quiz</span><span class="ac-sub">Win ₹500 / Week</span>
+      </a>
+      <a class="ac ac-login" href="login.html">
+        <svg viewBox="0 0 24 24" fill="none" stroke="#888" stroke-width="2"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+        <span class="ac-title" style="color:#666">Login</span><span class="ac-sub" style="color:#aaa">My Account</span>
+      </a>
+      <a class="ac ac-reg" href="register.html">
+        <svg viewBox="0 0 24 24" fill="none" stroke="#888" stroke-width="2"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/><line x1="19" y1="8" x2="19" y2="14"/><line x1="16" y1="11" x2="22" y2="11"/></svg>
+        <span class="ac-title" style="color:#666">Register</span><span class="ac-sub" style="color:#aaa">Free Account</span>
+      </a>
+      <a class="ac ac-wt" href="login.html" style="position:relative">
+        <span class="free-badge">FREE</span>
+        <svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2"><path d="M12 2L15.1 8.3 22 9.3 17 14.1 18.2 21 12 17.8 5.8 21 7 14.1 2 9.3 8.9 8.3 12 2z"/></svg>
+        <span class="ac-title">Weekly Test</span><span class="ac-sub">Free Access</span>
+      </a>
+    </div>
+  </div>
+</div>
+
+<!-- NAV -->
 <nav>
   <div class="nav-inner">
-    <a href="index.html" class="logo-wrap"><div class="logo-block"><span class="logo-since">Employee Choice</span><span class="logo-main">TOPPERS<span>11</span></span><span class="logo-sub">AI-Powered Test Series</span></div></a>
-    <button class="nav-toggle" aria-label="Toggle menu" onclick="document.getElementById('nav-links').classList.toggle('open')">
-      <svg width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M4 6h16M4 12h16M4 18h16"/></svg>
+    <a class="nav-link" href="index.html">Home</a>
+    <a class="nav-link" href="about.html">About Us</a>
+    <a class="nav-link" href="index.html#exams">Test Series</a>
+    <a class="nav-link" href="syllabus-ms.html">Ministerial Staff Syllabus</a>
+    <a class="nav-link" href="syllabus-iti.html">Inspector Syllabus</a>
+    <a class="nav-link" href="syllabus-ito.html">ITO Syllabus</a>
+    <a class="nav-link" href="contact.html">Contact Us</a>
+    <a class="nav-link active" href="notification.html">Notifications</a>
+    <a class="nav-link" href="faq.html">FAQ</a>
+    <button onclick="document.getElementById('mob-menu').classList.toggle('open')" aria-label="Menu" id="mob-toggle">
+      <svg viewBox="0 0 24 24" fill="none" height="22" stroke="#444" stroke-width="2" width="22"><path d="M4 6h16M4 12h16M4 18h16"/></svg>
     </button>
-    <div class="nav-links" id="nav-links">
-      <a href="index.html" class="nav-link">Home</a>
-      <a href="about.html" class="nav-link">About</a>
-      <a href="faq.html" class="nav-link">FAQ</a>
-      <a href="contact.html" class="nav-link">Contact</a>
-      <a href="login.html" class="btn-primary">Start Free →</a>
-    </div>
+  </div>
+  <div id="mob-menu">
+    <a class="mob-nav-link" href="about.html">About Us</a>
+    <a class="mob-nav-link" href="index.html#exams">Test Series</a>
+    <a class="mob-nav-link" href="syllabus-ms.html">Ministerial Staff Syllabus</a>
+    <a class="mob-nav-link" href="syllabus-iti.html">Inspector Syllabus</a>
+    <a class="mob-nav-link" href="syllabus-ito.html">ITO Syllabus</a>
+    <a class="mob-nav-link" href="contact.html">Contact Us</a>
+    <a class="mob-nav-link active" href="notification.html">Notifications</a>
+    <a class="mob-nav-link" href="faq.html">FAQ</a>
   </div>
 </nav>
 
-<!-- ALERT -->
+<!-- ALERT BAR -->
 <div class="alert-bar">
   <div class="alert-inner">
     <svg width="14" height="14" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M8.257 3.099c.765-1.36 2.722-1.36 3.486 0l5.58 9.92c.75 1.334-.213 2.98-1.742 2.98H4.42c-1.53 0-2.493-1.646-1.743-2.98l5.58-9.92zM11 13a1 1 0 11-2 0 1 1 0 012 0zm-1-8a1 1 0 00-1 1v3a1 1 0 002 0V6a1 1 0 00-1-1z" clip-rule="evenodd"/></svg>
-    Application deadline: <strong>23 June 2025 (8:00 PM)</strong> — No forms accepted after this date.
+    Application Deadline: <strong>23 June 2025 (8:00 PM)</strong> — No forms accepted after this date &nbsp;·&nbsp; Exam: <strong>08–15 September 2025</strong>
   </div>
 </div>
 
 <!-- HERO -->
 <section class="hero">
+  <!-- Floating Triangles -->
+  <div class="tri tri-tl"><svg style="filter:drop-shadow(4px 8px 16px #00000059)" viewBox="0 0 120 120" xmlns="http://www.w3.org/2000/svg"><defs><linearGradient id="c1a" x1="0%" x2="100%" y1="0%" y2="100%"><stop offset="0%" stop-color="#3ddbb0"/><stop offset="100%" stop-color="#00AB84"/></linearGradient><linearGradient id="c1b" x1="100%" x2="0%" y1="0%" y2="100%"><stop offset="0%" stop-color="#006D5B"/><stop offset="100%" stop-color="#003d30"/></linearGradient></defs><polygon points="60,10 15,95 60,78" fill="url(#c1a)"/><polygon points="60,10 105,95 60,78" fill="url(#c1b)"/><polygon points="15,95 60,78 105,95" fill="#00AB84" opacity="0.75"/><line stroke="rgba(255,255,255,0.35)" stroke-width="1.2" x1="60" x2="60" y1="10" y2="78"/></svg></div>
+  <div class="tri tri-tl2"><svg style="filter:drop-shadow(2px 4px 8px #0003)" viewBox="0 0 120 120" xmlns="http://www.w3.org/2000/svg"><polygon points="60,10 15,95 60,78" fill="rgba(255,255,255,0.18)" stroke="rgba(255,255,255,0.5)" stroke-width="1.5"/><polygon points="60,10 105,95 60,78" fill="rgba(255,255,255,0.08)" stroke="rgba(255,255,255,0.3)" stroke-width="1.5"/><line stroke="rgba(255,255,255,0.4)" stroke-width="1" x1="60" x2="60" y1="10" y2="78"/></svg></div>
+  <div class="tri tri-tr"><svg style="filter:drop-shadow(4px 8px 18px #0006)" viewBox="0 0 120 120" xmlns="http://www.w3.org/2000/svg"><defs><linearGradient id="c3a" x1="0%" x2="100%" y1="0%" y2="100%"><stop offset="0%" stop-color="#FFE97A"/><stop offset="100%" stop-color="#F5C518"/></linearGradient><linearGradient id="c3b" x1="100%" x2="0%" y1="0%" y2="100%"><stop offset="0%" stop-color="#c9920a"/><stop offset="100%" stop-color="#8a5e00"/></linearGradient></defs><polygon points="60,10 15,95 60,78" fill="url(#c3a)"/><polygon points="60,10 105,95 60,78" fill="url(#c3b)"/><polygon points="15,95 60,78 105,95" fill="#E8A900" opacity="0.7"/><line stroke="rgba(255,255,255,0.45)" stroke-width="1.2" x1="60" x2="60" y1="10" y2="78"/></svg></div>
+  <div class="tri tri-tr2"><svg style="filter:drop-shadow(3px 6px 12px #0000004d)" viewBox="0 0 120 120" xmlns="http://www.w3.org/2000/svg"><defs><linearGradient id="c4a" x1="0%" x2="100%" y1="0%" y2="100%"><stop offset="0%" stop-color="#2ecfa3"/><stop offset="100%" stop-color="#006D5B"/></linearGradient></defs><polygon points="60,10 15,95 60,78" fill="url(#c4a)"/><polygon points="60,10 105,95 60,78" fill="#004D3F"/><polygon points="15,95 60,78 105,95" fill="#003d30" opacity="0.8"/><line stroke="rgba(255,255,255,0.3)" stroke-width="1" x1="60" x2="60" y1="10" y2="78"/></svg></div>
+  <div class="tri tri-tr3"><svg viewBox="0 0 120 120" xmlns="http://www.w3.org/2000/svg"><polygon points="60,10 15,95 60,78" fill="rgba(255,255,255,0.15)" stroke="rgba(255,255,255,0.45)" stroke-width="1.5"/><polygon points="60,10 105,95 60,78" fill="rgba(255,255,255,0.07)" stroke="rgba(255,255,255,0.25)" stroke-width="1.5"/></svg></div>
+  <div class="tri tri-bl"><svg style="filter:drop-shadow(4px 8px 16px #00000059)" viewBox="0 0 120 120" xmlns="http://www.w3.org/2000/svg"><defs><linearGradient id="c6a" x1="0%" x2="100%" y1="0%" y2="100%"><stop offset="0%" stop-color="#FFE97A"/><stop offset="100%" stop-color="#F5C518"/></linearGradient><linearGradient id="c6b" x1="100%" x2="0%" y1="0%" y2="100%"><stop offset="0%" stop-color="#c9920a"/><stop offset="100%" stop-color="#8a5e00"/></linearGradient></defs><polygon points="60,10 15,95 60,78" fill="url(#c6a)"/><polygon points="60,10 105,95 60,78" fill="url(#c6b)"/><polygon points="15,95 60,78 105,95" fill="#b87800" opacity="0.7"/><line stroke="rgba(255,255,255,0.4)" stroke-width="1.2" x1="60" x2="60" y1="10" y2="78"/></svg></div>
+  <div class="tri tri-bl2"><svg viewBox="0 0 120 120" xmlns="http://www.w3.org/2000/svg"><polygon points="60,10 15,95 60,78" fill="rgba(255,255,255,0.14)" stroke="rgba(255,255,255,0.4)" stroke-width="1.5"/><polygon points="60,10 105,95 60,78" fill="rgba(255,255,255,0.06)" stroke="rgba(255,255,255,0.2)" stroke-width="1.5"/></svg></div>
+  <div class="tri tri-bc"><svg style="filter:drop-shadow(4px 10px 20px #0006)" viewBox="0 0 120 120" xmlns="http://www.w3.org/2000/svg"><defs><linearGradient id="c8a" x1="0%" x2="100%" y1="0%" y2="100%"><stop offset="0%" stop-color="#3ddbb0"/><stop offset="100%" stop-color="#00AB84"/></linearGradient></defs><polygon points="60,10 15,95 60,78" fill="url(#c8a)"/><polygon points="60,10 105,95 60,78" fill="#005a48"/><polygon points="15,95 60,78 105,95" fill="#003d30" opacity="0.8"/><line stroke="rgba(255,255,255,0.35)" stroke-width="1.2" x1="60" x2="60" y1="10" y2="78"/></svg></div>
+  <div class="tri tri-br"><svg style="filter:drop-shadow(3px 6px 14px #0000004d)" viewBox="0 0 120 120" xmlns="http://www.w3.org/2000/svg"><defs><linearGradient id="c9a" x1="0%" x2="100%" y1="0%" y2="100%"><stop offset="0%" stop-color="#2ecfa3"/><stop offset="100%" stop-color="#007a60"/></linearGradient></defs><polygon points="60,10 15,95 60,78" fill="url(#c9a)"/><polygon points="60,10 105,95 60,78" fill="#004D3F"/><polygon points="15,95 60,78 105,95" fill="#003830" opacity="0.75"/><line stroke="rgba(255,255,255,0.3)" stroke-width="1" x1="60" x2="60" y1="10" y2="78"/></svg></div>
+  <div class="tri tri-mr"><svg style="filter:drop-shadow(4px 8px 16px #00000059)" viewBox="0 0 120 120" xmlns="http://www.w3.org/2000/svg"><defs><linearGradient id="c10a" x1="0%" x2="100%" y1="0%" y2="100%"><stop offset="0%" stop-color="#FFE97A"/><stop offset="100%" stop-color="#F5C518"/></linearGradient><linearGradient id="c10b" x1="100%" x2="0%" y1="0%" y2="100%"><stop offset="0%" stop-color="#c9920a"/><stop offset="100%" stop-color="#7a5000"/></linearGradient></defs><polygon points="60,10 15,95 60,78" fill="url(#c10a)"/><polygon points="60,10 105,95 60,78" fill="url(#c10b)"/><polygon points="15,95 60,78 105,95" fill="#a07000" opacity="0.7"/><line stroke="rgba(255,255,255,0.4)" stroke-width="1.2" x1="60" x2="60" y1="10" y2="78"/></svg></div>
+
   <div class="hero-inner">
-    <div class="eyebrow">📢 Official Notification</div>
-    <h1>Departmental Examinations 2025<br/>ITO &amp; ITI Notification — II</h1>
-    <p>Issued by the Directorate of Income Tax (HRD), Examination Division, New Delhi. F. No. DE/Notification/ITO/ITI/MS/2025/ADG — Dated 14.05.2025</p>
-    <div class="hero-meta">
+    <div class="hero-eyebrow">
+      <svg width="12" height="12" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M18 8h1a4 4 0 010 8h-1M2 8h16v9a4 4 0 01-4 4H6a4 4 0 01-4-4V8zM6 1v3M10 1v3M14 1v3"/></svg>
+      Official Notification
+    </div>
+    <h1 class="hero-tagline">Departmental Examinations 2025<br/>ITO &amp; ITI — Notification II</h1>
+    <p class="hero-sub">Directorate of Income Tax (HRD), Examination Division, New Delhi &nbsp;·&nbsp; F. No. DE/Notification/ITO/ITI/MS/2025/ADG &nbsp;·&nbsp; 14.05.2025</p>
+    <div class="hero-badges">
       <div class="hero-badge">
-        <svg width="12" height="12" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+        <svg width="12" height="12" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
         Exam: 08–15 Sep 2025
       </div>
       <div class="hero-badge">
@@ -237,11 +350,46 @@ footer{background:#fff;border-top:1px solid var(--border);padding:2rem 0;}
         <svg width="12" height="12" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87M16 3.13a4 4 0 010 7.75"/></svg>
         CBDT — Amended Rules 2009
       </div>
+      <div class="hero-badge">
+        <svg width="12" height="12" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+        Apply by 23 Jun 2025
+      </div>
     </div>
   </div>
 </section>
 
-<div class="main">
+<!-- INFO STRIP -->
+<div class="info-strip">
+  <div class="info-strip-inner">
+    <div class="info-strip-item">
+      <div class="info-strip-icon">
+        <svg width="18" height="18" fill="none" stroke="#fff" stroke-width="2" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+      </div>
+      <div><div class="info-strip-title">Notification Issued</div><div class="info-strip-sub">14 May 2025 by HRD Directorate</div></div>
+    </div>
+    <div class="info-strip-item">
+      <div class="info-strip-icon">
+        <svg width="18" height="18" fill="none" stroke="#fff" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+      </div>
+      <div><div class="info-strip-title">Apply: 23 May – 23 Jun</div><div class="info-strip-sub">Online at incometaxindia.gov.in</div></div>
+    </div>
+    <div class="info-strip-item">
+      <div class="info-strip-icon">
+        <svg width="18" height="18" fill="none" stroke="#fff" stroke-width="2" viewBox="0 0 24 24"><path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+      </div>
+      <div><div class="info-strip-title">6 Exam Days</div><div class="info-strip-sub">08 Sep to 15 Sep 2025</div></div>
+    </div>
+    <div class="info-strip-item">
+      <div class="info-strip-icon">
+        <svg width="18" height="18" fill="none" stroke="#fff" stroke-width="2" viewBox="0 0 24 24"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
+      </div>
+      <div><div class="info-strip-title">Online Exam Mode</div><div class="info-strip-sub">MCQ format (except ITO Paper-IV)</div></div>
+    </div>
+  </div>
+</div>
+
+<!-- MAIN LAYOUT -->
+<div class="main-wrap">
   <div class="layout">
 
     <!-- SIDEBAR -->
@@ -251,40 +399,42 @@ footer{background:#fff;border-top:1px solid var(--border);padding:2rem 0;}
         <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"/></svg>
       </button>
       <div class="sidebar-collapsible" id="sidebar-collapsible">
-      <div class="sidebar-card">
-        <div class="sidebar-head">Quick Navigation</div>
-        <div class="sidebar-body">
-          <a href="#key-dates" class="sidebar-link"><span class="dot"></span>Key Dates</a>
-          <a href="#timetable" class="sidebar-link"><span class="dot"></span>Exam Timetable</a>
-          <a href="#eligibility" class="sidebar-link"><span class="dot"></span>Eligibility</a>
-          <a href="#application" class="sidebar-link"><span class="dot"></span>Application Process</a>
-          <a href="#exam-mode" class="sidebar-link"><span class="dot"></span>Exam Mode &amp; Format</a>
-          <a href="#important-rules" class="sidebar-link"><span class="dot"></span>Important Rules</a>
-        </div>
-      </div>
 
-      <div class="download-card">
-        <h4>📄 Download PDF</h4>
-        <p>Get the official notification document for offline reference.</p>
-        <a href="Notification_-II_2025.pdf" class="btn-download" target="_blank">
-          <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4M7 10l5 5 5-5M12 15V3"/></svg>
-          Download Notification
-        </a>
-      </div>
-
-      <div class="sidebar-card" style="margin-top:1.2rem;">
-        <div class="sidebar-head">Prepare Now</div>
-        <div class="sidebar-body">
-          <a href="syllabus-iti.html" class="sidebar-link"><span class="dot"></span>ITI Syllabus</a>
-          <a href="syllabus-ito.html" class="sidebar-link"><span class="dot"></span>ITO Syllabus</a>
-          <a href="syllabus-ms.html" class="sidebar-link"><span class="dot"></span>MS / UDC Syllabus</a>
-          <a href="toppers11_test.html" class="sidebar-link"><span class="dot"></span>Take Free Mock Test</a>
+        <div class="sidebar-card">
+          <div class="sidebar-head">Quick Navigation</div>
+          <div class="sidebar-body">
+            <a href="#key-dates" class="sidebar-link"><span class="dot"></span>Key Dates</a>
+            <a href="#timetable" class="sidebar-link"><span class="dot"></span>Exam Timetable</a>
+            <a href="#exam-mode" class="sidebar-link"><span class="dot"></span>Exam Mode &amp; Format</a>
+            <a href="#eligibility" class="sidebar-link"><span class="dot"></span>Eligibility</a>
+            <a href="#application" class="sidebar-link"><span class="dot"></span>Application Process</a>
+            <a href="#important-rules" class="sidebar-link"><span class="dot"></span>Important Rules</a>
+          </div>
         </div>
-      </div>
+
+        <div class="download-card">
+          <h4>📄 Download PDF</h4>
+          <p>Official notification document for offline reference.</p>
+          <a href="Notification_-II_2025.pdf" class="btn-download" target="_blank">
+            <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4M7 10l5 5 5-5M12 15V3"/></svg>
+            Download Notification
+          </a>
+        </div>
+
+        <div class="sidebar-card">
+          <div class="sidebar-head">Prepare Now</div>
+          <div class="sidebar-body">
+            <a href="syllabus-iti.html" class="sidebar-link"><span class="dot"></span>ITI Syllabus</a>
+            <a href="syllabus-ito.html" class="sidebar-link"><span class="dot"></span>ITO Syllabus</a>
+            <a href="syllabus-ms.html" class="sidebar-link"><span class="dot"></span>MS / UDC Syllabus</a>
+            <a href="toppers11_test.html" class="sidebar-link"><span class="dot"></span>Take Free Mock Test</a>
+          </div>
+        </div>
+
       </div><!-- /sidebar-collapsible -->
     </aside>
 
-    <!-- MAIN CONTENT -->
+    <!-- CONTENT -->
     <div class="content">
 
       <!-- KEY DATES -->
@@ -294,12 +444,12 @@ footer{background:#fff;border-top:1px solid var(--border);padding:2rem 0;}
           <h2>Key Dates at a Glance</h2>
         </div>
         <div class="dates-grid">
-          <div class="date-card">
+          <div class="date-card done">
             <div class="date-label">Notification Issued</div>
             <div class="date-val">14 May 2025</div>
             <div class="date-desc">CBDT / HRD Directorate</div>
           </div>
-          <div class="date-card">
+          <div class="date-card done">
             <div class="date-label">Application Opens</div>
             <div class="date-val">23 May 2025</div>
             <div class="date-desc">From 10:00 AM at incometaxindia.gov.in</div>
@@ -330,112 +480,113 @@ footer{background:#fff;border-top:1px solid var(--border);padding:2rem 0;}
         </div>
         <div class="info-card" style="padding:0;overflow:hidden;">
           <div class="table-scroll">
-          <table class="timetable">
-            <thead>
-              <tr>
-                <th>S.No.</th>
-                <th>Day / Date</th>
-                <th>1st Session — ITO Exam (10:30 AM)</th>
-                <th>2nd Session — ITI Exam (2:30 PM)</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td>1</td>
-                <td class="t-date">Mon<br/>08.09.2025</td>
-                <td>
-                  <span class="session-tag tag-ito">ITO Paper-1</span><br/>
-                  <span class="t-ito">Income Tax Law &amp; Computation</span><br/>
-                  <small style="color:var(--muted)">Without Books | Objective</small><br/>
-                  <div class="t-time">10:30 AM – 12:30 PM</div>
-                </td>
-                <td>
-                  <span class="session-tag tag-iti">ITI Paper-1</span><br/>
-                  <span class="t-iti">Income Tax Law &amp; Computation</span><br/>
-                  <small style="color:var(--muted)">Without Books | Objective</small><br/>
-                  <div class="t-time">2:30 PM – 5:30 PM</div>
-                </td>
-              </tr>
-              <tr>
-                <td>2</td>
-                <td class="t-date">Tue<br/>09.09.2025</td>
-                <td>
-                  <span class="session-tag tag-ito">ITO Paper-2</span><br/>
-                  <span class="t-ito">Advanced Accountancy</span><br/>
-                  <small style="color:var(--muted)">Without Books | Objective</small><br/>
-                  <div class="t-time">10:30 AM – 12:30 PM</div>
-                </td>
-                <td>
-                  <span class="session-tag tag-iti">ITI Paper-2</span><br/>
-                  <span class="t-iti">Book Keeping</span><br/>
-                  <small style="color:var(--muted)">Without Books | Objective</small><br/>
-                  <div class="t-time">2:30 PM – 4:30 PM</div>
-                </td>
-              </tr>
-              <tr>
-                <td>3</td>
-                <td class="t-date">Wed<br/>10.09.2025</td>
-                <td>
-                  <span class="session-tag tag-ito">ITO Paper-3</span><br/>
-                  <span class="t-ito">Allied Laws</span><br/>
-                  <small style="color:var(--muted)">Without Books | Objective</small><br/>
-                  <div class="t-time">10:30 AM – 12:30 PM</div>
-                </td>
-                <td>
-                  <span class="session-tag tag-iti">ITI Paper-3</span><br/>
-                  <span class="t-iti">Allied Laws</span><br/>
-                  <small style="color:var(--muted)">Without Books | Objective</small><br/>
-                  <div class="t-time">2:30 PM – 4:30 PM</div>
-                </td>
-              </tr>
-              <tr>
-                <td>4</td>
-                <td class="t-date">Thu<br/>11.09.2025</td>
-                <td>
-                  <span class="session-tag tag-ito">ITO Paper-4</span><br/>
-                  <span class="t-ito">Income Tax &amp; Accountancy (Combined Practical)</span><br/>
-                  <small style="color:var(--muted)">With I.T. Act &amp; Rules | <strong>Subjective</strong></small><br/>
-                  <div class="t-time">10:30 AM – 1:30 PM</div>
-                </td>
-                <td>
-                  <span class="session-tag tag-iti">ITI Paper-4</span><br/>
-                  <span class="t-iti">Office Procedure</span><br/>
-                  <small style="color:var(--muted)">Without Books | Objective</small><br/>
-                  <div class="t-time">2:30 PM – 4:30 PM</div>
-                </td>
-              </tr>
-              <tr>
-                <td>5</td>
-                <td class="t-date">Fri<br/>12.09.2025</td>
-                <td>
-                  <span class="session-tag tag-ito">ITO Paper-5</span><br/>
-                  <span class="t-ito">Office Procedure</span><br/>
-                  <small style="color:var(--muted)">Partially Qualified &amp; Betterment (Old Pattern) | Objective</small><br/>
-                  <div class="t-time">10:30 AM – 12:30 PM</div>
-                </td>
-                <td>
-                  <span class="session-tag tag-iti">ITI Paper-5</span> Hindi (Subjective) <div class="t-time">2:30 PM – 3:30 PM</div>
-                  <span class="session-tag tag-iti" style="margin-top:0.5rem;">ITI Paper-6</span> Examination of Accounts<br/>
-                  <small style="color:var(--muted)">Partially Qualified &amp; Betterment (Old Pattern)</small><br/>
-                  <div class="t-time">3:30 PM – 5:30 PM</div>
-                </td>
-              </tr>
-              <tr>
-                <td>6</td>
-                <td class="t-date">Mon<br/>15.09.2025</td>
-                <td colspan="2">
-                  <span class="session-tag tag-ito">ITO Paper-6</span><br/>
-                  <span class="t-ito">Examination of Accounts &amp; Language Test</span><br/>
-                  <small style="color:var(--muted)">Partially Qualified &amp; Betterment (Old Pattern)</small><br/>
-                  <div class="t-time">10:30 AM – 1:30 PM &nbsp;|&nbsp; Language Test (Hindi Translation): 2:30 PM – 3:00 PM &nbsp;|&nbsp; Oral Test: 3:30 PM onwards</div>
-                </td>
-              </tr>
-            </tbody>
-          </table>
-          </div><!-- /table-scroll -->
+            <table class="timetable">
+              <thead>
+                <tr>
+                  <th>S.No.</th>
+                  <th>Day / Date</th>
+                  <th>1st Session — ITO Exam (10:30 AM)</th>
+                  <th>2nd Session — ITI Exam (2:30 PM)</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>1</td>
+                  <td class="t-date">Mon<br/>08.09.2025</td>
+                  <td>
+                    <span class="session-tag tag-ito">ITO Paper-1</span><br/>
+                    <span class="t-ito">Income Tax Law &amp; Computation</span><br/>
+                    <small style="color:var(--muted)">Without Books | Objective</small>
+                    <div class="t-time">10:30 AM – 12:30 PM</div>
+                  </td>
+                  <td>
+                    <span class="session-tag tag-iti">ITI Paper-1</span><br/>
+                    <span class="t-iti">Income Tax Law &amp; Computation</span><br/>
+                    <small style="color:var(--muted)">Without Books | Objective</small>
+                    <div class="t-time">2:30 PM – 5:30 PM</div>
+                  </td>
+                </tr>
+                <tr>
+                  <td>2</td>
+                  <td class="t-date">Tue<br/>09.09.2025</td>
+                  <td>
+                    <span class="session-tag tag-ito">ITO Paper-2</span><br/>
+                    <span class="t-ito">Advanced Accountancy</span><br/>
+                    <small style="color:var(--muted)">Without Books | Objective</small>
+                    <div class="t-time">10:30 AM – 12:30 PM</div>
+                  </td>
+                  <td>
+                    <span class="session-tag tag-iti">ITI Paper-2</span><br/>
+                    <span class="t-iti">Book Keeping</span><br/>
+                    <small style="color:var(--muted)">Without Books | Objective</small>
+                    <div class="t-time">2:30 PM – 4:30 PM</div>
+                  </td>
+                </tr>
+                <tr>
+                  <td>3</td>
+                  <td class="t-date">Wed<br/>10.09.2025</td>
+                  <td>
+                    <span class="session-tag tag-ito">ITO Paper-3</span><br/>
+                    <span class="t-ito">Allied Laws</span><br/>
+                    <small style="color:var(--muted)">Without Books | Objective</small>
+                    <div class="t-time">10:30 AM – 12:30 PM</div>
+                  </td>
+                  <td>
+                    <span class="session-tag tag-iti">ITI Paper-3</span><br/>
+                    <span class="t-iti">Allied Laws</span><br/>
+                    <small style="color:var(--muted)">Without Books | Objective</small>
+                    <div class="t-time">2:30 PM – 4:30 PM</div>
+                  </td>
+                </tr>
+                <tr>
+                  <td>4</td>
+                  <td class="t-date">Thu<br/>11.09.2025</td>
+                  <td>
+                    <span class="session-tag tag-ito">ITO Paper-4</span><br/>
+                    <span class="t-ito">Income Tax &amp; Accountancy (Practical)</span><br/>
+                    <small style="color:var(--muted)">With I.T. Act &amp; Rules | <strong>Subjective</strong></small>
+                    <div class="t-time">10:30 AM – 1:30 PM</div>
+                  </td>
+                  <td>
+                    <span class="session-tag tag-iti">ITI Paper-4</span><br/>
+                    <span class="t-iti">Office Procedure</span><br/>
+                    <small style="color:var(--muted)">Without Books | Objective</small>
+                    <div class="t-time">2:30 PM – 4:30 PM</div>
+                  </td>
+                </tr>
+                <tr>
+                  <td>5</td>
+                  <td class="t-date">Fri<br/>12.09.2025</td>
+                  <td>
+                    <span class="session-tag tag-ito">ITO Paper-5</span><br/>
+                    <span class="t-ito">Office Procedure</span><br/>
+                    <small style="color:var(--muted)">Partially Qualified &amp; Betterment (Old Pattern) | Objective</small>
+                    <div class="t-time">10:30 AM – 12:30 PM</div>
+                  </td>
+                  <td>
+                    <span class="session-tag tag-iti">ITI Paper-5</span> Hindi (Subjective)
+                    <div class="t-time">2:30 PM – 3:30 PM</div>
+                    <span class="session-tag tag-iti" style="margin-top:.5rem">ITI Paper-6</span> Examination of Accounts<br/>
+                    <small style="color:var(--muted)">Partially Qualified &amp; Betterment (Old Pattern)</small>
+                    <div class="t-time">3:30 PM – 5:30 PM</div>
+                  </td>
+                </tr>
+                <tr>
+                  <td>6</td>
+                  <td class="t-date">Mon<br/>15.09.2025</td>
+                  <td colspan="2">
+                    <span class="session-tag tag-ito">ITO Paper-6</span><br/>
+                    <span class="t-ito">Examination of Accounts &amp; Language Test</span><br/>
+                    <small style="color:var(--muted)">Partially Qualified &amp; Betterment (Old Pattern)</small>
+                    <div class="t-time">10:30 AM – 1:30 PM &nbsp;|&nbsp; Language Test (Hindi): 2:30 PM – 3:00 PM &nbsp;|&nbsp; Oral Test: 3:30 PM onwards</div>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
         </div>
-        <div class="warning" style="margin-top:1rem;">
-          <strong>Note:</strong> Paper-IV for ITO is <strong>subjective and offline only</strong>. Question papers will be in physical form; answers will be recorded in booklets provided by the Department.
+        <div class="warning">
+          <strong>Note:</strong> Paper-IV for ITO is <strong>subjective and offline only</strong>. Question papers will be in physical form; answers recorded in booklets provided by the Department.
         </div>
       </div>
 
@@ -451,7 +602,7 @@ footer{background:#fff;border-top:1px solid var(--border);padding:2rem 0;}
             <strong>Online Papers:</strong> Question papers are displayed on screen; answers are captured via button click (objective/MCQ format).<br/>
             <strong>ITO Paper-IV Exception:</strong> Subjective paper conducted in offline mode. Physical question papers and answer booklets provided.
           </div>
-          <p>The syllabus remains the same as was applicable for Departmental Examination-2024. All In-charge of Examinations must arrange answer sheets for ITI subjective papers (Paper-V — Hindi, Paper-VI — Examination of Accounts for Old Pattern candidates) and ITO Paper-V (Office Procedure) and Paper-VI for Old Pattern candidates.</p>
+          <p>The syllabus remains the same as was applicable for Departmental Examination-2024. All In-charge of Examinations must arrange answer sheets for ITI subjective papers (Paper-V — Hindi, Paper-VI — Examination of Accounts for Old Pattern candidates) and ITO Paper-V and Paper-VI for Old Pattern candidates.</p>
         </div>
       </div>
 
@@ -498,11 +649,11 @@ footer{background:#fff;border-top:1px solid var(--border);padding:2rem 0;}
             </div>
           </div>
         </div>
-        <div class="warning" style="margin-top:1rem;">
+        <div class="warning" style="margin-top:1rem">
           <strong>Stenographers Grade-II for ITO:</strong> Only those who have completed 5 years of regular service after induction AND have passed the ITI Exam are eligible. (As per F.No.DE2012/Notification/DIT(Exam)/2251 dated 11.07.2012)
         </div>
         <div class="highlight">
-          <strong>No Age Bar:</strong> The Amended Department Examination Rules 2009 do not place any age bar for taking ITO and ITI Examination for new pattern candidates. The number of chances for all categories (including SC/ST availing betterment chance) is limited to <strong>ten</strong>.
+          <strong>No Age Bar:</strong> The Amended Department Examination Rules 2009 do not place any age bar for ITO and ITI Examination (new pattern candidates). Chances limited to <strong>ten</strong> for all categories including SC/ST availing betterment chance.
         </div>
       </div>
 
@@ -515,14 +666,14 @@ footer{background:#fff;border-top:1px solid var(--border);padding:2rem 0;}
         <div class="info-card">
           <p>Candidates shall fill the application form online at <strong>www.incometaxindia.gov.in</strong>. The online application window opens from <strong>23.05.2025 (10:00 AM)</strong>.</p>
           <div class="highlight">
-            <strong>Last Date:</strong> 23.06.2025 (8:00 PM). No application form will be accepted after this date. Physical printout must also be submitted to Pr. CCsIT/CsIT (In-charge of Examination).
+            <strong>Last Date:</strong> 23.06.2025 (8:00 PM). No application will be accepted after this date. Physical printout must also be submitted to Pr. CCsIT/CsIT (In-charge of Examination).
           </div>
         </div>
         <div class="info-card">
           <ul class="checklist">
             <li>
               <div class="check-circle"><svg width="10" height="10" fill="none" stroke="#059669" stroke-width="2.5" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg></div>
-              Read all instructions carefully before filling the form. Only one application form per candidate.
+              Read all instructions carefully before filling the form. Only <strong>one application form</strong> per candidate.
             </li>
             <li>
               <div class="check-circle"><svg width="10" height="10" fill="none" stroke="#059669" stroke-width="2.5" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg></div>
@@ -542,7 +693,7 @@ footer{background:#fff;border-top:1px solid var(--border);padding:2rem 0;}
             </li>
             <li>
               <div class="check-circle"><svg width="10" height="10" fill="none" stroke="#059669" stroke-width="2.5" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg></div>
-              Retain a copy of the application printout as acknowledgement. Do <strong>NOT</strong> fold, punch or crush the printout.
+              Retain a copy of the application printout. Do <strong>NOT</strong> fold, punch or crush the printout.
             </li>
             <li>
               <div class="check-circle"><svg width="10" height="10" fill="none" stroke="#059669" stroke-width="2.5" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg></div>
@@ -574,7 +725,7 @@ footer{background:#fff;border-top:1px solid var(--border);padding:2rem 0;}
             </li>
             <li>
               <div class="check-circle"><svg width="10" height="10" fill="none" stroke="#059669" stroke-width="2.5" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg></div>
-              Adhoc employees are not eligible even if they belong to eligible cadres.
+              Adhoc employees are <strong>not eligible</strong> even if they belong to eligible cadres.
             </li>
             <li>
               <div class="check-circle"><svg width="10" height="10" fill="none" stroke="#059669" stroke-width="2.5" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg></div>
@@ -582,8 +733,8 @@ footer{background:#fff;border-top:1px solid var(--border);padding:2rem 0;}
             </li>
           </ul>
         </div>
-        <div class="info-card" style="margin-top:1rem;background:var(--green-pale);border-color:var(--green-light);">
-          <p style="font-size:0.82rem;color:var(--green-deeper);">
+        <div class="info-card" style="background:var(--green-pale);border-color:var(--green-light)">
+          <p style="font-size:.82rem;color:var(--t-dark)">
             <strong>Issued by:</strong> Dr. Satyapal Singh Meena, Addl. Director General-2 HRD, New Delhi &nbsp;|&nbsp;
             <strong>Ref:</strong> F. No. DE/Notification/ITO/ITI/MS/2025/ADG — Dated 14.05.2025
           </p>
@@ -591,56 +742,100 @@ footer{background:#fff;border-top:1px solid var(--border);padding:2rem 0;}
       </div>
 
       <!-- CTA BANNER -->
-      <div style="background:linear-gradient(135deg,#064E3B,#059669);border-radius:20px;padding:2rem;text-align:center;">
-        <p style="font-size:0.72rem;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:rgba(255,255,255,0.6);margin-bottom:0.4rem;">Exam in September 2025</p>
-        <h3 style="font-family:'Playfair Display',serif;font-size:1.6rem;font-weight:800;color:#fff;margin-bottom:0.5rem;">Start Preparing Today</h3>
-        <p style="font-size:0.85rem;color:rgba(255,255,255,0.72);margin-bottom:1.2rem;">Paper-wise mock tests designed exactly for the 2025 exam pattern. Free tests available.</p>
-        <div style="display:flex;gap:0.8rem;justify-content:center;flex-wrap:wrap;" class="cta-buttons">
-          <a href="toppers11_test.html" style="background:#fff;color:#059669;font-size:0.82rem;font-weight:700;letter-spacing:0.05em;text-transform:uppercase;padding:0.65rem 1.4rem;border-radius:9px;text-decoration:none;display:inline-flex;align-items:center;gap:0.4rem;">Take Free Test →</a>
-          <a href="login.html" style="background:rgba(255,255,255,0.15);color:#fff;font-size:0.82rem;font-weight:600;padding:0.65rem 1.4rem;border-radius:9px;text-decoration:none;border:1px solid rgba(255,255,255,0.3);">View All Papers</a>
+      <div class="cta-banner">
+        <p class="eyebrow-small">Exam in September 2025</p>
+        <h3>Start Preparing Today</h3>
+        <p>Paper-wise mock tests designed exactly for the 2025 exam pattern. Free tests available — no signup required.</p>
+        <div class="cta-btns">
+          <a href="toppers11_test.html" class="cta-btn-primary">Take Free Test →</a>
+          <a href="login.html" class="cta-btn-sec">View All Papers</a>
         </div>
       </div>
 
     </div><!-- /content -->
   </div><!-- /layout -->
-</div><!-- /main -->
+</div><!-- /main-wrap -->
 
+<!-- FOOTER -->
 <footer>
-  <div class="footer-inner">
-    <a href="index.html" class="logo-wrap"><div class="logo-block"><span class="logo-since">Employee Choice</span><span class="logo-main">TOPPERS<span>11</span></span><span class="logo-sub">AI-Powered Test Series</span></div></a>
-    <div class="footer-links">
-      <a href="about.html" class="footer-link">About Us</a>
-      <a href="faq.html" class="footer-link">FAQ</a>
-      <a href="contact.html" class="footer-link">Contact</a>
-      <a href="sitemap.html" class="footer-link">Sitemap</a>
-      <a href="notification.html" class="footer-link">Notification</a>
+  <div class="foot-tris">
+    <svg viewBox="0 0 120 120" style="width:120px;height:120px;position:absolute;top:-10px;left:1%;transform:rotate(-30deg)"><defs><linearGradient id="ft1" x1="0%" x2="100%" y1="0%" y2="100%"><stop offset="0%" stop-color="#3ddbb0"/><stop offset="100%" stop-color="#006D5B"/></linearGradient></defs><polygon points="60,10 15,95 60,78" fill="url(#ft1)"/><polygon points="60,10 105,95 60,78" fill="#004D3F"/><polygon points="15,95 60,78 105,95" fill="#003d30"/></svg>
+    <svg viewBox="0 0 120 120" style="width:70px;height:70px;position:absolute;bottom:20px;left:5%;transform:rotate(55deg)"><defs><linearGradient id="ft2" x1="0%" x2="100%" y1="0%" y2="100%"><stop offset="0%" stop-color="#FFE97A"/><stop offset="100%" stop-color="#c9920a"/></linearGradient></defs><polygon points="60,10 15,95 60,78" fill="url(#ft2)"/><polygon points="60,10 105,95 60,78" fill="#8a5e00"/><polygon points="15,95 60,78 105,95" fill="#7a5000"/></svg>
+    <svg viewBox="0 0 120 120" style="width:90px;height:90px;position:absolute;top:-5px;right:30%;transform:rotate(22deg)"><defs><linearGradient id="ft3" x1="0%" x2="100%" y1="0%" y2="100%"><stop offset="0%" stop-color="#2ecfa3"/><stop offset="100%" stop-color="#005a48"/></linearGradient></defs><polygon points="60,10 15,95 60,78" fill="url(#ft3)"/><polygon points="60,10 105,95 60,78" fill="#003d30"/><polygon points="15,95 60,78 105,95" fill="#002820"/></svg>
+    <svg viewBox="0 0 120 120" style="filter:blur(.5px);width:140px;height:140px;position:absolute;bottom:-20px;right:5%;transform:rotate(-15deg)"><defs><linearGradient id="ft4" x1="0%" x2="100%" y1="0%" y2="100%"><stop offset="0%" stop-color="#FFE97A"/><stop offset="100%" stop-color="#F5C518"/></linearGradient></defs><polygon points="60,10 15,95 60,78" fill="url(#ft4)"/><polygon points="60,10 105,95 60,78" fill="#c9920a"/><polygon points="15,95 60,78 105,95" fill="#a07000"/></svg>
+  </div>
+  <div class="foot-inner">
+    <div class="foot-top">
+      <div>
+        <div class="foot-brand">
+          <div class="site-name">toppers<span style="color:var(--t3);font-family:Righteous,cursive;font-size:inherit">11</span></div>
+          <div class="tag" style="color:rgba(255,255,255,.35);align-items:center;gap:.4rem;display:flex"><span style="background:rgba(255,255,255,.2);flex:1;height:1px;display:inline-block"></span>AI-Powered Test Series<span style="background:rgba(255,255,255,.2);flex:1;height:1px;display:inline-block"></span></div>
+        </div>
+        <p class="foot-desc">India's only mock test platform built exclusively for Income Tax Departmental Promotion Exams.</p>
+      </div>
+      <div style="flex-wrap:wrap;gap:2.5rem;display:flex">
+        <div class="foot-col">
+          <div class="foot-col-title">Syllabus</div>
+          <ul>
+            <li><a href="syllabus-iti.html">ITI Exam Syllabus</a></li>
+            <li><a href="syllabus-ito.html">ITO Exam Syllabus</a></li>
+            <li><a href="syllabus-ms.html">MS/UDC Syllabus</a></li>
+            <li><a href="notification.html">Notifications</a></li>
+          </ul>
+        </div>
+        <div class="foot-col">
+          <div class="foot-col-title">Company</div>
+          <ul>
+            <li><a href="about.html">About Us</a></li>
+            <li><a href="faq.html">FAQ</a></li>
+            <li><a href="contact.html">Contact Us</a></li>
+            <li><a href="sitemap.html">Sitemap</a></li>
+          </ul>
+        </div>
+        <div class="foot-col">
+          <div class="foot-col-title">Legal</div>
+          <ul>
+            <li><a href="contact.html#privacy">Privacy Policy</a></li>
+            <li><a href="contact.html#terms">Terms of Use</a></li>
+            <li><a href="contact.html#refund">Refund Policy</a></li>
+          </ul>
+        </div>
+      </div>
     </div>
-    <div style="font-size:0.75rem;color:#9CA3AF;">© 2025 Toppers11. Not affiliated with the Income Tax Department of India.</div>
+    <div class="foot-bottom"><p>© 2025 Toppers11. All rights reserved. Not affiliated with the Income Tax Department of India.</p></div>
   </div>
 </footer>
 
 <script>
-// Smooth scroll for sidebar links
+window.addEventListener('scroll',()=>{
+  const prog = document.getElementById('progress');
+  const btt  = document.getElementById('btt');
+  const pct  = scrollY / (document.documentElement.scrollHeight - innerHeight) * 100;
+  if(prog) prog.style.width = pct + '%';
+  if(btt)  btt.classList.toggle('vis', scrollY > 400);
+},{passive:true});
+
+// Smooth scroll for anchor links
 document.querySelectorAll('a[href^="#"]').forEach(a => {
   a.addEventListener('click', e => {
-    const id = a.getAttribute('href').slice(1);
-    const el = document.getElementById(id);
+    const el = document.getElementById(a.getAttribute('href').slice(1));
     if(el){ e.preventDefault(); el.scrollIntoView({behavior:'smooth', block:'start'}); }
   });
 });
+
 // Active sidebar link on scroll
 const sections = document.querySelectorAll('.section[id]');
-const links = document.querySelectorAll('.sidebar-link');
-const observer = new IntersectionObserver(entries => {
+const sideLinks = document.querySelectorAll('.sidebar-link[href^="#"]');
+const obs = new IntersectionObserver(entries => {
   entries.forEach(entry => {
     if(entry.isIntersecting){
-      links.forEach(l => l.classList.remove('active'));
+      sideLinks.forEach(l => l.classList.remove('active'));
       const active = document.querySelector(`.sidebar-link[href="#${entry.target.id}"]`);
       if(active) active.classList.add('active');
     }
   });
-}, {threshold:0.35});
-sections.forEach(s => observer.observe(s));
+},{threshold:0.3});
+sections.forEach(s => obs.observe(s));
 </script>
 </body>
 </html>
