@@ -192,7 +192,6 @@ footer{background:var(--dark);padding:2.8rem 0 0;position:relative;overflow:hidd
 <div class="top-bar">
   <div class="top-inner">
     <a class="logo-box" href="index.html">
-      <span class="logo-eyebrow">Employee Choice</span>
       <span class="site-name">toppers<span style="color:var(--t3);font-family:Righteous,cursive;font-size:48px">11</span></span>
       <span class="site-tag">AI-Powered Test Series</span>
     </a>
@@ -208,6 +207,10 @@ footer{background:var(--dark);padding:2.8rem 0 0;position:relative;overflow:hidd
       <a class="ac ac-login" href="login.html">
         <svg viewBox="0 0 24 24" fill="none" stroke="#888" stroke-width="2"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
         <span class="ac-title" style="color:#666">Login</span><span class="ac-sub" style="color:#aaa">My Account</span>
+      </a>
+      <a class="ac ac-reg" href="register.html">
+        <svg viewBox="0 0 24 24" fill="none" stroke="#888" stroke-width="2"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/><line x1="19" y1="8" x2="19" y2="14"/><line x1="16" y1="11" x2="22" y2="11"/></svg>
+        <span class="ac-title" style="color:#666">Register</span><span class="ac-sub" style="color:#aaa">Free Account</span>
       </a>
       <a class="ac ac-wt" href="login.html" style="position:relative">
         <span class="free-badge">FREE</span>
@@ -440,7 +443,6 @@ footer{background:var(--dark);padding:2.8rem 0 0;position:relative;overflow:hidd
     <div class="foot-top">
       <div>
         <div class="foot-brand">
-          <span style="letter-spacing:.04em;color:var(--t3);font-family:'Great Vibes',cursive;font-size:1.1rem;font-weight:400;line-height:1.4;display:block">Employee Choice</span>
           <div class="site-name">toppers<span style="color:var(--t3);font-family:Righteous,cursive;font-size:inherit">11</span></div>
           <div class="tag" style="color:rgba(255,255,255,.35);align-items:center;gap:.4rem;display:flex"><span style="background:rgba(255,255,255,.2);flex:1;height:1px;display:inline-block"></span>AI-Powered Test Series<span style="background:rgba(255,255,255,.2);flex:1;height:1px;display:inline-block"></span></div>
         </div>
@@ -480,13 +482,57 @@ footer{background:var(--dark);padding:2.8rem 0 0;position:relative;overflow:hidd
 </footer>
 
 <script>
-function submitForm(){
-  const name=document.getElementById('f-name').value.trim();
-  const subject=document.getElementById('f-subject').value;
-  const msg=document.getElementById('f-message').value.trim();
-  if(!name||!subject||!msg){alert('Please fill in all required fields (*)');return;}
-  document.getElementById('success-msg').classList.add('show');
+/* ── MESSAGE DATABASE (localStorage) ── */
+const DB_KEY = 'toppers11_messages';
+
+function getMessages() {
+  try { return JSON.parse(localStorage.getItem(DB_KEY) || '[]'); } catch(e) { return []; }
 }
+
+function saveMessage(entry) {
+  const msgs = getMessages();
+  msgs.push(entry);
+  localStorage.setItem(DB_KEY, JSON.stringify(msgs));
+}
+
+function submitForm(){
+  const name    = document.getElementById('f-name').value.trim();
+  const email   = document.getElementById('f-email').value.trim();
+  const phone   = document.getElementById('f-phone').value.trim();
+  const category= document.getElementById('f-category').value;
+  const subject = document.getElementById('f-subject').value;
+  const msg     = document.getElementById('f-message').value.trim();
+
+  if(!name || !subject || !msg){
+    alert('Please fill in all required fields (*)');
+    return;
+  }
+
+  const entry = {
+    id:        'msg_' + Date.now() + '_' + Math.random().toString(36).slice(2,7),
+    timestamp: new Date().toISOString(),
+    name, email, phone, category, subject, message: msg
+  };
+
+  saveMessage(entry);
+  console.log('[Toppers11] Message saved to DB. Total messages:', getMessages().length);
+
+  // Clear form
+  ['f-name','f-email','f-phone','f-message'].forEach(id => document.getElementById(id).value = '');
+  document.getElementById('f-category').value = '';
+  document.getElementById('f-subject').value  = '';
+
+  document.getElementById('success-msg').classList.add('show');
+  setTimeout(() => document.getElementById('success-msg').classList.remove('show'), 6000);
+}
+
+/* Admin helper: call getToppers11Messages() in browser console to view all submissions */
+window.getToppers11Messages = function() {
+  const msgs = getMessages();
+  console.table(msgs);
+  return msgs;
+};
+
 window.addEventListener('scroll',()=>{
   const prog=document.getElementById('progress');
   const btt=document.getElementById('btt');
