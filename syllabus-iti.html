@@ -56,7 +56,7 @@ body{background:var(--bg);color:var(--ink);font-family:'Open Sans',sans-serif;ov
 /* ── NAV ── */
 nav{z-index:200;background:#fff;position:sticky;top:0;border-bottom:1px solid var(--bdr)}
 .nav-inner{justify-content:space-evenly;align-items:stretch;max-width:1200px;margin:0 auto;padding:0 1.2rem;display:flex}
-.nav-link{letter-spacing:.04em;text-transform:uppercase;color:#444;white-space:nowrap;border-bottom:3px solid transparent;flex:none;justify-content:center;align-items:center;gap:.2rem;padding:.85rem .45rem;font-size:.72rem;font-weight:600;text-decoration:none;transition:all .15s;display:inline-flex}
+.nav-link{letter-spacing:.04em;text-transform:uppercase;color:#333;white-space:nowrap;border-bottom:3px solid transparent;flex:none;justify-content:center;align-items:center;gap:.2rem;padding:.85rem .45rem;font-size:.72rem;font-weight:700;text-decoration:none;transition:all .15s;display:inline-flex}
 .nav-link:hover,.nav-link.active{color:var(--t3);border-bottom-color:var(--t3)}
 #mob-toggle{cursor:pointer;background:none;border:none;flex-shrink:0;margin-left:auto;padding:.5rem;display:none}
 #mob-menu{border-top:1px solid var(--bdr);background:#fff;padding:.5rem 1.2rem 1rem;display:none}
@@ -104,12 +104,14 @@ nav{z-index:200;background:#fff;position:sticky;top:0;border-bottom:1px solid va
 /* ── MAIN CONTENT ── */
 .page-wrap{max-width:1200px;margin:0 auto;padding:2rem 1.5rem 5rem}
 
-/* Stats strip */
-.stats-strip{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:.75rem;margin-bottom:2rem}
-.stat-box{background:#fff;border:1.5px solid #A7F3D0;border-radius:12px;padding:.85rem 1rem;display:flex;flex-direction:column;gap:.2rem;transition:transform .2s,box-shadow .2s}
-.stat-box:hover{transform:translateY(-2px);box-shadow:0 6px 20px rgba(0,171,132,.12)}
-.stat-label{font-size:.62rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--muted)}
-.stat-value{font-size:1.05rem;font-weight:800;color:var(--ink)}
+/* Feature bar (replaces stats strip) */
+.feature-bar{background:#fff;border:1px solid #e8e8e8;border-radius:12px;padding:.85rem 1.5rem;margin-bottom:2rem;display:flex;flex-wrap:wrap;align-items:center;justify-content:space-evenly;gap:.5rem 0;box-shadow:0 2px 10px rgba(0,0,0,.04)}
+.feature-item{display:flex;align-items:center;gap:.65rem;padding:.45rem 1.1rem;flex-shrink:0}
+.feature-item+.feature-item{border-left:1px solid #eee}
+.fi-icon{font-size:1.55rem;line-height:1;flex-shrink:0}
+.fi-text{font-size:.8rem;color:#555;line-height:1.4}
+.fi-text strong{color:var(--t3);font-weight:700}
+@media(max-width:640px){.feature-item+.feature-item{border-left:none;border-top:1px solid #eee}.feature-bar{flex-direction:column;align-items:flex-start;gap:0}.feature-item{width:100%}}
 
 /* Section label */
 .section-heading{font-size:.65rem;font-weight:800;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);margin-bottom:1rem;display:flex;align-items:center;gap:.6rem}
@@ -334,13 +336,28 @@ footer{background:var(--dark);padding:2.8rem 0 0;position:relative;overflow:hidd
 <main>
 <div class="page-wrap">
 
-  <!-- Stats strip -->
-  <div class="stats-strip fade-up">
-    <div class="stat-box"><span class="stat-label">Total Papers</span><span class="stat-value">5 Papers</span></div>
-    <div class="stat-box"><span class="stat-label">Total Marks</span><span class="stat-value">500 Marks</span></div>
-    <div class="stat-box"><span class="stat-label">Exam Type</span><span class="stat-value">Objective + Subjective</span></div>
-    <div class="stat-box"><span class="stat-label">Negative Marking</span><span class="stat-value">1/8 per wrong</span></div>
-    <div class="stat-box"><span class="stat-label">Authority</span><span class="stat-value">CBDT / UPSC</span></div>
+  <!-- Feature bar -->
+  <div class="feature-bar fade-up">
+    <div class="feature-item">
+      <span class="fi-icon">🏆</span>
+      <span class="fi-text"><strong>5 Papers</strong> Total Papers<br>to Clear</span>
+    </div>
+    <div class="feature-item">
+      <span class="fi-icon">💡</span>
+      <span class="fi-text">Designed According to the<br><strong>New Exam Pattern</strong></span>
+    </div>
+    <div class="feature-item">
+      <span class="fi-icon">📊</span>
+      <span class="fi-text"><strong>500 Marks</strong> Total &amp;<br>Performance Analysis</span>
+    </div>
+    <div class="feature-item">
+      <span class="fi-icon">🎯</span>
+      <span class="fi-text"><strong>AI Leveled Practice Sets</strong> to Match<br>Real Exam Difficulty</span>
+    </div>
+    <div class="feature-item">
+      <span class="fi-icon">⚖️</span>
+      <span class="fi-text"><strong>1/8 Negative</strong> Marking<br>per Wrong Answer</span>
+    </div>
   </div>
 
   <div class="section-heading fade-up">Paper-wise Detailed Syllabus</div>
