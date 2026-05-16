@@ -1199,9 +1199,12 @@ function nextUpiId(){_upiIdx=(_upiIdx+1)%UPI_POOL.length;return UPI_POOL[_upiIdx
 
 /* ── Plans ── */
 const PLANS={
-  'single-iti':{label:'ITI Single Subject',amount:355,desc:'All 21 tests for 1 paper · Best for targeted prep'},
-  'bunch-iti':{label:'ITI Complete Bunch (All 4 Papers)',amount:955,desc:'All 84 tests — save ₹465 vs buying individually',best:true}
+  'single-iti':{label:'ITI Single Subject',amount:355,desc:'All 21 tests for 1 paper · Best for targeted prep',requiresPaperSelect:true},
+  'bunch-iti':{label:'ITI Complete Bunch (All 4 Papers)',amount:955,desc:'All 84 tests — save ₹465 vs buying individually',best:true,requiresPaperSelect:false}
 };
+
+/* ── Track selected paper for single-subject purchase ── */
+let selSubjectKey=null; // e.g. 'p1','p2','p3','p4'
 
 const PAPERS=[
   {key:'p1',name:'IT Law & Computation',hasFree:true,topics:'Income Tax Act 1961, heads of income, TDS, deductions, assessment, computation of total income.',type:'Objective',marks:150,tests:[
@@ -1315,7 +1318,22 @@ function isSessionValid(user){
   return true;
 }
 
-function isPaid(){const u=getUser();return u.paid&&(!u.plan||u.plan.includes('bunch-iti')||u.plan.includes('single-iti'))}
+/** Returns true if user has paid for the given paper key (or bought the full bunch) */
+function isPaidForPaper(paperKey){
+  const u=getUser();
+  if(!u.paid)return false;
+  if(u.plan==='bunch-iti')return true; // full access
+  // Single subject: check purchased_subjects array
+  const subjects=u.purchased_subjects||[];
+  return subjects.includes(paperKey);
+}
+/** Legacy: returns true if user has any paid access */
+function isPaid(){const u=getUser();return u.paid;}
+function isUnlocked(t,paperKey){
+  // Free tests always unlocked
+  if(t.free)return true;
+  return isPaidForPaper(paperKey);
+}
 function getScore(id){try{return JSON.parse(localStorage.getItem('t11_score_'+id)||'null')}catch(e){return null}}
 function getAttempts(id){try{return parseInt(localStorage.getItem('t11_attempts_'+id)||'0',10);}catch(e){return 0;}}
 function recordAttempt(id){const n=getAttempts(id)+1;localStorage.setItem('t11_attempts_'+id,n);}
@@ -1326,7 +1344,6 @@ function logout(){
   // Keep t11_users (registration data) and t11_payments — those belong to the device
   window.location.href='login.html';
 }
-function isUnlocked(t){return t.free||isPaid();}
 
 function buildTabs(){
   const bar=document.getElementById('tabs-inner');bar.innerHTML='';
@@ -1417,7 +1434,7 @@ function buildCards(p,i){
       </div>
       ${''/* free pill removed */}
     </div>
-    ${!isPaid()?bundleHTML:''}
+    ${!isPaidForPaper(p.key)?bundleHTML:''}
     <div class="papers-lbl">All 21 Tests — ${p.tests.filter(t=>t.pyq).length} PYQs + ${p.tests.filter(t=>!t.pyq).length} Series</div>
     <div class="tests-grid" id="grid-${p.key}"></div>`;
 
@@ -1425,7 +1442,7 @@ function buildCards(p,i){
   const grid=document.getElementById('grid-'+p.key);
 
   p.tests.forEach(t=>{
-    const unlocked=isUnlocked(t);
+    const unlocked=isUnlocked(t,p.key);
     const score=getScore(t.id);
     const attempts=getAttempts(t.id);
     const maxed=unlocked&&score&&attempts>=3;
@@ -1454,7 +1471,7 @@ function buildCards(p,i){
     } else if(unlocked){
       bottomHTML=`<div class="pc-btns"><span class="pb pb-free">${score?'Retake Test':'Free Test'}</span></div>${sc}`;
     } else {
-      bottomHTML=`<div class="pc-btns"><button class="pb pb-lock" onclick="openModal()">🔒 Locked</button></div>`;
+      bottomHTML=`<div class="pc-btns"><button class="pb pb-lock" onclick="openModal('${p.key}')">🔒 Locked</button></div>`;
     }
 
     card.innerHTML=`
@@ -1473,20 +1490,23 @@ function buildCards(p,i){
       </div>
       <div class="cf">${bottomHTML}</div>`;
 
-    if(!unlocked) card.onclick=()=>openModal();
+    if(!unlocked) card.onclick=()=>openModal(p.key);
     wrap.appendChild(card);
     grid.appendChild(wrap);
   });
 }
 
 function render(){
-  const ub=document.getElementById('unlock-bar');if(ub)ub.style.display=isPaid()?'none':'';
+  const ub=document.getElementById('unlock-bar');if(ub)ub.style.display=isPaid()&&getUser().plan==='bunch-iti'?'none':'';
   document.getElementById('panels').innerHTML='';
   PAPERS.forEach((p,i)=>buildCards(p,i));
   buildTabs();
 }
 
 let selPlan=null;
+let selSubjectFromCard=null; // paper key pre-set when clicking a locked card
+
+/* ── Build plan selector (Step 1) ── */
 function buildPlans(){
   const pc=document.getElementById('plan-cards');pc.innerHTML='';
   Object.entries(PLANS).forEach(([k,p])=>{
@@ -1494,45 +1514,197 @@ function buildPlans(){
     d.innerHTML=`<div class="pr"><div class="pd-dot"></div></div><div class="pi"><h4>${p.label}</h4><p>${p.desc}</p></div><div class="pp">₹${p.amount}</div>${p.best?'<span class="best-m">Best Value</span>':''}`;
     pc.appendChild(d);
   });
-  document.getElementById('cont-btn').textContent=selPlan?`Pay ₹${PLANS[selPlan].amount} via UPI →`:'Select a plan to continue';
+
+  // Subject picker — only shown when single-iti is selected
+  let picker=document.getElementById('subject-picker');
+  if(!picker){
+    picker=document.createElement('div');picker.id='subject-picker';
+    picker.style.cssText='margin-top:.75rem;display:none;';
+    pc.parentNode.insertBefore(picker,document.getElementById('cont-btn'));
+  }
+  if(selPlan==='single-iti'){
+    picker.style.display='';
+    picker.innerHTML=`
+      <p style="font-size:.72rem;color:var(--muted);margin-bottom:.5rem;font-weight:600;">📚 Select the subject you want to unlock:</p>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:.45rem;">
+        ${PAPERS.map(p=>`
+          <div onclick="selectSubject('${p.key}')" style="cursor:pointer;padding:.55rem .7rem;border-radius:9px;border:1.5px solid ${selSubjectKey===p.key?'var(--t3)':'#e0e0e0'};background:${selSubjectKey===p.key?'#f0fdf8':'#fff'};transition:all .15s;">
+            <div style="font-size:.72rem;font-weight:700;color:${selSubjectKey===p.key?'var(--t1)':'var(--ink)'}">Paper ${PAPERS.indexOf(p)+1} — ${p.name}</div>
+            <div style="font-size:.62rem;color:var(--muted);margin-top:.15rem;">21 Tests · ${p.marks} Marks</div>
+          </div>`).join('')}
+      </div>`;
+  } else {
+    picker.style.display='none';
+    selSubjectKey=null;
+  }
+
+  const contBtn=document.getElementById('cont-btn');
+  if(selPlan==='single-iti'){
+    contBtn.textContent=selSubjectKey
+      ?`Pay ₹355 for ${PAPERS.find(p=>p.key===selSubjectKey)?.name} →`
+      :'Select a subject to continue';
+    contBtn.disabled=!selSubjectKey;
+  } else if(selPlan==='bunch-iti'){
+    contBtn.textContent='Pay ₹955 — Unlock All 4 Papers →';
+    contBtn.disabled=false;
+  } else {
+    contBtn.textContent='Select a plan to continue';
+    contBtn.disabled=true;
+  }
 }
-function selectPlan(k){selPlan=k;buildPlans();}
-function openModal(){
+
+function selectPlan(k){
+  selPlan=k;
+  if(k!=='single-iti')selSubjectKey=null;
+  buildPlans();
+}
+
+function selectSubject(key){
+  selSubjectKey=key;
+  buildPlans();
+}
+
+function openModal(paperKey){
   selPlan=null;
+  // Pre-select subject if coming from a locked card click
+  selSubjectKey=paperKey||null;
+  // If paperKey provided, pre-select single-iti plan for convenience
+  if(paperKey)selPlan='single-iti';
+  selSubjectFromCard=paperKey||null;
   document.getElementById('overlay').classList.add('show');
   document.getElementById('step1').style.display='';
   document.getElementById('step2').style.display='none';
   buildPlans();
 }
+
 function selectBundlePlan(k){
   selPlan=k;
-  // highlight selected bpc card across ALL bundle instances
+  if(k!=='single-iti')selSubjectKey=null;
   document.querySelectorAll('.bpc').forEach(el=>{
-    el.classList.toggle('bpc-selected', el.getAttribute('data-plan')===k);
+    el.classList.toggle('bpc-selected',el.getAttribute('data-plan')===k);
   });
-  // enable all Choose Your Plan buttons
   document.querySelectorAll('.btn-bpc-go').forEach(btn=>{
     btn.disabled=false;
-    btn.textContent='Pay via UPI →';
+    btn.textContent=k==='single-iti'?'Select Subject & Pay →':'Pay ₹955 — All Papers →';
   });
 }
+
 function openModalFromBundle(){
   if(!selPlan)return;
+  // For single-iti from bundle, need to pick subject first — go to step1
+  if(selPlan==='single-iti'&&!selSubjectKey){
+    document.getElementById('overlay').classList.add('show');
+    document.getElementById('step1').style.display='';
+    document.getElementById('step2').style.display='none';
+    buildPlans();
+    return;
+  }
   document.getElementById('overlay').classList.add('show');
   document.getElementById('step1').style.display='none';
   document.getElementById('step2').style.display='';
   doContinue();
 }
+
 function closeModal(){document.getElementById('overlay').classList.remove('show');}
 function overlayClick(e){if(e.target===document.getElementById('overlay'))closeModal();}
+
 async function doContinue(){
-  if(!selPlan)return;const p=PLANS[selPlan];
-  document.getElementById('step1').style.display='none';document.getElementById('step2').style.display='';
-  document.getElementById('qr-lbl').textContent=`Scan & Pay`;
+  if(!selPlan)return;
+  if(selPlan==='single-iti'&&!selSubjectKey){
+    alert('Please select a subject first.');return;
+  }
+  const p=PLANS[selPlan];
+  const subjectPaper=PAPERS.find(pp=>pp.key===selSubjectKey);
+  document.getElementById('step1').style.display='none';
+  document.getElementById('step2').style.display='';
+  // Show what they're paying for clearly
+  const labelEl=document.getElementById('qr-lbl');
+  if(selPlan==='single-iti'&&subjectPaper){
+    labelEl.textContent=`Paper ${PAPERS.indexOf(subjectPaper)+1} — ${subjectPaper.name}`;
+  } else {
+    labelEl.textContent='All 4 Papers — Complete Bunch';
+  }
   document.getElementById('amt-lbl').textContent='₹'+p.amount;
-  await loadQrLib(); // lazy-load QR lib only now
+  await loadQrLib();
   renderUpiStep();
 }
+
+function renderUpiStep(){
+  if(!selPlan)return;
+  const p=PLANS[selPlan];
+  const subjectPaper=PAPERS.find(pp=>pp.key===selSubjectKey);
+  const uid=getUpiId();
+  // Build UPI note — make it crystal clear what the payment is for
+  const payNote=selPlan==='single-iti'&&subjectPaper
+    ?`Paper ${PAPERS.indexOf(subjectPaper)+1} - ${subjectPaper.name} (ITI Inspector)`
+    :`ITI Inspector Complete Bunch (All 4 Papers)`;
+  document.getElementById('upi-disp').textContent=uid;
+
+  // Show payment-for label clearly in the activate box
+  const utrSub=document.getElementById('utr-sub');
+  if(utrSub){
+    utrSub.innerHTML=`You are paying <strong style="color:var(--t1)">₹${p.amount}</strong> for <strong style="color:var(--t1)">${selPlan==='single-iti'&&subjectPaper?`Paper ${PAPERS.indexOf(subjectPaper)+1} — ${subjectPaper.name}`:'All 4 Papers (Complete Bunch)'}</strong>. Once payment is done, tap below to activate.`;
+  }
+
+  const upiStr=`upi://pay?pa=${uid}&pn=${encodeURIComponent(UPI_NAME)}&am=${p.amount}&cu=INR&tn=${encodeURIComponent(payNote)}`;
+  document.getElementById('gpay-a').href=`tez://upi/pay?pa=${uid}&pn=${encodeURIComponent(UPI_NAME)}&am=${p.amount}&cu=INR&tn=${encodeURIComponent(payNote)}`;
+  document.getElementById('phonepe-a').href=upiStr;
+  document.getElementById('paytm-a').href=`paytmmp://pay?pa=${uid}&pn=${encodeURIComponent(UPI_NAME)}&am=${p.amount}&cu=INR&tn=${encodeURIComponent(payNote)}`;
+  const qc=document.getElementById('qr-canvas');qc.innerHTML='';
+  try{new QRCode(qc,{text:upiStr,width:104,height:104,colorDark:'#004d3f',colorLight:'#fff',correctLevel:QRCode.CorrectLevel.M})}
+  catch(e){qc.innerHTML='<div style="padding:1rem;font-size:.7rem;color:#6b7280">Use UPI ID below</div>';}
+  const badge=document.getElementById('upi-switch-badge');if(badge)badge.textContent=`${_upiIdx+1}/${UPI_POOL.length}`;
+}
+
+function switchUpi(){nextUpiId();renderUpiStep();showToast('🔄 Switched to UPI ID '+(_upiIdx+1)+' of '+UPI_POOL.length);}
+function backToPlan(){document.getElementById('step1').style.display='';document.getElementById('step2').style.display='none';buildPlans();}
+function copyUpi(){const uid=getUpiId();navigator.clipboard.writeText(uid).then(()=>{const b=document.getElementById('cp-btn');b.textContent='✓';setTimeout(()=>b.textContent='Copy',2000);}).catch(()=>prompt('Copy:',uid));}
+
+async function activate(){
+  const btn=document.getElementById('act-btn');
+  btn.disabled=true;btn.innerHTML='<span class="spin"></span> Submitting…';
+  const user=getUser();const plan=PLANS[selPlan]||{};
+  const subjectPaper=PAPERS.find(pp=>pp.key===selSubjectKey);
+
+  const record={
+    email:user.email||'',
+    name:user.name||'',
+    plan_key:selPlan,
+    plan_label:plan.label||'',
+    subject_key:selPlan==='single-iti'?(selSubjectKey||''):null,
+    subject_name:selPlan==='single-iti'&&subjectPaper?`Paper ${PAPERS.indexOf(subjectPaper)+1} — ${subjectPaper.name}`:null,
+    amount:plan.amount||0,
+    exam_type:'ITI',
+    activated_at:new Date().toISOString(),
+    status:'pending_verification'
+  };
+
+  // Save locally as pending
+  const payments=JSON.parse(localStorage.getItem('t11_payments')||'[]');
+  payments.push(record);
+  localStorage.setItem('t11_payments',JSON.stringify(payments));
+
+  // Update user's purchased_subjects locally (optimistic — confirmed by admin)
+  if(selPlan==='single-iti'&&selSubjectKey){
+    const subjects=[...(user.purchased_subjects||[])];
+    if(!subjects.includes(selSubjectKey))subjects.push(selSubjectKey);
+    saveUser({...user,paid:true,plan:selPlan,purchased_subjects:subjects});
+  } else if(selPlan==='bunch-iti'){
+    saveUser({...user,paid:true,plan:selPlan,purchased_subjects:['p1','p2','p3','p4']});
+  }
+
+  // Push to Supabase payments table with subject info
+  await sbInsert('payments',record);
+
+  closeModal();
+  const subLabel=selPlan==='single-iti'&&subjectPaper?`Paper ${PAPERS.indexOf(subjectPaper)+1} — ${subjectPaper.name}`:'All 4 Papers';
+  showToast(`✅ Payment submitted for ${subLabel}! Tests will activate after verification (~1 hr).`);
+  render(); // re-render cards with new unlock state
+  btn.disabled=false;
+  btn.innerHTML='🔓 Activate My Access Now';
+}
+function showToast(msg){const t=document.getElementById('toast');document.getElementById('toast-msg').textContent=msg;t.classList.add('show');setTimeout(()=>t.classList.remove('show'),3500);}
+
 /* ── Lazy-load QR code library only when modal opens ── */
 let _qrLibLoaded=false;
 function loadQrLib(){
@@ -1547,44 +1719,6 @@ function loadQrLib(){
     document.head.appendChild(s);
   });
 }
-
-function renderUpiStep(){
-  if(!selPlan)return;const p=PLANS[selPlan];const uid=getUpiId();
-  document.getElementById('upi-disp').textContent=uid;
-  const upiStr=`upi://pay?pa=${uid}&pn=${encodeURIComponent(UPI_NAME)}&am=${p.amount}&cu=INR&tn=${encodeURIComponent(p.label)}`;
-  document.getElementById('gpay-a').href=`tez://upi/pay?pa=${uid}&pn=${encodeURIComponent(UPI_NAME)}&am=${p.amount}&cu=INR`;
-  document.getElementById('phonepe-a').href=upiStr;
-  document.getElementById('paytm-a').href=`paytmmp://pay?pa=${uid}&pn=${encodeURIComponent(UPI_NAME)}&am=${p.amount}&cu=INR`;
-  const qc=document.getElementById('qr-canvas');qc.innerHTML='';
-  try{new QRCode(qc,{text:upiStr,width:104,height:104,colorDark:'#004d3f',colorLight:'#fff',correctLevel:QRCode.CorrectLevel.M})}catch(e){qc.innerHTML='<div style="padding:1rem;font-size:.7rem;color:#6b7280">Use UPI ID below</div>';}
-  const badge=document.getElementById('upi-switch-badge');if(badge)badge.textContent=`${_upiIdx+1}/${UPI_POOL.length}`;
-}
-function switchUpi(){nextUpiId();renderUpiStep();showToast('🔄 Switched to UPI ID '+(_upiIdx+1)+' of '+UPI_POOL.length);}
-function backToPlan(){document.getElementById('step1').style.display='';document.getElementById('step2').style.display='none';}
-function copyUpi(){const uid=getUpiId();navigator.clipboard.writeText(uid).then(()=>{const b=document.getElementById('cp-btn');b.textContent='✓';setTimeout(()=>b.textContent='Copy',2000);}).catch(()=>prompt('Copy:',uid));}
-async function activate(){
-  const btn=document.getElementById('act-btn');
-  btn.disabled=true;btn.innerHTML='<span class="spin"></span> Submitting…';
-  const user=getUser();const plan=PLANS[selPlan]||{};
-  const record={
-    email:user.email||'',name:user.name||'',
-    plan_key:selPlan,plan_label:plan.label||'',
-    amount:plan.amount||0,exam_type:'ITI',
-    activated_at:new Date().toISOString(),
-    status:'pending_verification'  // access granted server-side after UTR check
-  };
-  // Save locally as pending (not yet unlocked)
-  const payments=JSON.parse(localStorage.getItem('t11_payments')||'[]');
-  payments.push(record);
-  localStorage.setItem('t11_payments',JSON.stringify(payments));
-  // Send to Supabase for admin review
-  await sbInsert('payments',record);
-  closeModal();
-  showToast('✅ Payment submitted! Access will be unlocked after verification (usually within 1 hour).');
-  btn.disabled=false;
-  btn.innerHTML='🔓 Activate My Access Now';
-}
-function showToast(msg){const t=document.getElementById('toast');document.getElementById('toast-msg').textContent=msg;t.classList.add('show');setTimeout(()=>t.classList.remove('show'),3500);}
 
 /* ── Show skeleton cards while content loads ── */
 function showSkeleton(){
@@ -1613,19 +1747,25 @@ window.addEventListener('DOMContentLoaded',async()=>{
   // Sync plan status from server (authoritative source)
   try{
     if(sbRateOk()){
-      const rows=await sbFetch('users?email=eq.'+encodeURIComponent((user.email||'').toLowerCase())+'&select=paid,plan&limit=1');
+      const rows=await sbFetch('payments?email=eq.'+encodeURIComponent((user.email||'').toLowerCase())+'&status=eq.verified&select=plan_key,subject_key,subject_name');
       if(rows&&rows.length){
-        const r=rows[0];
-        // Only upgrade locally — never downgrade from server (edge case: race condition)
-        if(r.paid&&!user.paid){
-          const updated={...user,paid:true,plan:r.plan||user.plan};
-          saveUser(updated);
-          const payments=JSON.parse(localStorage.getItem('t11_payments')||'[]');
-          const already=payments.some(p=>p.email===(user.email||'').toLowerCase());
-          if(!already&&r.plan){
-            payments.push({email:(user.email||'').toLowerCase(),plan_key:r.plan,activated_at:new Date().toISOString(),source:'db_recovery'});
-            localStorage.setItem('t11_payments',JSON.stringify(payments));
+        // Rebuild purchased_subjects from all verified payment records
+        const subjects=[];
+        let hasBunch=false;
+        rows.forEach(r=>{
+          if(r.plan_key==='bunch-iti'){hasBunch=true;}
+          if(r.plan_key==='single-iti'&&r.subject_key&&!subjects.includes(r.subject_key)){
+            subjects.push(r.subject_key);
           }
+        });
+        if(hasBunch||subjects.length){
+          const updated={
+            ...user,
+            paid:true,
+            plan:hasBunch?'bunch-iti':'single-iti',
+            purchased_subjects:hasBunch?['p1','p2','p3','p4']:subjects
+          };
+          saveUser(updated);
         }
       }
     }
@@ -1748,7 +1888,7 @@ document.addEventListener('keydown',e=>{
 /* ── Expose functions needed by inline HTML onclick handlers ── */
 Object.assign(window,{
   toggleProfile,openEditModal,closeEditModal,saveProfile,logout,
-  closeModal,overlayClick,doContinue,activate,switchUpi,backToPlan,
+  closeModal,overlayClick,doContinue,activate,switchUpi,backToPlan,selectSubject,
   copyUpi,selectBundlePlan,openModalFromBundle,buildTabs,switchTab,render
 });
 
