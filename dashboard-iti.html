@@ -13,10 +13,10 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="preload" as="style"
-  href="https://fonts.googleapis.com/css2?family=Nunito:wght@100;600;800&family=Open+Sans:wght@400;600;700&family=Dancing+Script:wght@600&family=Playfair+Display:ital,wght@1,700;1,800&family=Righteous&display=swap"
+  href="https://fonts.googleapis.com/css2?family=Nunito:wght@100;300;400;600;700;800;900&family=Open+Sans:wght@400;600;700;800&family=Righteous&family=Great+Vibes&family=Playfair+Display:ital,wght@1,700;1,800&display=swap"
   onload="this.onload=null;this.rel='stylesheet'">
 <noscript>
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Nunito:wght@100;600;800&family=Open+Sans:wght@400;600;700&family=Dancing+Script:wght@600&family=Playfair+Display:ital,wght@1,700;1,800&family=Righteous&display=swap">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Nunito:wght@100;300;400;600;700;800;900&family=Open+Sans:wght@400;600;700;800&family=Righteous&family=Great+Vibes&family=Playfair+Display:ital,wght@1,700;1,800&display=swap">
 </noscript>
 <!-- QR code lib loaded lazily in JS — only when payment modal opens -->
 <style>
@@ -32,14 +32,51 @@ body{background:var(--bg);color:var(--ink);font-family:Open Sans,sans-serif;over
 .top-bar{border-bottom:2px solid var(--t3);background:#fff;padding:.6rem 0}
 .top-inner{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:center;gap:1rem;max-width:1200px;margin:0 auto;padding:0 1.2rem}
 
-/* Logo — exact from index-2 */
-.logo-box{flex-direction:column;flex-shrink:0;gap:0;min-width:140px;padding:.4rem 0;line-height:1;text-decoration:none;display:inline-flex;position:relative}
-.logo-box .site-name{color:#1a1a2e;letter-spacing:-.01em;text-transform:lowercase;margin-bottom:.3rem;font-family:'Open Sans',sans-serif;font-size:1.9rem;font-weight:400;line-height:1;display:flex;align-items:baseline;gap:0}
-.logo-box .site-name .logo-num{color:var(--t3);font-family:Righteous,cursive;font-size:2.4rem;font-weight:400;line-height:1}
-.logo-box .site-tag{letter-spacing:.15em;text-transform:uppercase;color:#555;align-items:center;gap:.4rem;font-size:.5rem;font-weight:700;display:flex;white-space:nowrap}
-.logo-box .site-tag:before,.logo-box .site-tag:after{content:'';background:var(--t3);flex:1;min-width:14px;height:1.5px;display:inline-block}
-.logo-box:hover .site-name{color:var(--t3)}
-.logo-box:hover .site-name .logo-num{opacity:.85}
+/* Logo — exact from exam-select.html */
+.logo-box {
+  display: inline-flex;
+  flex-direction: column;
+  gap: 0;
+  line-height: 1;
+  text-decoration: none;
+  padding: 4px 0 10px;
+  flex-shrink: 0;
+}
+.logo-wordmark {
+  font-family: 'Nunito', sans-serif;
+  font-size: 36px;
+  font-weight: 100;
+  color: var(--ink);
+  letter-spacing: 0.01em;
+  text-transform: lowercase;
+  line-height: 1;
+  display: block;
+  margin-bottom: 1px;
+}
+.logo-wordmark .logo-num {
+  font-family: 'Righteous', cursive;
+  color: var(--t3);
+  font-size: inherit;
+}
+.logo-tag {
+  font-size: 0.46rem;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: #999;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+.logo-tag::before, .logo-tag::after {
+  content: '';
+  display: inline-block;
+  height: 1px;
+  width: 14px;
+  background: var(--t3);
+  flex-shrink: 0;
+}
+.logo-box:hover .logo-wordmark { color: var(--t3); }
 
 /* Back link */
 .btn-back{display:inline-flex;align-items:center;gap:.35rem;font-size:.75rem;font-weight:700;color:#555;text-decoration:none;background:#fff;border:1.5px solid #dde8e4;border-radius:999px;cursor:pointer;padding:.38rem .95rem;transition:all .18s;letter-spacing:.02em;white-space:nowrap;box-shadow:0 1px 4px rgba(0,0,0,.06)}
@@ -156,8 +193,8 @@ body{background:var(--bg);color:var(--ink);font-family:Open Sans,sans-serif;over
 .tab-btn.active{
   color:var(--t3);
   font-weight:700;
-  background:rgba(0,171,132,.04);
-  }
+  border-bottom-color:var(--t3);
+}
 /* All child spans inherit — no opacity tricks, no size differences */
 .tab-btn span{
   font:inherit;
@@ -672,9 +709,8 @@ body{background:var(--bg);color:var(--ink);font-family:Open Sans,sans-serif;over
 
 /* ── RESPONSIVE ── */
 @media(max-width:640px){
-  .logo-box .site-name{font-size:1.4rem}
-  .logo-box .site-name .logo-num{font-size:1.8rem}
-  .logo-box .site-tag{font-size:.44rem}
+  .logo-wordmark{font-size:28px}
+  .logo-tag{font-size:.4rem}
   .hero{padding:1.8rem 0 1.4rem}
   .hero-title{font-size:1.3rem}
   .main{padding:1rem .9rem 4rem}
@@ -696,7 +732,7 @@ body{background:var(--bg);color:var(--ink);font-family:Open Sans,sans-serif;over
 }
 @media(min-width:641px) and (max-width:900px){
   .tests-grid{grid-template-columns:repeat(2,1fr)}
-  .logo-box .site-name{font-size:1.65rem}
+  .logo-wordmark{font-size:30px}
 }
 /* ── ACCESSIBILITY ── */
 :focus-visible{outline:2px solid var(--t3);outline-offset:3px;border-radius:4px}
@@ -720,8 +756,8 @@ body{background:var(--bg);color:var(--ink);font-family:Open Sans,sans-serif;over
   <div class="top-inner">
     <div>
       <a class="logo-box" href="index.html" aria-label="Toppers11 — Home">
-        <span class="site-name">toppers<span class="logo-num">11</span></span>
-        <span class="site-tag">AI Powered Test Series</span>
+        <span class="logo-wordmark">toppers<span class="logo-num">11</span></span>
+        <span class="logo-tag">AI-Powered Test Series</span>
       </a>
     </div>
     <div style="display:flex;align-items:center;gap:.5rem;">
