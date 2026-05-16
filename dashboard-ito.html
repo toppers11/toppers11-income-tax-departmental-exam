@@ -208,33 +208,51 @@ body{background:var(--bg);color:var(--ink);font-family:'Open Sans',sans-serif;ov
 
 /* ── TEST CARDS ── */
 .papers-lbl{font-size:.68rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin-bottom:.7rem}
-.tests-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:.7rem}
+.tests-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:.85rem}
 .free-wrap{position:relative}
-.free-ribbon{background:linear-gradient(135deg,var(--t1),var(--t3));color:#fff;font-size:.58rem;font-weight:800;letter-spacing:.08em;text-transform:uppercase;text-align:center;padding:.28rem;border-radius:10px 10px 0 0;display:flex;align-items:center;justify-content:center;gap:.25rem}
+.free-ribbon{background:linear-gradient(135deg,var(--t1),var(--t3));color:#fff;font-size:.58rem;font-weight:800;letter-spacing:.08em;text-transform:uppercase;text-align:center;padding:.3rem;border-radius:10px 10px 0 0;display:flex;align-items:center;justify-content:center;gap:.25rem}
 .free-wrap .card{border-radius:0 0 10px 10px;border-color:var(--t3);box-shadow:0 3px 14px rgba(0,171,132,.15)}
 .card{background:#fff;border:1.5px solid var(--bdr);border-radius:10px;overflow:hidden;cursor:pointer;display:block;text-decoration:none;transition:all .17s}
-.card:hover{transform:translateY(-3px);border-color:var(--t3);box-shadow:0 8px 20px rgba(0,171,132,.13)}
-.card.locked{opacity:.62;cursor:not-allowed}
+.card:hover{transform:translateY(-3px);border-color:var(--t3);box-shadow:0 8px 22px rgba(0,171,132,.14)}
+.card.locked{opacity:.65;cursor:not-allowed}
 .card.locked:hover{transform:none;box-shadow:none;border-color:var(--bdr)}
-.card.completed{opacity:.75;cursor:not-allowed;border-color:#6ee7b7}
+.card.completed{opacity:.78;cursor:not-allowed;border-color:#6ee7b7}
 .card.completed:hover{transform:none;box-shadow:none;border-color:#6ee7b7}
-.ct{padding:.75rem .9rem .5rem;display:flex;align-items:flex-start;justify-content:space-between;gap:.35rem}
-.lbl{font-size:.56rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;padding:.13rem .4rem;border-radius:999px;white-space:nowrap}
+
+/* Card top row — label + status badge */
+.ct{padding:.75rem .9rem .4rem;display:flex;align-items:center;justify-content:space-between;gap:.35rem}
+.lbl{font-size:.56rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;padding:.14rem .5rem;border-radius:999px;white-space:nowrap}
 .lbl-reg{background:#f0fdf8;color:var(--t1)}
 .lbl-pyq{background:#f5f3ff;color:#6d28d9}
-.st{font-size:.58rem;font-weight:700}
-.st-free{color:var(--t3)}
+.st{font-size:.6rem;font-weight:800;letter-spacing:.06em}
+.st-open{color:var(--t3)}
 .st-lock{color:var(--muted)}
-.cb{padding:0 .9rem .55rem}
-.ctitle{font-size:.85rem;font-weight:700;color:var(--ink);line-height:1.3;margin-bottom:.1rem}
-.cmeta{display:flex;gap:.5rem}
-.mi{font-size:.63rem;color:var(--muted);display:flex;align-items:center;gap:.18rem}
-.cf{padding:.5rem .9rem;border-top:1px solid #f3f4f6;display:flex;align-items:center;justify-content:space-between}
-.ca{font-size:.66rem;font-weight:700;text-transform:uppercase;letter-spacing:.04em;color:var(--t3);display:flex;align-items:center;gap:.22rem}
-.ca-done{color:var(--t1)}
-.ca-lock{color:var(--muted)}
-.cscore{font-size:.66rem;color:var(--muted)}
+.st-done{color:var(--t1)}
+
+/* Card body — title + description */
+.cb{padding:0 .9rem .5rem}
+.ctitle{font-size:.88rem;font-weight:800;color:var(--ink);line-height:1.3;margin-bottom:.28rem}
+.cdesc{font-size:.7rem;color:var(--muted);line-height:1.5;margin-bottom:.45rem;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+
+/* Meta row — time · Qs · type pill */
+.cmeta{display:flex;align-items:center;gap:.45rem;flex-wrap:wrap}
+.mi{font-size:.63rem;color:var(--muted);display:flex;align-items:center;gap:.2rem;font-weight:600}
+.type-pill{font-size:.54rem;font-weight:800;letter-spacing:.08em;text-transform:uppercase;background:#e8f4fd;color:#1e6fa8;border-radius:999px;padding:.14rem .5rem;white-space:nowrap}
+
+/* Card footer — action button area */
+.cf{padding:.55rem .9rem .65rem;border-top:1px solid #f3f4f6;display:flex;align-items:center;justify-content:space-between;gap:.4rem}
+.cscore{font-size:.66rem;color:var(--muted);font-weight:600}
 .retest-badge{font-size:.58rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase;background:#f0fdf8;color:var(--t1);border:1px solid #6ee7b7;border-radius:999px;padding:.12rem .45rem;margin-left:.3rem}
+
+/* Action buttons in footer */
+.btn-free-test{display:inline-flex;align-items:center;gap:.3rem;background:var(--t3);color:#fff;border:none;border-radius:6px;padding:.38rem .9rem;font-size:.7rem;font-weight:700;cursor:pointer;letter-spacing:.03em;font-family:'Open Sans',sans-serif;transition:background .15s;text-decoration:none}
+.btn-free-test:hover{background:var(--t1)}
+.btn-start-test{display:inline-flex;align-items:center;gap:.3rem;background:#1a1a2e;color:#fff;border:none;border-radius:6px;padding:.38rem .9rem;font-size:.7rem;font-weight:700;cursor:pointer;letter-spacing:.03em;font-family:'Open Sans',sans-serif;transition:background .15s;text-decoration:none}
+.btn-start-test:hover{background:#2d2d44}
+.btn-retake-test{display:inline-flex;align-items:center;gap:.3rem;background:#f0fdf8;color:var(--t1);border:1.5px solid #6ee7b7;border-radius:6px;padding:.36rem .9rem;font-size:.7rem;font-weight:700;cursor:pointer;letter-spacing:.03em;font-family:'Open Sans',sans-serif;transition:all .15s;text-decoration:none}
+.btn-retake-test:hover{background:#d1fae5}
+.btn-locked-test{display:inline-flex;align-items:center;gap:.3rem;background:#f3f4f6;color:var(--muted);border:none;border-radius:6px;padding:.38rem .9rem;font-size:.7rem;font-weight:700;cursor:not-allowed;letter-spacing:.03em;font-family:'Open Sans',sans-serif}
+.btn-completed-test{display:inline-flex;align-items:center;gap:.3rem;background:#f0fdf8;color:var(--t1);border:1.5px solid #6ee7b7;border-radius:6px;padding:.36rem .9rem;font-size:.7rem;font-weight:700;cursor:not-allowed;letter-spacing:.03em;font-family:'Open Sans',sans-serif}
 
 /* ── PURCHASE MODAL ── */
 .overlay{position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:600;display:none;place-items:center;padding:1rem}
@@ -1031,18 +1049,52 @@ function buildCards(p,i){
     const maxed=unlocked&&score&&attempts>=3;
     const wrap=document.createElement('div');
     if(t.free){wrap.className='free-wrap';wrap.innerHTML='<div class="free-ribbon">★ FREE PYQ</div>';}
+
     let card;
-    if(unlocked&&!maxed){card=document.createElement('a');card.href='test-engine.html?id='+t.id;card.addEventListener('click',()=>recordAttempt(t.id));}
-    else{card=document.createElement('div');}
+    if(unlocked&&!maxed){
+      card=document.createElement('a');
+      card.href='test-engine.html?id='+t.id;
+      card.addEventListener('click',()=>recordAttempt(t.id));
+    }else{
+      card=document.createElement('div');
+    }
     card.className='card'+(maxed?' completed':unlocked?'':' locked');
-    const sc=score?`<span class="cscore">${score.correct||0}/${score.total||t.qs}</span>`:'';
-    let ac;
-    if(maxed){ac=`<span class="ca ca-done"><svg width="10" height="10" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>Completed</span><span class="retest-badge">All 3 Used</span>${sc}`;}
-    else if(unlocked){ac=`<span class="ca"><svg width="10" height="10" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><polygon points="5 3 19 12 5 21 5 3"/></svg>${score?'Retake':'Start'}</span>${sc}`;}
-    else{ac=`<span class="ca ca-lock"><svg width="10" height="10" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0110 0v4"/></svg>Locked</span>`;}
-    const stTxt=t.free?'FREE':maxed?'DONE':unlocked?'OPEN':'LOCK';
-    const stCls=maxed||unlocked?'st-free':'st-lock';
-    card.innerHTML=`<div class="ct"><span class="lbl ${t.pyq?'lbl-pyq':'lbl-reg'}">${t.lbl}</span><span class="st ${stCls}">${stTxt}</span></div><div class="cb"><div class="ctitle">${t.title}</div><div class="cmeta"><span class="mi"><svg width="9" height="9" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>${t.mins} min</span><span class="mi"><svg width="9" height="9" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M9 11l3 3L22 4"/></svg>${t.qs} Qs</span></div></div><div class="cf">${ac}</div>`;
+
+    // Status badge text & class
+    const stTxt=t.free?'FREE':maxed?'DONE':unlocked?'OPEN':'LOCKED';
+    const stCls=maxed?'st-done':unlocked?'st-open':'st-lock';
+
+    // Score chip
+    const sc=score?`<span class="cscore">${score.correct||0}/${score.total||t.qs} correct</span>`:'';
+
+    // Footer action button
+    let footerBtn;
+    if(maxed){
+      footerBtn=`<span class="btn-completed-test"><svg width="11" height="11" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>Completed</span><span class="retest-badge">All 3 Used</span>`;
+    }else if(unlocked&&t.free){
+      footerBtn=`<span class="btn-free-test"><svg width="11" height="11" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24"><polygon points="5 3 19 12 5 21 5 3"/></svg>${score?'Re-take':'FREE TEST'}</span>${sc}`;
+    }else if(unlocked){
+      footerBtn=`<span class="${score?'btn-retake-test':'btn-start-test'}"><svg width="11" height="11" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24"><polygon points="5 3 19 12 5 21 5 3"/></svg>${score?'Retake':'Start Test'}</span>${sc}`;
+    }else{
+      footerBtn=`<span class="btn-locked-test"><svg width="11" height="11" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0110 0v4"/></svg>Locked</span>`;
+    }
+
+    card.innerHTML=`
+      <div class="ct">
+        <span class="lbl ${t.pyq?'lbl-pyq':'lbl-reg'}">${t.lbl}</span>
+        <span class="st ${stCls}">${stTxt}</span>
+      </div>
+      <div class="cb">
+        <div class="ctitle">${t.title}</div>
+        <div class="cdesc">${p.topics}</div>
+        <div class="cmeta">
+          <span class="mi"><svg width="10" height="10" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>${t.mins} min</span>
+          <span class="mi"><svg width="10" height="10" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M9 11l3 3L22 4"/></svg>${t.qs} Qs</span>
+          <span class="type-pill">${p.type}</span>
+        </div>
+      </div>
+      <div class="cf">${footerBtn}</div>`;
+
     if(!unlocked)card.onclick=()=>openModal(p.key);
     wrap.appendChild(card);grid.appendChild(wrap);
   });
