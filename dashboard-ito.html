@@ -259,11 +259,19 @@ body{background:var(--bg);color:var(--ink);font-family:'Open Sans',sans-serif;ov
 .btn-cont{width:100%;padding:.78rem;border:none;border-radius:9px;font-size:.88rem;font-weight:700;cursor:pointer;background:linear-gradient(135deg,var(--t1),var(--t3));color:#fff;margin-top:.5rem;font-family:'Open Sans',sans-serif}
 .btn-cont:hover{background:var(--t1)}
 
-/* Subject selector */
+/* Subject card grid selector */
 .subject-selector{margin-bottom:.7rem}
-.subject-selector label{display:block;font-size:.73rem;font-weight:700;color:var(--ink);margin-bottom:.4rem}
-.subject-sel{width:100%;padding:.65rem .85rem;border:1.5px solid var(--bdr);border-radius:8px;font-family:'Open Sans',sans-serif;font-size:.84rem;color:var(--ink);background:#fff;outline:none;appearance:none;background-image:url("data:image/svg+xml,%3Csvg width='12' height='8' fill='none' stroke='%236B7280' stroke-width='1.5' viewBox='0 0 12 8' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M1 1l5 5 5-5'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right .85rem center;padding-right:2.2rem}
-.subject-sel:focus{border-color:var(--t3);box-shadow:0 0 0 3px rgba(0,171,132,.1)}
+.subject-selector-lbl{display:flex;align-items:center;gap:.4rem;font-size:.72rem;font-weight:700;color:var(--ink);margin-bottom:.6rem}
+.subject-selector-lbl svg{color:var(--t3)}
+.subject-grid{display:grid;grid-template-columns:1fr 1fr;gap:.5rem;margin-bottom:.5rem}
+.subj-card{border:1.5px solid var(--bdr);border-radius:10px;padding:.65rem .75rem;cursor:pointer;transition:all .15s;background:#fff}
+.subj-card:hover{border-color:#a7f3d0;background:#f8fefb}
+.subj-card.sel{border-color:var(--t3);background:#f0fdf8;box-shadow:0 0 0 2px rgba(0,171,132,.12)}
+.subj-card h5{font-size:.76rem;font-weight:700;color:var(--ink);margin-bottom:.18rem;line-height:1.3}
+.subj-card p{font-size:.6rem;color:var(--muted)}
+.btn-subj-cont{width:100%;padding:.68rem;border:none;border-radius:9px;font-size:.84rem;font-weight:700;cursor:pointer;background:linear-gradient(135deg,var(--t1),var(--t3));color:#fff;font-family:'Open Sans',sans-serif;transition:all .2s;margin-top:.35rem;display:block}
+.btn-subj-cont:disabled{background:#c4c4c4;cursor:not-allowed}
+.btn-subj-cont:not(:disabled):hover{filter:brightness(1.06)}
 
 /* ── PAYMENT STEP ── */
 .qr-box{background:var(--t-dark);border-radius:14px;padding:0;margin-bottom:.45rem;overflow:hidden;position:relative;box-shadow:0 4px 24px rgba(0,77,63,.22)}
@@ -619,16 +627,31 @@ body{background:var(--bg);color:var(--ink);font-family:'Open Sans',sans-serif;ov
         <p style="font-size:.77rem;color:var(--muted);margin-bottom:.85rem;">Choose your plan:</p>
         <div class="plan-cards" id="plan-cards"></div>
         <div class="subject-selector" id="subject-selector-wrap" style="display:none">
-          <label for="subject-sel-input">Select Paper (for Single Subject)</label>
-          <select class="subject-sel" id="subject-sel-input" onchange="selSubjectKey=this.value">
-            <option value="">— Choose a Paper —</option>
-            <option value="p1">Paper 1 — Income Tax Law & Computation</option>
-            <option value="p2">Paper 2 — Advance Accountancy</option>
-            <option value="p3">Paper 3 — Allied Laws</option>
-            <option value="p4">Paper 4 — Office Procedure & GK</option>
-          </select>
+          <div class="subject-selector-lbl">
+            <svg width=13 height=13 fill=none stroke="currentColor" stroke-width=2.2 viewBox="0 0 24 24"><circle cx=12 cy=12 r=10/><path d="M12 8v4l3 3"/></svg>
+            Select the subject you want to unlock:
+          </div>
+          <div class="subject-grid" id="subject-grid">
+            <div class="subj-card" data-key="p1" onclick="selectSubjCard('p1')">
+              <h5>Paper 1 — Income Tax Law &amp; Computation</h5>
+              <p>21 Tests · 150 Marks</p>
+            </div>
+            <div class="subj-card" data-key="p2" onclick="selectSubjCard('p2')">
+              <h5>Paper 2 — Advance Accountancy</h5>
+              <p>21 Tests · 100 Marks</p>
+            </div>
+            <div class="subj-card" data-key="p3" onclick="selectSubjCard('p3')">
+              <h5>Paper 3 — Allied Laws</h5>
+              <p>21 Tests · 100 Marks</p>
+            </div>
+            <div class="subj-card" data-key="p4" onclick="selectSubjCard('p4')">
+              <h5>Paper 4 — Office Procedure &amp; GK</h5>
+              <p>21 Tests · 100 Marks</p>
+            </div>
+          </div>
+          <button class="btn-subj-cont" id="subj-cont-btn" disabled onclick="doContinue()">Select a subject to continue</button>
         </div>
-        <button class="btn-cont" id="cont-btn" onclick="doContinue()">Continue →</button>
+        <button class="btn-cont" id="cont-btn" onclick="doContinue()" style="display:none">Continue →</button>
       </div>
       <div id="step2" style="display:none">
         <!-- PAY SCREEN -->
@@ -1053,15 +1076,31 @@ function buildPlans(){
     d.innerHTML=`<div class="pr"><div class="pd-dot"></div></div><div class="pi"><h4>${p.label}</h4><p>${p.desc}</p></div><div class="pp">₹${p.amount}</div>${p.best?'<span class="best-m">Best Value</span>':''}`;
     pc.appendChild(d);
   });
-  // Show/hide subject selector
+  // Show subject card grid only for single plan
   const ss=document.getElementById('subject-selector-wrap');
-  if(ss)ss.style.display=(selPlan==='single-ito')?'':'none';
   const cb=document.getElementById('cont-btn');
-  if(cb)cb.textContent=selPlan?`Pay ₹${PLANS[selPlan].amount} via UPI →`:'Select a plan to continue';
+  if(selPlan==='single-ito'){
+    if(ss)ss.style.display='';
+    if(cb)cb.style.display='none';
+  }else if(selPlan==='bunch-ito'){
+    if(ss)ss.style.display='none';
+    if(cb){cb.style.display='';cb.textContent='Pay ₹955 via UPI →';}
+  }else{
+    if(ss)ss.style.display='none';
+    if(cb){cb.style.display='';cb.textContent='Select a plan to continue';}
+  }
 }
 function selectModalPlan(k){
   selPlan=k;
+  // Reset subject selection when switching plan
+  if(k!=='single-ito'){selSubjectKey=null;document.querySelectorAll('.subj-card').forEach(c=>c.classList.remove('sel'));}
   buildPlans();
+}
+function selectSubjCard(key){
+  selSubjectKey=key;
+  document.querySelectorAll('.subj-card').forEach(c=>c.classList.toggle('sel',c.dataset.key===key));
+  const btn=document.getElementById('subj-cont-btn');
+  if(btn){const p=PAPERS.find(pp=>pp.key===key);btn.disabled=false;btn.textContent=p?`Pay ₹355 — ${p.name} →`:'Pay ₹355 via UPI →';}
 }
 
 function openModal(paperKey){
@@ -1092,9 +1131,7 @@ function overlayClick(e){if(e.target===document.getElementById('overlay'))closeM
 async function doContinue(){
   if(!selPlan)return;
   if(selPlan==='single-ito'&&!selSubjectKey){
-    const ss=document.getElementById('subject-sel-input');
-    if(ss&&ss.value)selSubjectKey=ss.value;
-    else{alert('Please select a paper first.');return;}
+    alert('Please select a paper first.');return;
   }
   const p=PLANS[selPlan];
   const subjectPaper=PAPERS.find(pp=>pp.key===selSubjectKey);
@@ -1419,7 +1456,7 @@ Object.assign(window,{
   toggleProfile,openEditModal,closeEditModal,saveProfile,logout,
   closeModal,overlayClick,doContinue,activate,switchUpi,backToPlan,
   copyUpi,selectBundlePlan,openModalFromBundle,buildTabs,switchTab,render,
-  onUpiAppClick,showPayScreen,showConfirmScreen
+  onUpiAppClick,showPayScreen,showConfirmScreen,selectSubjCard
 });
 
 })();
