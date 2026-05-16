@@ -49,14 +49,14 @@ body{background:var(--bg);color:var(--ink);font-family:'Open Sans',sans-serif;ov
 .ac-sub{letter-spacing:.05em;text-transform:uppercase;opacity:.85;text-align:center;font-size:.5rem;font-weight:600}
 .ac-eq{background:var(--t3);color:#fff}
 .ac-wq{background:var(--dark);color:#fff}
-.ac-login{color:#555;background:#e8e8e8}
+.ac-login,.ac-reg{color:#555;background:#e8e8e8}
 .ac-wt{background:var(--t2);color:#fff;position:relative}
 .free-badge{background:var(--yellow);color:#111;letter-spacing:.08em;text-transform:uppercase;border-radius:3px;padding:.1rem .3rem;font-size:.46rem;font-weight:800;position:absolute;top:-6px;right:-6px}
 
 /* ── NAV ── */
 nav{z-index:200;background:#fff;position:sticky;top:0;border-bottom:1px solid var(--bdr)}
 .nav-inner{justify-content:space-evenly;align-items:stretch;max-width:1200px;margin:0 auto;padding:0 1.2rem;display:flex}
-.nav-link{letter-spacing:.04em;text-transform:uppercase;color:#444;white-space:nowrap;border-bottom:3px solid transparent;flex:none;justify-content:center;align-items:center;gap:.2rem;padding:.85rem .4rem;font-size:.72rem;font-weight:600;text-decoration:none;transition:all .15s;display:inline-flex}
+.nav-link{letter-spacing:.03em;text-transform:uppercase;color:#444;white-space:nowrap;border-bottom:3px solid transparent;flex:none;justify-content:center;align-items:center;gap:.2rem;padding:.85rem .32rem;font-size:.65rem;font-weight:600;text-decoration:none;transition:all .15s;display:inline-flex}
 .nav-link:hover,.nav-link.active{color:var(--t3);border-bottom-color:var(--t3)}
 #mob-toggle{cursor:pointer;background:none;border:none;flex-shrink:0;margin-left:auto;padding:.5rem;display:none}
 #mob-menu{border-top:1px solid var(--bdr);background:#fff;padding:.5rem 1.2rem 1rem;display:none}
@@ -106,7 +106,7 @@ nav{z-index:200;background:#fff;position:sticky;top:0;border-bottom:1px solid va
 .breadcrumb a:hover{color:var(--t-dark)}
 
 /* ── MAIN CONTENT ── */
-.page-wrap{max-width:980px;margin:0 auto;padding:2rem 1.5rem 5rem}
+.page-wrap{max-width:1200px;margin:0 auto;padding:2rem 1.5rem 5rem}
 
 /* Stats strip */
 .stats-strip{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:.75rem;margin-bottom:2rem}
@@ -253,6 +253,10 @@ footer{background:var(--dark);padding:2.8rem 0 0;position:relative;overflow:hidd
         <svg viewBox="0 0 24 24" fill="none" stroke="#888" stroke-width="2"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
         <span class="ac-title" style="color:#666">Login</span><span class="ac-sub" style="color:#aaa">My Account</span>
       </a>
+      <a class="ac ac-reg" href="login.html">
+        <svg viewBox="0 0 24 24" fill="none" stroke="#888" stroke-width="2"><path d="M16 21v-2a4 4 0 00-4-4H6a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><line x1="19" y1="8" x2="19" y2="14"/><line x1="22" y1="11" x2="16" y2="11"/></svg>
+        <span class="ac-title" style="color:#666">Register</span><span class="ac-sub" style="color:#aaa">Free Account</span>
+      </a>
       <a class="ac ac-wt" href="login.html">
         <span class="free-badge">FREE</span>
         <svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2"><path d="M12 2L15.1 8.3 22 9.3 17 14.1 18.2 21 12 17.8 5.8 21 7 14.1 2 9.3 8.9 8.3 12 2z"/></svg>
@@ -268,10 +272,11 @@ footer{background:var(--dark);padding:2.8rem 0 0;position:relative;overflow:hidd
     <a class="nav-link" href="index.html">Home</a>
     <a class="nav-link" href="about.html">About Us</a>
     <a class="nav-link" href="index.html#exams">Test Series</a>
-    <a class="nav-link" href="syllabus-ms.html">MS Syllabus</a>
+    <a class="nav-link" href="syllabus-ms.html">Ministrial Staff Syllabus</a>
     <a class="nav-link active" href="syllabus-iti.html">Inspector Syllabus</a>
-    <a class="nav-link" href="syllabus-ito.html">ITO Syllabus</a>
-    <a class="nav-link" href="contact.html">Contact</a>
+    <a class="nav-link" href="syllabus-ito.html">Income Tax Officer Syllabus</a>
+    <a class="nav-link" href="contact.html">Contact Us</a>
+    <a class="nav-link" href="notification.html">Notifications</a>
     <a class="nav-link" href="faq.html">FAQ</a>
     <button onclick="document.getElementById('mob-menu').classList.toggle('open')" aria-label="Menu" id="mob-toggle">
       <svg viewBox="0 0 24 24" fill="none" height="22" stroke="#444" stroke-width="2" width="22"><path d="M4 6h16M4 12h16M4 18h16"/></svg>
@@ -281,10 +286,11 @@ footer{background:var(--dark);padding:2.8rem 0 0;position:relative;overflow:hidd
     <a class="mob-nav-link" href="index.html">Home</a>
     <a class="mob-nav-link" href="about.html">About Us</a>
     <a class="mob-nav-link" href="index.html#exams">Test Series</a>
-    <a class="mob-nav-link" href="syllabus-ms.html">MS Syllabus</a>
+    <a class="mob-nav-link" href="syllabus-ms.html">Ministrial Staff Syllabus</a>
     <a class="mob-nav-link active" href="syllabus-iti.html">Inspector Syllabus</a>
-    <a class="mob-nav-link" href="syllabus-ito.html">ITO Syllabus</a>
-    <a class="mob-nav-link" href="contact.html">Contact</a>
+    <a class="mob-nav-link" href="syllabus-ito.html">Income Tax Officer Syllabus</a>
+    <a class="mob-nav-link" href="contact.html">Contact Us</a>
+    <a class="mob-nav-link" href="notification.html">Notifications</a>
     <a class="mob-nav-link" href="faq.html">FAQ</a>
   </div>
 </nav>
