@@ -482,56 +482,68 @@ footer{background:var(--dark);padding:2.8rem 0 0;position:relative;overflow:hidd
 </footer>
 
 <script>
-/* ── MESSAGE DATABASE (localStorage) ── */
-const DB_KEY = 'toppers11_messages';
+/* ── SUPABASE CONFIG ── */
+const SUPA_URL  = 'https://tvstcvinatkokhmoeqlx.supabase.co';
+const SUPA_KEY  = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InR2c3RjdmluYXRrb2tobW9lcWx4Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3Nzc5MzU5NDMsImV4cCI6MjA5MzUxMTk0M30.MNT5dOgqeCmJmgQPgmh8t5ivKnTZ90nB8UzQhfqquh8';
+const SUPA_TABLE = 'contact_messages';
 
-function getMessages() {
-  try { return JSON.parse(localStorage.getItem(DB_KEY) || '[]'); } catch(e) { return []; }
-}
+async function submitForm(){
+  const name     = document.getElementById('f-name').value.trim();
+  const email    = document.getElementById('f-email').value.trim();
+  const phone    = document.getElementById('f-phone').value.trim();
+  const category = document.getElementById('f-category').value;
+  const subject  = document.getElementById('f-subject').value;
+  const message  = document.getElementById('f-message').value.trim();
 
-function saveMessage(entry) {
-  const msgs = getMessages();
-  msgs.push(entry);
-  localStorage.setItem(DB_KEY, JSON.stringify(msgs));
-}
-
-function submitForm(){
-  const name    = document.getElementById('f-name').value.trim();
-  const email   = document.getElementById('f-email').value.trim();
-  const phone   = document.getElementById('f-phone').value.trim();
-  const category= document.getElementById('f-category').value;
-  const subject = document.getElementById('f-subject').value;
-  const msg     = document.getElementById('f-message').value.trim();
-
-  if(!name || !subject || !msg){
+  if(!name || !subject || !message){
     alert('Please fill in all required fields (*)');
     return;
   }
 
-  const entry = {
-    id:        'msg_' + Date.now() + '_' + Math.random().toString(36).slice(2,7),
-    timestamp: new Date().toISOString(),
-    name, email, phone, category, subject, message: msg
-  };
+  /* Disable button & show spinner */
+  const btn = document.querySelector('.btn-submit');
+  const origHTML = btn.innerHTML;
+  btn.disabled = true;
+  btn.innerHTML = '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" style="animation:spin .8s linear infinite"><path d="M12 2v4M12 18v4M4.93 4.93l2.83 2.83M16.24 16.24l2.83 2.83M2 12h4M18 12h4M4.93 19.07l2.83-2.83M16.24 7.76l2.83-2.83"/></svg> Sending…';
 
-  saveMessage(entry);
-  console.log('[Toppers11] Message saved to DB. Total messages:', getMessages().length);
+  try {
+    const res = await fetch(`${SUPA_URL}/rest/v1/${SUPA_TABLE}`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'apikey': SUPA_KEY,
+        'Authorization': `Bearer ${SUPA_KEY}`,
+        'Prefer': 'return=minimal'
+      },
+      body: JSON.stringify({ name, email, phone, category, subject, message })
+    });
 
-  // Clear form
-  ['f-name','f-email','f-phone','f-message'].forEach(id => document.getElementById(id).value = '');
-  document.getElementById('f-category').value = '';
-  document.getElementById('f-subject').value  = '';
+    if(!res.ok){
+      const err = await res.json().catch(()=>({}));
+      throw new Error(err.message || `HTTP ${res.status}`);
+    }
 
-  document.getElementById('success-msg').classList.add('show');
-  setTimeout(() => document.getElementById('success-msg').classList.remove('show'), 6000);
+    /* Clear form */
+    ['f-name','f-email','f-phone','f-message'].forEach(id => document.getElementById(id).value = '');
+    document.getElementById('f-category').value = '';
+    document.getElementById('f-subject').value  = '';
+
+    document.getElementById('success-msg').classList.add('show');
+    setTimeout(() => document.getElementById('success-msg').classList.remove('show'), 6000);
+
+  } catch(e) {
+    alert('Sorry, something went wrong. Please try WhatsApp or email.\n\nError: ' + e.message);
+    console.error('[Toppers11] Supabase error:', e);
+  } finally {
+    btn.disabled = false;
+    btn.innerHTML = origHTML;
+  }
 }
 
-/* Admin helper: call getToppers11Messages() in browser console to view all submissions */
-window.getToppers11Messages = function() {
-  const msgs = getMessages();
-  console.table(msgs);
-  return msgs;
-};
+/* Spinner keyframe */
+const _s = document.createElement('style');
+_s.textContent = '@keyframes spin{to{transform:rotate(360deg)}}';
+document.head.appendChild(_s);
 
 window.addEventListener('scroll',()=>{
   const prog=document.getElementById('progress');
