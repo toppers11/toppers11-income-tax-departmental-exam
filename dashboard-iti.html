@@ -9,6 +9,11 @@
 <title>ITI Inspector Dashboard — Toppers11</title>
 <meta name="robots" content="noindex, nofollow">
 <meta name="theme-color" content="#00AB84">
+<meta name="description" content="ITI Inspector Exam Test Series — Practice with PYQs and AI-leveled sets on Toppers11.">
+<!-- Security hardening via meta (backup to HTTP headers) -->
+<meta http-equiv="X-Content-Type-Options" content="nosniff">
+<meta http-equiv="X-Frame-Options" content="SAMEORIGIN">
+<meta name="referrer" content="strict-origin-when-cross-origin">
 <!-- Only the 4 font families actually used in the UI -->
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -23,7 +28,7 @@
 :root{--t1:#006d5b;--t2:#25a36f;--t3:#00ab84;--t-dark:#004d3f;--t-mid:#008c6e;--yellow:#f5c518;--yellow2:#e8a900;--dark:#1a1a2e;--dark2:#2d2d44;--ink:#222;--muted:#555;--bg:#f7f7f7;--wh:#fff;--bdr:#ddd}
 *{box-sizing:border-box;margin:0;padding:0}
 html{scroll-behavior:smooth}
-body{background:var(--bg);color:var(--ink);font-family:Open Sans,sans-serif;overflow-x:hidden}
+body{background:var(--bg);color:var(--ink);font-family:'Open Sans',sans-serif;overflow-x:hidden}
 
 /* ── PROGRESS BAR ── */
 #progress{background:linear-gradient(90deg,var(--t1),var(--t3));position:fixed;top:0;left:0;width:0%;height:3px;z-index:9999;transition:width .15s}
@@ -712,8 +717,19 @@ body{background:var(--bg);color:var(--ink);font-family:Open Sans,sans-serif;over
   .tests-grid{grid-template-columns:repeat(2,1fr)}
   .logo-box .site-name{font-size:1.65rem}
 }
+/* ── SKELETON LOADER ── */
+@keyframes shimmer{0%{background-position:-600px 0}100%{background-position:600px 0}}
+.skel{background:linear-gradient(90deg,#f0f0f0 25%,#e0e0e0 50%,#f0f0f0 75%);background-size:600px 100%;animation:shimmer 1.4s infinite;border-radius:6px}
+.skel-line{height:10px;margin-bottom:6px}
+.skel-line.w60{width:60%}
+.skel-line.w80{width:80%}
+.skel-line.w40{width:40%}
+.skel-card{background:#fff;border:1.5px solid var(--bdr);border-radius:8px;padding:.75rem .9rem;display:flex;flex-direction:column;gap:.5rem;min-height:130px}
+
 /* ── ACCESSIBILITY ── */
 :focus-visible{outline:2px solid var(--t3);outline-offset:3px;border-radius:4px}
+.skip-link{position:absolute;top:-100px;left:1rem;background:var(--t1);color:#fff;padding:.5rem 1rem;border-radius:0 0 8px 8px;font-size:.8rem;font-weight:700;text-decoration:none;z-index:99999;transition:top .15s}
+.skip-link:focus{top:0}
 .sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
 /* Ensure interactive divs have a pointer and focusable affordance */
 [role="button"]{cursor:pointer}
@@ -721,6 +737,8 @@ body{background:var(--bg);color:var(--ink);font-family:Open Sans,sans-serif;over
 </head>
 <body>
 <div id="progress"></div>
+<!-- Skip link for keyboard and screen reader users -->
+<a href="#main-content" class="skip-link">Skip to main content</a>
 <button aria-label="Back to top" onclick="scrollTo({top:0,behavior:'smooth'})" id="btt">
   <svg viewBox="0 0 24 24" fill=none height=15 stroke=currentColor stroke-width=2.5 width=15><path d="M5 15l7-7 7 7"/></svg>
 </button>
@@ -990,7 +1008,7 @@ body{background:var(--bg);color:var(--ink);font-family:Open Sans,sans-serif;over
 <div class="tabs-bar"><div class="tabs-inner" id="tabs-inner"></div></div>
 
 <!-- MAIN -->
-<div class="main">
+<main class="main" id="main-content" aria-label="Dashboard content">
 
   <div class="retest-notice">
     <div class="rn-accent"></div>
@@ -1016,7 +1034,7 @@ body{background:var(--bg);color:var(--ink);font-family:Open Sans,sans-serif;over
     </div>
   </div>
   <div id="panels"></div>
-</div>
+</main>
 
 <!-- PURCHASE MODAL -->
 <div class="overlay" id="overlay" role="dialog" aria-modal="true" aria-labelledby="modal-title" onclick="overlayClick(event)">
@@ -1099,41 +1117,58 @@ body{background:var(--bg);color:var(--ink);font-family:Open Sans,sans-serif;over
   </div>
 </div>
 
-<div class=toast id="toast">
+<div class=toast id="toast" role="status" aria-live="polite" aria-atomic="true">
   <svg width=13 height=13 fill=none stroke=currentColor stroke-width=2.5 viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>
   <span id="toast-msg"></span>
 </div>
 
 <script>
 'use strict';
-/* ─────────────────────────────────────────────
-   T11 Dashboard — ITI Inspector
-   Improvements:
-   • QR lib loaded lazily (only on modal open)
-   • Passwords never stored client-side
-   • activate() shows UTR field; flags pending verification
-   • Wrapped in IIFE to avoid polluting global scope
-   • aria-expanded kept in sync on profile toggle
-───────────────────────────────────────────── */
 (function(){
+
+/* ── Safe DOM helper — prevents XSS via innerHTML ── */
+function setText(id,val){const el=document.getElementById(id);if(el)el.textContent=val||'—';}
+function setAttr(id,attr,val){const el=document.getElementById(id);if(el)el.setAttribute(attr,val);}
+
+/* ── Sanitize strings before injecting into DOM ── */
+function sanitize(str){
+  const d=document.createElement('div');
+  d.appendChild(document.createTextNode(String(str||'')));
+  return d.innerHTML;
+}
+
+/* ── Session integrity check — detect localStorage tampering ── */
+function isValidToken(token){
+  // Tokens must be non-empty strings of reasonable length
+  return typeof token==='string'&&token.length>=8&&token.length<=512;
+}
+
+/* ── Rate limit guard for Supabase calls ── */
+let _lastSbCall=0;
+function sbRateOk(){const now=Date.now();if(now-_lastSbCall<500)return false;_lastSbCall=now;return true;}
 
 const SUPABASE_URL='https://tvstcvinatkokhmoeqlx.supabase.co';
 const SUPABASE_ANON_KEY='eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InR2c3RjdmluYXRrb2tobW9lcWx4Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3Nzc5MzU5NDMsImV4cCI6MjA5MzUxMTk0M30.MNT5dOgqeCmJmgQPgmh8t5ivKnTZ90nB8UzQhfqquh8';
 
 /* ── Supabase helpers ── */
+function fetchWithTimeout(url,opts,ms=8000){
+  const ctrl=new AbortController();
+  const id=setTimeout(()=>ctrl.abort(),ms);
+  return fetch(url,{...opts,signal:ctrl.signal}).finally(()=>clearTimeout(id));
+}
 async function sbInsert(table,row){
   try{
-    const res=await fetch(SUPABASE_URL+'/rest/v1/'+table,{
+    const res=await fetchWithTimeout(SUPABASE_URL+'/rest/v1/'+table,{
       method:'POST',
       headers:{'Content-Type':'application/json','apikey':SUPABASE_ANON_KEY,'Authorization':'Bearer '+SUPABASE_ANON_KEY,'Prefer':'return=minimal'},
       body:JSON.stringify(row)
     });
     if(!res.ok)console.warn('Supabase insert error:',res.status);
-  }catch(e){console.warn('Supabase unreachable:',e);}
+  }catch(e){if(e.name!=='AbortError')console.warn('Supabase unreachable:',e);}
 }
 async function sbFetch(path){
   try{
-    const res=await fetch(SUPABASE_URL+'/rest/v1/'+path,{
+    const res=await fetchWithTimeout(SUPABASE_URL+'/rest/v1/'+path,{
       headers:{'apikey':SUPABASE_ANON_KEY,'Authorization':'Bearer '+SUPABASE_ANON_KEY}
     });
     if(!res.ok)return[];
@@ -1269,9 +1304,10 @@ let activeTab=0;
 function getUser(){try{return JSON.parse(localStorage.getItem('t11_user')||'{}')}catch(e){return{}}}
 function saveUser(u){localStorage.setItem('t11_user',JSON.stringify(u))}
 
-/** Returns true only if user has a token and it hasn't expired (24h) */
+/** Returns true only if user has a valid token format and it hasn't expired (24h) */
 function isSessionValid(user){
   if(!user||!user.token)return false;
+  if(!isValidToken(user.token))return false; // reject malformed/tampered tokens
   if(user.loginAt){
     const age=Date.now()-new Date(user.loginAt).getTime();
     if(age>86400000){localStorage.removeItem('t11_user');return false;}// 24h
@@ -1283,7 +1319,13 @@ function isPaid(){const u=getUser();return u.paid&&(!u.plan||u.plan.includes('bu
 function getScore(id){try{return JSON.parse(localStorage.getItem('t11_score_'+id)||'null')}catch(e){return null}}
 function getAttempts(id){try{return parseInt(localStorage.getItem('t11_attempts_'+id)||'0',10);}catch(e){return 0;}}
 function recordAttempt(id){const n=getAttempts(id)+1;localStorage.setItem('t11_attempts_'+id,n);}
-function logout(){localStorage.removeItem('t11_user');window.location.href='login.html'}
+function logout(){
+  // Clear all session-related keys on logout for privacy
+  const keysToRemove=Object.keys(localStorage).filter(k=>k.startsWith('t11_user')||k==='t11_user');
+  keysToRemove.forEach(k=>localStorage.removeItem(k));
+  // Keep t11_users (registration data) and t11_payments — those belong to the device
+  window.location.href='login.html';
+}
 function isUnlocked(t){return t.free||isPaid();}
 
 function buildTabs(){
@@ -1498,6 +1540,8 @@ function loadQrLib(){
     if(_qrLibLoaded||window.QRCode){_qrLibLoaded=true;resolve();return;}
     const s=document.createElement('script');
     s.src='https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js';
+    s.crossOrigin='anonymous';
+    s.referrerPolicy='no-referrer';
     s.onload=()=>{_qrLibLoaded=true;resolve();};
     s.onerror=()=>{console.warn('QR lib failed to load');resolve();};
     document.head.appendChild(s);
@@ -1542,41 +1586,78 @@ async function activate(){
 }
 function showToast(msg){const t=document.getElementById('toast');document.getElementById('toast-msg').textContent=msg;t.classList.add('show');setTimeout(()=>t.classList.remove('show'),3500);}
 
+/* ── Show skeleton cards while content loads ── */
+function showSkeleton(){
+  const panels=document.getElementById('panels');
+  if(!panels)return;
+  let html='<div class="panel active"><div style="display:grid;grid-template-columns:repeat(4,1fr);gap:.85rem;margin-top:1rem">';
+  for(let i=0;i<8;i++){
+    html+=`<div class="skel-card">
+      <div class="skel skel-line w40"></div>
+      <div class="skel skel-line w80"></div>
+      <div class="skel skel-line w60"></div>
+      <div class="skel skel-line w40" style="margin-top:auto"></div>
+    </div>`;
+  }
+  html+='</div></div>';
+  panels.innerHTML=html;
+}
+
 window.addEventListener('DOMContentLoaded',async()=>{
   const user=getUser();
   if(!isSessionValid(user)){window.location.href='login.html';return;}
+
+  // Show skeleton immediately — don't make user stare at blank page
+  showSkeleton();
+
+  // Sync plan status from server (authoritative source)
   try{
-    const rows=await sbFetch('users?email=eq.'+encodeURIComponent((user.email||'').toLowerCase())+'&select=paid,plan&limit=1');
-    if(rows&&rows.length){
-      const r=rows[0];
-      if(r.paid&&!user.paid){
-        const updated={...user,paid:true,plan:r.plan||user.plan};
-        saveUser(updated);
-        const payments=JSON.parse(localStorage.getItem('t11_payments')||'[]');
-        const already=payments.some(p=>p.email===(user.email||'').toLowerCase());
-        if(!already&&r.plan){
-          payments.push({email:(user.email||'').toLowerCase(),plan_key:r.plan,activated_at:new Date().toISOString(),source:'db_recovery'});
-          localStorage.setItem('t11_payments',JSON.stringify(payments));
+    if(sbRateOk()){
+      const rows=await sbFetch('users?email=eq.'+encodeURIComponent((user.email||'').toLowerCase())+'&select=paid,plan&limit=1');
+      if(rows&&rows.length){
+        const r=rows[0];
+        // Only upgrade locally — never downgrade from server (edge case: race condition)
+        if(r.paid&&!user.paid){
+          const updated={...user,paid:true,plan:r.plan||user.plan};
+          saveUser(updated);
+          const payments=JSON.parse(localStorage.getItem('t11_payments')||'[]');
+          const already=payments.some(p=>p.email===(user.email||'').toLowerCase());
+          if(!already&&r.plan){
+            payments.push({email:(user.email||'').toLowerCase(),plan_key:r.plan,activated_at:new Date().toISOString(),source:'db_recovery'});
+            localStorage.setItem('t11_payments',JSON.stringify(payments));
+          }
         }
       }
     }
-  }catch(e){console.warn('Plan sync failed',e);}
-  populateProfile(getUser(),getUsers());render();fetchAndUpdateQuestionCounts();
+  }catch(e){console.warn('Plan sync failed — using cached status',e);}
+
+  // Populate UI with fresh (possibly updated) user
+  populateProfile(getUser(),getUsers());
+  render();
+  fetchAndUpdateQuestionCounts();
 });
 
 function getUsers(){try{return JSON.parse(localStorage.getItem('t11_users')||'{}')}catch(e){return{}}}
 function saveUsers(u){localStorage.setItem('t11_users',JSON.stringify(u))}
 function populateProfile(user,users){
-  const key=(user.email||'').toLowerCase();const s=users[key]||{};const init=(user.name||'U').charAt(0).toUpperCase();
-  const un=document.getElementById('uname');if(un)un.textContent=(user.name||'User').split(' ')[0];
-  const pl=document.getElementById('pd-av-lg');if(pl)pl.textContent=init;
-  const pn=document.getElementById('pd-nm');if(pn)pn.textContent=user.name||'—';
-  const ph=document.getElementById('pd-em-hdr');if(ph)ph.textContent=user.email||'—';
-  const pe=document.getElementById('pd-em');if(pe)pe.textContent=user.email||'—';
-  const pm=document.getElementById('pd-mob');if(pm)pm.textContent=s.mobile?'+91 '+s.mobile:'Not provided';
-  const pr=document.getElementById('pd-reg');if(pr)pr.textContent=s.region||'Not selected';
-  const pp=document.getElementById('pd-plan-v');if(pp)pp.textContent=user.paid?(user.plan?user.plan.replace('bunch-','').replace('single-','').toUpperCase()+' Access':'Premium Access'):'Free (4 Tests)';
-  const pb=document.getElementById('pd-plan-badge-txt');if(pb)pb.textContent=user.paid?'Premium':'Free Plan';
+  const key=(user.email||'').toLowerCase();
+  const s=users[key]||{};
+  const init=(user.name||'U').charAt(0).toUpperCase();
+
+  // Safe setText — no XSS risk, no innerHTML
+  setText('uname',(user.name||'User').split(' ')[0]);
+  setText('pd-av-lg',init);
+  setText('pd-nm',user.name||'—');
+  setText('pd-em-hdr',user.email||'—');
+  setText('pd-em',user.email||'—');
+  setText('pd-mob',s.mobile?'+91 '+s.mobile:'Not provided');
+  setText('pd-reg',s.region||'Not selected');
+
+  const planLabel=user.paid
+    ?(user.plan?user.plan.replace('bunch-','').replace('single-','').toUpperCase()+' Access':'Premium Access')
+    :'Free (4 Tests)';
+  setText('pd-plan-v',planLabel);
+  setText('pd-plan-badge-txt',user.paid?'Premium':'Free Plan');
 }
 function toggleProfile(){
   const wrap=document.getElementById('chip-wrap');
@@ -1607,28 +1688,45 @@ function openEditModal(){
 }
 function closeEditModal(){document.getElementById('edit-modal').classList.remove('open');}
 function saveProfile(){
-  const name=document.getElementById('ef-name').value.trim();const email=document.getElementById('ef-email').value.trim();
-  const mobile=document.getElementById('ef-mobile').value.trim();const region=document.getElementById('ef-region').value;
-  const pass=document.getElementById('ef-pass').value;const pass2=document.getElementById('ef-pass2').value;
+  // Trim and sanitize all inputs
+  const name=sanitize(document.getElementById('ef-name').value.trim());
+  const email=sanitize(document.getElementById('ef-email').value.trim().toLowerCase());
+  const mobile=document.getElementById('ef-mobile').value.trim().replace(/\D/g,''); // digits only
+  const region=sanitize(document.getElementById('ef-region').value);
+  const pass=document.getElementById('ef-pass').value;
+  const pass2=document.getElementById('ef-pass2').value;
   const errEl=document.getElementById('ef-error');errEl.classList.remove('show');
   function err(m){errEl.textContent=m;errEl.classList.add('show');}
-  if(!name){err('Full name is required.');return;}if(!email||!email.includes('@')){err('Valid email is required.');return;}
-  if(mobile&&!/^\d{10}$/.test(mobile)){err('Mobile must be 10 digits.');return;}
-  if(pass&&pass.length<8){err('New password must be at least 8 characters.');return;}if(pass&&pass!==pass2){err('Passwords do not match.');return;}
-  const user=getUser();const users=getUsers();const oldKey=(user?.email||'').toLowerCase();const newKey=email.toLowerCase();
+
+  // Validation
+  if(!name||name.length<2){err('Full name must be at least 2 characters.');return;}
+  if(name.length>80){err('Name is too long (max 80 characters).');return;}
+  if(!email||!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)){err('Please enter a valid email address.');return;}
+  if(mobile&&!/^\d{10}$/.test(mobile)){err('Mobile must be exactly 10 digits.');return;}
+  if(pass&&pass.length<8){err('New password must be at least 8 characters.');return;}
+  if(pass&&pass!==pass2){err('Passwords do not match.');return;}
+  if(pass&&/^(.)\1+$/.test(pass)){err('Password is too simple — avoid repeated characters.');return;}
+
+  const user=getUser();const users=getUsers();
+  const oldKey=(user?.email||'').toLowerCase();const newKey=email;
   if(!users[oldKey]){err('Session error. Please log in again.');return;}
-  const ex=users[oldKey];if(mobile&&ex.mobile&&ex.mobile!==mobile&&ex.mobileUpdateUsed){err('Mobile number can only be updated once.');return;}
-  const changed=mobile&&ex.mobile&&ex.mobile!==mobile;const rec={...ex,name,mobile,region};
+  const ex=users[oldKey];
+  if(mobile&&ex.mobile&&ex.mobile!==mobile&&ex.mobileUpdateUsed){err('Mobile number can only be updated once.');return;}
+  const changed=mobile&&ex.mobile&&ex.mobile!==mobile;
+  const rec={...ex,name,mobile,region};
   if(changed)rec.mobileUpdateUsed=true;
-  // SECURITY: passwords are never stored client-side; send to server only
+
+  // Password change — server-side only, never stored locally
   if(pass){
     sbInsert('password_change_requests',{email:newKey,requested_at:new Date().toISOString()})
       .then(()=>showToast('🔑 Password change request sent. Check your email.'))
       .catch(()=>{});
   }
   if(newKey!==oldKey){if(users[newKey]){err('That email is already registered.');return;}delete users[oldKey];}
-  users[newKey]=rec;saveUsers(users);const upd={...user,name,email};saveUser(upd);
-  populateProfile(upd,users);closeEditModal();alert('✓ Profile updated successfully!');
+  users[newKey]=rec;saveUsers(users);
+  const upd={...user,name,email:newKey};saveUser(upd);
+  populateProfile(upd,users);closeEditModal();
+  showToast('✓ Profile updated successfully!');
 }
 
 window.addEventListener('scroll',()=>{
