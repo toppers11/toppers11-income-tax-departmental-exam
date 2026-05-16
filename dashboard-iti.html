@@ -57,24 +57,36 @@ body{background:var(--bg);color:var(--ink);font-family:Open Sans,sans-serif;over
 .user-chip-wrap.open .chevron-d{transform:rotate(180deg)}
 
 /* Profile dropdown */
-.profile-dropdown{position:absolute;top:calc(100% + 10px);right:0;width:300px;background:#fff;border:1px solid var(--bdr);border-radius:16px;box-shadow:0 16px 48px rgba(0,0,0,.12);z-index:500;overflow:hidden;display:none}
-.profile-dropdown.open{display:block;animation:ddIn .2s ease}
-@keyframes ddIn{from{opacity:0;transform:translateY(-8px)}to{opacity:1;transform:translateY(0)}}
-.pd-hdr{background:linear-gradient(135deg,var(--t-dark),var(--t3));padding:1.2rem 1.4rem;display:flex;align-items:center;gap:.9rem}
-.pd-av-lg{width:46px;height:46px;border-radius:50%;background:rgba(255,255,255,.2);display:grid;place-items:center;font-size:1.1rem;font-weight:700;color:#fff;flex-shrink:0;border:2px solid rgba(255,255,255,.35)}
-.pd-hdr-info h3{font-size:.95rem;font-weight:700;color:#fff;margin-bottom:.1rem}
-.pd-hdr-info p{font-size:.75rem;color:rgba(255,255,255,.72)}
-.pd-body{padding:1rem 1.4rem 1.2rem}
-.pd-row{display:flex;align-items:flex-start;gap:.7rem;padding:.5rem 0;border-bottom:1px solid var(--bdr)}
-.pd-row:last-child{border-bottom:none}
-.pd-ico{width:32px;height:32px;border-radius:8px;background:#f0fdf8;display:grid;place-items:center;flex-shrink:0;margin-top:2px}
-.pd-lbl{font-size:.7rem;font-weight:600;color:var(--muted);letter-spacing:.04em;text-transform:uppercase;margin-bottom:.15rem}
-.pd-val{font-size:.84rem;font-weight:500;color:var(--ink);line-height:1.4}
-.pd-ftr{padding:.8rem 1.4rem;border-top:1px solid var(--bdr);display:flex;gap:.6rem}
-.pd-btn-ed{flex:1;padding:.55rem;font-size:.78rem;font-weight:600;background:#f0fdf8;color:var(--t-dark);border:none;border-radius:8px;cursor:pointer;transition:background .15s}
-.pd-btn-ed:hover{background:#a7f3d0}
-.pd-btn-lo{flex:1;padding:.55rem;font-size:.78rem;font-weight:600;background:#fef2f2;color:#991b1b;border:none;border-radius:8px;cursor:pointer;transition:background .15s}
-.pd-btn-lo:hover{background:#fee2e2}
+.profile-dropdown{position:absolute;top:calc(100% + 12px);right:0;width:310px;background:#fff;border:1px solid #e2e8f0;border-radius:20px;box-shadow:0 20px 60px rgba(0,0,0,.13),0 4px 16px rgba(0,109,91,.08);z-index:500;overflow:hidden;display:none}
+.profile-dropdown.open{display:block;animation:ddIn .22s cubic-bezier(.16,1,.3,1)}
+@keyframes ddIn{from{opacity:0;transform:translateY(-10px) scale(.97)}to{opacity:1;transform:translateY(0) scale(1)}}
+
+/* Header */
+.pd-hdr{background:linear-gradient(135deg,var(--t-dark) 0%,var(--t3) 100%);padding:1.4rem 1.4rem 1.6rem;position:relative;overflow:hidden}
+.pd-hdr::before{content:'';position:absolute;inset:0;background:url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Ccircle cx='30' cy='30' r='28' stroke='%23ffffff' stroke-opacity='.04' stroke-width='1'/%3E%3C/g%3E%3C/svg%3E") repeat;pointer-events:none}
+.pd-hdr-top{display:flex;align-items:center;gap:.95rem;position:relative;z-index:1}
+.pd-av-lg{width:50px;height:50px;border-radius:50%;background:rgba(255,255,255,.22);display:grid;place-items:center;font-size:1.2rem;font-weight:800;color:#fff;flex-shrink:0;border:2.5px solid rgba(255,255,255,.45);letter-spacing:0;box-shadow:0 2px 12px rgba(0,0,0,.18)}
+.pd-hdr-info{flex:1;min-width:0}
+.pd-hdr-info h3{font-size:1rem;font-weight:700;color:#fff;margin-bottom:.18rem;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.pd-hdr-info p{font-size:.72rem;color:rgba(255,255,255,.75);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.pd-plan-badge{display:inline-flex;align-items:center;gap:.3rem;margin-top:.75rem;background:rgba(255,255,255,.15);border:1px solid rgba(255,255,255,.28);border-radius:999px;padding:.25rem .7rem;font-size:.62rem;font-weight:700;color:#fff;letter-spacing:.05em;text-transform:uppercase;position:relative;z-index:1}
+.pd-plan-badge svg{opacity:.85}
+
+/* Body rows */
+.pd-body{padding:.85rem 1.1rem .7rem}
+.pd-row{display:flex;align-items:center;gap:.75rem;padding:.55rem .65rem;border-radius:10px;transition:background .15s;margin-bottom:.18rem}
+.pd-row:hover{background:#f7fdfb}
+.pd-ico{width:34px;height:34px;border-radius:10px;background:linear-gradient(135deg,#e8faf4,#d0f5e8);display:grid;place-items:center;flex-shrink:0;box-shadow:0 1px 4px rgba(0,109,91,.1)}
+.pd-text{flex:1;min-width:0}
+.pd-lbl{font-size:.6rem;font-weight:700;color:#94a3b8;letter-spacing:.07em;text-transform:uppercase;margin-bottom:.1rem}
+.pd-val{font-size:.82rem;font-weight:600;color:var(--ink);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+
+/* Footer */
+.pd-ftr{padding:.8rem 1.1rem 1rem;display:flex;gap:.6rem;border-top:1px solid #f1f5f9}
+.pd-btn-ed{flex:1;display:inline-flex;align-items:center;justify-content:center;gap:.4rem;padding:.6rem .5rem;font-size:.76rem;font-weight:700;font-family:'Open Sans',sans-serif;background:#f0fdf8;color:var(--t-dark);border:1.5px solid #a7f3d0;border-radius:10px;cursor:pointer;transition:all .18s;letter-spacing:.01em}
+.pd-btn-ed:hover{background:var(--t3);color:#fff;border-color:var(--t3);box-shadow:0 4px 14px rgba(0,171,132,.3)}
+.pd-btn-lo{flex:1;display:inline-flex;align-items:center;justify-content:center;gap:.4rem;padding:.6rem .5rem;font-size:.76rem;font-weight:700;font-family:'Open Sans',sans-serif;background:#fff5f5;color:#c0392b;border:1.5px solid #fecaca;border-radius:10px;cursor:pointer;transition:all .18s;letter-spacing:.01em}
+.pd-btn-lo:hover{background:#e74c3c;color:#fff;border-color:#e74c3c;box-shadow:0 4px 14px rgba(231,76,60,.28)}
 
 /* ── HERO ── */
 .hero{background:var(--t3);padding:2.5rem 1.2rem 2.2rem;position:relative;overflow:hidden;}
@@ -750,31 +762,57 @@ body{background:var(--bg);color:var(--ink);font-family:Open Sans,sans-serif;over
           <span class="nav-tile-sub" id=uname>User</span>
         </div>
       <div class="profile-dropdown" id="profile-dropdown">
+        <!-- Header -->
         <div class="pd-hdr">
-          <div class="pd-av-lg" id="pd-av-lg">U</div>
-          <div class="pd-hdr-info"><h3 id="pd-nm">—</h3><p id="pd-em-hdr">—</p></div>
+          <div class="pd-hdr-top">
+            <div class="pd-av-lg" id="pd-av-lg">U</div>
+            <div class="pd-hdr-info">
+              <h3 id="pd-nm">—</h3>
+              <p id="pd-em-hdr">—</p>
+            </div>
+          </div>
+          <div class="pd-plan-badge">
+            <svg width=11 height=11 viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width=2.5 stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+            <span id="pd-plan-badge-txt">Free Plan</span>
+          </div>
         </div>
+        <!-- Body -->
         <div class="pd-body">
           <div class="pd-row">
-            <div class="pd-ico"><svg width=15 height=15 fill=none stroke="var(--t3)" stroke-width=2 viewBox="0 0 24 24"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg></div>
-            <div><div class="pd-lbl">Email</div><div class="pd-val" id="pd-em">—</div></div>
+            <div class="pd-ico">
+              <svg width=16 height=16 fill=none stroke="var(--t3)" stroke-width=2 viewBox="0 0 24 24"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+            </div>
+            <div class="pd-text"><div class="pd-lbl">Email</div><div class="pd-val" id="pd-em">—</div></div>
           </div>
           <div class="pd-row">
-            <div class="pd-ico"><svg width=15 height=15 fill=none stroke="var(--t3)" stroke-width=2 viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 9.81 19.79 19.79 0 01.4 3.18 2 2 0 012 1h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L6.09 8.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"/></svg></div>
-            <div><div class="pd-lbl">Mobile</div><div class="pd-val" id="pd-mob">—</div></div>
+            <div class="pd-ico">
+              <svg width=16 height=16 fill=none stroke="var(--t3)" stroke-width=2 viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 9.81 19.79 19.79 0 01.4 3.18 2 2 0 012 1h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L6.09 8.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"/></svg>
+            </div>
+            <div class="pd-text"><div class="pd-lbl">Mobile</div><div class="pd-val" id="pd-mob">—</div></div>
           </div>
           <div class="pd-row">
-            <div class="pd-ico"><svg width=15 height=15 fill=none stroke="var(--t3)" stroke-width=2 viewBox="0 0 24 24"><path d="M21 10c0 7-9 13-9 13S3 17 3 10a9 9 0 0118 0z"/><circle cx=12 cy=10 r=3/></svg></div>
-            <div><div class="pd-lbl">Region</div><div class="pd-val" id="pd-reg">—</div></div>
+            <div class="pd-ico">
+              <svg width=16 height=16 fill=none stroke="var(--t3)" stroke-width=2 viewBox="0 0 24 24"><path d="M21 10c0 7-9 13-9 13S3 17 3 10a9 9 0 0118 0z"/><circle cx=12 cy=10 r=3/></svg>
+            </div>
+            <div class="pd-text"><div class="pd-lbl">Region</div><div class="pd-val" id="pd-reg">—</div></div>
           </div>
           <div class="pd-row">
-            <div class="pd-ico"><svg width=15 height=15 fill=none stroke="var(--t3)" stroke-width=2 viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg></div>
-            <div><div class="pd-lbl">Plan</div><div class="pd-val" id="pd-plan-v">Free (4 Tests)</div></div>
+            <div class="pd-ico">
+              <svg width=16 height=16 fill=none stroke="var(--t3)" stroke-width=2 viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+            </div>
+            <div class="pd-text"><div class="pd-lbl">Plan</div><div class="pd-val" id="pd-plan-v">Free (4 Tests)</div></div>
           </div>
         </div>
+        <!-- Footer -->
         <div class="pd-ftr">
-          <button class="pd-btn-ed" aria-label="Edit your profile" onclick="openEditModal()">✏️ Edit Profile</button>
-          <button class="pd-btn-lo" aria-label="Sign out of your account" onclick="logout()">🚪 Sign Out</button>
+          <button class="pd-btn-ed" aria-label="Edit your profile" onclick="openEditModal()">
+            <svg width=13 height=13 fill=none stroke="currentColor" stroke-width=2.2 viewBox="0 0 24 24"><path d="M11 4H4a2 2 0 00-2 2v14a2 2 0 002 2h14a2 2 0 002-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 013 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
+            Edit Profile
+          </button>
+          <button class="pd-btn-lo" aria-label="Sign out of your account" onclick="logout()">
+            <svg width=13 height=13 fill=none stroke="currentColor" stroke-width=2.2 viewBox="0 0 24 24"><path d="M9 21H5a2 2 0 01-2-2V5a2 2 0 012-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
+            Sign Out
+          </button>
         </div>
       </div>
     </div>
@@ -1535,6 +1573,7 @@ function populateProfile(user,users){
   const pm=document.getElementById('pd-mob');if(pm)pm.textContent=s.mobile?'+91 '+s.mobile:'Not provided';
   const pr=document.getElementById('pd-reg');if(pr)pr.textContent=s.region||'Not selected';
   const pp=document.getElementById('pd-plan-v');if(pp)pp.textContent=user.paid?(user.plan?user.plan.replace('bunch-','').replace('single-','').toUpperCase()+' Access':'Premium Access'):'Free (4 Tests)';
+  const pb=document.getElementById('pd-plan-badge-txt');if(pb)pb.textContent=user.paid?'Premium':'Free Plan';
 }
 function toggleProfile(){
   const wrap=document.getElementById('chip-wrap');
