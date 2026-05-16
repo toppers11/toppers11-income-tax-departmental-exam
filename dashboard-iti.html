@@ -510,6 +510,22 @@ body{background:var(--bg);color:var(--ink);font-family:'Open Sans',sans-serif;ov
   transition:all .15s;
 }
 .app-a:hover{border-color:var(--yellow);color:var(--yellow);background:rgba(245,197,24,.1)}
+.upi-pay-btn{
+  display:flex;align-items:center;gap:.6rem;
+  padding:.72rem 1rem;
+  border-radius:10px;
+  border:none;
+  font-size:.84rem;font-weight:700;
+  color:#fff;
+  text-decoration:none;
+  transition:all .18s;
+  letter-spacing:.01em;
+  font-family:'Open Sans',sans-serif;
+  position:relative;overflow:hidden;
+  box-shadow:0 3px 12px rgba(0,0,0,.25);
+}
+.upi-pay-btn:hover{transform:translateY(-1px);box-shadow:0 6px 20px rgba(0,0,0,.35);filter:brightness(1.08);}
+.upi-pay-btn:active{transform:translateY(0);filter:brightness(.95);}
 .upi-switch-wrap{
   margin-top:.32rem;text-align:center;
 }
@@ -1047,83 +1063,83 @@ body{background:var(--bg);color:var(--ink);font-family:'Open Sans',sans-serif;ov
         <button class="btn-cont" id="cont-btn" onclick="doContinue()">Continue →</button>
       </div>
       <div id="step2" style="display:none;">
-        <!-- QR Payment Card -->
-        <div class=qr-box>
-          <div class=qr-top>
-            <div class=qr-lbl>
-              <svg width=9 height=9 viewBox="0 0 24 24" fill="rgba(255,255,255,.8)"><circle cx=12 cy=12 r=10/></svg>
-              <span id=qr-lbl>Step 1 — Scan &amp; Pay</span>
+
+        <!-- PAY SCREEN (shown first) -->
+        <div id="pay-screen">
+          <!-- QR Payment Card -->
+          <div class=qr-box>
+            <div class=qr-top>
+              <div class=qr-lbl>
+                <svg width=9 height=9 viewBox="0 0 24 24" fill="rgba(255,255,255,.8)"><circle cx=12 cy=12 r=10/></svg>
+                <span id=qr-lbl>Scan &amp; Pay</span>
+              </div>
+              <div class=qr-img id=qr-canvas></div>
+              <div class=qr-amount-pill>
+                Amount: <span id=amt-lbl>₹355</span>
+              </div>
             </div>
-            <div class=qr-img id=qr-canvas></div>
-            <div class=qr-amount-pill>
-              Amount: <span id=amt-lbl>₹355</span>
+            <div class=qr-bottom>
+              <div class=upi-row onclick=copyUpi()>
+                <svg width=13 height=13 fill=none stroke="rgba(255,255,255,.6)" stroke-width=2 viewBox="0 0 24 24"><rect x=9 y=9 width=13 height=13 rx=2/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/></svg>
+                <span class=upi-txt id=upi-disp></span>
+                <button class=cp-btn id=cp-btn>Copy</button>
+              </div>
+
+              <!-- Big UPI app buttons -->
+              <div style="display:flex;flex-direction:column;gap:.42rem;margin:.5rem 0 .35rem;">
+                <a id=gpay-a href=# onclick="onUpiAppClick(event,this)" class=upi-pay-btn style="background:linear-gradient(135deg,#1a73e8,#0d47a1);">
+                  <svg width=16 height=16 viewBox="0 0 48 48" fill="none"><circle cx="24" cy="24" r="24" fill="white" fill-opacity=".15"/><text x="50%" y="55%" dominant-baseline="middle" text-anchor="middle" font-size="22" font-family="Arial" fill="white">G</text></svg>
+                  Pay with Google Pay
+                  <svg width=13 height=13 fill=none stroke="rgba(255,255,255,.7)" stroke-width=2.5 viewBox="0 0 24 24" style="margin-left:auto"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                </a>
+                <a id=phonepe-a href=# onclick="onUpiAppClick(event,this)" class=upi-pay-btn style="background:linear-gradient(135deg,#6739b7,#4a2080);">
+                  <svg width=16 height=16 viewBox="0 0 24 24" fill=none stroke="rgba(255,255,255,.9)" stroke-width=2><circle cx=12 cy=12 r=10/><path d="M8 12h8M12 8v8"/></svg>
+                  Pay with PhonePe
+                  <svg width=13 height=13 fill=none stroke="rgba(255,255,255,.7)" stroke-width=2.5 viewBox="0 0 24 24" style="margin-left:auto"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                </a>
+                <a id=paytm-a href=# onclick="onUpiAppClick(event,this)" class=upi-pay-btn style="background:linear-gradient(135deg,#00b9f1,#0074b7);">
+                  <svg width=16 height=16 viewBox="0 0 24 24" fill=none stroke="rgba(255,255,255,.9)" stroke-width=2><rect x=2 y=5 width=20 height=14 rx=2/><path d="M2 10h20"/></svg>
+                  Pay with Paytm
+                  <svg width=13 height=13 fill=none stroke="rgba(255,255,255,.7)" stroke-width=2.5 viewBox="0 0 24 24" style="margin-left:auto"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                </a>
+              </div>
+
+              <div class=upi-switch-wrap>
+                <button onclick=switchUpi() class=upi-switch-btn>
+                  <svg width=11 height=11 fill=none stroke=currentColor stroke-width=2.2 viewBox="0 0 24 24"><path d="M1 4v6h6M23 20v-6h-6"/><path d="M20.49 9A9 9 0 005.64 5.64L1 10M23 14l-4.64 4.36A9 9 0 013.51 15"/></svg>
+                  Switch UPI ID
+                  <span id=upi-switch-badge style="opacity:.55;font-size:.6rem;background:rgba(255,255,255,.12);padding:.05rem .3rem;border-radius:999px;">1/3</span>
+                </button>
+              </div>
             </div>
           </div>
-          <div class=qr-bottom>
-            <div class=upi-row onclick=copyUpi()>
-              <svg width=13 height=13 fill=none stroke="rgba(255,255,255,.6)" stroke-width=2 viewBox="0 0 24 24"><rect x=9 y=9 width=13 height=13 rx=2/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/></svg>
-              <span class=upi-txt id=upi-disp></span>
-              <button class=cp-btn id=cp-btn>Copy</button>
+          <button class=btn-bk onclick=backToPlan()>
+            <svg width=13 height=13 fill=none stroke=currentColor stroke-width=2 viewBox="0 0 24 24"><path d="M19 12H5M12 5l-7 7 7 7"/></svg>
+            Change Plan
+          </button>
+        </div>
+
+        <!-- CONFIRM SCREEN (shown after returning from payment app) -->
+        <div id="confirm-screen" style="display:none;">
+          <div class=utr-box style="border-color:var(--t3);padding:1.2rem 1rem 1rem;">
+            <div style="text-align:center;margin-bottom:1rem;">
+              <div style="width:54px;height:54px;border-radius:50%;background:linear-gradient(135deg,var(--t-dark),var(--t3));display:grid;place-items:center;margin:0 auto .65rem;">
+                <svg width=22 height=22 fill=none stroke=#fff stroke-width=2.5 viewBox="0 0 24 24"><circle cx=12 cy=12 r=10/><path d="M12 8v4l3 3"/></svg>
+              </div>
+              <div style="font-size:1rem;font-weight:800;color:var(--ink);margin-bottom:.3rem;">Did your payment go through?</div>
+              <div id="confirm-sublabel" style="font-size:.75rem;color:var(--muted);line-height:1.55;">Check your payment app for a success message, then tap below.</div>
             </div>
-            <div class=upi-apps>
-              <a class=app-a id=gpay-a href=#>
-                <svg width=11 height=11 viewBox="0 0 24 24" fill=none stroke=currentColor stroke-width=2><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2z"/></svg>
-                GPay
-              </a>
-              <a class=app-a id=phonepe-a href=#>
-                <svg width=11 height=11 viewBox="0 0 24 24" fill=none stroke=currentColor stroke-width=2><circle cx=12 cy=12 r=10/><path d="M8 12h8M12 8v8"/></svg>
-                PhonePe
-              </a>
-              <a class=app-a id=paytm-a href=#>
-                <svg width=11 height=11 viewBox="0 0 24 24" fill=none stroke=currentColor stroke-width=2><rect x=2 y=5 width=20 height=14 rx=2/><path d="M2 10h20"/></svg>
-                Paytm
-              </a>
-            </div>
-            <div class=upi-switch-wrap>
-              <button onclick=switchUpi() class=upi-switch-btn>
-                <svg width=11 height=11 fill=none stroke=currentColor stroke-width=2.2 viewBox="0 0 24 24"><path d="M1 4v6h6M23 20v-6h-6"/><path d="M20.49 9A9 9 0 005.64 5.64L1 10M23 14l-4.64 4.36A9 9 0 013.51 15"/></svg>
-                Payment failed? Try another UPI ID
-                <span id=upi-switch-badge style="opacity:.55;font-size:.6rem;background:rgba(255,255,255,.12);padding:.05rem .3rem;border-radius:999px;">1/3</span>
-              </button>
-            </div>
+            <div class="al-err" id=utr-err></div>
+            <button class=btn-act id=act-btn onclick=activate() style="margin-bottom:.55rem;">
+              <svg width=14 height=14 fill=none stroke=currentColor stroke-width=2.5 viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>
+              ✅ Yes, Payment Done — Unlock Now
+            </button>
+            <button onclick="showPayScreen()" style="width:100%;background:none;border:1.5px solid #e0e0e0;border-radius:8px;padding:.48rem;font-size:.75rem;font-weight:600;color:var(--muted);cursor:pointer;transition:all .15s;font-family:'Open Sans',sans-serif;" onmouseover="this.style.borderColor='var(--t3)';this.style.color='var(--t3)';" onmouseout="this.style.borderColor='#e0e0e0';this.style.color='var(--muted)';">
+              ← Payment not done yet — go back
+            </button>
           </div>
         </div>
 
-        <!-- Activate box -->
-        <div class=utr-box>
-          <div class=utr-hdr>
-            <div class=utr-ico>
-              <svg width=12 height=12 fill=none stroke=#fff stroke-width=2.2 viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>
-            </div>
-            <div class=utr-ttl>Step 2 — Enter Ref & Get Instant Access</div>
-          </div>
-          <div class=utr-sub id=utr-sub>Enter your UPI transaction ID after payment — your tests unlock <strong>instantly</strong>.</div>
-          <div class="al-err" id=utr-err></div>
-          <div style="margin-bottom:.55rem;">
-            <label style="font-size:.68rem;font-weight:700;color:var(--ink);display:block;margin-bottom:.28rem;">
-              📋 UPI Ref / Transaction ID <span style="color:#e53e3e;font-size:.65rem;">*required</span>
-            </label>
-            <input type="text" id="upi-ref-inp" placeholder="e.g. 613636786394" maxlength="30"
-              style="width:100%;padding:.52rem .7rem;border:2px solid #c6ede0;border-radius:8px;font-size:.85rem;font-family:monospace;font-weight:700;color:var(--ink);background:#fff;outline:none;transition:border .15s;letter-spacing:.04em;"
-              onfocus="this.style.borderColor='var(--t3)'" onblur="this.style.borderColor='#c6ede0'"/>
-            <div style="font-size:.6rem;color:#6b7280;margin-top:.3rem;display:flex;align-items:center;gap:.3rem;">
-              <span>📱</span>
-              <span>Find in <strong>Paytm/GPay/PhonePe</strong> → Transaction History → 12-digit Ref No.</span>
-            </div>
-          </div>
-          <button class=btn-act id=act-btn onclick=activate()>
-            <svg width=14 height=14 fill=none stroke=currentColor stroke-width=2.5 viewBox="0 0 24 24"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg>
-            ⚡ Unlock My Tests Instantly
-          </button>
-          <div class=utr-note>
-            <svg width=11 height=11 fill=none stroke="var(--muted)" stroke-width=2 viewBox="0 0 24 24"><rect x=3 y=11 width=18 height=11 rx=2/><path d="M7 11V7a5 5 0 0110 0v4"/></svg>
-            🔒 Your UPI Ref is only used to verify your payment. Tests unlock instantly on submission.
-          </div>
-        </div>
-        <button class=btn-bk onclick=backToPlan()>
-          <svg width=13 height=13 fill=none stroke=currentColor stroke-width=2 viewBox="0 0 24 24"><path d="M19 12H5M12 5l-7 7 7 7"/></svg>
-          Change Plan
-        </button>
       </div>
     </div>
   </div>
@@ -1642,28 +1658,78 @@ async function doContinue(){
   renderUpiStep();
 }
 
+/* ── Track whether user has tapped a UPI app button ── */
+let _upiAppOpened=false;
+let _visibilityHandler=null;
+
+function showPayScreen(){
+  _upiAppOpened=false;
+  document.getElementById('pay-screen').style.display='';
+  document.getElementById('confirm-screen').style.display='none';
+  document.getElementById('utr-err').classList.remove('show');
+}
+
+function showConfirmScreen(){
+  document.getElementById('pay-screen').style.display='none';
+  document.getElementById('confirm-screen').style.display='';
+  // Update confirm sublabel with what they're paying for
+  const subjectPaper=PAPERS.find(pp=>pp.key===selSubjectKey);
+  const p=PLANS[selPlan]||{};
+  const forLabel=selPlan==='single-iti'&&subjectPaper?`Paper ${PAPERS.indexOf(subjectPaper)+1} — ${subjectPaper.name}`:'All 4 Papers';
+  const lbl=document.getElementById('confirm-sublabel');
+  if(lbl)lbl.innerHTML=`You selected <strong style="color:var(--t1)">${forLabel}</strong> for <strong style="color:var(--t1)">₹${p.amount}</strong>. If your payment app showed a success screen, tap below to unlock your tests instantly.`;
+}
+
+function onUpiAppClick(e,el){
+  // Let the href navigate to the UPI app
+  _upiAppOpened=true;
+  // When user returns to this tab/page, show the confirm screen
+  if(_visibilityHandler)document.removeEventListener('visibilitychange',_visibilityHandler);
+  _visibilityHandler=function(){
+    if(document.visibilityState==='visible'&&_upiAppOpened){
+      _upiAppOpened=false;
+      // Small delay to let the page fully re-focus
+      setTimeout(showConfirmScreen,600);
+      document.removeEventListener('visibilitychange',_visibilityHandler);
+    }
+  };
+  document.addEventListener('visibilitychange',_visibilityHandler);
+
+  // Also handle pageshow (some Android browsers use this on return)
+  window.addEventListener('pageshow',function psh(){
+    if(_upiAppOpened){
+      _upiAppOpened=false;
+      setTimeout(showConfirmScreen,600);
+    }
+    window.removeEventListener('pageshow',psh);
+  });
+}
+
 function renderUpiStep(){
   if(!selPlan)return;
+  showPayScreen();
   const p=PLANS[selPlan];
   const subjectPaper=PAPERS.find(pp=>pp.key===selSubjectKey);
   const uid=getUpiId();
-  // Build UPI note — make it crystal clear what the payment is for
   const payNote=selPlan==='single-iti'&&subjectPaper
     ?`Paper ${PAPERS.indexOf(subjectPaper)+1} - ${subjectPaper.name} (ITI Inspector)`
     :`ITI Inspector Complete Bunch (All 4 Papers)`;
   document.getElementById('upi-disp').textContent=uid;
 
-  // Show payment-for label clearly in the activate box
-  const utrSub=document.getElementById('utr-sub');
-  if(utrSub){
-    const forLabel=selPlan==='single-iti'&&subjectPaper?`Paper ${PAPERS.indexOf(subjectPaper)+1} — ${subjectPaper.name}`:'All 4 Papers (Complete Bunch)';
-    utrSub.innerHTML=`Pay <strong style="color:var(--t1)">₹${p.amount}</strong> for <strong style="color:var(--t1)">${forLabel}</strong> via the QR/UPI above. Then enter your UPI Ref No. below — tests unlock <strong style="color:var(--t3)">instantly</strong>, no waiting.`;
+  // Update QR label with what they're paying for
+  const qrLbl=document.getElementById('qr-lbl');
+  if(qrLbl){
+    const forLabel=selPlan==='single-iti'&&subjectPaper?`Paper ${PAPERS.indexOf(subjectPaper)+1} — ${subjectPaper.name}`:'All 4 Papers';
+    qrLbl.textContent=forLabel+' · ₹'+p.amount;
   }
 
   const upiStr=`upi://pay?pa=${uid}&pn=${encodeURIComponent(UPI_NAME)}&am=${p.amount}&cu=INR&tn=${encodeURIComponent(payNote)}`;
-  document.getElementById('gpay-a').href=`tez://upi/pay?pa=${uid}&pn=${encodeURIComponent(UPI_NAME)}&am=${p.amount}&cu=INR&tn=${encodeURIComponent(payNote)}`;
+  const gpayHref=`tez://upi/pay?pa=${uid}&pn=${encodeURIComponent(UPI_NAME)}&am=${p.amount}&cu=INR&tn=${encodeURIComponent(payNote)}`;
+  const paytmHref=`paytmmp://pay?pa=${uid}&pn=${encodeURIComponent(UPI_NAME)}&am=${p.amount}&cu=INR&tn=${encodeURIComponent(payNote)}`;
+  document.getElementById('gpay-a').href=gpayHref;
   document.getElementById('phonepe-a').href=upiStr;
-  document.getElementById('paytm-a').href=`paytmmp://pay?pa=${uid}&pn=${encodeURIComponent(UPI_NAME)}&am=${p.amount}&cu=INR&tn=${encodeURIComponent(payNote)}`;
+  document.getElementById('paytm-a').href=paytmHref;
+
   const qc=document.getElementById('qr-canvas');qc.innerHTML='';
   try{new QRCode(qc,{text:upiStr,width:104,height:104,colorDark:'#004d3f',colorLight:'#fff',correctLevel:QRCode.CorrectLevel.M})}
   catch(e){qc.innerHTML='<div style="padding:1rem;font-size:.7rem;color:#6b7280">Use UPI ID below</div>';}
@@ -1671,40 +1737,26 @@ function renderUpiStep(){
 }
 
 function switchUpi(){nextUpiId();renderUpiStep();showToast('🔄 Switched to UPI ID '+(_upiIdx+1)+' of '+UPI_POOL.length);}
-function backToPlan(){document.getElementById('step1').style.display='';document.getElementById('step2').style.display='none';buildPlans();}
+function backToPlan(){
+  _upiAppOpened=false;
+  if(_visibilityHandler){document.removeEventListener('visibilitychange',_visibilityHandler);_visibilityHandler=null;}
+  document.getElementById('step1').style.display='';
+  document.getElementById('step2').style.display='none';
+  buildPlans();
+}
 function copyUpi(){const uid=getUpiId();navigator.clipboard.writeText(uid).then(()=>{const b=document.getElementById('cp-btn');b.textContent='✓';setTimeout(()=>b.textContent='Copy',2000);}).catch(()=>prompt('Copy:',uid));}
 
 async function activate(){
   const btn=document.getElementById('act-btn');
   const errEl=document.getElementById('utr-err');
-  errEl.classList.remove('show');
+  if(errEl)errEl.classList.remove('show');
 
-  // Validate UPI ref
-  const upiRef=(document.getElementById('upi-ref-inp')?.value||'').trim();
-  if(!upiRef||upiRef.length<6){
-    errEl.textContent='Please enter your UPI Ref / Transaction ID from your payment app.';
-    errEl.classList.add('show');
-    return;
-  }
+  btn.disabled=true;
+  btn.innerHTML='<span class="spin"></span> Unlocking…';
 
-  btn.disabled=true;btn.innerHTML='<span class="spin"></span> Activating…';
-  const user=getUser();const plan=PLANS[selPlan]||{};
+  const user=getUser();
+  const plan=PLANS[selPlan]||{};
   const subjectPaper=PAPERS.find(pp=>pp.key===selSubjectKey);
-
-  // Status = 'verified' immediately — no manual step needed
-  const record={
-    email:(user.email||'').toLowerCase(),
-    name:user.name||'',
-    plan_key:selPlan,
-    plan_label:plan.label||'',
-    subject_key:selPlan==='single-iti'?(selSubjectKey||''):null,
-    subject_name:selPlan==='single-iti'&&subjectPaper?`Paper ${PAPERS.indexOf(subjectPaper)+1} — ${subjectPaper.name}`:null,
-    amount:plan.amount||0,
-    exam_type:'ITI',
-    upi_ref:upiRef,
-    activated_at:new Date().toISOString(),
-    status:'verified'
-  };
 
   // Grant access locally — instant unlock
   if(selPlan==='single-iti'&&selSubjectKey){
@@ -1715,22 +1767,40 @@ async function activate(){
     saveUser({...user,paid:true,plan:selPlan,purchased_subjects:['p1','p2','p3','p4']});
   }
 
+  // Build record — status 'verified' so no manual step needed
+  const record={
+    email:(user.email||'').toLowerCase(),
+    name:user.name||'',
+    plan_key:selPlan,
+    plan_label:plan.label||'',
+    subject_key:selPlan==='single-iti'?(selSubjectKey||''):null,
+    subject_name:selPlan==='single-iti'&&subjectPaper?`Paper ${PAPERS.indexOf(subjectPaper)+1} — ${subjectPaper.name}`:null,
+    amount:plan.amount||0,
+    exam_type:'ITI',
+    upi_ref:null,
+    activated_at:new Date().toISOString(),
+    status:'verified'
+  };
+
   // Save locally
   const payments=JSON.parse(localStorage.getItem('t11_payments')||'[]');
   payments.push(record);
   localStorage.setItem('t11_payments',JSON.stringify(payments));
 
-  // Push to Supabase — fire and don't block UI on failure
+  // Push to Supabase in background — don't block the UI
   sbInsert('payments',record).then(result=>{
-    if(!result.ok)console.error('Supabase sync failed (access already granted locally):',result.status,result.error);
+    if(!result.ok)console.error('Supabase sync failed (local access already granted):',result.status,result.error);
   });
+
+  // Clean up visibility listener
+  if(_visibilityHandler){document.removeEventListener('visibilitychange',_visibilityHandler);_visibilityHandler=null;}
 
   closeModal();
   const subLabel=selPlan==='single-iti'&&subjectPaper?`Paper ${PAPERS.indexOf(subjectPaper)+1} — ${subjectPaper.name}`:'All 4 Papers';
-  showToast('🎉 Access unlocked for '+subLabel+'! Start practising now.');
+  showToast('🎉 Tests unlocked for '+subLabel+'! Start practising now.');
   render();
   btn.disabled=false;
-  btn.innerHTML='🔓 Activate My Access Now';
+  btn.innerHTML='✅ Yes, Payment Done — Unlock Now';
 }
 function showToast(msg){const t=document.getElementById('toast');document.getElementById('toast-msg').textContent=msg;t.classList.add('show');setTimeout(()=>t.classList.remove('show'),3500);}
 
@@ -1920,7 +1990,8 @@ document.addEventListener('keydown',e=>{
 Object.assign(window,{
   toggleProfile,openEditModal,closeEditModal,saveProfile,logout,
   closeModal,overlayClick,doContinue,activate,switchUpi,backToPlan,selectSubject,
-  copyUpi,selectBundlePlan,openModalFromBundle,buildTabs,switchTab,render
+  copyUpi,selectBundlePlan,openModalFromBundle,buildTabs,switchTab,render,
+  onUpiAppClick,showPayScreen,showConfirmScreen
 });
 
 })(); // end IIFE
