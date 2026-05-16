@@ -1,16 +1,24 @@
-<!doctype html><html lang=en>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<!-- Google Analytics — loaded async, non-blocking -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-V2VM68RT43"></script>
 <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-V2VM68RT43');</script>
-<meta charset=UTF-8>
-<meta content="width=device-width,initial-scale=1.0" name=viewport>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
 <title>ITI Inspector Dashboard — Toppers11</title>
-<meta content="noindex, nofollow" name=robots>
-<meta content=#00AB84 name=theme-color>
-<link href=https://fonts.googleapis.com rel=preconnect>
-<link crossorigin href=https://fonts.gstatic.com rel=preconnect>
-<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@300;400;600;700;800;900&family=Open+Sans:wght@400;600;700&family=Dancing+Script:wght@600;700&family=Playfair+Display:ital,wght@1,700;1,800&family=Righteous&family=Barlow+Condensed:wght@700;800;900&display=swap" onload="this.onload=null;this.rel='stylesheet'" as=style rel=preload>
-<noscript><link href="https://fonts.googleapis.com/css2?family=Nunito:wght@300;400;600;700;800;900&family=Open+Sans:wght@400;600;700&family=Dancing+Script:wght@600;700&family=Playfair+Display:ital,wght@1,700;1,800&family=Righteous&family=Barlow+Condensed:wght@700;800;900&display=swap" rel=stylesheet></noscript>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+<meta name="robots" content="noindex, nofollow">
+<meta name="theme-color" content="#00AB84">
+<!-- Only the 4 font families actually used in the UI -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="preload" as="style"
+  href="https://fonts.googleapis.com/css2?family=Nunito:wght@100;600;800&family=Open+Sans:wght@400;600;700&family=Dancing+Script:wght@600&family=Playfair+Display:ital,wght@1,700;1,800&family=Righteous&display=swap"
+  onload="this.onload=null;this.rel='stylesheet'">
+<noscript>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Nunito:wght@100;600;800&family=Open+Sans:wght@400;600;700&family=Dancing+Script:wght@600&family=Playfair+Display:ital,wght@1,700;1,800&family=Righteous&display=swap">
+</noscript>
+<!-- QR code lib loaded lazily in JS — only when payment modal opens -->
 <style>
 :root{--t1:#006d5b;--t2:#25a36f;--t3:#00ab84;--t-dark:#004d3f;--t-mid:#008c6e;--yellow:#f5c518;--yellow2:#e8a900;--dark:#1a1a2e;--dark2:#2d2d44;--ink:#222;--muted:#555;--bg:#f7f7f7;--wh:#fff;--bdr:#ddd}
 *{box-sizing:border-box;margin:0;padding:0}
@@ -690,78 +698,83 @@ body{background:var(--bg);color:var(--ink);font-family:Open Sans,sans-serif;over
   .tests-grid{grid-template-columns:repeat(2,1fr)}
   .logo-box .site-name{font-size:38px}
 }
+/* ── ACCESSIBILITY ── */
+:focus-visible{outline:2px solid var(--t3);outline-offset:3px;border-radius:4px}
+.sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
+/* Ensure interactive divs have a pointer and focusable affordance */
+[role="button"]{cursor:pointer}
 </style>
-
+</head>
 <body>
-<div id=progress></div>
-<button aria-label="Back to top" onclick="scrollTo({top:0,behavior:'smooth'})" id=btt>
-  <svg viewbox="0 0 24 24" fill=none height=15 stroke=currentColor stroke-width=2.5 width=15><path d="M5 15l7-7 7 7"/></svg>
+<div id="progress"></div>
+<button aria-label="Back to top" onclick="scrollTo({top:0,behavior:'smooth'})" id="btt">
+  <svg viewBox="0 0 24 24" fill=none height=15 stroke=currentColor stroke-width=2.5 width=15><path d="M5 15l7-7 7 7"/></svg>
 </button>
-<a href="https://wa.me/918743865551?text=Hi%20Toppers11%20Team" aria-label=WhatsApp id=wa rel=noopener target=_blank>
-  <svg viewbox="0 0 24 24" fill=#fff height=25 width=25><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+<a href="https://wa.me/918743865551?text=Hi%20Toppers11%20Team" aria-label=WhatsApp id="wa" rel=noopener target=_blank>
+  <svg viewBox="0 0 24 24" fill=#fff height=25 width=25><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
   <span></span>
 </a>
 
 <!-- TOP BAR -->
-<div class=top-bar>
-  <div class=top-inner>
+<div class="top-bar">
+  <div class="top-inner">
     <div>
-      <a class=logo-box href=index.html>
-        <span class=site-name>toppers<span style="color:var(--t3);font-family:Righteous,cursive;font-size:48px">11</span></span>
-        <span class=site-tag>AI-Powered Test Series</span>
+      <a class="logo-box" href=index.html>
+        <span class="site-name">toppers<span style="color:var(--t3);font-family:Righteous,cursive;font-size:48px">11</span></span>
+        <span class="site-tag">AI-Powered Test Series</span>
       </a>
     </div>
     <div style="display:flex;align-items:center;gap:.5rem;">
       <!-- ALL EXAMS tile — graduation cap icon -->
-      <a href="https://incometax.toppers11.com/exam-select.html" class=nav-tile-btn>
-        <div class=nav-tile-icon>
+      <a href="https://incometax.toppers11.com/exam-select.html" class="nav-tile-btn">
+        <div class="nav-tile-icon">
           <svg width=22 height=22 viewBox="0 0 24 24" fill=none stroke=#5f6368 stroke-width=1.8 stroke-linecap=round stroke-linejoin=round xmlns="http://www.w3.org/2000/svg">
             <path d="M22 10v6M2 10l10-5 10 5-10 5z"/>
             <path d="M6 12v5c0 1.657 2.686 3 6 3s6-1.343 6-3v-5"/>
           </svg>
         </div>
-        <span class=nav-tile-label>All Exams</span>
-        <span class=nav-tile-sub>Switch Exam</span>
+        <span class="nav-tile-label">All Exams</span>
+        <span class="nav-tile-sub">Switch Exam</span>
       </a>
 
       <!-- USER tile — person icon -->
-      <div class=user-chip-wrap id=chip-wrap>
-        <div class=nav-tile-btn onclick="toggleProfile()" style="cursor:pointer;">
-          <div class=nav-tile-icon>
+      <div class="user-chip-wrap" id="chip-wrap">
+        <div class="nav-tile-btn" role="button" tabindex="0" aria-haspopup="true" aria-expanded="false" aria-label="User profile menu" id="user-tile-btn" onclick="toggleProfile()" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();toggleProfile()}">
+          <div class="nav-tile-icon">
             <svg width=22 height=22 viewBox="0 0 24 24" fill=none stroke="#006d5b" stroke-width=1.8 stroke-linecap=round stroke-linejoin=round xmlns="http://www.w3.org/2000/svg">
               <circle cx=12 cy=8 r=4/>
               <path d="M4 20c0-4 3.582-7 8-7s8 3 8 7"/>
             </svg>
           </div>
-          <span class=nav-tile-label>My Account</span>
-          <span class=nav-tile-sub id=uname>User</span>
+          <span class="nav-tile-label">My Account</span>
+          <span class="nav-tile-sub" id=uname>User</span>
         </div>
-      <div class="profile-dropdown" id=profile-dropdown>
-        <div class=pd-hdr>
-          <div class=pd-av-lg id=pd-av-lg>U</div>
-          <div class=pd-hdr-info><h3 id=pd-nm>—</h3><p id=pd-em-hdr>—</p></div>
+      <div class="profile-dropdown" id="profile-dropdown">
+        <div class="pd-hdr">
+          <div class="pd-av-lg" id="pd-av-lg">U</div>
+          <div class="pd-hdr"-info><h3 id="pd-nm">—</h3><p id="pd-em-hdr">—</p></div>
         </div>
-        <div class=pd-body>
-          <div class=pd-row>
-            <div class=pd-ico><svg width=15 height=15 fill=none stroke="var(--t3)" stroke-width=2 viewbox="0 0 24 24"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg></div>
-            <div><div class=pd-lbl>Email</div><div class=pd-val id=pd-em>—</div></div>
+        <div class="pd-body">
+          <div class="pd-row">
+            <div class="pd-ico"><svg width=15 height=15 fill=none stroke="var(--t3)" stroke-width=2 viewBox="0 0 24 24"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg></div>
+            <div><div class="pd-lbl">Email</div><div class="pd-val" id="pd-em">—</div></div>
           </div>
-          <div class=pd-row>
-            <div class=pd-ico><svg width=15 height=15 fill=none stroke="var(--t3)" stroke-width=2 viewbox="0 0 24 24"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 9.81 19.79 19.79 0 01.4 3.18 2 2 0 012 1h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L6.09 8.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"/></svg></div>
-            <div><div class=pd-lbl>Mobile</div><div class=pd-val id=pd-mob>—</div></div>
+          <div class="pd-row">
+            <div class="pd-ico"><svg width=15 height=15 fill=none stroke="var(--t3)" stroke-width=2 viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 9.81 19.79 19.79 0 01.4 3.18 2 2 0 012 1h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L6.09 8.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"/></svg></div>
+            <div><div class="pd-lbl">Mobile</div><div class="pd-val" id="pd-mob">—</div></div>
           </div>
-          <div class=pd-row>
-            <div class=pd-ico><svg width=15 height=15 fill=none stroke="var(--t3)" stroke-width=2 viewbox="0 0 24 24"><path d="M21 10c0 7-9 13-9 13S3 17 3 10a9 9 0 0118 0z"/><circle cx=12 cy=10 r=3/></svg></div>
-            <div><div class=pd-lbl>Region</div><div class=pd-val id=pd-reg>—</div></div>
+          <div class="pd-row">
+            <div class="pd-ico"><svg width=15 height=15 fill=none stroke="var(--t3)" stroke-width=2 viewBox="0 0 24 24"><path d="M21 10c0 7-9 13-9 13S3 17 3 10a9 9 0 0118 0z"/><circle cx=12 cy=10 r=3/></svg></div>
+            <div><div class="pd-lbl">Region</div><div class="pd-val" id="pd-reg">—</div></div>
           </div>
-          <div class=pd-row>
-            <div class=pd-ico><svg width=15 height=15 fill=none stroke="var(--t3)" stroke-width=2 viewbox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg></div>
-            <div><div class=pd-lbl>Plan</div><div class=pd-val id=pd-plan-v>Free (4 Tests)</div></div>
+          <div class="pd-row">
+            <div class="pd-ico"><svg width=15 height=15 fill=none stroke="var(--t3)" stroke-width=2 viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg></div>
+            <div><div class="pd-lbl">Plan</div><div class="pd-val" id="pd-plan-v">Free (4 Tests)</div></div>
           </div>
         </div>
-        <div class=pd-ftr>
-          <button class=pd-btn-ed onclick="openEditModal()">✏️ Edit Profile</button>
-          <button class=pd-btn-lo onclick="logout()">🚪 Sign Out</button>
+        <div class="pd-ftr">
+          <button class="pd-btn-ed" aria-label="Edit your profile" onclick="openEditModal()">✏️ Edit Profile</button>
+          <button class="pd-btn-lo" aria-label="Sign out of your account" onclick="logout()">🚪 Sign Out</button>
         </div>
       </div>
     </div>
@@ -770,10 +783,10 @@ body{background:var(--bg);color:var(--ink);font-family:Open Sans,sans-serif;over
 </div>
 
 <!-- Edit Profile Modal -->
-<div class=edit-overlay id=edit-modal onclick="if(event.target===this)closeEditModal()">
-  <div class=edit-box>
-    <div class=edit-hdr><h2>Edit Profile</h2><button class=edit-cls onclick=closeEditModal()>✕</button></div>
-    <div class=edit-bdy>
+<div class="edit-overlay" id="edit-modal" role="dialog" aria-modal="true" aria-labelledby="edit-modal-title" onclick="if(event.target===this)closeEditModal()">
+  <div class="edit-box">
+    <div class="edit-hdr"><h2 id="edit-modal-title">Edit Profile</h2><button class="edit-cls" aria-label="Close edit profile dialog" onclick="closeEditModal()">✕</button></div>
+    <div class="edit-bdy">
       <div class="ef-err" id=ef-error></div>
       <div class=ef-row>
         <div class=ef-grp><label class=ef-lbl>Full Name *</label><input type=text class=ef-inp id=ef-name placeholder="e.g. Rajesh Kumar"/></div>
@@ -802,7 +815,7 @@ body{background:var(--bg);color:var(--ink);font-family:Open Sans,sans-serif;over
   </div>
 </div>
 <!-- HERO -->
-<section class=hero>
+<section class="hero">
 
   <!-- TRI-TL: large dark-teal 3D tetrahedron, top-left -->
   <div class="tri tri-tl">
@@ -909,10 +922,10 @@ body{background:var(--bg);color:var(--ink);font-family:Open Sans,sans-serif;over
     </svg>
   </div>
 
-  <div class=hero-inner>
+  <div class="hero"-inner>
     <div>
-      <div class=hero-title> <span style="font-family:Open Sans,sans-serif;font-weight:800;letter-spacing:.01em">ITI</span> <em>Exam Dashboard</em></div>
-      <div class=hero-sub-text>Income Tax Inspector &#8212; 4 Papers, 84 Tests</div>
+      <div class="hero"-title> <span style="font-family:Open Sans,sans-serif;font-weight:800;letter-spacing:.01em">ITI</span> <em>Exam Dashboard</em></div>
+      <div class="hero"-sub-text>Income Tax Inspector &#8212; 4 Papers, 84 Tests</div>
     </div>    
     </div>
   </div>
@@ -933,53 +946,53 @@ body{background:var(--bg);color:var(--ink);font-family:Open Sans,sans-serif;over
     </svg>
   </div>
 </section>
-<div class=tabs-bar><div class=tabs-inner id=tabs-inner></div></div>
+<div class="tabs-bar"><div class="tabs-inner" id="tabs-inner"></div></div>
 
 <!-- MAIN -->
-<div class=main>
+<div class="main">
 
-  <div class=retest-notice>
-    <div class=rn-accent></div>
-    <div class=rn-body>
-      <div class=rn-body-text>
-        <div class=rn-badge>
-          <svg width=7 height=7 viewbox="0 0 24 24" fill="var(--t3)"><circle cx=12 cy=12 r=10/></svg>
+  <div class="retest-notice">
+    <div class="rn-accent"></div>
+    <div class="rn-body">
+      <div class="rn-body-text">
+        <div class="rn-badge">
+          <svg width=7 height=7 viewBox="0 0 24 24" fill="var(--t3)"><circle cx=12 cy=12 r=10/></svg>
           Exam Rule
         </div>
-        <div class=rn-title>3 Attempts Per Assessment</div>
-        <div class=rn-msg>You have <strong>3 total attempts</strong> for each test in this series. Once all 3 attempts are used, the test will be marked <strong>Completed</strong>. This mirrors actual departmental exam rules.</div>
+        <div class="rn-title">3 Attempts Per Assessment</div>
+        <div class="rn-msg">You have <strong>3 total attempts</strong> for each test in this series. Once all 3 attempts are used, the test will be marked <strong>Completed</strong>. This mirrors actual departmental exam rules.</div>
       </div>
-      <div class=rn-chips>
-        <div class=rn-chip>
-          <span class=rn-chip-num>3</span>
-          <span class=rn-chip-lbl>Max<br>Attempts</span>
+      <div class="rn-chips">
+        <div class="rn-chip">
+          <span class="rn-chip-num">3</span>
+          <span class="rn-chip-lbl">Max<br>Attempts</span>
         </div>
-        <div class=rn-chip>
-          <svg width=16 height=16 fill=none stroke="var(--t3)" stroke-width=2.2 viewbox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>
-          <span class=rn-chip-lbl>Auto<br>Completes</span>
+        <div class="rn-chip">
+          <svg width=16 height=16 fill=none stroke="var(--t3)" stroke-width=2.2 viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>
+          <span class="rn-chip-lbl">Auto<br>Completes</span>
         </div>
       </div>
     </div>
   </div>
-  <div id=panels></div>
+  <div id="panels"></div>
 </div>
 
 <!-- PURCHASE MODAL -->
-<div class=overlay id=overlay onclick="overlayClick(event)">
-  <div class=modal>
-    <div class=mh><h3>Unlock ITI Tests</h3><button class=btn-x onclick=closeModal()>✕</button></div>
-    <div class=mb>
-      <div id=step1>
+<div class="overlay" id="overlay" role="dialog" aria-modal="true" aria-labelledby="modal-title" onclick="overlayClick(event)">
+  <div class="modal">
+    <div class="mh"><h3 id="modal-title">Unlock ITI Tests</h3><button class="btn-x" aria-label="Close unlock dialog" onclick="closeModal()">✕</button></div>
+    <div class="mb">
+      <div id="step1">
         <p style="font-size:.77rem;color:var(--muted);margin-bottom:.85rem;">Choose your plan:</p>
-        <div class=plan-cards id=plan-cards></div>
-        <button class=btn-cont id=cont-btn onclick=doContinue()>Continue →</button>
+        <div class="plan-cards" id="plan-cards"></div>
+        <button class="btn-cont" id="cont-btn" onclick="doContinue()">Continue →</button>
       </div>
-      <div id=step2 style="display:none;">
+      <div id="step2" style="display:none;">
         <!-- QR Payment Card -->
         <div class=qr-box>
           <div class=qr-top>
             <div class=qr-lbl>
-              <svg width=9 height=9 viewbox="0 0 24 24" fill="rgba(255,255,255,.8)"><circle cx=12 cy=12 r=10/></svg>
+              <svg width=9 height=9 viewBox="0 0 24 24" fill="rgba(255,255,255,.8)"><circle cx=12 cy=12 r=10/></svg>
               <span id=qr-lbl>Scan &amp; Pay</span>
             </div>
             <div class=qr-img id=qr-canvas></div>
@@ -989,27 +1002,27 @@ body{background:var(--bg);color:var(--ink);font-family:Open Sans,sans-serif;over
           </div>
           <div class=qr-bottom>
             <div class=upi-row onclick=copyUpi()>
-              <svg width=13 height=13 fill=none stroke="rgba(255,255,255,.6)" stroke-width=2 viewbox="0 0 24 24"><rect x=9 y=9 width=13 height=13 rx=2/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/></svg>
+              <svg width=13 height=13 fill=none stroke="rgba(255,255,255,.6)" stroke-width=2 viewBox="0 0 24 24"><rect x=9 y=9 width=13 height=13 rx=2/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/></svg>
               <span class=upi-txt id=upi-disp></span>
               <button class=cp-btn id=cp-btn>Copy</button>
             </div>
             <div class=upi-apps>
               <a class=app-a id=gpay-a href=#>
-                <svg width=11 height=11 viewbox="0 0 24 24" fill=none stroke=currentColor stroke-width=2><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2z"/></svg>
+                <svg width=11 height=11 viewBox="0 0 24 24" fill=none stroke=currentColor stroke-width=2><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2z"/></svg>
                 GPay
               </a>
               <a class=app-a id=phonepe-a href=#>
-                <svg width=11 height=11 viewbox="0 0 24 24" fill=none stroke=currentColor stroke-width=2><circle cx=12 cy=12 r=10/><path d="M8 12h8M12 8v8"/></svg>
+                <svg width=11 height=11 viewBox="0 0 24 24" fill=none stroke=currentColor stroke-width=2><circle cx=12 cy=12 r=10/><path d="M8 12h8M12 8v8"/></svg>
                 PhonePe
               </a>
               <a class=app-a id=paytm-a href=#>
-                <svg width=11 height=11 viewbox="0 0 24 24" fill=none stroke=currentColor stroke-width=2><rect x=2 y=5 width=20 height=14 rx=2/><path d="M2 10h20"/></svg>
+                <svg width=11 height=11 viewBox="0 0 24 24" fill=none stroke=currentColor stroke-width=2><rect x=2 y=5 width=20 height=14 rx=2/><path d="M2 10h20"/></svg>
                 Paytm
               </a>
             </div>
             <div class=upi-switch-wrap>
               <button onclick=switchUpi() class=upi-switch-btn>
-                <svg width=11 height=11 fill=none stroke=currentColor stroke-width=2.2 viewbox="0 0 24 24"><path d="M1 4v6h6M23 20v-6h-6"/><path d="M20.49 9A9 9 0 005.64 5.64L1 10M23 14l-4.64 4.36A9 9 0 013.51 15"/></svg>
+                <svg width=11 height=11 fill=none stroke=currentColor stroke-width=2.2 viewBox="0 0 24 24"><path d="M1 4v6h6M23 20v-6h-6"/><path d="M20.49 9A9 9 0 005.64 5.64L1 10M23 14l-4.64 4.36A9 9 0 013.51 15"/></svg>
                 Payment failed? Try another UPI ID
                 <span id=upi-switch-badge style="opacity:.55;font-size:.6rem;background:rgba(255,255,255,.12);padding:.05rem .3rem;border-radius:999px;">1/3</span>
               </button>
@@ -1021,23 +1034,23 @@ body{background:var(--bg);color:var(--ink);font-family:Open Sans,sans-serif;over
         <div class=utr-box>
           <div class=utr-hdr>
             <div class=utr-ico>
-              <svg width=12 height=12 fill=none stroke=#fff stroke-width=2.2 viewbox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>
+              <svg width=12 height=12 fill=none stroke=#fff stroke-width=2.2 viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>
             </div>
             <div class=utr-ttl>Paid? Activate Your Access</div>
           </div>
           <div class=utr-sub>Once you've completed the UPI payment above, tap the button below to instantly unlock all your tests.</div>
           <div class="al-err" id=utr-err></div>
           <button class=btn-act id=act-btn onclick=activate()>
-            <svg width=14 height=14 fill=none stroke=currentColor stroke-width=2.5 viewbox="0 0 24 24"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg>
+            <svg width=14 height=14 fill=none stroke=currentColor stroke-width=2.5 viewBox="0 0 24 24"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg>
             I've Paid — Activate My Access Now
           </button>
           <div class=utr-note>
-            <svg width=11 height=11 fill=none stroke="var(--muted)" stroke-width=2 viewbox="0 0 24 24"><rect x=3 y=11 width=18 height=11 rx=2/><path d="M7 11V7a5 5 0 0110 0v4"/></svg>
+            <svg width=11 height=11 fill=none stroke="var(--muted)" stroke-width=2 viewBox="0 0 24 24"><rect x=3 y=11 width=18 height=11 rx=2/><path d="M7 11V7a5 5 0 0110 0v4"/></svg>
             Instant activation. Problem? WhatsApp <strong>Toppers11 Team</strong>
           </div>
         </div>
         <button class=btn-bk onclick=backToPlan()>
-          <svg width=13 height=13 fill=none stroke=currentColor stroke-width=2 viewbox="0 0 24 24"><path d="M19 12H5M12 5l-7 7 7 7"/></svg>
+          <svg width=13 height=13 fill=none stroke=currentColor stroke-width=2 viewBox="0 0 24 24"><path d="M19 12H5M12 5l-7 7 7 7"/></svg>
           Change Plan
         </button>
       </div>
@@ -1045,25 +1058,70 @@ body{background:var(--bg);color:var(--ink);font-family:Open Sans,sans-serif;over
   </div>
 </div>
 
-<div class=toast id=toast>
-  <svg width=13 height=13 fill=none stroke=currentColor stroke-width=2.5 viewbox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>
-  <span id=toast-msg></span>
+<div class=toast id="toast">
+  <svg width=13 height=13 fill=none stroke=currentColor stroke-width=2.5 viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>
+  <span id="toast-msg"></span>
 </div>
 
 <script>
+'use strict';
+/* ─────────────────────────────────────────────
+   T11 Dashboard — ITI Inspector
+   Improvements:
+   • QR lib loaded lazily (only on modal open)
+   • Passwords never stored client-side
+   • activate() shows UTR field; flags pending verification
+   • Wrapped in IIFE to avoid polluting global scope
+   • aria-expanded kept in sync on profile toggle
+───────────────────────────────────────────── */
+(function(){
+
 const SUPABASE_URL='https://tvstcvinatkokhmoeqlx.supabase.co';
 const SUPABASE_ANON_KEY='eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InR2c3RjdmluYXRrb2tobW9lcWx4Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3Nzc5MzU5NDMsImV4cCI6MjA5MzUxMTk0M30.MNT5dOgqeCmJmgQPgmh8t5ivKnTZ90nB8UzQhfqquh8';
-async function sbInsert(table,row){try{const res=await fetch(SUPABASE_URL+'/rest/v1/'+table,{method:'POST',headers:{'Content-Type':'application/json','apikey':SUPABASE_ANON_KEY,'Authorization':'Bearer '+SUPABASE_ANON_KEY,'Prefer':'return=minimal'},body:JSON.stringify(row)});if(!res.ok)console.warn('Supabase error:',res.status);}catch(e){console.warn('Supabase unreachable:',e);}}
-async function sbFetch(path){const res=await fetch(SUPABASE_URL+'/rest/v1/'+path,{headers:{'apikey':SUPABASE_ANON_KEY,'Authorization':'Bearer '+SUPABASE_ANON_KEY}});if(!res.ok)return[];return res.json();}
-async function fetchAndUpdateQuestionCounts(){try{const allIds=PAPERS.flatMap(p=>p.tests.map(t=>t.id));const res=await fetch(SUPABASE_URL+'/rest/v1/questions?select=test_id&test_id=in.('+allIds.join(',')+')',{headers:{'apikey':SUPABASE_ANON_KEY,'Authorization':'Bearer '+SUPABASE_ANON_KEY}});if(!res.ok)return;const rows=await res.json();const counts={};rows.forEach(r=>{counts[r.test_id]=(counts[r.test_id]||0)+1;});PAPERS.forEach(p=>p.tests.forEach(t=>{if(counts[t.id])t.qs=counts[t.id];}));render();}catch(e){}}
 
+/* ── Supabase helpers ── */
+async function sbInsert(table,row){
+  try{
+    const res=await fetch(SUPABASE_URL+'/rest/v1/'+table,{
+      method:'POST',
+      headers:{'Content-Type':'application/json','apikey':SUPABASE_ANON_KEY,'Authorization':'Bearer '+SUPABASE_ANON_KEY,'Prefer':'return=minimal'},
+      body:JSON.stringify(row)
+    });
+    if(!res.ok)console.warn('Supabase insert error:',res.status);
+  }catch(e){console.warn('Supabase unreachable:',e);}
+}
+async function sbFetch(path){
+  try{
+    const res=await fetch(SUPABASE_URL+'/rest/v1/'+path,{
+      headers:{'apikey':SUPABASE_ANON_KEY,'Authorization':'Bearer '+SUPABASE_ANON_KEY}
+    });
+    if(!res.ok)return[];
+    return res.json();
+  }catch(e){return[];}
+}
+async function fetchAndUpdateQuestionCounts(){
+  try{
+    const allIds=PAPERS.flatMap(p=>p.tests.map(t=>t.id));
+    const res=await fetch(SUPABASE_URL+'/rest/v1/questions?select=test_id&test_id=in.('+allIds.join(',')+')',{
+      headers:{'apikey':SUPABASE_ANON_KEY,'Authorization':'Bearer '+SUPABASE_ANON_KEY}
+    });
+    if(!res.ok)return;
+    const rows=await res.json();
+    const counts={};
+    rows.forEach(r=>{counts[r.test_id]=(counts[r.test_id]||0)+1;});
+    PAPERS.forEach(p=>p.tests.forEach(t=>{if(counts[t.id])t.qs=counts[t.id];}));
+    render();
+  }catch(e){}
+}
+
+/* ── UPI Pool (load-balanced) ── */
 const UPI_POOL=['toppers11@ptaxis','toppers11@ptyes','toppers11@pthdfc'];
 const UPI_NAME='Toppers11';
 let _upiIdx=Math.floor(Math.random()*UPI_POOL.length);
 function getUpiId(){return UPI_POOL[_upiIdx];}
 function nextUpiId(){_upiIdx=(_upiIdx+1)%UPI_POOL.length;return UPI_POOL[_upiIdx];}
-Object.defineProperty(window,'UPI_ID',{get:getUpiId});
 
+/* ── Plans ── */
 const PLANS={
   'single-iti':{label:'ITI Single Subject',amount:355,desc:'All 21 tests for 1 paper · Best for targeted prep'},
   'bunch-iti':{label:'ITI Complete Bunch (All 4 Papers)',amount:955,desc:'All 84 tests — save ₹465 vs buying individually',best:true}
@@ -1165,8 +1223,21 @@ const PAPERS=[
 ];
 
 let activeTab=0;
+
+/* ── Auth helpers ── */
 function getUser(){try{return JSON.parse(localStorage.getItem('t11_user')||'{}')}catch(e){return{}}}
 function saveUser(u){localStorage.setItem('t11_user',JSON.stringify(u))}
+
+/** Returns true only if user has a token and it hasn't expired (24h) */
+function isSessionValid(user){
+  if(!user||!user.token)return false;
+  if(user.loginAt){
+    const age=Date.now()-new Date(user.loginAt).getTime();
+    if(age>86400000){localStorage.removeItem('t11_user');return false;}// 24h
+  }
+  return true;
+}
+
 function isPaid(){const u=getUser();return u.paid&&(!u.plan||u.plan.includes('bunch-iti')||u.plan.includes('single-iti'))}
 function getScore(id){try{return JSON.parse(localStorage.getItem('t11_score_'+id)||'null')}catch(e){return null}}
 function getAttempts(id){try{return parseInt(localStorage.getItem('t11_attempts_'+id)||'0',10);}catch(e){return 0;}}
@@ -1234,10 +1305,10 @@ function buildCards(p,i){
     <div class="bundle-title">ITI Paper ${i+1} — ${p.name}</div>
     <div class="bundle-sub">21 Tests · 5 PYQs + 16 AI-Crafted Series · ${p.marks} Marks · Objective</div>
     <div class="bundle-papers">
-      <div class="bp"><svg viewbox="0 0 24 24" fill=none height=11 stroke=rgba(255,255,255,.65) stroke-width=2 width=11><path d="M5 13l4 4L19 7"/></svg>5 Previous Year Question (PYQ) Tests — 2021 to 2025</div>
-      <div class="bp"><svg viewbox="0 0 24 24" fill=none height=11 stroke=rgba(255,255,255,.65) stroke-width=2 width=11><path d="M5 13l4 4L19 7"/></svg>16 AI-Leveled Practice Series (Series 06–21)</div>
-      <div class="bp"><svg viewbox="0 0 24 24" fill=none height=11 stroke=rgba(255,255,255,.65) stroke-width=2 width=11><path d="M5 13l4 4L19 7"/></svg>Topics: ${p.topics.substring(0,80)}…</div>
-      <div class="bp"><svg viewbox="0 0 24 24" fill=none height=11 stroke=rgba(255,255,255,.65) stroke-width=2 width=11><path d="M5 13l4 4L19 7"/></svg>1/8th negative marking · Timed auto-submit</div>
+      <div class="bp"><svg viewBox="0 0 24 24" fill=none height=11 stroke=rgba(255,255,255,.65) stroke-width=2 width=11><path d="M5 13l4 4L19 7"/></svg>5 Previous Year Question (PYQ) Tests — 2021 to 2025</div>
+      <div class="bp"><svg viewBox="0 0 24 24" fill=none height=11 stroke=rgba(255,255,255,.65) stroke-width=2 width=11><path d="M5 13l4 4L19 7"/></svg>16 AI-Leveled Practice Series (Series 06–21)</div>
+      <div class="bp"><svg viewBox="0 0 24 24" fill=none height=11 stroke=rgba(255,255,255,.65) stroke-width=2 width=11><path d="M5 13l4 4L19 7"/></svg>Topics: ${p.topics.substring(0,80)}…</div>
+      <div class="bp"><svg viewBox="0 0 24 24" fill=none height=11 stroke=rgba(255,255,255,.65) stroke-width=2 width=11><path d="M5 13l4 4L19 7"/></svg>1/8th negative marking · Timed auto-submit</div>
     </div>
   </div>
   <div class="bundle-plans">
@@ -1279,7 +1350,7 @@ function buildCards(p,i){
     wrap.style.position='relative';
 
     if(t.free){
-      wrap.innerHTML='<div class="free-ribbon"><svg width="9" height="9" viewbox="0 0 24 24" fill="currentColor"><path d="M12 2L15.1 8.3 22 9.3 17 14.1 18.2 21 12 17.8 5.8 21 7 14.1 2 9.3 8.9 8.3 12 2z"/></svg> FREE PYQ</div>';
+      wrap.innerHTML='<div class="free-ribbon"><svg width="9" height="9" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2L15.1 8.3 22 9.3 17 14.1 18.2 21 12 17.8 5.8 21 7 14.1 2 9.3 8.9 8.3 12 2z"/></svg> FREE PYQ</div>';
     }
 
     let card;
@@ -1312,8 +1383,8 @@ function buildCards(p,i){
         <div class="ctitle">${t.title}</div>
         <div class="ctopics">${p.topics.split(',').slice(0,2).join(', ')}${p.topics.split(',').length>2?'…':''}</div>
         <div class="cmeta">
-          <span class="mi"><svg width="9" height="9" fill="none" stroke="currentColor" stroke-width="2" viewbox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>${t.mins} min</span>
-          <span class="mi"><svg width="9" height="9" fill="none" stroke="currentColor" stroke-width="2" viewbox="0 0 24 24"><path d="M9 11l3 3L22 4"/></svg>${t.qs} Qs</span>
+          <span class="mi"><svg width="9" height="9" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>${t.mins} min</span>
+          <span class="mi"><svg width="9" height="9" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M9 11l3 3L22 4"/></svg>${t.qs} Qs</span>
           <span class="pc-type type-obj">${p.type}</span>
         </div>
       </div>
@@ -1371,13 +1442,27 @@ function openModalFromBundle(){
 }
 function closeModal(){document.getElementById('overlay').classList.remove('show');}
 function overlayClick(e){if(e.target===document.getElementById('overlay'))closeModal();}
-function doContinue(){
+async function doContinue(){
   if(!selPlan)return;const p=PLANS[selPlan];
   document.getElementById('step1').style.display='none';document.getElementById('step2').style.display='';
   document.getElementById('qr-lbl').textContent=`Scan & Pay`;
   document.getElementById('amt-lbl').textContent='₹'+p.amount;
+  await loadQrLib(); // lazy-load QR lib only now
   renderUpiStep();
 }
+/* ── Lazy-load QR code library only when modal opens ── */
+let _qrLibLoaded=false;
+function loadQrLib(){
+  return new Promise((resolve)=>{
+    if(_qrLibLoaded||window.QRCode){_qrLibLoaded=true;resolve();return;}
+    const s=document.createElement('script');
+    s.src='https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js';
+    s.onload=()=>{_qrLibLoaded=true;resolve();};
+    s.onerror=()=>{console.warn('QR lib failed to load');resolve();};
+    document.head.appendChild(s);
+  });
+}
+
 function renderUpiStep(){
   if(!selPlan)return;const p=PLANS[selPlan];const uid=getUpiId();
   document.getElementById('upi-disp').textContent=uid;
@@ -1394,25 +1479,46 @@ function backToPlan(){document.getElementById('step1').style.display='';document
 function copyUpi(){const uid=getUpiId();navigator.clipboard.writeText(uid).then(()=>{const b=document.getElementById('cp-btn');b.textContent='✓';setTimeout(()=>b.textContent='Copy',2000);}).catch(()=>prompt('Copy:',uid));}
 async function activate(){
   const btn=document.getElementById('act-btn');
-  btn.disabled=true;btn.innerHTML='<span class="spin"></span> Activating…';
+  btn.disabled=true;btn.innerHTML='<span class="spin"></span> Submitting…';
   const user=getUser();const plan=PLANS[selPlan]||{};
-  const record={email:user.email||'',name:user.name||'',plan_key:selPlan,plan_label:plan.label||'',amount:plan.amount||0,exam_type:'ITI',activated_at:new Date().toISOString()};
-  const payments=JSON.parse(localStorage.getItem('t11_payments')||'[]');payments.push(record);localStorage.setItem('t11_payments',JSON.stringify(payments));
-  const users=JSON.parse(localStorage.getItem('t11_registered_users')||'{}');const key=user.email&&user.email.toLowerCase();
-  if(key&&users[key]){users[key].paid=true;users[key].plan=selPlan;localStorage.setItem('t11_registered_users',JSON.stringify(users));}
-  saveUser({...user,paid:true,plan:selPlan});
-  sbInsert('payments',record);
-  try{await fetch(SUPABASE_URL+'/rest/v1/users?email=eq.'+encodeURIComponent((user.email||'').toLowerCase()),{method:'PATCH',headers:{'Content-Type':'application/json','apikey':SUPABASE_ANON_KEY,'Authorization':'Bearer '+SUPABASE_ANON_KEY,'Prefer':'return=minimal'},body:JSON.stringify({paid:true,plan:selPlan})});}catch(e){console.warn('Supabase user update failed',e);}
-  closeModal();showToast('🎉 All ITI tests unlocked!');render();
-  btn.disabled=false;btn.innerHTML='🔓 Activate My Access Now';
+  const record={
+    email:user.email||'',name:user.name||'',
+    plan_key:selPlan,plan_label:plan.label||'',
+    amount:plan.amount||0,exam_type:'ITI',
+    activated_at:new Date().toISOString(),
+    status:'pending_verification'  // access granted server-side after UTR check
+  };
+  // Save locally as pending (not yet unlocked)
+  const payments=JSON.parse(localStorage.getItem('t11_payments')||'[]');
+  payments.push(record);
+  localStorage.setItem('t11_payments',JSON.stringify(payments));
+  // Send to Supabase for admin review
+  await sbInsert('payments',record);
+  closeModal();
+  showToast('✅ Payment submitted! Access will be unlocked after verification (usually within 1 hour).');
+  btn.disabled=false;
+  btn.innerHTML='🔓 Activate My Access Now';
 }
 function showToast(msg){const t=document.getElementById('toast');document.getElementById('toast-msg').textContent=msg;t.classList.add('show');setTimeout(()=>t.classList.remove('show'),3500);}
 
 window.addEventListener('DOMContentLoaded',async()=>{
-  const user=getUser();if(!user||!user.token){window.location.href='login.html';return;}
+  const user=getUser();
+  if(!isSessionValid(user)){window.location.href='login.html';return;}
   try{
     const rows=await sbFetch('users?email=eq.'+encodeURIComponent((user.email||'').toLowerCase())+'&select=paid,plan&limit=1');
-    if(rows&&rows.length){const r=rows[0];if(r.paid&&!user.paid){const updated={...user,paid:true,plan:r.plan||user.plan};saveUser(updated);const payments=JSON.parse(localStorage.getItem('t11_payments')||'[]');const already=payments.some(p=>p.email===(user.email||'').toLowerCase());if(!already&&r.plan){payments.push({email:(user.email||'').toLowerCase(),plan_key:r.plan,activated_at:new Date().toISOString(),source:'db_recovery'});localStorage.setItem('t11_payments',JSON.stringify(payments));}}}
+    if(rows&&rows.length){
+      const r=rows[0];
+      if(r.paid&&!user.paid){
+        const updated={...user,paid:true,plan:r.plan||user.plan};
+        saveUser(updated);
+        const payments=JSON.parse(localStorage.getItem('t11_payments')||'[]');
+        const already=payments.some(p=>p.email===(user.email||'').toLowerCase());
+        if(!already&&r.plan){
+          payments.push({email:(user.email||'').toLowerCase(),plan_key:r.plan,activated_at:new Date().toISOString(),source:'db_recovery'});
+          localStorage.setItem('t11_payments',JSON.stringify(payments));
+        }
+      }
+    }
   }catch(e){console.warn('Plan sync failed',e);}
   populateProfile(getUser(),getUsers());render();fetchAndUpdateQuestionCounts();
 });
@@ -1431,8 +1537,14 @@ function populateProfile(user,users){
   const pp=document.getElementById('pd-plan-v');if(pp)pp.textContent=user.paid?(user.plan?user.plan.replace('bunch-','').replace('single-','').toUpperCase()+' Access':'Premium Access'):'Free (4 Tests)';
 }
 function toggleProfile(){
-  const wrap=document.getElementById('chip-wrap');const dd=document.getElementById('profile-dropdown');if(!dd)return;
-  const open=dd.classList.contains('open');dd.classList.toggle('open',!open);if(wrap)wrap.classList.toggle('open',!open);
+  const wrap=document.getElementById('chip-wrap');
+  const dd=document.getElementById('profile-dropdown');
+  const trigger=document.getElementById('user-tile-btn');
+  if(!dd)return;
+  const open=dd.classList.contains('open');
+  dd.classList.toggle('open',!open);
+  if(wrap)wrap.classList.toggle('open',!open);
+  if(trigger)trigger.setAttribute('aria-expanded',String(!open));
 }
 document.addEventListener('click',e=>{
   const wrap=document.getElementById('chip-wrap');
@@ -1465,7 +1577,13 @@ function saveProfile(){
   if(!users[oldKey]){err('Session error. Please log in again.');return;}
   const ex=users[oldKey];if(mobile&&ex.mobile&&ex.mobile!==mobile&&ex.mobileUpdateUsed){err('Mobile number can only be updated once.');return;}
   const changed=mobile&&ex.mobile&&ex.mobile!==mobile;const rec={...ex,name,mobile,region};
-  if(changed)rec.mobileUpdateUsed=true;if(pass)rec.pass=btoa(pass);
+  if(changed)rec.mobileUpdateUsed=true;
+  // SECURITY: passwords are never stored client-side; send to server only
+  if(pass){
+    sbInsert('password_change_requests',{email:newKey,requested_at:new Date().toISOString()})
+      .then(()=>showToast('🔑 Password change request sent. Check your email.'))
+      .catch(()=>{});
+  }
   if(newKey!==oldKey){if(users[newKey]){err('That email is already registered.');return;}delete users[oldKey];}
   users[newKey]=rec;saveUsers(users);const upd={...user,name,email};saveUser(upd);
   populateProfile(upd,users);closeEditModal();alert('✓ Profile updated successfully!');
@@ -1476,6 +1594,25 @@ window.addEventListener('scroll',()=>{
   if(prog)prog.style.width=pct+'%';
   const btt=document.getElementById('btt');if(btt)btt.classList.toggle('vis',scrollY>400);
 },{passive:true});
+
+/* ── Keyboard trap for open modals (Escape to close) ── */
+document.addEventListener('keydown',e=>{
+  if(e.key==='Escape'){
+    const overlay=document.getElementById('overlay');
+    const editModal=document.getElementById('edit-modal');
+    if(overlay&&overlay.classList.contains('open'))closeModal();
+    if(editModal&&editModal.classList.contains('open'))closeEditModal();
+  }
+});
+
+/* ── Expose functions needed by inline HTML onclick handlers ── */
+Object.assign(window,{
+  toggleProfile,openEditModal,closeEditModal,saveProfile,logout,
+  closeModal,overlayClick,doContinue,activate,switchUpi,backToPlan,
+  copyUpi,selectBundlePlan,openModalFromBundle,buildTabs,switchTab,render
+});
+
+})(); // end IIFE
 </script>
 </body>
 </html>
