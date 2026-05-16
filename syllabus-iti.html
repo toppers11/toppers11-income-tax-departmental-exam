@@ -205,19 +205,46 @@ footer{background:var(--dark);padding:2.8rem 0 0;position:relative;overflow:hidd
   .nav-inner{padding:.4rem 1.2rem}
 }
 @media(max-width:640px){
-  .top-inner{flex-direction:column;align-items:center;gap:0;padding:.7rem 0 0}
+  /* Top bar */
+  .top-inner{flex-direction:column;align-items:center;gap:.6rem;padding:.8rem 1rem}
   .logo-box{text-align:center;align-items:center}
+
+  /* Action cards — 3 columns on mobile */
+  .action-cards{display:grid;grid-template-columns:repeat(3,1fr);gap:.4rem;width:100%;max-width:400px}
+  .ac{min-width:0;width:100%;padding:.5rem .3rem}
+  .ac svg{width:22px;height:22px}
+  .ac-title{font-size:.5rem}
+  .ac-sub{font-size:.44rem}
+  .free-badge{font-size:.4rem;padding:.08rem .22rem}
+
+  /* Hero */
   .hero{padding:36px 0 48px}
   .hero-title{font-size:1.6rem}
+
+  /* Exam switcher — 2 on top, 1 centered below */
+  .exam-switcher{display:grid;grid-template-columns:repeat(2,1fr);gap:.5rem;max-width:360px;margin:0 auto}
+  .exam-pill:last-child{grid-column:1/-1;max-width:180px;margin:0 auto}
+
+  /* Page & cards */
   .page-wrap{padding:1.25rem 1rem 3rem}
   .paper-header{padding:.9rem 1rem}
   .paper-body{padding:0 1rem 1.1rem}
+
+  /* Feature bar */
+  .feature-bar{flex-wrap:wrap}
+  .feature-item{flex:1 1 45%}
+  .feature-item+.feature-item{border-left:none;border-top:1px solid #eee}
+
+  /* CTA & footer */
   .cta-inner{text-align:center;flex-direction:column}
   .cta-right{align-items:center}
+  .cta-btns{flex-direction:column;align-items:stretch}
   .foot-top{flex-direction:column}
   .foot-brand .site-name{font-size:2rem}
-  .stats-strip{grid-template-columns:repeat(2,1fr)}
-  .cta-btns{flex-direction:column;align-items:stretch}
+}
+@media(max-width:380px){
+  .action-cards{grid-template-columns:repeat(2,1fr)}
+  .ac-eq,.ac-wq{grid-column:span 1}
 }
 </style>
 </head>
