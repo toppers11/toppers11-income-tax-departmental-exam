@@ -1052,7 +1052,7 @@ body{background:var(--bg);color:var(--ink);font-family:'Open Sans',sans-serif;ov
           <div class=qr-top>
             <div class=qr-lbl>
               <svg width=9 height=9 viewBox="0 0 24 24" fill="rgba(255,255,255,.8)"><circle cx=12 cy=12 r=10/></svg>
-              <span id=qr-lbl>Scan &amp; Pay</span>
+              <span id=qr-lbl>Step 1 — Scan &amp; Pay</span>
             </div>
             <div class=qr-img id=qr-canvas></div>
             <div class=qr-amount-pill>
@@ -1095,17 +1095,29 @@ body{background:var(--bg);color:var(--ink);font-family:'Open Sans',sans-serif;ov
             <div class=utr-ico>
               <svg width=12 height=12 fill=none stroke=#fff stroke-width=2.2 viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>
             </div>
-            <div class=utr-ttl>Paid? Activate Your Access</div>
+            <div class=utr-ttl>Step 2 — Enter Ref & Get Instant Access</div>
           </div>
-          <div class=utr-sub>Once you've completed the UPI payment above, tap the button below to instantly unlock all your tests.</div>
+          <div class=utr-sub id=utr-sub>Enter your UPI transaction ID after payment — your tests unlock <strong>instantly</strong>.</div>
           <div class="al-err" id=utr-err></div>
+          <div style="margin-bottom:.55rem;">
+            <label style="font-size:.68rem;font-weight:700;color:var(--ink);display:block;margin-bottom:.28rem;">
+              📋 UPI Ref / Transaction ID <span style="color:#e53e3e;font-size:.65rem;">*required</span>
+            </label>
+            <input type="text" id="upi-ref-inp" placeholder="e.g. 613636786394" maxlength="30"
+              style="width:100%;padding:.52rem .7rem;border:2px solid #c6ede0;border-radius:8px;font-size:.85rem;font-family:monospace;font-weight:700;color:var(--ink);background:#fff;outline:none;transition:border .15s;letter-spacing:.04em;"
+              onfocus="this.style.borderColor='var(--t3)'" onblur="this.style.borderColor='#c6ede0'"/>
+            <div style="font-size:.6rem;color:#6b7280;margin-top:.3rem;display:flex;align-items:center;gap:.3rem;">
+              <span>📱</span>
+              <span>Find in <strong>Paytm/GPay/PhonePe</strong> → Transaction History → 12-digit Ref No.</span>
+            </div>
+          </div>
           <button class=btn-act id=act-btn onclick=activate()>
             <svg width=14 height=14 fill=none stroke=currentColor stroke-width=2.5 viewBox="0 0 24 24"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg>
-            I've Paid — Activate My Access Now
+            ⚡ Unlock My Tests Instantly
           </button>
           <div class=utr-note>
             <svg width=11 height=11 fill=none stroke="var(--muted)" stroke-width=2 viewBox="0 0 24 24"><rect x=3 y=11 width=18 height=11 rx=2/><path d="M7 11V7a5 5 0 0110 0v4"/></svg>
-            Instant activation. Problem? WhatsApp <strong>Toppers11 Team</strong>
+            🔒 Your UPI Ref is only used to verify your payment. Tests unlock instantly on submission.
           </div>
         </div>
         <button class=btn-bk onclick=backToPlan()>
@@ -1163,8 +1175,9 @@ async function sbInsert(table,row){
       headers:{'Content-Type':'application/json','apikey':SUPABASE_ANON_KEY,'Authorization':'Bearer '+SUPABASE_ANON_KEY,'Prefer':'return=minimal'},
       body:JSON.stringify(row)
     });
-    if(!res.ok)console.warn('Supabase insert error:',res.status);
-  }catch(e){if(e.name!=='AbortError')console.warn('Supabase unreachable:',e);}
+    if(!res.ok){const errText=await res.text().catch(()=>'');console.error('Supabase insert error:',res.status,errText);return{ok:false,status:res.status,error:errText};}
+    return{ok:true};
+  }catch(e){if(e.name!=='AbortError')console.error('Supabase unreachable:',e);return{ok:false,error:e.message};}
 }
 async function sbFetch(path){
   try{
@@ -1643,7 +1656,8 @@ function renderUpiStep(){
   // Show payment-for label clearly in the activate box
   const utrSub=document.getElementById('utr-sub');
   if(utrSub){
-    utrSub.innerHTML=`You are paying <strong style="color:var(--t1)">₹${p.amount}</strong> for <strong style="color:var(--t1)">${selPlan==='single-iti'&&subjectPaper?`Paper ${PAPERS.indexOf(subjectPaper)+1} — ${subjectPaper.name}`:'All 4 Papers (Complete Bunch)'}</strong>. Once payment is done, tap below to activate.`;
+    const forLabel=selPlan==='single-iti'&&subjectPaper?`Paper ${PAPERS.indexOf(subjectPaper)+1} — ${subjectPaper.name}`:'All 4 Papers (Complete Bunch)';
+    utrSub.innerHTML=`Pay <strong style="color:var(--t1)">₹${p.amount}</strong> for <strong style="color:var(--t1)">${forLabel}</strong> via the QR/UPI above. Then enter your UPI Ref No. below — tests unlock <strong style="color:var(--t3)">instantly</strong>, no waiting.`;
   }
 
   const upiStr=`upi://pay?pa=${uid}&pn=${encodeURIComponent(UPI_NAME)}&am=${p.amount}&cu=INR&tn=${encodeURIComponent(payNote)}`;
@@ -1662,12 +1676,24 @@ function copyUpi(){const uid=getUpiId();navigator.clipboard.writeText(uid).then(
 
 async function activate(){
   const btn=document.getElementById('act-btn');
-  btn.disabled=true;btn.innerHTML='<span class="spin"></span> Submitting…';
+  const errEl=document.getElementById('utr-err');
+  errEl.classList.remove('show');
+
+  // Validate UPI ref
+  const upiRef=(document.getElementById('upi-ref-inp')?.value||'').trim();
+  if(!upiRef||upiRef.length<6){
+    errEl.textContent='Please enter your UPI Ref / Transaction ID from your payment app.';
+    errEl.classList.add('show');
+    return;
+  }
+
+  btn.disabled=true;btn.innerHTML='<span class="spin"></span> Activating…';
   const user=getUser();const plan=PLANS[selPlan]||{};
   const subjectPaper=PAPERS.find(pp=>pp.key===selSubjectKey);
 
+  // Status = 'verified' immediately — no manual step needed
   const record={
-    email:user.email||'',
+    email:(user.email||'').toLowerCase(),
     name:user.name||'',
     plan_key:selPlan,
     plan_label:plan.label||'',
@@ -1675,16 +1701,12 @@ async function activate(){
     subject_name:selPlan==='single-iti'&&subjectPaper?`Paper ${PAPERS.indexOf(subjectPaper)+1} — ${subjectPaper.name}`:null,
     amount:plan.amount||0,
     exam_type:'ITI',
+    upi_ref:upiRef,
     activated_at:new Date().toISOString(),
-    status:'pending_verification'
+    status:'verified'
   };
 
-  // Save locally as pending
-  const payments=JSON.parse(localStorage.getItem('t11_payments')||'[]');
-  payments.push(record);
-  localStorage.setItem('t11_payments',JSON.stringify(payments));
-
-  // Update user's purchased_subjects locally (optimistic — confirmed by admin)
+  // Grant access locally — instant unlock
   if(selPlan==='single-iti'&&selSubjectKey){
     const subjects=[...(user.purchased_subjects||[])];
     if(!subjects.includes(selSubjectKey))subjects.push(selSubjectKey);
@@ -1693,13 +1715,20 @@ async function activate(){
     saveUser({...user,paid:true,plan:selPlan,purchased_subjects:['p1','p2','p3','p4']});
   }
 
-  // Push to Supabase payments table with subject info
-  await sbInsert('payments',record);
+  // Save locally
+  const payments=JSON.parse(localStorage.getItem('t11_payments')||'[]');
+  payments.push(record);
+  localStorage.setItem('t11_payments',JSON.stringify(payments));
+
+  // Push to Supabase — fire and don't block UI on failure
+  sbInsert('payments',record).then(result=>{
+    if(!result.ok)console.error('Supabase sync failed (access already granted locally):',result.status,result.error);
+  });
 
   closeModal();
   const subLabel=selPlan==='single-iti'&&subjectPaper?`Paper ${PAPERS.indexOf(subjectPaper)+1} — ${subjectPaper.name}`:'All 4 Papers';
-  showToast(`✅ Payment submitted for ${subLabel}! Tests will activate after verification (~1 hr).`);
-  render(); // re-render cards with new unlock state
+  showToast('🎉 Access unlocked for '+subLabel+'! Start practising now.');
+  render();
   btn.disabled=false;
   btn.innerHTML='🔓 Activate My Access Now';
 }
@@ -1747,9 +1776,11 @@ window.addEventListener('DOMContentLoaded',async()=>{
   // Sync plan status from server (authoritative source)
   try{
     if(sbRateOk()){
-      const rows=await sbFetch('payments?email=eq.'+encodeURIComponent((user.email||'').toLowerCase())+'&status=eq.verified&select=plan_key,subject_key,subject_name');
+      // Accept both verified AND pending_verification so users get immediate access after payment
+      const emailEnc=encodeURIComponent((user.email||'').toLowerCase());
+      const rows=await sbFetch('payments?email=eq.'+emailEnc+'&status=in.(verified,pending_verification)&select=plan_key,subject_key,subject_name,status');
       if(rows&&rows.length){
-        // Rebuild purchased_subjects from all verified payment records
+        // Rebuild purchased_subjects from all verified/pending payment records
         const subjects=[];
         let hasBunch=false;
         rows.forEach(r=>{
