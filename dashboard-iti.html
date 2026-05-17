@@ -1723,9 +1723,9 @@ function renderUpiStep(){
     qrLbl.textContent=forLabel+' · ₹'+p.amount;
   }
 
-  const upiStr=`upi://pay?pa=${uid}&pn=${encodeURIComponent(UPI_NAME)}&am=${p.amount}&cu=INR&tn=${encodeURIComponent(payNote)}`;
-  const gpayHref=`tez://upi/pay?pa=${uid}&pn=${encodeURIComponent(UPI_NAME)}&am=${p.amount}&cu=INR&tn=${encodeURIComponent(payNote)}`;
-  const paytmHref=`paytmmp://pay?pa=${uid}&pn=${encodeURIComponent(UPI_NAME)}&am=${p.amount}&cu=INR&tn=${encodeURIComponent(payNote)}`;
+  const upiStr=`upi://pay?pa=${uid}&pn=${encodeURIComponent(UPI_NAME)}&cu=INR&tn=${encodeURIComponent(payNote)}`;
+  const gpayHref=`tez://upi/pay?pa=${uid}&pn=${encodeURIComponent(UPI_NAME)}&cu=INR&tn=${encodeURIComponent(payNote)}`;
+  const paytmHref=`paytmmp://pay?pa=${uid}&pn=${encodeURIComponent(UPI_NAME)}&cu=INR&tn=${encodeURIComponent(payNote)}`;
   document.getElementById('gpay-a').href=gpayHref;
   document.getElementById('phonepe-a').href=upiStr;
   document.getElementById('paytm-a').href=paytmHref;
