@@ -40,7 +40,8 @@ body{-webkit-user-select:none;-moz-user-select:none;user-select:none;}
 #inst-page.active,#test-page.active,#result-page.active,#subj-page.active,#subj-result-page.active{display:flex;flex-direction:column;min-height:100vh;}
 
 /* ══ TOPBAR ══ */
-.topbar{background:#fff;border-bottom:2px solid var(--t3);padding:0 1rem;height:58px;display:flex;align-items:center;justify-content:space-between;flex-shrink:0;gap:.5rem;position:sticky;top:0;z-index:100;}
+.topbar{background:#fff;border-bottom:2px solid var(--t3);height:58px;display:flex;align-items:center;justify-content:center;flex-shrink:0;position:sticky;top:0;z-index:100;padding:0 1rem;}
+.topbar-inner{width:100%;max-width:1200px;display:flex;align-items:center;justify-content:space-between;gap:.5rem;}
 .topbar-logo{text-decoration:none;display:inline-flex;flex-shrink:0;}
 .logo-block{display:flex;flex-direction:column;align-items:flex-start;gap:0;}
 .logo-eyebrow{font-family:'Dancing Script',cursive;font-size:.85rem;font-weight:600;color:var(--t3);line-height:1.2;margin-bottom:-1px;}
@@ -308,6 +309,7 @@ body{-webkit-user-select:none;-moz-user-select:none;user-select:none;}
 <!-- ══ INSTRUCTIONS PAGE ══ -->
 <div id="inst-page" class="active">
   <div class="topbar">
+    <div class="topbar-inner">
     <a href="exam-select.html" class="topbar-logo">
       <div class="logo-block">
         <span class="logo-main">toppers<span class="num">11</span></span>
@@ -318,6 +320,7 @@ body{-webkit-user-select:none;-moz-user-select:none;user-select:none;}
       <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M19 12H5M12 5l-7 7 7 7"/></svg>
       Back
     </a>
+    </div>
   </div>
   <div class="inst-body">
     <div class="inst-card">
@@ -380,6 +383,7 @@ body{-webkit-user-select:none;-moz-user-select:none;user-select:none;}
 <!-- ══ MCQ TEST PAGE ══ -->
 <div id="test-page">
   <div class="topbar">
+    <div class="topbar-inner">
     <a href="exam-select.html" class="topbar-logo">
       <div class="logo-block">
         <span class="logo-main">toppers<span class="num">11</span></span>
@@ -394,6 +398,7 @@ body{-webkit-user-select:none;-moz-user-select:none;user-select:none;}
       </div>
       <div class="timer-display" id="timer-box">60:00</div>
       <button class="btn-submit-top" onclick="showSubmitModal()">Submit</button>
+    </div>
     </div>
   </div>
   <div class="test-layout">
@@ -440,6 +445,7 @@ body{-webkit-user-select:none;-moz-user-select:none;user-select:none;}
 <!-- ══ MCQ RESULT PAGE ══ -->
 <div id="result-page">
   <div class="topbar">
+    <div class="topbar-inner">
     <a id="result-dash-link" href="exam-select.html" class="topbar-logo">
       <div class="logo-block">
         <span class="logo-main">toppers<span class="num">11</span></span>
@@ -452,6 +458,7 @@ body{-webkit-user-select:none;-moz-user-select:none;user-select:none;}
         <button class="lang-btn active" id="rl-btn-en" onclick="setLang('en')">EN</button>
         <button class="lang-btn" id="rl-btn-hi" onclick="setLang('hi')">हि</button>
       </div>
+    </div>
     </div>
   </div>
   <div class="result-body">
@@ -490,6 +497,7 @@ body{-webkit-user-select:none;-moz-user-select:none;user-select:none;}
 <!-- ══ SUBJECTIVE TEST PAGE ══ -->
 <div id="subj-page">
   <div class="topbar">
+    <div class="topbar-inner">
     <a href="exam-select.html" class="topbar-logo">
       <div class="logo-block">
         <span class="logo-main">toppers<span class="num">11</span></span>
@@ -500,6 +508,7 @@ body{-webkit-user-select:none;-moz-user-select:none;user-select:none;}
       <div class="topbar-info" id="subj-tp-info"></div>
       <div class="timer-display" id="subj-timer-box">120:00</div>
       <button class="btn-submit-top" onclick="submitSubjective()">Submit</button>
+    </div>
     </div>
   </div>
   <div class="subj-body" id="subj-questions-body"></div>
@@ -513,12 +522,14 @@ body{-webkit-user-select:none;-moz-user-select:none;user-select:none;}
 <!-- ══ SUBJECTIVE RESULT PAGE ══ -->
 <div id="subj-result-page">
   <div class="topbar">
+    <div class="topbar-inner">
     <a id="subj-dash-link" href="exam-select.html" class="topbar-logo">
       <div class="logo-block">
         <span class="logo-main">toppers<span class="num">11</span></span>
       </div>
     </a>
     <span class="topbar-info">Submitted</span>
+    </div>
   </div>
   <div class="subj-res-body">
     <div class="subj-res-hero">
