@@ -67,27 +67,27 @@ body{-webkit-user-select:none;-moz-user-select:none;user-select:none;}
 .lang-btn:hover:not(.active){background:#a7f3d0;color:var(--t1);}
 
 /* ══ INSTRUCTIONS ══ */
-.inst-body{max-width:860px;margin:1.5rem auto;padding:0 1rem 3rem;width:100%;flex:1;}
+.inst-body{max-width:1200px;margin:1.5rem auto;padding:0 1rem 3rem;width:100%;flex:1;}
 .inst-card{background:#fff;border-radius:16px;border:1px solid var(--bdr);overflow:hidden;box-shadow:0 4px 24px rgba(0,109,91,.08);margin-bottom:1.5rem;}
 .inst-head{padding:1rem 1.25rem;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:.5rem;}
 .inst-head h2{font-family:'Nunito',sans-serif;font-size:1.05rem;font-weight:800;color:#fff;}
 .exam-badge-sm{background:rgba(255,255,255,.2);border:1px solid rgba(255,255,255,.35);color:#fff;font-size:.65rem;font-weight:700;padding:.18rem .6rem;border-radius:999px;letter-spacing:.06em;text-transform:uppercase;}
 .inst-head-iti{background:linear-gradient(135deg,var(--t-dark),var(--t1));}
 .inst-head-ito{background:linear-gradient(135deg,#92400E,#D97706);}
-.inst-head-ms{background:linear-gradient(135deg,#1E40AF,#3B82F6);}
+.inst-head-ms{background:linear-gradient(135deg,var(--t-dark),var(--t1));}
 .inst-bdy{padding:1.2rem 1.25rem;}
 .details-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:.65rem;margin-bottom:1.2rem;}
 @media(min-width:480px){.details-grid{grid-template-columns:repeat(4,1fr);}}
 .detail-cell{background:#e6faf5;border:1px solid #a7f3d0;border-radius:10px;padding:.65rem .85rem;}
-.detail-cell.blue{background:var(--blue-pale);border-color:#BFDBFE;}
+.detail-cell.blue{background:#e6faf5;border-color:#a7f3d0;}
 .detail-label{font-size:.62rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);margin-bottom:.2rem;}
 .detail-val{font-size:.95rem;font-weight:800;color:var(--ink);}
 .sec-title{font-size:.7rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--t1);margin-bottom:.7rem;padding-bottom:.4rem;border-bottom:2px solid #a7f3d0;}
-.sec-title.blue{color:var(--blue-dark);border-bottom-color:#BFDBFE;}
+.sec-title.blue{color:var(--t1);border-bottom-color:#a7f3d0;}
 .inst-list{list-style:none;display:flex;flex-direction:column;gap:.45rem;margin-bottom:1.1rem;}
 .inst-list li{display:flex;align-items:flex-start;gap:.6rem;font-size:.84rem;color:#374151;line-height:1.6;}
 .bullet{width:20px;height:20px;border-radius:50%;background:#e6faf5;border:1.5px solid #a7f3d0;display:grid;place-items:center;flex-shrink:0;margin-top:2px;font-size:.6rem;font-weight:700;color:var(--t1);}
-.bullet.blue{background:var(--blue-pale);border-color:#BFDBFE;color:var(--blue-dark);}
+.bullet.blue{background:#e6faf5;border-color:#a7f3d0;color:var(--t1);}
 .legend-row{display:grid;grid-template-columns:repeat(2,1fr);gap:.5rem;margin-bottom:1.1rem;}
 @media(min-width:480px){.legend-row{grid-template-columns:repeat(auto-fit,minmax(150px,1fr));}}
 .leg-item{display:flex;align-items:center;gap:.5rem;background:var(--bg);border:1px solid var(--bdr);border-radius:8px;padding:.45rem .7rem;font-size:.78rem;color:#374151;}
@@ -103,7 +103,7 @@ body{-webkit-user-select:none;-moz-user-select:none;user-select:none;}
 .btn-start{background:linear-gradient(135deg,var(--t1),var(--t3));color:#fff;font-size:.84rem;font-weight:700;letter-spacing:.04em;text-transform:uppercase;padding:.65rem 1.8rem;border-radius:10px;border:none;cursor:pointer;box-shadow:0 4px 16px rgba(0,171,132,.3);transition:all .2s;}
 .btn-start:hover{transform:translateY(-1px);box-shadow:0 6px 22px rgba(0,171,132,.4);}
 .btn-start:disabled{opacity:.45;cursor:not-allowed;transform:none;box-shadow:none;}
-.btn-start.blue{background:linear-gradient(135deg,#1E40AF,#3B82F6);box-shadow:0 4px 14px rgba(59,130,246,.35);}
+.btn-start.blue{background:linear-gradient(135deg,var(--t-dark),var(--t1));box-shadow:0 4px 14px rgba(0,171,132,.35);}
 .back-link{font-size:.8rem;color:var(--muted);text-decoration:none;display:flex;align-items:center;gap:.3rem;}
 .back-link:hover{color:var(--t1);}
 .inst-lang-row{display:flex;align-items:center;justify-content:space-between;padding:.55rem 1.25rem;background:var(--bg);border-bottom:1px solid var(--bdr);}
@@ -180,7 +180,7 @@ body{-webkit-user-select:none;-moz-user-select:none;user-select:none;}
 .lang-hi .opt-text-en{display:none;}
 
 /* ══ RESULT PAGE ══ */
-.result-body{max-width:860px;margin:1.5rem auto;padding:0 1rem 4rem;flex:1;}
+.result-body{max-width:1200px;margin:1.5rem auto;padding:0 1rem 4rem;flex:1;}
 .result-hero{background:linear-gradient(135deg,var(--t-dark),var(--t1));border-radius:16px;padding:1.75rem 1.25rem;text-align:center;margin-bottom:1.25rem;color:#fff;position:relative;overflow:hidden;}
 .result-hero:before{content:'';position:absolute;inset:0;background:repeating-linear-gradient(90deg,transparent,transparent 80px,rgba(255,255,255,.03) 80px 160px);pointer-events:none;}
 .result-hero h2{font-family:'Nunito',sans-serif;font-size:1.6rem;font-weight:800;margin-bottom:.3rem;position:relative;}
@@ -256,10 +256,10 @@ body{-webkit-user-select:none;-moz-user-select:none;user-select:none;}
 .feedback-sent-msg.show{display:block;}
 
 /* ══ SUBJECTIVE TEST PAGE ══ */
-.subj-body{flex:1;max-width:860px;margin:0 auto;padding:1.25rem 1rem;width:100%;}
+.subj-body{flex:1;max-width:1200px;margin:0 auto;padding:1.25rem 1rem;width:100%;}
 .subj-q-card{background:#fff;border:1px solid var(--bdr);border-radius:14px;margin-bottom:1.1rem;overflow:hidden;}
 .subj-q-head{padding:.75rem 1.1rem;display:flex;align-items:center;gap:.55rem;border-bottom:1px solid var(--bdr);}
-.subj-q-num{font-family:'DM Mono',monospace;font-size:.68rem;font-weight:700;color:var(--blue-dark);background:var(--blue-pale);border-radius:6px;padding:.13rem .45rem;}
+.subj-q-num{font-family:'DM Mono',monospace;font-size:.68rem;font-weight:700;color:var(--t-dark);background:#e6faf5;border-radius:6px;padding:.13rem .45rem;}
 .subj-q-marks{font-size:.7rem;font-weight:600;color:var(--muted);}
 .subj-q-text{padding:.9rem 1.1rem;font-size:.88rem;font-weight:500;color:var(--ink);line-height:1.75;}
 .subj-q-hint{padding:0 1.1rem .55rem;font-size:.73rem;color:var(--muted);font-style:italic;}
@@ -269,16 +269,16 @@ body{-webkit-user-select:none;-moz-user-select:none;user-select:none;}
 .subj-textarea:focus{border-color:var(--t3);box-shadow:0 0 0 3px rgba(0,171,132,.1);}
 .word-count{font-size:.66rem;color:var(--muted);text-align:right;margin-top:.25rem;}
 .subj-nav{display:flex;gap:.55rem;margin-top:1.25rem;justify-content:flex-end;}
-.btn-subj-submit{background:linear-gradient(135deg,#1E40AF,#3B82F6);color:#fff;font-size:.84rem;font-weight:700;padding:.65rem 1.6rem;border-radius:10px;border:none;cursor:pointer;box-shadow:0 4px 14px rgba(59,130,246,.35);}
+.btn-subj-submit{background:linear-gradient(135deg,var(--t-dark),var(--t1));color:#fff;font-size:.84rem;font-weight:700;padding:.65rem 1.6rem;border-radius:10px;border:none;cursor:pointer;box-shadow:0 4px 14px rgba(0,171,132,.35);}
 .btn-subj-submit:hover{opacity:.9;}
 
 /* ══ SUBJECTIVE RESULT ══ */
-.subj-res-body{flex:1;max-width:860px;margin:0 auto;padding:1.25rem 1rem;width:100%;}
-.subj-res-hero{background:linear-gradient(135deg,#1E40AF,#3B82F6);border-radius:16px;padding:1.75rem 1.25rem;text-align:center;color:#fff;margin-bottom:1.25rem;}
+.subj-res-body{flex:1;max-width:1200px;margin:0 auto;padding:1.25rem 1rem;width:100%;}
+.subj-res-hero{background:linear-gradient(135deg,var(--t-dark),var(--t1));border-radius:16px;padding:1.75rem 1.25rem;text-align:center;color:#fff;margin-bottom:1.25rem;}
 .subj-res-hero h2{font-family:'Nunito',sans-serif;font-size:1.5rem;font-weight:800;margin-bottom:.3rem;}
 .subj-ans-review{background:#fff;border:1px solid var(--bdr);border-radius:14px;overflow:hidden;margin-bottom:1rem;}
-.sar-head{background:var(--blue-pale);padding:.75rem 1.1rem;display:flex;align-items:center;gap:.45rem;}
-.sar-q-num{font-family:'DM Mono',monospace;font-size:.68rem;font-weight:700;color:var(--blue-dark);}
+.sar-head{background:#e6faf5;padding:.75rem 1.1rem;display:flex;align-items:center;gap:.45rem;}
+.sar-q-num{font-family:'DM Mono',monospace;font-size:.68rem;font-weight:700;color:var(--t-dark);}
 .sar-body{padding:.9rem 1.1rem;}
 .sar-q{font-size:.86rem;font-weight:600;color:var(--ink);margin-bottom:.7rem;line-height:1.6;}
 .sar-user-label{font-size:.66rem;font-weight:700;letter-spacing:.07em;text-transform:uppercase;color:var(--muted);margin-bottom:.28rem;}
@@ -310,7 +310,6 @@ body{-webkit-user-select:none;-moz-user-select:none;user-select:none;}
   <div class="topbar">
     <a href="exam-select.html" class="topbar-logo">
       <div class="logo-block">
-        <span class="logo-eyebrow">Employee Choice</span>
         <span class="logo-main">toppers<span class="num">11</span></span>
         <span class="logo-sub">AI-Powered Test Series</span>
       </div>
@@ -383,7 +382,6 @@ body{-webkit-user-select:none;-moz-user-select:none;user-select:none;}
   <div class="topbar">
     <a href="exam-select.html" class="topbar-logo">
       <div class="logo-block">
-        <span class="logo-eyebrow">Employee Choice</span>
         <span class="logo-main">toppers<span class="num">11</span></span>
         <span class="logo-sub">AI-Powered Test Series</span>
       </div>
@@ -444,7 +442,6 @@ body{-webkit-user-select:none;-moz-user-select:none;user-select:none;}
   <div class="topbar">
     <a id="result-dash-link" href="exam-select.html" class="topbar-logo">
       <div class="logo-block">
-        <span class="logo-eyebrow">Employee Choice</span>
         <span class="logo-main">toppers<span class="num">11</span></span>
         <span class="logo-sub">AI-Powered Test Series</span>
       </div>
@@ -495,7 +492,6 @@ body{-webkit-user-select:none;-moz-user-select:none;user-select:none;}
   <div class="topbar">
     <a href="exam-select.html" class="topbar-logo">
       <div class="logo-block">
-        <span class="logo-eyebrow">Employee Choice</span>
         <span class="logo-main">toppers<span class="num">11</span></span>
         <span class="logo-sub">AI-Powered Test Series</span>
       </div>
@@ -503,11 +499,11 @@ body{-webkit-user-select:none;-moz-user-select:none;user-select:none;}
     <div class="topbar-right">
       <div class="topbar-info" id="subj-tp-info"></div>
       <div class="timer-display" id="subj-timer-box">120:00</div>
-      <button class="btn-submit-top" style="background:linear-gradient(135deg,#1E40AF,#3B82F6);" onclick="submitSubjective()">Submit</button>
+      <button class="btn-submit-top" onclick="submitSubjective()">Submit</button>
     </div>
   </div>
   <div class="subj-body" id="subj-questions-body"></div>
-  <div style="max-width:860px;margin:0 auto;padding:0 1rem 2.5rem;width:100%;">
+  <div style="max-width:1200px;margin:0 auto;padding:0 1rem 2.5rem;width:100%;">
     <div class="subj-nav">
       <button class="btn-subj-submit" onclick="submitSubjective()">Submit All Answers →</button>
     </div>
@@ -519,7 +515,6 @@ body{-webkit-user-select:none;-moz-user-select:none;user-select:none;}
   <div class="topbar">
     <a id="subj-dash-link" href="exam-select.html" class="topbar-logo">
       <div class="logo-block">
-        <span class="logo-eyebrow">Employee Choice</span>
         <span class="logo-main">toppers<span class="num">11</span></span>
       </div>
     </a>
