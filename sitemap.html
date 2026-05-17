@@ -64,7 +64,7 @@ nav{z-index:200;background:#fff;border-bottom:none;position:sticky;top:0}
 .mob-nav-link:hover{color:var(--t3);background:#00ab840a}
 
 /* ── HERO WITH TRIANGLES ── */
-.hero{background:var(--t3);min-height:300px;padding:50px 0 58px;position:relative;overflow:hidden}
+.hero{background:var(--t3);min-height:150px;padding:26px 0 28px;position:relative;overflow:hidden}
 .tri{pointer-events:none;z-index:0;position:absolute}
 .hero-inner{z-index:2;position:relative;text-align:center;max-width:1200px;margin:0 auto;padding:0 1.2rem}
 
@@ -130,8 +130,9 @@ nav{z-index:200;background:#fff;border-bottom:none;position:sticky;top:0}
 .badge-new{background:#eff6ff;color:#3b82f6}
 
 /* ── FOOTER ── */
-footer{background:var(--dark);color:#e0e0e0;padding:3.5rem 0 0}
-.foot-inner{max-width:1200px;margin:0 auto;padding:0 1.2rem}
+footer{background:var(--dark);padding:2.8rem 0 0;position:relative;overflow:hidden}
+.foot-tris{pointer-events:none;z-index:0;opacity:.35;position:absolute;inset:0}
+.foot-inner{z-index:1;max-width:1200px;margin:0 auto;padding:0 1.2rem;position:relative}
 .foot-top{display:flex;flex-wrap:wrap;gap:3rem;justify-content:space-between;padding-bottom:2.5rem;border-bottom:1px solid rgba(255,255,255,.08)}
 .foot-brand .site-name{font-family:Nunito,sans-serif;font-size:2.2rem;font-weight:100;color:#fff;letter-spacing:.02em;line-height:1;margin-bottom:.2rem}
 .foot-brand .tag{font-size:.52rem;font-weight:700;letter-spacing:.18em;text-transform:uppercase;margin-bottom:.8rem}
@@ -234,17 +235,17 @@ footer{background:var(--dark);color:#e0e0e0;padding:3.5rem 0 0}
 
 <!-- HERO -->
 <section class="hero">
-  <!-- Floating triangles -->
-  <svg class="tri tri-tl" viewBox="0 0 100 100"><polygon points="50,5 95,95 5,95" fill="rgba(255,255,255,0.12)"/></svg>
-  <svg class="tri tri-tl2" viewBox="0 0 100 100"><polygon points="50,5 95,95 5,95" fill="rgba(255,255,255,0.09)"/></svg>
-  <svg class="tri tri-tr" viewBox="0 0 100 100"><polygon points="50,5 95,95 5,95" fill="rgba(255,255,255,0.1)"/></svg>
-  <svg class="tri tri-tr2" viewBox="0 0 100 100"><polygon points="50,5 95,95 5,95" fill="rgba(255,255,255,0.08)"/></svg>
-  <svg class="tri tri-tr3" viewBox="0 0 100 100"><polygon points="50,5 95,95 5,95" fill="rgba(255,255,255,0.07)"/></svg>
-  <svg class="tri tri-bl" viewBox="0 0 100 100"><polygon points="50,5 95,95 5,95" fill="rgba(255,255,255,0.1)"/></svg>
-  <svg class="tri tri-bl2" viewBox="0 0 100 100"><polygon points="50,5 95,95 5,95" fill="rgba(255,255,255,0.07)"/></svg>
-  <svg class="tri tri-bc" viewBox="0 0 100 100"><polygon points="50,5 95,95 5,95" fill="rgba(255,255,255,0.09)"/></svg>
-  <svg class="tri tri-br" viewBox="0 0 100 100"><polygon points="50,5 95,95 5,95" fill="rgba(255,255,255,0.08)"/></svg>
-  <svg class="tri tri-mr" viewBox="0 0 100 100"><polygon points="50,5 95,95 5,95" fill="rgba(255,255,255,0.07)"/></svg>
+  <!-- 3D Floating Triangles (same as contact.html) -->
+  <div class="tri tri-tl"><svg style="filter:drop-shadow(4px 8px 16px #00000059)" viewBox="0 0 120 120" xmlns="http://www.w3.org/2000/svg"><defs><linearGradient id="c1a" x1="0%" x2="100%" y1="0%" y2="100%"><stop offset="0%" stop-color="#3ddbb0"/><stop offset="100%" stop-color="#00AB84"/></linearGradient><linearGradient id="c1b" x1="100%" x2="0%" y1="0%" y2="100%"><stop offset="0%" stop-color="#006D5B"/><stop offset="100%" stop-color="#003d30"/></linearGradient></defs><polygon points="60,10 15,95 60,78" fill="url(#c1a)"/><polygon points="60,10 105,95 60,78" fill="url(#c1b)"/><polygon points="15,95 60,78 105,95" fill="#00AB84" opacity="0.75"/><line stroke="rgba(255,255,255,0.35)" stroke-width="1.2" x1="60" x2="60" y1="10" y2="78"/></svg></div>
+  <div class="tri tri-tl2"><svg style="filter:drop-shadow(2px 4px 8px #0003)" viewBox="0 0 120 120" xmlns="http://www.w3.org/2000/svg"><polygon points="60,10 15,95 60,78" fill="rgba(255,255,255,0.18)" stroke="rgba(255,255,255,0.5)" stroke-width="1.5"/><polygon points="60,10 105,95 60,78" fill="rgba(255,255,255,0.08)" stroke="rgba(255,255,255,0.3)" stroke-width="1.5"/><line stroke="rgba(255,255,255,0.4)" stroke-width="1" x1="60" x2="60" y1="10" y2="78"/></svg></div>
+  <div class="tri tri-tr"><svg style="filter:drop-shadow(4px 8px 18px #0006)" viewBox="0 0 120 120" xmlns="http://www.w3.org/2000/svg"><defs><linearGradient id="c3a" x1="0%" x2="100%" y1="0%" y2="100%"><stop offset="0%" stop-color="#FFE97A"/><stop offset="100%" stop-color="#F5C518"/></linearGradient><linearGradient id="c3b" x1="100%" x2="0%" y1="0%" y2="100%"><stop offset="0%" stop-color="#c9920a"/><stop offset="100%" stop-color="#8a5e00"/></linearGradient></defs><polygon points="60,10 15,95 60,78" fill="url(#c3a)"/><polygon points="60,10 105,95 60,78" fill="url(#c3b)"/><polygon points="15,95 60,78 105,95" fill="#E8A900" opacity="0.7"/><line stroke="rgba(255,255,255,0.45)" stroke-width="1.2" x1="60" x2="60" y1="10" y2="78"/></svg></div>
+  <div class="tri tri-tr2"><svg style="filter:drop-shadow(3px 6px 12px #0000004d)" viewBox="0 0 120 120" xmlns="http://www.w3.org/2000/svg"><defs><linearGradient id="c4a" x1="0%" x2="100%" y1="0%" y2="100%"><stop offset="0%" stop-color="#2ecfa3"/><stop offset="100%" stop-color="#006D5B"/></linearGradient></defs><polygon points="60,10 15,95 60,78" fill="url(#c4a)"/><polygon points="60,10 105,95 60,78" fill="#004D3F"/><polygon points="15,95 60,78 105,95" fill="#003d30" opacity="0.8"/><line stroke="rgba(255,255,255,0.3)" stroke-width="1" x1="60" x2="60" y1="10" y2="78"/></svg></div>
+  <div class="tri tri-tr3"><svg viewBox="0 0 120 120" xmlns="http://www.w3.org/2000/svg"><polygon points="60,10 15,95 60,78" fill="rgba(255,255,255,0.15)" stroke="rgba(255,255,255,0.45)" stroke-width="1.5"/><polygon points="60,10 105,95 60,78" fill="rgba(255,255,255,0.07)" stroke="rgba(255,255,255,0.25)" stroke-width="1.5"/></svg></div>
+  <div class="tri tri-bl"><svg style="filter:drop-shadow(4px 8px 16px #00000059)" viewBox="0 0 120 120" xmlns="http://www.w3.org/2000/svg"><defs><linearGradient id="c6a" x1="0%" x2="100%" y1="0%" y2="100%"><stop offset="0%" stop-color="#FFE97A"/><stop offset="100%" stop-color="#F5C518"/></linearGradient><linearGradient id="c6b" x1="100%" x2="0%" y1="0%" y2="100%"><stop offset="0%" stop-color="#c9920a"/><stop offset="100%" stop-color="#8a5e00"/></linearGradient></defs><polygon points="60,10 15,95 60,78" fill="url(#c6a)"/><polygon points="60,10 105,95 60,78" fill="url(#c6b)"/><polygon points="15,95 60,78 105,95" fill="#b87800" opacity="0.7"/><line stroke="rgba(255,255,255,0.4)" stroke-width="1.2" x1="60" x2="60" y1="10" y2="78"/></svg></div>
+  <div class="tri tri-bl2"><svg viewBox="0 0 120 120" xmlns="http://www.w3.org/2000/svg"><polygon points="60,10 15,95 60,78" fill="rgba(255,255,255,0.14)" stroke="rgba(255,255,255,0.4)" stroke-width="1.5"/><polygon points="60,10 105,95 60,78" fill="rgba(255,255,255,0.06)" stroke="rgba(255,255,255,0.2)" stroke-width="1.5"/></svg></div>
+  <div class="tri tri-bc"><svg style="filter:drop-shadow(4px 10px 20px #0006)" viewBox="0 0 120 120" xmlns="http://www.w3.org/2000/svg"><defs><linearGradient id="c8a" x1="0%" x2="100%" y1="0%" y2="100%"><stop offset="0%" stop-color="#3ddbb0"/><stop offset="100%" stop-color="#00AB84"/></linearGradient></defs><polygon points="60,10 15,95 60,78" fill="url(#c8a)"/><polygon points="60,10 105,95 60,78" fill="#005a48"/><polygon points="15,95 60,78 105,95" fill="#003d30" opacity="0.8"/><line stroke="rgba(255,255,255,0.35)" stroke-width="1.2" x1="60" x2="60" y1="10" y2="78"/></svg></div>
+  <div class="tri tri-br"><svg style="filter:drop-shadow(3px 6px 14px #0000004d)" viewBox="0 0 120 120" xmlns="http://www.w3.org/2000/svg"><defs><linearGradient id="c9a" x1="0%" x2="100%" y1="0%" y2="100%"><stop offset="0%" stop-color="#2ecfa3"/><stop offset="100%" stop-color="#007a60"/></linearGradient></defs><polygon points="60,10 15,95 60,78" fill="url(#c9a)"/><polygon points="60,10 105,95 60,78" fill="#004D3F"/><polygon points="15,95 60,78 105,95" fill="#003830" opacity="0.75"/><line stroke="rgba(255,255,255,0.3)" stroke-width="1" x1="60" x2="60" y1="10" y2="78"/></svg></div>
+  <div class="tri tri-mr"><svg style="filter:drop-shadow(4px 8px 16px #00000059)" viewBox="0 0 120 120" xmlns="http://www.w3.org/2000/svg"><defs><linearGradient id="c10a" x1="0%" x2="100%" y1="0%" y2="100%"><stop offset="0%" stop-color="#FFE97A"/><stop offset="100%" stop-color="#F5C518"/></linearGradient><linearGradient id="c10b" x1="100%" x2="0%" y1="0%" y2="100%"><stop offset="0%" stop-color="#c9920a"/><stop offset="100%" stop-color="#7a5000"/></linearGradient></defs><polygon points="60,10 15,95 60,78" fill="url(#c10a)"/><polygon points="60,10 105,95 60,78" fill="url(#c10b)"/><polygon points="15,95 60,78 105,95" fill="#a07000" opacity="0.7"/><line stroke="rgba(255,255,255,0.4)" stroke-width="1.2" x1="60" x2="60" y1="10" y2="78"/></svg></div>
 
   <div class="hero-inner">
     <div class="hero-eyebrow">
@@ -430,6 +431,12 @@ footer{background:var(--dark);color:#e0e0e0;padding:3.5rem 0 0}
 
 <!-- FOOTER -->
 <footer>
+  <div class="foot-tris">
+    <svg viewBox="0 0 120 120" style="width:120px;height:120px;position:absolute;top:-10px;left:1%;transform:rotate(-30deg)"><defs><linearGradient id="ft1" x1="0%" x2="100%" y1="0%" y2="100%"><stop offset="0%" stop-color="#3ddbb0"/><stop offset="100%" stop-color="#006D5B"/></linearGradient></defs><polygon points="60,10 15,95 60,78" fill="url(#ft1)"/><polygon points="60,10 105,95 60,78" fill="#004D3F"/><polygon points="15,95 60,78 105,95" fill="#003d30"/></svg>
+    <svg viewBox="0 0 120 120" style="width:70px;height:70px;position:absolute;bottom:20px;left:5%;transform:rotate(55deg)"><defs><linearGradient id="ft2" x1="0%" x2="100%" y1="0%" y2="100%"><stop offset="0%" stop-color="#FFE97A"/><stop offset="100%" stop-color="#c9920a"/></linearGradient></defs><polygon points="60,10 15,95 60,78" fill="url(#ft2)"/><polygon points="60,10 105,95 60,78" fill="#8a5e00"/><polygon points="15,95 60,78 105,95" fill="#7a5000"/></svg>
+    <svg viewBox="0 0 120 120" style="width:90px;height:90px;position:absolute;top:-5px;right:30%;transform:rotate(22deg)"><defs><linearGradient id="ft3" x1="0%" x2="100%" y1="0%" y2="100%"><stop offset="0%" stop-color="#2ecfa3"/><stop offset="100%" stop-color="#005a48"/></linearGradient></defs><polygon points="60,10 15,95 60,78" fill="url(#ft3)"/><polygon points="60,10 105,95 60,78" fill="#003d30"/><polygon points="15,95 60,78 105,95" fill="#002820"/></svg>
+    <svg viewBox="0 0 120 120" style="filter:blur(.5px);width:140px;height:140px;position:absolute;bottom:-20px;right:5%;transform:rotate(-15deg)"><defs><linearGradient id="ft4" x1="0%" x2="100%" y1="0%" y2="100%"><stop offset="0%" stop-color="#FFE97A"/><stop offset="100%" stop-color="#F5C518"/></linearGradient></defs><polygon points="60,10 15,95 60,78" fill="url(#ft4)"/><polygon points="60,10 105,95 60,78" fill="#c9920a"/><polygon points="15,95 60,78 105,95" fill="#a07000"/></svg>
+  </div>
   <div class="foot-inner">
     <div class="foot-top">
       <div>
