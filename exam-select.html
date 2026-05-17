@@ -70,13 +70,17 @@ body::before{
   background:#0a6b4e;
   border-bottom:none;
   padding:0 1.5rem;
+  width:100%;
+  position:relative;
+  z-index:200;
+}
+.top-nav-inner{
+  max-width:1200px;
+  margin:0 auto;
   height:58px;
   display:flex;
   align-items:center;
   justify-content:space-between;
-  width:100%;
-  position:relative;
-  z-index:200;
 }
 
 /* Logo */
@@ -135,7 +139,7 @@ body::before{
   justify-content:center;
   gap:3px;
   min-width:88px;
-  padding:.5rem .8rem .45rem;
+  padding:10px .8rem;
   border-radius:10px;
   text-decoration:none;
   border:none;
@@ -483,20 +487,21 @@ body::before{
 </head>
 <body>
 
-<!-- Floating triangles -->
-<svg class="tri tri-tl" viewBox="0 0 100 100"><polygon points="50,8 96,92 4,92" fill="none" stroke="rgba(255,255,255,0.18)" stroke-width="2.5"/></svg>
-<svg class="tri tri-tl2" viewBox="0 0 100 100"><polygon points="50,8 96,92 4,92" fill="rgba(255,255,255,0.07)" stroke="rgba(255,255,255,0.14)" stroke-width="2"/></svg>
-<svg class="tri tri-tr" viewBox="0 0 100 100"><polygon points="50,8 96,92 4,92" fill="none" stroke="rgba(255,255,255,0.16)" stroke-width="2.5"/></svg>
-<svg class="tri tri-tr2" viewBox="0 0 100 100"><polygon points="50,8 96,92 4,92" fill="rgba(255,255,255,0.06)" stroke="rgba(255,255,255,0.13)" stroke-width="2"/></svg>
-<svg class="tri tri-tr3" viewBox="0 0 100 100"><polygon points="50,8 96,92 4,92" fill="none" stroke="rgba(255,255,255,0.12)" stroke-width="1.8"/></svg>
-<svg class="tri tri-bl" viewBox="0 0 100 100"><polygon points="50,8 96,92 4,92" fill="rgba(255,255,255,0.07)" stroke="rgba(255,255,255,0.15)" stroke-width="2"/></svg>
-<svg class="tri tri-bl2" viewBox="0 0 100 100"><polygon points="50,8 96,92 4,92" fill="none" stroke="rgba(255,255,255,0.1)" stroke-width="1.6"/></svg>
-<svg class="tri tri-bc" viewBox="0 0 100 100"><polygon points="50,8 96,92 4,92" fill="none" stroke="rgba(255,255,255,0.13)" stroke-width="2"/></svg>
-<svg class="tri tri-br" viewBox="0 0 100 100"><polygon points="50,8 96,92 4,92" fill="rgba(255,255,255,0.05)" stroke="rgba(255,255,255,0.12)" stroke-width="1.8"/></svg>
-<svg class="tri tri-mr" viewBox="0 0 100 100"><polygon points="50,8 96,92 4,92" fill="none" stroke="rgba(255,255,255,0.1)" stroke-width="1.6"/></svg>
+<!-- 3D Floating triangle decorations — exact from login.html -->
+  <div class="tri tri-tl"><svg style="filter:drop-shadow(4px 8px 16px #00000059)" viewBox="0 0 120 120"><defs><linearGradient id="a1" x1="0%" x2="100%" y1="0%" y2="100%"><stop offset="0%" stop-color="#3ddbb0"/><stop offset="100%" stop-color="#00AB84"/></linearGradient><linearGradient id="a2" x1="100%" x2="0%" y1="0%" y2="100%"><stop offset="0%" stop-color="#006D5B"/><stop offset="100%" stop-color="#003d30"/></linearGradient></defs><polygon points="60,10 15,95 60,78" fill="url(#a1)"/><polygon points="60,10 105,95 60,78" fill="url(#a2)"/><polygon points="15,95 60,78 105,95" fill="#00AB84" opacity="0.75"/><line stroke="rgba(255,255,255,0.35)" stroke-width="1.2" x1="60" x2="60" y1="10" y2="78"/></svg></div>
+  <div class="tri tri-tl2"><svg style="filter:drop-shadow(2px 4px 8px #0003)" viewBox="0 0 120 120"><polygon points="60,10 15,95 60,78" fill="rgba(255,255,255,0.18)" stroke="rgba(255,255,255,0.5)" stroke-width="1.5"/><polygon points="60,10 105,95 60,78" fill="rgba(255,255,255,0.08)" stroke="rgba(255,255,255,0.3)" stroke-width="1.5"/><line stroke="rgba(255,255,255,0.4)" stroke-width="1" x1="60" x2="60" y1="10" y2="78"/></svg></div>
+  <div class="tri tri-tr"><svg style="filter:drop-shadow(4px 8px 18px #0006)" viewBox="0 0 120 120"><defs><linearGradient id="b1" x1="0%" x2="100%" y1="0%" y2="100%"><stop offset="0%" stop-color="#FFE97A"/><stop offset="100%" stop-color="#F5C518"/></linearGradient><linearGradient id="b2" x1="100%" x2="0%" y1="0%" y2="100%"><stop offset="0%" stop-color="#c9920a"/><stop offset="100%" stop-color="#8a5e00"/></linearGradient></defs><polygon points="60,10 15,95 60,78" fill="url(#b1)"/><polygon points="60,10 105,95 60,78" fill="url(#b2)"/><polygon points="15,95 60,78 105,95" fill="#E8A900" opacity="0.7"/><line stroke="rgba(255,255,255,0.45)" stroke-width="1.2" x1="60" x2="60" y1="10" y2="78"/></svg></div>
+  <div class="tri tri-tr2"><svg style="filter:drop-shadow(3px 6px 12px #0000004d)" viewBox="0 0 120 120"><defs><linearGradient id="b3" x1="0%" x2="100%" y1="0%" y2="100%"><stop offset="0%" stop-color="#2ecfa3"/><stop offset="100%" stop-color="#006D5B"/></linearGradient></defs><polygon points="60,10 15,95 60,78" fill="url(#b3)"/><polygon points="60,10 105,95 60,78" fill="#004D3F"/><polygon points="15,95 60,78 105,95" fill="#003d30" opacity="0.8"/><line stroke="rgba(255,255,255,0.3)" stroke-width="1" x1="60" x2="60" y1="10" y2="78"/></svg></div>
+  <div class="tri tri-tr3"><svg viewBox="0 0 120 120"><polygon points="60,10 15,95 60,78" fill="rgba(255,255,255,0.15)" stroke="rgba(255,255,255,0.45)" stroke-width="1.5"/><polygon points="60,10 105,95 60,78" fill="rgba(255,255,255,0.07)" stroke="rgba(255,255,255,0.25)" stroke-width="1.5"/></svg></div>
+  <div class="tri tri-bl"><svg style="filter:drop-shadow(4px 8px 16px #00000059)" viewBox="0 0 120 120"><defs><linearGradient id="c1" x1="0%" x2="100%" y1="0%" y2="100%"><stop offset="0%" stop-color="#FFE97A"/><stop offset="100%" stop-color="#F5C518"/></linearGradient><linearGradient id="c2" x1="100%" x2="0%" y1="0%" y2="100%"><stop offset="0%" stop-color="#c9920a"/><stop offset="100%" stop-color="#8a5e00"/></linearGradient></defs><polygon points="60,10 15,95 60,78" fill="url(#c1)"/><polygon points="60,10 105,95 60,78" fill="url(#c2)"/><polygon points="15,95 60,78 105,95" fill="#b87800" opacity="0.7"/><line stroke="rgba(255,255,255,0.4)" stroke-width="1.2" x1="60" x2="60" y1="10" y2="78"/></svg></div>
+  <div class="tri tri-bl2"><svg viewBox="0 0 120 120"><polygon points="60,10 15,95 60,78" fill="rgba(255,255,255,0.14)" stroke="rgba(255,255,255,0.4)" stroke-width="1.5"/><polygon points="60,10 105,95 60,78" fill="rgba(255,255,255,0.06)" stroke="rgba(255,255,255,0.2)" stroke-width="1.5"/></svg></div>
+  <div class="tri tri-bc"><svg style="filter:drop-shadow(4px 10px 20px #0006)" viewBox="0 0 120 120"><defs><linearGradient id="d1" x1="0%" x2="100%" y1="0%" y2="100%"><stop offset="0%" stop-color="#3ddbb0"/><stop offset="100%" stop-color="#00AB84"/></linearGradient></defs><polygon points="60,10 15,95 60,78" fill="url(#d1)"/><polygon points="60,10 105,95 60,78" fill="#005a48"/><polygon points="15,95 60,78 105,95" fill="#003d30" opacity="0.8"/><line stroke="rgba(255,255,255,0.35)" stroke-width="1.2" x1="60" x2="60" y1="10" y2="78"/></svg></div>
+  <div class="tri tri-br"><svg style="filter:drop-shadow(3px 6px 14px #0000004d)" viewBox="0 0 120 120"><defs><linearGradient id="e1" x1="0%" x2="100%" y1="0%" y2="100%"><stop offset="0%" stop-color="#2ecfa3"/><stop offset="100%" stop-color="#007a60"/></linearGradient></defs><polygon points="60,10 15,95 60,78" fill="url(#e1)"/><polygon points="60,10 105,95 60,78" fill="#004D3F"/><polygon points="15,95 60,78 105,95" fill="#003830" opacity="0.75"/><line stroke="rgba(255,255,255,0.3)" stroke-width="1" x1="60" x2="60" y1="10" y2="78"/></svg></div>
+  <div class="tri tri-mr"><svg style="filter:drop-shadow(4px 8px 16px #00000059)" viewBox="0 0 120 120"><defs><linearGradient id="f1" x1="0%" x2="100%" y1="0%" y2="100%"><stop offset="0%" stop-color="#FFE97A"/><stop offset="100%" stop-color="#F5C518"/></linearGradient><linearGradient id="f2" x1="100%" x2="0%" y1="0%" y2="100%"><stop offset="0%" stop-color="#c9920a"/><stop offset="100%" stop-color="#7a5000"/></linearGradient></defs><polygon points="60,10 15,95 60,78" fill="url(#f1)"/><polygon points="60,10 105,95 60,78" fill="url(#f2)"/><polygon points="15,95 60,78 105,95" fill="#a07000" opacity="0.7"/><line stroke="rgba(255,255,255,0.4)" stroke-width="1.2" x1="60" x2="60" y1="10" y2="78"/></svg></div>
 
 <!-- NAV -->
 <nav class="top-nav">
+  <div class="top-nav-inner">
   <a class="logo-box" href="index.html">
     <span class="logo-wordmark">toppers<span class="logo-num">11</span></span>
     <span class="logo-tag">AI-Powered Test Series</span>
@@ -557,6 +562,7 @@ body::before{
       </div>
     </div>
 
+  </div>
   </div>
 </nav>
 
