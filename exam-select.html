@@ -254,7 +254,7 @@ body::before{
 .cards-grid{
   display:grid;
   grid-template-columns:repeat(3,1fr);
-  gap:22px;
+  gap:24px;
   width:100%;
   max-width:1100px;
 }
@@ -265,7 +265,7 @@ body::before{
   border-radius:20px;
   overflow:hidden;
   border:none;
-  box-shadow:0 8px 32px rgba(0,0,0,0.14),0 2px 8px rgba(0,0,0,0.06);
+  box-shadow:0 8px 40px rgba(0,0,0,0.18),0 2px 10px rgba(0,0,0,0.08);
   display:flex;
   flex-direction:column;
   transition:transform 0.25s ease,box-shadow 0.25s ease;
@@ -274,118 +274,145 @@ body::before{
 .card:nth-child(1){animation-delay:0.05s;}
 .card:nth-child(2){animation-delay:0.15s;}
 .card:nth-child(3){animation-delay:0.25s;}
-@keyframes cardIn{from{opacity:0;transform:translateY(20px);}to{opacity:1;transform:translateY(0);}}
+@keyframes cardIn{from{opacity:0;transform:translateY(24px);}to{opacity:1;transform:translateY(0);}}
 .card:hover{
   transform:translateY(-8px);
-  box-shadow:0 24px 64px rgba(0,0,0,0.18),0 4px 12px rgba(0,0,0,0.08);
+  box-shadow:0 28px 72px rgba(0,0,0,0.22),0 4px 16px rgba(0,0,0,0.1);
 }
 
-/* Top accent stripe */
-.card-stripe{
-  height:6px;
-  background:linear-gradient(90deg,#00ab84,#5decbb);
-  flex-shrink:0;
+/* ── Card Header — login.html auth-header style ── */
+.card-header{
+  background:linear-gradient(160deg,#0a5f38 0%,#0e7a4a 45%,#13a660 100%);
+  padding:1.5rem 1.6rem 1.3rem;
+  position:relative;
+  overflow:hidden;
 }
-
-.card-body{padding:26px 26px 24px;display:flex;flex-direction:column;flex:1;}
-
-/* Icon box */
-.icon-box{
-  width:52px;height:52px;border-radius:14px;
-  background:var(--green-pale);
+/* subtle dot texture like login hero */
+.card-header::before{
+  content:'';
+  position:absolute;inset:0;
+  background:repeating-linear-gradient(0deg,rgba(255,255,255,0.03) 0px,rgba(255,255,255,0.03) 1px,transparent 1px,transparent 22px);
+  pointer-events:none;
+}
+.card-hd-top{
+  display:flex;align-items:flex-start;justify-content:space-between;
+  gap:10px;margin-bottom:10px;position:relative;z-index:1;
+}
+.card-icon{
+  width:46px;height:46px;border-radius:12px;
+  background:rgba(255,255,255,0.15);
+  border:1px solid rgba(255,255,255,0.25);
   display:flex;align-items:center;justify-content:center;
-  font-size:24px;margin-bottom:16px;
-  box-shadow:0 2px 8px rgba(16,185,129,0.15);
+  font-size:22px;flex-shrink:0;
 }
-
-/* Code label */
 .card-code{
-  font-size:10px;font-weight:700;
-  letter-spacing:0.16em;text-transform:uppercase;
-  color:var(--green-dark);
-  margin-bottom:4px;
+  font-size:9.5px;font-weight:700;
+  letter-spacing:0.18em;text-transform:uppercase;
+  color:rgba(255,255,255,0.55);
+  margin-bottom:3px;
 }
 .card-title{
-  font-size:18px;font-weight:800;color:var(--ink);
-  margin-bottom:3px;line-height:1.2;letter-spacing:-0.01em;
+  font-size:17px;font-weight:700;color:#fff;
+  line-height:1.2;letter-spacing:-0.01em;
 }
-.card-sub{font-size:12px;color:#999;margin-bottom:18px;}
+/* free pills — login.html free-pill style */
+.card-pills{
+  display:flex;flex-wrap:wrap;gap:5px;
+  position:relative;z-index:1;
+}
+.card-pill{
+  display:inline-flex;align-items:center;gap:4px;
+  background:rgba(255,255,255,0.15);
+  border:1px solid rgba(255,255,255,0.28);
+  border-radius:999px;
+  padding:3px 10px;
+  font-size:9.5px;font-weight:600;
+  color:#fff;letter-spacing:0.02em;
+}
+
+/* ── Card Body ── */
+.card-body{padding:20px 22px 20px;display:flex;flex-direction:column;flex:1;}
 
 /* Paper list */
-.plist{list-style:none;margin-bottom:20px;}
+.plist{list-style:none;margin-bottom:18px;}
 .plist li{
-  display:flex;align-items:flex-start;gap:9px;
-  font-size:11.5px;color:#444;
-  padding:7px 0;
-  border-bottom:1px solid #f5f5f5;
-  line-height:1.4;
+  display:flex;align-items:flex-start;gap:10px;
+  font-size:12px;color:#374151;
+  padding:8px 0;
+  border-bottom:1px solid #f3f4f6;
+  line-height:1.45;
+  font-weight:500;
 }
 .plist li:last-child{border-bottom:none;}
 .dot{
-  width:7px;height:7px;border-radius:50%;
+  width:6px;height:6px;border-radius:50%;
   background:var(--green);
-  flex-shrink:0;margin-top:4px;
+  flex-shrink:0;margin-top:5px;
 }
 
-/* Price box */
+/* Price box — clean white with green border */
 .price-box{
-  background:var(--green-pale);
-  border:1px solid var(--green-light);
-  border-radius:14px;
-  padding:15px 18px;
-  margin-bottom:18px;
+  background:#f9fafb;
+  border:1.5px solid #e5e7eb;
+  border-radius:12px;
+  padding:14px 16px;
+  margin-bottom:16px;
 }
 .ptop{
   display:flex;align-items:center;justify-content:space-between;
-  margin-bottom:8px;
+  margin-bottom:7px;
 }
 .plabel{
-  font-size:9.5px;font-weight:700;
-  letter-spacing:0.14em;text-transform:uppercase;color:#999;
+  font-size:9px;font-weight:700;
+  letter-spacing:0.14em;text-transform:uppercase;color:#9ca3af;
 }
 .save-pill{
-  font-size:10px;font-weight:800;
-  background:var(--green);color:#fff;
+  font-size:9.5px;font-weight:800;
+  background:linear-gradient(90deg,#059669,#0ea56a);
+  color:#fff;
   border-radius:999px;padding:2px 10px;
-  letter-spacing:0.04em;
+  letter-spacing:0.03em;
+  box-shadow:0 1px 6px rgba(5,150,105,0.3);
 }
 .price-row{
-  display:flex;align-items:baseline;gap:7px;
+  display:flex;align-items:baseline;gap:6px;
   margin-bottom:4px;
 }
-.price-strike{font-size:13px;color:#bbb;text-decoration:line-through;}
-.price-final{font-size:34px;font-weight:800;color:var(--ink);line-height:1;}
-.price-period{font-size:12px;color:#aaa;}
-.price-per{font-size:12px;color:var(--muted);}
+.price-strike{font-size:13px;color:#d1d5db;text-decoration:line-through;}
+.price-final{font-size:32px;font-weight:800;color:var(--ink);line-height:1;}
+.price-period{font-size:12px;color:#9ca3af;}
+.price-per{font-size:11.5px;color:var(--muted);}
 .price-per span{font-weight:700;color:var(--ink);}
 
-/* Action buttons */
+/* Action buttons — login.html btn-primary style */
 .card-actions{display:flex;gap:10px;margin-top:auto;}
 .btn-main{
-  flex:1;padding:13px 16px;
-  background:var(--green);color:#fff;
-  border:none;border-radius:10px;
+  flex:1;padding:12px 16px;
+  background:linear-gradient(90deg,#059669 0%,#0ea56a 100%);
+  color:#fff;
+  border:none;border-radius:9px;
   font-family:'Poppins',sans-serif;
-  font-size:13px;font-weight:700;
+  font-size:12.5px;font-weight:600;
   cursor:pointer;
-  transition:background 0.15s,transform 0.13s,box-shadow 0.15s;
+  transition:all 0.2s;
   white-space:nowrap;
   letter-spacing:0.01em;
+  box-shadow:0 2px 10px rgba(5,150,105,0.28);
 }
-.btn-main:hover{background:var(--green-dark);transform:translateY(-1px);box-shadow:0 4px 16px rgba(16,185,129,0.35);}
+.btn-main:hover{background:linear-gradient(90deg,#047857 0%,#0a9460 100%);box-shadow:0 4px 18px rgba(5,150,105,0.4);transform:translateY(-1px);}
 .btn-main:active{transform:scale(0.98);}
 
 .btn-free{
-  padding:13px 16px;
-  background:transparent;color:#555;
-  border:1.5px solid #e0e0e0;
-  border-radius:10px;
+  padding:12px 14px;
+  background:#fff;color:#374151;
+  border:1.5px solid #e5e7eb;
+  border-radius:9px;
   font-family:'Poppins',sans-serif;
-  font-size:12px;font-weight:600;
+  font-size:11.5px;font-weight:600;
   cursor:pointer;white-space:nowrap;
-  transition:border-color 0.15s,background 0.15s,color 0.15s;
+  transition:all 0.15s;
 }
-.btn-free:hover{border-color:var(--green);color:var(--green-deeper);background:var(--green-pale);}
+.btn-free:hover{border-color:#059669;color:var(--green-deeper);background:var(--green-pale);}
 
 /* Bottom note */
 .bnote{
@@ -546,22 +573,29 @@ body::before{
   <!-- 3 Cards -->
   <div class="cards-grid">
 
-    <!-- MS / UDC -->
+    <!-- ── MS / UDC ── -->
     <div class="card">
-      <div class="card-stripe"></div>
+      <div class="card-header">
+        <div class="card-hd-top">
+          <div>
+            <div class="card-code">MS / UDC</div>
+            <div class="card-title">Ministerial Staff</div>
+          </div>
+          <div class="card-icon">📋</div>
+        </div>
+        <div class="card-pills">
+          <span class="card-pill">✓ 1 Free MS Test</span>
+          <span class="card-pill">4 Papers</span>
+          <span class="card-pill">Promo Exam</span>
+        </div>
+      </div>
       <div class="card-body">
-        <div class="icon-box">📋</div>
-        <div class="card-code">MS / UDC</div>
-        <div class="card-title">Ministerial Staff</div>
-        <div class="card-sub">Ministerial Staff Promotional Exam</div>
-
         <ul class="plist">
           <li><span class="dot"></span>Precis Writing &amp; Office Correspondence</li>
           <li><span class="dot"></span>Office Procedure &amp; Establishment Rules</li>
           <li><span class="dot"></span>I.T. Acts, Rules &amp; Procedure</li>
           <li><span class="dot"></span>Practical — Noting &amp; Drafting</li>
         </ul>
-
         <div class="price-box">
           <div class="ptop">
             <span class="plabel">Complete Bunch</span>
@@ -574,7 +608,6 @@ body::before{
           </div>
           <div class="price-per">Per paper: <span>₹355 / yr</span></div>
         </div>
-
         <div class="card-actions">
           <button class="btn-main" onclick="window.location.href='dashboard-ms.html'">GET MS BUNCH →</button>
           <button class="btn-free" onclick="window.location.href='test.html?exam=ms&type=free'">✦ FREE TEST</button>
@@ -582,22 +615,29 @@ body::before{
       </div>
     </div>
 
-    <!-- ITI Inspector -->
+    <!-- ── ITI Inspector ── -->
     <div class="card">
-      <div class="card-stripe"></div>
+      <div class="card-header">
+        <div class="card-hd-top">
+          <div>
+            <div class="card-code">ITI — Inspector</div>
+            <div class="card-title">Income Tax Inspector</div>
+          </div>
+          <div class="card-icon">🔍</div>
+        </div>
+        <div class="card-pills">
+          <span class="card-pill">✓ 1 Free ITI Test</span>
+          <span class="card-pill">4 Papers</span>
+          <span class="card-pill">450 Marks</span>
+        </div>
+      </div>
       <div class="card-body">
-        <div class="icon-box">🔍</div>
-        <div class="card-code">ITI — Inspector</div>
-        <div class="card-title">Income Tax Inspector</div>
-        <div class="card-sub">Income Tax Inspector Exam</div>
-
         <ul class="plist">
           <li><span class="dot"></span>IT Law &amp; Computation · 150 Marks</li>
           <li><span class="dot"></span>Book Keeping &amp; Accountancy · 100 Marks</li>
           <li><span class="dot"></span>Allied Laws — TDS, Penalty · 100 Marks</li>
           <li><span class="dot"></span>Office Procedure &amp; Establishment · 100 Marks</li>
         </ul>
-
         <div class="price-box">
           <div class="ptop">
             <span class="plabel">Complete Bunch</span>
@@ -610,7 +650,6 @@ body::before{
           </div>
           <div class="price-per">Per paper: <span>₹355 / yr</span></div>
         </div>
-
         <div class="card-actions">
           <button class="btn-main" onclick="window.location.href='dashboard-iti.html'">GET ITI BUNCH →</button>
           <button class="btn-free" onclick="window.location.href='test.html?exam=iti&type=free'">✦ FREE TEST</button>
@@ -618,22 +657,29 @@ body::before{
       </div>
     </div>
 
-    <!-- ITO Officer -->
+    <!-- ── ITO Officer ── -->
     <div class="card">
-      <div class="card-stripe"></div>
+      <div class="card-header">
+        <div class="card-hd-top">
+          <div>
+            <div class="card-code">ITO — Officer</div>
+            <div class="card-title">Income Tax Officer</div>
+          </div>
+          <div class="card-icon">⚖️</div>
+        </div>
+        <div class="card-pills">
+          <span class="card-pill">✓ 1 Free ITO Test</span>
+          <span class="card-pill">4 Papers</span>
+          <span class="card-pill">400 Marks</span>
+        </div>
+      </div>
       <div class="card-body">
-        <div class="icon-box">⚖️</div>
-        <div class="card-code">ITO — Officer</div>
-        <div class="card-title">Income Tax Officer</div>
-        <div class="card-sub">Income Tax Officer Exam</div>
-
         <ul class="plist">
           <li><span class="dot"></span>IT Law + Case Laws &amp; Interpretations · 100 Marks</li>
           <li><span class="dot"></span>Advanced Accountancy &amp; Audit · 100 Marks</li>
           <li><span class="dot"></span>Allied Laws — PMLA, Benami · 100 Marks</li>
           <li><span class="dot"></span>Practical — Assessment &amp; Computation · 100 Marks</li>
         </ul>
-
         <div class="price-box">
           <div class="ptop">
             <span class="plabel">Complete Bunch</span>
@@ -646,7 +692,6 @@ body::before{
           </div>
           <div class="price-per">Per paper: <span>₹355 / yr</span></div>
         </div>
-
         <div class="card-actions">
           <button class="btn-main" onclick="window.location.href='dashboard-ito.html'">GET ITO BUNCH →</button>
           <button class="btn-free" onclick="window.location.href='test.html?exam=ito&type=free'">✦ FREE TEST</button>
