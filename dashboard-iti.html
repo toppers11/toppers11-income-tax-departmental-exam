@@ -1716,9 +1716,10 @@ function renderUpiStep(){
   const p=PLANS[selPlan];
   const subjectPaper=PAPERS.find(pp=>pp.key===selSubjectKey);
   const uid=getUpiId();
-  const payNote=selPlan==='single-iti'&&subjectPaper
+  const rawNote=selPlan==='single-iti'&&subjectPaper
     ?`Paper ${PAPERS.indexOf(subjectPaper)+1} - ${subjectPaper.name} (ITI Inspector)`
     :`ITI Inspector Complete Bunch (All 4 Papers)`;
+  const payNote=rawNote.replace(/&/g,'and');
   document.getElementById('upi-disp').textContent=uid;
 
   // Update QR label with what they're paying for
