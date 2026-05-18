@@ -1104,11 +1104,16 @@ body{background:var(--bg);color:var(--ink);font-family:'Open Sans',sans-serif;ov
                 </a>
               </div>
 
+              <!-- Already paid via QR button -->
+              <button onclick="showConfirmScreen()" style="width:100%;margin-top:.5rem;background:linear-gradient(135deg,#00b96b,#008f50);color:#fff;border:none;border-radius:9px;padding:.62rem;font-size:.78rem;font-weight:700;cursor:pointer;font-family:'Open Sans',sans-serif;letter-spacing:.02em;display:flex;align-items:center;justify-content:center;gap:.4rem;">
+                ✅ I've Already Paid via QR — Unlock Now
+              </button>
+
               <div class=upi-switch-wrap>
                 <button onclick=switchUpi() class=upi-switch-btn>
                   <svg width=11 height=11 fill=none stroke=currentColor stroke-width=2.2 viewBox="0 0 24 24"><path d="M1 4v6h6M23 20v-6h-6"/><path d="M20.49 9A9 9 0 005.64 5.64L1 10M23 14l-4.64 4.36A9 9 0 013.51 15"/></svg>
                   Switch UPI ID
-                  <span id=upi-switch-badge style="opacity:.55;font-size:.6rem;background:rgba(255,255,255,.12);padding:.05rem .3rem;border-radius:999px;">1/3</span>
+                  <span id=upi-switch-badge style="opacity:.55;font-size:.6rem;background:rgba(255,255,255,.12);padding:.05rem .3rem;border-radius:999px;">1/1</span>
                 </button>
               </div>
             </div>
@@ -1723,9 +1728,9 @@ function renderUpiStep(){
     qrLbl.textContent=forLabel+' · ₹'+p.amount;
   }
 
-  const upiStr=`upi://pay?pa=${uid}&pn=${encodeURIComponent(UPI_NAME)}&cu=INR&tn=${encodeURIComponent(payNote)}`;
-  const gpayHref=`tez://upi/pay?pa=${uid}&pn=${encodeURIComponent(UPI_NAME)}&cu=INR&tn=${encodeURIComponent(payNote)}`;
-  const paytmHref=`paytmmp://pay?pa=${uid}&pn=${encodeURIComponent(UPI_NAME)}&cu=INR&tn=${encodeURIComponent(payNote)}`;
+  const upiStr=`upi://pay?pa=${uid}&pn=${encodeURIComponent(UPI_NAME)}&am=${p.amount}&cu=INR&tn=${encodeURIComponent(payNote)}`;
+  const gpayHref=`tez://upi/pay?pa=${uid}&pn=${encodeURIComponent(UPI_NAME)}&am=${p.amount}&cu=INR&tn=${encodeURIComponent(payNote)}`;
+  const paytmHref=`paytmmp://pay?pa=${uid}&pn=${encodeURIComponent(UPI_NAME)}&am=${p.amount}&cu=INR&tn=${encodeURIComponent(payNote)}`;
   document.getElementById('gpay-a').href=gpayHref;
   document.getElementById('phonepe-a').href=upiStr;
   document.getElementById('paytm-a').href=paytmHref;
