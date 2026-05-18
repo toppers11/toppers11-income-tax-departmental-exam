@@ -1723,12 +1723,19 @@ function renderUpiStep(){
     qrLbl.textContent=forLabel+' · ₹'+p.amount;
   }
 
-  const upiStr=`upi://pay?pa=${uid}&pn=${encodeURIComponent(UPI_NAME)}&am=${p.amount}&cu=INR&tn=${encodeURIComponent(payNote)}`;
+  // Use intent:// so Android treats it as P2P not merchant collect
+  const upiParams=`pa=${uid}&pn=${encodeURIComponent(UPI_NAME)}&cu=INR&tn=${encodeURIComponent(payNote)}`;
+  const upiStr=`intent://pay?${upiParams}#Intent;scheme=upi;package=com.phonepe.app;end`;
+  const intentGeneric=`intent://pay?${upiParams}#Intent;scheme=upi;end`;
   document.getElementById('gpay-a').href=upiStr;
   document.getElementById('phonepe-a').href=upiStr;
   document.getElementById('paytm-a').href=upiStr;
   const mainBtn=document.getElementById('upi-main-btn');
-  if(mainBtn)mainBtn.href=upiStr;
+  if(mainBtn){
+    // Try intent:// first, fallback to generic upi://
+    const isAndroid=/android/i.test(navigator.userAgent);
+    mainBtn.href=isAndroid?upiStr:intentGeneric;
+  }
   const amtSpan=document.getElementById('upi-btn-amt');
   if(amtSpan)amtSpan.textContent=p.amount;
 
