@@ -1680,28 +1680,29 @@ function showConfirmScreen(){
 }
 
 function onUpiAppClick(e,el){
-  // Let the href navigate to the UPI app
+  e.preventDefault();
+  const href=el.href;
+  if(!href||href==='#')return;
   _upiAppOpened=true;
-  // When user returns to this tab/page, show the confirm screen
+
+  // Register confirm screen trigger when user returns
   if(_visibilityHandler)document.removeEventListener('visibilitychange',_visibilityHandler);
   _visibilityHandler=function(){
     if(document.visibilityState==='visible'&&_upiAppOpened){
       _upiAppOpened=false;
-      // Small delay to let the page fully re-focus
       setTimeout(showConfirmScreen,600);
       document.removeEventListener('visibilitychange',_visibilityHandler);
     }
   };
   document.addEventListener('visibilitychange',_visibilityHandler);
 
-  // Also handle pageshow (some Android browsers use this on return)
   window.addEventListener('pageshow',function psh(){
-    if(_upiAppOpened){
-      _upiAppOpened=false;
-      setTimeout(showConfirmScreen,600);
-    }
+    if(_upiAppOpened){_upiAppOpened=false;setTimeout(showConfirmScreen,600);}
     window.removeEventListener('pageshow',psh);
   });
+
+  // Use window.location.href — fixes Chrome Android blocking upi:// in <a> tags
+  setTimeout(function(){window.location.href=href;},50);
 }
 
 function renderUpiStep(){
