@@ -6,13 +6,26 @@
 <title>Pay Test</title>
 </head>
 <body>
-<p>UPI ID: tweet2ranjana@oksbi</p>
 <p>Amount to pay: Rs 355</p>
-<a href="#" onclick="
-  event.preventDefault();
-  setTimeout(function(){
-    window.location.href='upi://pay?pa=tweet2ranjana@oksbi&pn=Ranjana%20Kumari&cu=INR';
-  },50);
-">Pay Rs 355 for your test (type amount yourself)</a>
+
+<!-- Method 1: Intent URL -->
+<a href="intent://pay?pa=tweet2ranjana@oksbi&pn=Ranjana%20Kumari&am=355&cu=INR&tn=Test#Intent;scheme=upi;package=com.phonepe.app;S.browser_fallback_url=https%3A%2F%2Fphonepe.com;end">
+  Pay via PhonePe
+</a>
+
+<br><br>
+
+<!-- Method 2: Intent URL for GPay -->
+<a href="intent://pay?pa=tweet2ranjana@oksbi&pn=Ranjana%20Kumari&am=355&cu=INR&tn=Test#Intent;scheme=upi;package=com.google.android.apps.nbu.paisa.user;S.browser_fallback_url=https%3A%2F%2Fpay.google.com;end">
+  Pay via Google Pay
+</a>
+
+<br><br>
+
+<!-- Method 3: Intent URL for Paytm -->
+<a href="intent://pay?pa=tweet2ranjana@oksbi&pn=Ranjana%20Kumari&am=355&cu=INR&tn=Test#Intent;scheme=upi;package=net.one97.paytm;S.browser_fallback_url=https%3A%2F%2Fpaytm.com;end">
+  Pay via Paytm
+</a>
+
 </body>
 </html>
