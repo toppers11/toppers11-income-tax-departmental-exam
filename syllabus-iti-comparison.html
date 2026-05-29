@@ -1,0 +1,584 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>ITI Syllabus Change: Old vs New (2026) — Income Tax Inspector | Toppers11</title>
+<meta name="description" content="Side-by-side comparison of the ITI Departmental Exam syllabus changes: Old Pattern (DE Rules 2009) vs New Pattern (DE Rules 2026). Paper-wise breakdown of what's added, removed, and changed.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@300;400;600;700;800;900&family=Inter:wght@400;500;600;700&family=Righteous&display=swap" rel="stylesheet">
+<style>
+:root{
+  --t1:#006d5b;--t2:#25a36f;--t3:#00ab84;--t-dark:#004d3f;
+  --old:#c0392b;--old-bg:#fff5f5;--old-border:#fca5a5;--old-light:#fef2f2;
+  --new:#006d5b;--new-bg:#f0fdf8;--new-border:#6ee7b7;--new-light:#ecfdf5;
+  --add:#15803d;--add-bg:#f0fdf4;--del:#b91c1c;--del-bg:#fff1f2;
+  --chg:#b45309;--chg-bg:#fffbeb;
+  --ink:#1a1a2e;--muted:#64748b;--bg:#f1f5f9;--wh:#fff;--bdr:#e2e8f0;
+  --dark:#0f172a;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--ink);font-family:'Inter',sans-serif;overflow-x:hidden;font-size:15px}
+
+/* ── HEADER ── */
+.site-header{background:var(--dark);padding:0;border-bottom:3px solid var(--t3)}
+.header-inner{max-width:1280px;margin:0 auto;padding:.9rem 1.5rem;display:flex;align-items:center;justify-content:space-between;gap:1rem;flex-wrap:wrap}
+.logo{text-decoration:none;display:flex;align-items:baseline;gap:.2rem}
+.logo-main{font-family:'Nunito',sans-serif;font-size:2rem;font-weight:200;color:#fff;letter-spacing:-.01em}
+.logo-main span{font-family:'Righteous',cursive;color:var(--t3)}
+.header-badge{background:var(--t3);color:#fff;font-size:.62rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;padding:.3rem .85rem;border-radius:999px}
+.back-link{color:rgba(255,255,255,.55);font-size:.78rem;text-decoration:none;display:flex;align-items:center;gap:.35rem;transition:color .15s}
+.back-link:hover{color:var(--t3)}
+
+/* ── HERO STRIP ── */
+.hero-strip{background:linear-gradient(135deg,var(--t-dark) 0%,var(--t1) 50%,var(--t2) 100%);padding:48px 1.5rem 52px;text-align:center;position:relative;overflow:hidden}
+.hero-strip::before{content:'';position:absolute;inset:0;background:url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.04'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E")}
+.hero-eyebrow{display:inline-flex;align-items:center;gap:.4rem;background:rgba(255,255,255,.15);border:1px solid rgba(255,255,255,.25);border-radius:999px;padding:.28rem .85rem;font-size:.65rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:rgba(255,255,255,.9);margin-bottom:1rem}
+.hero-title{font-family:'Nunito',sans-serif;font-size:clamp(1.7rem,4vw,2.7rem);font-weight:800;color:#fff;line-height:1.2;margin-bottom:.7rem}
+.hero-title .vs{display:inline-block;background:rgba(255,255,255,.15);border:1px solid rgba(255,255,255,.3);border-radius:8px;padding:.1rem .6rem;font-size:1.1rem;font-weight:900;letter-spacing:.06em;vertical-align:middle;margin:0 .4rem}
+.hero-sub{color:rgba(255,255,255,.78);font-size:.9rem;max-width:560px;margin:0 auto;line-height:1.7}
+
+/* ── SUMMARY CARDS ── */
+.summary-grid{max-width:1280px;margin:-28px auto 0;padding:0 1.5rem;display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:.85rem;position:relative;z-index:10}
+.sum-card{background:#fff;border-radius:14px;padding:1.1rem 1.2rem;box-shadow:0 4px 20px rgba(0,0,0,.08);border:1.5px solid var(--bdr);display:flex;flex-direction:column;gap:.3rem}
+.sum-card .sc-label{font-size:.6rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--muted)}
+.sum-card .sc-row{display:flex;align-items:center;justify-content:space-between;gap:.5rem}
+.sc-old{font-size:.95rem;font-weight:700;color:var(--old);text-decoration:line-through;opacity:.75}
+.sc-arrow{color:var(--muted);font-size:.8rem}
+.sc-new{font-size:.95rem;font-weight:800;color:var(--new)}
+.sum-card .sc-note{font-size:.67rem;color:var(--muted);margin-top:.1rem}
+
+/* ── LEGEND ── */
+.legend-bar{max-width:1280px;margin:1.8rem auto .5rem;padding:0 1.5rem;display:flex;align-items:center;flex-wrap:wrap;gap:.6rem}
+.legend-label{font-size:.68rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);margin-right:.2rem}
+.leg{display:inline-flex;align-items:center;gap:.3rem;font-size:.72rem;font-weight:600;padding:.22rem .65rem;border-radius:999px}
+.leg-add{background:var(--add-bg);color:var(--add);border:1px solid #bbf7d0}
+.leg-del{background:var(--del-bg);color:var(--del);border:1px solid #fecaca}
+.leg-chg{background:var(--chg-bg);color:var(--chg);border:1px solid #fde68a}
+.leg-same{background:#f8fafc;color:#475569;border:1px solid var(--bdr)}
+
+/* ── SECTION HEADING ── */
+.section-wrap{max-width:1280px;margin:0 auto;padding:2rem 1.5rem 4rem}
+.section-head{font-size:.65rem;font-weight:800;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);margin-bottom:1.2rem;display:flex;align-items:center;gap:.6rem}
+.section-head::after{content:'';flex:1;height:1.5px;background:var(--bdr)}
+
+/* ── COMPARISON TABLE CARD ── */
+.comp-card{background:#fff;border-radius:18px;box-shadow:0 2px 16px rgba(0,0,0,.06);border:1.5px solid var(--bdr);margin-bottom:1.5rem;overflow:hidden;transition:box-shadow .2s}
+.comp-card:hover{box-shadow:0 6px 30px rgba(0,0,0,.1)}
+
+/* Card header */
+.comp-head{padding:1.1rem 1.5rem;display:flex;align-items:center;justify-content:space-between;gap:1rem;flex-wrap:wrap;cursor:pointer;user-select:none;background:#fafbfc;border-bottom:1.5px solid var(--bdr)}
+.comp-head:hover{background:#f4f6f8}
+.ch-left{display:flex;align-items:center;gap:.9rem}
+.ch-icon{width:46px;height:46px;border-radius:12px;display:grid;place-items:center;font-size:1.25rem;flex-shrink:0}
+.chi-green{background:#ecfdf5;border:1.5px solid #6ee7b7}
+.chi-blue{background:#eff6ff;border:1.5px solid #bfdbfe}
+.chi-purple{background:#f5f3ff;border:1.5px solid #ddd6fe}
+.chi-amber{background:#fffbeb;border:1.5px solid #fde68a}
+.chi-red{background:#fef2f2;border:1.5px solid #fecaca}
+.ch-title{font-size:1rem;font-weight:800;color:var(--ink);line-height:1.2}
+.ch-sub{font-size:.72rem;color:var(--muted);margin-top:.12rem}
+.ch-pills{display:flex;align-items:center;gap:.45rem;flex-wrap:wrap}
+.cpill{font-size:.62rem;font-weight:700;padding:.2rem .65rem;border-radius:999px;letter-spacing:.03em;white-space:nowrap}
+.cp-new{background:var(--new-bg);color:var(--new);border:1px solid var(--new-border)}
+.cp-amber{background:#fffbeb;color:#b45309;border:1px solid #fde68a}
+.cp-red{background:#fff5f5;color:var(--old);border:1px solid #fca5a5}
+.cp-blue{background:#eff6ff;color:#1d4ed8;border:1px solid #bfdbfe}
+.ch-chevron{color:var(--muted);transition:transform .25s;font-size:.8rem}
+.comp-card.open .ch-chevron{transform:rotate(180deg)}
+
+/* Card body */
+.comp-body{display:none;padding:0}
+.comp-card.open .comp-body{display:block}
+
+/* Side-by-side grid */
+.side-grid{display:grid;grid-template-columns:1fr 1fr;gap:0}
+.side-col{padding:1.4rem 1.5rem}
+.side-col + .side-col{border-left:2px dashed var(--bdr)}
+.side-col-head{display:flex;align-items:center;gap:.5rem;font-size:.65rem;font-weight:800;letter-spacing:.1em;text-transform:uppercase;margin-bottom:1rem;padding-bottom:.6rem;border-bottom:2px solid}
+.old-col .side-col-head{color:var(--old);border-color:#fca5a5}
+.new-col .side-col-head{color:var(--new);border-color:#6ee7b7}
+.side-dot{width:10px;height:10px;border-radius:50%}
+.old-dot{background:var(--old)}
+.new-dot{background:var(--new)}
+
+/* Change items */
+.change-list{display:flex;flex-direction:column;gap:.5rem}
+.ci{display:flex;align-items:flex-start;gap:.6rem;font-size:.82rem;line-height:1.6;color:#334155;padding:.5rem .75rem;border-radius:9px}
+.ci-add{background:var(--add-bg);border:1px solid #bbf7d0}
+.ci-del{background:var(--del-bg);border:1px solid #fecaca}
+.ci-chg{background:var(--chg-bg);border:1px solid #fde68a}
+.ci-same{background:#f8fafc;border:1px solid #e2e8f0}
+.ci-tag{flex-shrink:0;font-size:.58rem;font-weight:800;padding:.12rem .45rem;border-radius:4px;letter-spacing:.05em;text-transform:uppercase;margin-top:3px;line-height:1.2}
+.tag-add{background:#dcfce7;color:var(--add)}
+.tag-del{background:#fee2e2;color:var(--del)}
+.tag-chg{background:#fef3c7;color:var(--chg)}
+.tag-same{background:#f1f5f9;color:#475569}
+
+/* Full-width section divider */
+.fw-section{padding:1.2rem 1.5rem;background:#fafbfc;border-top:1.5px solid var(--bdr)}
+.fw-section-title{font-size:.65rem;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin-bottom:.85rem;display:flex;align-items:center;gap:.5rem}
+.fw-section-title::after{content:'';flex:1;height:1px;background:var(--bdr)}
+
+/* Quick-diff table */
+.diff-table{width:100%;border-collapse:collapse;font-size:.8rem}
+.diff-table th{background:#f1f5f9;color:var(--muted);font-size:.62rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;padding:.6rem .9rem;text-align:left;border-bottom:1.5px solid var(--bdr)}
+.diff-table td{padding:.65rem .9rem;border-bottom:1px solid #f0f0f0;vertical-align:top;line-height:1.55}
+.diff-table tr:last-child td{border-bottom:none}
+.diff-table .dt-old{color:var(--old);font-weight:600;text-decoration:line-through;opacity:.75}
+.diff-table .dt-new{color:var(--new);font-weight:700}
+.diff-table .dt-label{font-weight:600;color:#334155}
+.row-add{background:var(--add-bg)}
+.row-del{background:var(--del-bg)}
+.row-chg{background:var(--chg-bg)}
+
+/* ── RESPONSIVE ── */
+@media(max-width:768px){
+  .side-grid{grid-template-columns:1fr}
+  .side-col+.side-col{border-left:none;border-top:2px dashed var(--bdr)}
+  .summary-grid{grid-template-columns:repeat(2,1fr)}
+  .comp-head{padding:.9rem 1.1rem}
+  .side-col{padding:1.1rem 1.1rem}
+}
+@media(max-width:480px){
+  .summary-grid{grid-template-columns:1fr 1fr}
+  .ch-pills{display:none}
+}
+
+/* Fade-in */
+.fade-up{opacity:0;transform:translateY(18px);transition:opacity .55s ease,transform .55s ease}
+.fade-up.vis{opacity:1;transform:translateY(0)}
+.delay-1{transition-delay:.08s}.delay-2{transition-delay:.16s}.delay-3{transition-delay:.24s}.delay-4{transition-delay:.32s}.delay-5{transition-delay:.4s}
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<header class="site-header">
+  <div class="header-inner">
+    <a class="logo" href="index.html">
+      <span class="logo-main">toppers<span>11</span></span>
+    </a>
+    <span class="header-badge">Syllabus Changes 2026</span>
+    <a class="back-link" href="syllabus-iti.html">
+      ← Back to Full Syllabus
+    </a>
+  </div>
+</header>
+
+<!-- HERO -->
+<div class="hero-strip">
+  <div class="hero-eyebrow">📋 Official CBDT Comparison</div>
+  <h1 class="hero-title">
+    ITI Exam: Old Pattern
+    <span class="vs">VS</span>
+    New Pattern 2026
+  </h1>
+  <p class="hero-sub">Every change from DE Rules 2009 → DE Rules 2026. What's added, removed, restructured — paper by paper.</p>
+</div>
+
+<!-- SUMMARY CARDS -->
+<div class="summary-grid">
+  <div class="sum-card fade-up">
+    <span class="sc-label">Total Papers</span>
+    <div class="sc-row"><span class="sc-old">5</span><span class="sc-arrow">→</span><span class="sc-new">5</span></div>
+    <span class="sc-note">Same count, Paper IV completely replaced</span>
+  </div>
+  <div class="sum-card fade-up delay-1">
+    <span class="sc-label">Total Marks</span>
+    <div class="sc-row"><span class="sc-old">500</span><span class="sc-arrow">→</span><span class="sc-new">500</span></div>
+    <span class="sc-note">Same total, redistribution across papers</span>
+  </div>
+  <div class="sum-card fade-up delay-2">
+    <span class="sc-label">Paper I Marks</span>
+    <div class="sc-row"><span class="sc-old">150</span><span class="sc-arrow">→</span><span class="sc-new">100</span></div>
+    <span class="sc-note">Duration also reduced to 2 hrs</span>
+  </div>
+  <div class="sum-card fade-up delay-3">
+    <span class="sc-label">Negative Marking</span>
+    <div class="sc-row"><span class="sc-old">−¼ mark</span><span class="sc-arrow">→</span><span class="sc-new">−¼ mark</span></div>
+    <span class="sc-note">Unchanged for objective papers</span>
+  </div>
+  <div class="sum-card fade-up delay-4">
+    <span class="sc-label">Paper V (Hindi)</span>
+    <div class="sc-row"><span class="sc-old">50 Marks</span><span class="sc-arrow">→</span><span class="sc-new">100 Marks</span></div>
+    <span class="sc-note">Duration doubled to 2 hrs, 5 new parts</span>
+  </div>
+  <div class="sum-card fade-up delay-5">
+    <span class="sc-label">Max Chances</span>
+    <div class="sc-row"><span class="sc-old">—</span><span class="sc-arrow">→</span><span class="sc-new">10 chances</span></div>
+    <span class="sc-note">Explicitly defined in 2026 Rules</span>
+  </div>
+</div>
+
+<!-- MAIN CONTENT -->
+<div class="section-wrap">
+  <div class="section-head fade-up">Paper-by-Paper Comparison</div>
+
+  <!-- ── PAPER I ── -->
+  <div class="comp-card open fade-up">
+    <div class="comp-head" onclick="toggle(this)">
+      <div class="ch-left">
+        <div class="ch-icon chi-green">📘</div>
+        <div>
+          <div class="ch-title">Paper I — IT Law &amp; Computation</div>
+          <div class="ch-sub">Biggest changes: new IT Act 2025, Taxpayer Services added, marks reduced, book allowed</div>
+        </div>
+      </div>
+      <div class="ch-pills">
+        <span class="cpill cp-red">150 → 100 Marks</span>
+        <span class="cpill cp-amber">No Books → With Books</span>
+        <span class="cpill cp-new">IT Act 2025 Added</span>
+      </div>
+      <span class="ch-chevron">▼</span>
+    </div>
+    <div class="comp-body">
+      <div class="side-grid">
+        <div class="side-col old-col">
+          <div class="side-col-head"><span class="side-dot old-dot"></span>Old Pattern (DE Rules 2009)</div>
+          <div class="change-list">
+            <div class="ci ci-del"><span class="ci-tag tag-del">Removed</span>150 MCQs — 150 Marks</div>
+            <div class="ci ci-del"><span class="ci-tag tag-del">Removed</span>Duration: 3 Hours</div>
+            <div class="ci ci-del"><span class="ci-tag tag-del">Removed</span>Without Books (Closed Book)</div>
+            <div class="ci ci-same"><span class="ci-tag tag-same">Kept</span>Income Tax Act, 1961 — core chapters</div>
+            <div class="ci ci-del"><span class="ci-tag tag-del">Removed</span>Wealth Tax Act, 1957</div>
+            <div class="ci ci-same"><span class="ci-tag tag-same">Kept</span>Black Money Act, 2015</div>
+            <div class="ci ci-same"><span class="ci-tag tag-same">Kept</span>Benami Transactions Act, 2016</div>
+            <div class="ci ci-del"><span class="ci-tag tag-del">Removed</span>Chapter XIII (IT Authorities) emphasis</div>
+            <div class="ci ci-del"><span class="ci-tag tag-del">Removed</span>2nd &amp; 3rd Schedules (Collection &amp; Recovery)</div>
+          </div>
+        </div>
+        <div class="side-col new-col">
+          <div class="side-col-head"><span class="side-dot new-dot"></span>New Pattern (DE Rules 2026)</div>
+          <div class="change-list">
+            <div class="ci ci-chg"><span class="ci-tag tag-chg">Changed</span>100 MCQs — 100 Marks (reduced from 150)</div>
+            <div class="ci ci-chg"><span class="ci-tag tag-chg">Changed</span>Duration: 2 Hours (reduced from 3)</div>
+            <div class="ci ci-add"><span class="ci-tag tag-add">New</span>With Books — Bare Acts &amp; Rules allowed</div>
+            <div class="ci ci-add"><span class="ci-tag tag-add">New</span>Income Tax Act, 2025 — full chapter mapping alongside IT Act 1961</div>
+            <div class="ci ci-add"><span class="ci-tag tag-add">New</span>Taxpayer Services &amp; Digital Service Delivery (Part of 90% weightage)</div>
+            <div class="ci ci-add"><span class="ci-tag tag-add">New</span>TRACES, 26AS, e-PAN, Prefilled ITR, ASK, SEVOTTAM</div>
+            <div class="ci ci-add"><span class="ci-tag tag-add">New</span>Grievance Redressal: CPGRAM, E-Nivaran</div>
+            <div class="ci ci-add"><span class="ci-tag tag-add">New</span>90:10 weightage split explicitly defined (IT Laws : Other Acts)</div>
+            <div class="ci ci-same"><span class="ci-tag tag-same">Kept</span>Black Money Act 2015 &amp; Benami Act 2016</div>
+          </div>
+        </div>
+      </div>
+      <div class="fw-section">
+        <div class="fw-section-title">Quick Diff</div>
+        <table class="diff-table">
+          <tr><th>Aspect</th><th>Old (2009)</th><th>New (2026)</th></tr>
+          <tr class="row-chg"><td class="dt-label">Total Marks</td><td class="dt-old">150</td><td class="dt-new">100</td></tr>
+          <tr class="row-chg"><td class="dt-label">Duration</td><td class="dt-old">3 Hours</td><td class="dt-new">2 Hours</td></tr>
+          <tr class="row-chg"><td class="dt-label">Books</td><td class="dt-old">Without Books</td><td class="dt-new">With Books (Bare Acts only)</td></tr>
+          <tr class="row-add"><td class="dt-label">IT Act 2025</td><td class="dt-old">Not included</td><td class="dt-new">Included alongside IT Act 1961</td></tr>
+          <tr class="row-add"><td class="dt-label">Taxpayer Services</td><td class="dt-old">Not included</td><td class="dt-new">Included (TRACES, 26AS, e-PAN, etc.)</td></tr>
+          <tr class="row-del"><td class="dt-label">Wealth Tax Act, 1957</td><td class="dt-old">Included</td><td class="dt-new">Removed</td></tr>
+          <tr class="row-chg"><td class="dt-label">Negative Marking</td><td class="dt-old">¼ mark per wrong</td><td class="dt-new">¼ mark per wrong (unchanged)</td></tr>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── PAPER II ── -->
+  <div class="comp-card fade-up delay-1">
+    <div class="comp-head" onclick="toggle(this)">
+      <div class="ch-left">
+        <div class="ch-icon chi-blue">📗</div>
+        <div>
+          <div class="ch-title">Paper II — Accountancy &amp; Book-Keeping</div>
+          <div class="ch-sub">Largely retained; added depreciation, partnerships, LLP, and 7 Accounting Standards</div>
+        </div>
+      </div>
+      <div class="ch-pills">
+        <span class="cpill cp-new">AS Standards Added</span>
+        <span class="cpill cp-new">LLP &amp; Co. Accounts</span>
+      </div>
+      <span class="ch-chevron">▼</span>
+    </div>
+    <div class="comp-body">
+      <div class="side-grid">
+        <div class="side-col old-col">
+          <div class="side-col-head"><span class="side-dot old-dot"></span>Old Pattern (DE Rules 2009)</div>
+          <div class="change-list">
+            <div class="ci ci-same"><span class="ci-tag tag-same">Kept</span>Fundamentals of Accounting</div>
+            <div class="ci ci-same"><span class="ci-tag tag-same">Kept</span>Accounting Principles — Concepts &amp; Conventions</div>
+            <div class="ci ci-same"><span class="ci-tag tag-same">Kept</span>Double Entry System</div>
+            <div class="ci ci-same"><span class="ci-tag tag-same">Kept</span>Journalisation, Ledgerisation, Subsidiary Books</div>
+            <div class="ci ci-same"><span class="ci-tag tag-same">Kept</span>Bank Transactions &amp; Bank Reconciliation</div>
+            <div class="ci ci-same"><span class="ci-tag tag-same">Kept</span>Capital &amp; Revenue Expenditure</div>
+            <div class="ci ci-same"><span class="ci-tag tag-same">Kept</span>Trial Balance &amp; Rectification of Errors</div>
+            <div class="ci ci-same"><span class="ci-tag tag-same">Kept</span>Final Accounts (Manufacturing, P&amp;L, Balance Sheet)</div>
+            <div class="ci ci-del"><span class="ci-tag tag-del">Missing</span>Depreciation Methods</div>
+            <div class="ci ci-del"><span class="ci-tag tag-del">Missing</span>Partnership, Company, LLP Accounts</div>
+            <div class="ci ci-del"><span class="ci-tag tag-del">Missing</span>Accounting Standards (none)</div>
+          </div>
+        </div>
+        <div class="side-col new-col">
+          <div class="side-col-head"><span class="side-dot new-dot"></span>New Pattern (DE Rules 2026)</div>
+          <div class="change-list">
+            <div class="ci ci-same"><span class="ci-tag tag-same">Kept</span>All 8 original topics retained</div>
+            <div class="ci ci-add"><span class="ci-tag tag-add">New</span>Depreciation — Straight-Line &amp; Written Down Value methods</div>
+            <div class="ci ci-add"><span class="ci-tag tag-add">New</span>Partnership Account, Company Account, LLP Account</div>
+            <div class="ci ci-add"><span class="ci-tag tag-add">New</span>AS-1: Disclosure of Accounting Policies</div>
+            <div class="ci ci-add"><span class="ci-tag tag-add">New</span>AS-2: Valuation of Inventory</div>
+            <div class="ci ci-add"><span class="ci-tag tag-add">New</span>AS-7: Accounting for Construction Contracts</div>
+            <div class="ci ci-add"><span class="ci-tag tag-add">New</span>AS-9: Revenue Recognition</div>
+            <div class="ci ci-add"><span class="ci-tag tag-add">New</span>AS-10: Property, Plant and Equipment</div>
+            <div class="ci ci-add"><span class="ci-tag tag-add">New</span>AS-22: Accounting for Taxes on Income</div>
+            <div class="ci ci-add"><span class="ci-tag tag-add">New</span>AS-29: Provisions, Contingent Liabilities &amp; Assets</div>
+            <div class="ci ci-add"><span class="ci-tag tag-add">New</span>35% weightage to practical/analytical MCQs (explicit)</div>
+          </div>
+        </div>
+      </div>
+      <div class="fw-section">
+        <div class="fw-section-title">Quick Diff</div>
+        <table class="diff-table">
+          <tr><th>Aspect</th><th>Old (2009)</th><th>New (2026)</th></tr>
+          <tr><td class="dt-label">Marks &amp; Duration</td><td>100 marks, 2 hrs</td><td class="dt-new">100 marks, 2 hrs (unchanged)</td></tr>
+          <tr class="row-add"><td class="dt-label">Depreciation</td><td class="dt-old">Not in syllabus</td><td class="dt-new">SLM &amp; WDV methods added</td></tr>
+          <tr class="row-add"><td class="dt-label">Company/LLP/Partnership</td><td class="dt-old">Not in syllabus</td><td class="dt-new">All three explicitly added</td></tr>
+          <tr class="row-add"><td class="dt-label">Accounting Standards</td><td class="dt-old">None (0 standards)</td><td class="dt-new">7 standards (AS-1 to AS-29)</td></tr>
+          <tr class="row-add"><td class="dt-label">Practical MCQ Weightage</td><td class="dt-old">Not specified</td><td class="dt-new">35% explicitly for analytical/computational Qs</td></tr>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── PAPER III ── -->
+  <div class="comp-card fade-up delay-2">
+    <div class="comp-head" onclick="toggle(this)">
+      <div class="ch-left">
+        <div class="ch-icon chi-purple">⚖️</div>
+        <div>
+          <div class="ch-title">Paper III — Allied Laws <span style="opacity:.5">+</span> Office Procedure (merged)</div>
+          <div class="ch-sub">Old Paper III (Allied Laws) + Old Paper IV (Office Procedure) are now combined into one paper</div>
+        </div>
+      </div>
+      <div class="ch-pills">
+        <span class="cpill cp-amber">Two papers → One</span>
+        <span class="cpill cp-red">Old Acts Removed</span>
+        <span class="cpill cp-new">Companies Act 2013 Added</span>
+      </div>
+      <span class="ch-chevron">▼</span>
+    </div>
+    <div class="comp-body">
+      <div class="side-grid">
+        <div class="side-col old-col">
+          <div class="side-col-head"><span class="side-dot old-dot"></span>Old Paper III — Allied Laws (2009)</div>
+          <div class="change-list">
+            <div class="ci ci-same"><span class="ci-tag tag-same">Kept</span>Transfer of Property Act, 1882 (same sections)</div>
+            <div class="ci ci-same"><span class="ci-tag tag-same">Kept</span>Indian Registration Act, 1908 (same sections)</div>
+            <div class="ci ci-del"><span class="ci-tag tag-del">Removed</span>Indian Succession Act, 1925</div>
+            <div class="ci ci-del"><span class="ci-tag tag-del">Removed</span>Indian Trusts Act</div>
+            <div class="ci ci-del"><span class="ci-tag tag-del">Removed</span>Hindu Law (Mullah) — Mitakshara Co-parcenary</div>
+            <div class="ci ci-same"><span class="ci-tag tag-same">Kept</span>Civil Procedure Code, 1908 (same orders)</div>
+            <div class="ci ci-same"><span class="ci-tag tag-same">Kept</span>Right to Information Act, 2005</div>
+            <div class="ci ci-del"><span class="ci-tag tag-del">Removed</span>Indian Evidence Act, 1872</div>
+          </div>
+        </div>
+        <div class="side-col new-col">
+          <div class="side-col-head"><span class="side-dot new-dot"></span>New Paper III — Allied Laws 60% + Office Procedure 40%</div>
+          <div class="change-list">
+            <div class="ci ci-add"><span class="ci-tag tag-add">New</span>Companies Act, 2013 (Ch I, II, IV, IX, XV, XX)</div>
+            <div class="ci ci-add"><span class="ci-tag tag-add">New</span>Bharatiya Sakshya Adhiniyam, 2023 (replaces Indian Evidence Act)</div>
+            <div class="ci ci-add"><span class="ci-tag tag-add">New</span>IT (Amendment) Act, 2008</div>
+            <div class="ci ci-add"><span class="ci-tag tag-add">New</span>CCS (CCA) Rules, 1965</div>
+            <div class="ci ci-add"><span class="ci-tag tag-add">New</span>CCS Conduct Rules, 1964 &amp; CCS Leave Rules, 1972</div>
+            <div class="ci ci-add"><span class="ci-tag tag-add">New</span>CCS Pension Rules, 2021</div>
+            <div class="ci ci-add"><span class="ci-tag tag-add">New</span>Delegation of Financial Power Rules, 2024</div>
+            <div class="ci ci-add"><span class="ci-tag tag-add">New</span>General Financial Rules, 2017</div>
+            <div class="ci ci-add"><span class="ci-tag tag-add">New</span>Manual of Office Procedure (Vol I, II, III)</div>
+            <div class="ci ci-add"><span class="ci-tag tag-add">New</span>POSH Act, 2013 (Sexual Harassment)</div>
+            <div class="ci ci-add"><span class="ci-tag tag-add">New</span>RPwD Act, 2016</div>
+            <div class="ci ci-add"><span class="ci-tag tag-add">New</span>GeM public procurement &amp; contract management</div>
+          </div>
+        </div>
+      </div>
+      <div class="fw-section">
+        <div class="fw-section-title">Key Structural Change — Two papers became one</div>
+        <table class="diff-table">
+          <tr><th>Old Paper</th><th>Old Marks</th><th>What happened in 2026</th></tr>
+          <tr class="row-chg"><td class="dt-label">Paper III — Allied Laws</td><td>100</td><td class="dt-new">Allied Laws section = 60 marks within new Paper III</td></tr>
+          <tr class="row-chg"><td class="dt-label">Paper IV — Office Procedure</td><td>100</td><td class="dt-new">Office Procedure section = 40 marks within new Paper III</td></tr>
+          <tr class="row-del"><td class="dt-label">Indian Succession Act, 1925</td><td>Part of old P-III</td><td class="dt-new" style="color:var(--del)">Removed from syllabus</td></tr>
+          <tr class="row-del"><td class="dt-label">Indian Trusts Act</td><td>Part of old P-III</td><td class="dt-new" style="color:var(--del)">Removed from syllabus</td></tr>
+          <tr class="row-del"><td class="dt-label">Indian Evidence Act, 1872</td><td>Part of old P-III</td><td class="dt-new" style="color:var(--del)">Replaced by Bharatiya Sakshya Adhiniyam, 2023</td></tr>
+          <tr class="row-add"><td class="dt-label">Companies Act, 2013</td><td>—</td><td class="dt-new">Newly added (Ch I, II, IV, IX, XV, XX)</td></tr>
+          <tr class="row-add"><td class="dt-label">Books allowed?</td><td>Without Books (old)</td><td class="dt-new">With Books (Bare Acts, FR/SR/GFR)</td></tr>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── PAPER IV ── -->
+  <div class="comp-card fade-up delay-3">
+    <div class="comp-head" onclick="toggle(this)">
+      <div class="ch-left">
+        <div class="ch-icon chi-amber">💻</div>
+        <div>
+          <div class="ch-title">Paper IV — IT Applications &amp; Operations (Brand New)</div>
+          <div class="ch-sub">Old Paper IV (Office Procedure) is gone. This is an entirely new paper on ITBA, digital forensics &amp; Insight portal</div>
+        </div>
+      </div>
+      <div class="ch-pills">
+        <span class="cpill cp-new">Entirely New Paper</span>
+        <span class="cpill cp-amber">Replaces Office Procedure</span>
+      </div>
+      <span class="ch-chevron">▼</span>
+    </div>
+    <div class="comp-body">
+      <div class="side-grid">
+        <div class="side-col old-col">
+          <div class="side-col-head"><span class="side-dot old-dot"></span>Old Paper IV — Office Procedure (2009)</div>
+          <div class="change-list">
+            <div class="ci ci-del"><span class="ci-tag tag-del">Gone</span>Part A — Service Rules (50 marks): FR/SR, CCS rules, TA/DA, leave, pension, HTC, GPF, cash book, pay bills</div>
+            <div class="ci ci-del"><span class="ci-tag tag-del">Gone</span>Part B — IT Procedures (50 marks): IT Records, notices, collection &amp; recovery, refunds, search &amp; seizure, appeals, audit, CBDT scrutiny guidelines</div>
+            <div class="ci ci-del"><span class="ci-tag tag-del">Note</span>Service Rules content moved to Paper III (40 marks) in new pattern</div>
+          </div>
+        </div>
+        <div class="side-col new-col">
+          <div class="side-col-head"><span class="side-dot new-dot"></span>New Paper IV — IT Applications &amp; Operations (2026)</div>
+          <div class="change-list">
+            <div class="ci ci-add"><span class="ci-tag tag-add">New</span>ITBA Portal — ITR Processing, Rectification, Recovery, Audit, Faceless Appeal, OGE, Penalty, e-Nivaran</div>
+            <div class="ci ci-add"><span class="ci-tag tag-add">New</span>PAN &amp; TAN Operations — NRI Status, Event Marking, Deletion, Deduplication, Bulk Transfer</div>
+            <div class="ci ci-add"><span class="ci-tag tag-add">New</span>TDS, Common Functions, MIS Reports, Email &amp; VC</div>
+            <div class="ci ci-add"><span class="ci-tag tag-add">New</span>Assessment Module (Faceless &amp; Non-Faceless) — overview, notice generation, case cancellation</div>
+            <div class="ci ci-add"><span class="ci-tag tag-add">New</span>HRMS in ITBA — user roles, access control, HR compliance</div>
+            <div class="ci ci-add"><span class="ci-tag tag-add">New</span>Insight Portal — data handling, process flow, e-verification, third-party reporting</div>
+            <div class="ci ci-add"><span class="ci-tag tag-add">New</span>Digital Forensics — CBDT DIALs standards, forensics protocols, disk/mobile/cloud forensics, chain of custody, Panchnama</div>
+          </div>
+        </div>
+      </div>
+      <div class="fw-section">
+        <div class="fw-section-title">This is the most transformative change in the 2026 pattern</div>
+        <table class="diff-table">
+          <tr><th>Aspect</th><th>Old Paper IV (2009)</th><th>New Paper IV (2026)</th></tr>
+          <tr class="row-chg"><td class="dt-label">Subject</td><td class="dt-old">Office Procedure</td><td class="dt-new">IT Applications &amp; Operations</td></tr>
+          <tr><td class="dt-label">Marks</td><td>100</td><td class="dt-new">100 (same)</td></tr>
+          <tr><td class="dt-label">Duration</td><td>2 Hours</td><td class="dt-new">2 Hours (same)</td></tr>
+          <tr class="row-del"><td class="dt-label">Books</td><td>Without Books</td><td class="dt-new">Without Books (same)</td></tr>
+          <tr class="row-add"><td class="dt-label">Focus</td><td class="dt-old">Manual rules &amp; procedures</td><td class="dt-new">Digital systems — ITBA, Insight, Forensics</td></tr>
+          <tr class="row-add"><td class="dt-label">Special rule</td><td class="dt-old">—</td><td class="dt-new">Candidates with &lt;3 chances left get minimum 3 extra chances just for this paper</td></tr>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── PAPER V ── -->
+  <div class="comp-card fade-up delay-4">
+    <div class="comp-head" onclick="toggle(this)">
+      <div class="ch-left">
+        <div class="ch-icon chi-red">🇮🇳</div>
+        <div>
+          <div class="ch-title">Paper V — Rajbhasha Hindi</div>
+          <div class="ch-sub">Marks doubled to 100, duration doubled to 2 hrs, syllabus expanded from 1 task to 5 structured parts</div>
+        </div>
+      </div>
+      <div class="ch-pills">
+        <span class="cpill cp-red">50 → 100 Marks</span>
+        <span class="cpill cp-amber">1 hr → 2 hrs</span>
+        <span class="cpill cp-new">5 Structured Parts</span>
+      </div>
+      <span class="ch-chevron">▼</span>
+    </div>
+    <div class="comp-body">
+      <div class="side-grid">
+        <div class="side-col old-col">
+          <div class="side-col-head"><span class="side-dot old-dot"></span>Old Paper V — Hindi (2009)</div>
+          <div class="change-list">
+            <div class="ci ci-del"><span class="ci-tag tag-del">Changed</span>50 Marks total</div>
+            <div class="ci ci-del"><span class="ci-tag tag-del">Changed</span>Duration: 1 Hour</div>
+            <div class="ci ci-del"><span class="ci-tag tag-del">Changed</span>Single task: Translation of a 500-word passage from English to Hindi only</div>
+            <div class="ci ci-del"><span class="ci-tag tag-del">Changed</span>Pass marks: 50% of 50 = 25 marks</div>
+          </div>
+        </div>
+        <div class="side-col new-col">
+          <div class="side-col-head"><span class="side-dot new-dot"></span>New Paper V — Rajbhasha Hindi (2026)</div>
+          <div class="change-list">
+            <div class="ci ci-add"><span class="ci-tag tag-add">New</span>100 Marks total (doubled)</div>
+            <div class="ci ci-add"><span class="ci-tag tag-add">New</span>Duration: 2 Hours (doubled)</div>
+            <div class="ci ci-add"><span class="ci-tag tag-add">New</span>Part A [20 marks] — Hindi to English translation</div>
+            <div class="ci ci-add"><span class="ci-tag tag-add">New</span>Part B [20 marks] — English to Hindi translation (bidirectional)</div>
+            <div class="ci ci-add"><span class="ci-tag tag-add">New</span>Part C [20 marks] — Reading Comprehension (official passages, orders, notices)</div>
+            <div class="ci ci-add"><span class="ci-tag tag-add">New</span>Part D [20 marks] — Official Terminology &amp; correct usage</div>
+            <div class="ci ci-add"><span class="ci-tag tag-add">New</span>Part E [20 marks] — Brief Official Writing in Hindi</div>
+            <div class="ci ci-same"><span class="ci-tag tag-same">Kept</span>Pass marks: 50% (45% for SC/ST/PwBD)</div>
+            <div class="ci ci-same"><span class="ci-tag tag-same">Kept</span>Exemptions for Hindi at matriculation / Pragya exam passers</div>
+          </div>
+        </div>
+      </div>
+      <div class="fw-section">
+        <div class="fw-section-title">Quick Diff</div>
+        <table class="diff-table">
+          <tr><th>Aspect</th><th>Old (2009)</th><th>New (2026)</th></tr>
+          <tr class="row-chg"><td class="dt-label">Marks</td><td class="dt-old">50</td><td class="dt-new">100</td></tr>
+          <tr class="row-chg"><td class="dt-label">Duration</td><td class="dt-old">1 Hour</td><td class="dt-new">2 Hours</td></tr>
+          <tr class="row-chg"><td class="dt-label">Tasks</td><td class="dt-old">1 task (E→H translation)</td><td class="dt-new">5 structured parts</td></tr>
+          <tr class="row-add"><td class="dt-label">Hindi → English</td><td class="dt-old">Not tested</td><td class="dt-new">Part A — 20 marks</td></tr>
+          <tr class="row-add"><td class="dt-label">Comprehension</td><td class="dt-old">Not tested</td><td class="dt-new">Part C — 20 marks</td></tr>
+          <tr class="row-add"><td class="dt-label">Official Writing</td><td class="dt-old">Not tested</td><td class="dt-new">Part E — 20 marks</td></tr>
+          <tr><td class="dt-label">Exemption Rules</td><td>Same</td><td class="dt-new">Same (no change)</td></tr>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── EXAM RULES CHANGES ── -->
+  <div class="section-head fade-up" style="margin-top:2.5rem">Exam Rules &amp; Administrative Changes (2009 → 2026)</div>
+
+  <div class="comp-card fade-up">
+    <div class="comp-head" onclick="toggle(this)">
+      <div class="ch-left">
+        <div class="ch-icon chi-green">📋</div>
+        <div>
+          <div class="ch-title">Examination Rules — Key Changes</div>
+          <div class="ch-sub">Chances, pass marks, grace marks, unfair means, and new provisions</div>
+        </div>
+      </div>
+      <span class="ch-chevron">▼</span>
+    </div>
+    <div class="comp-body">
+      <div class="fw-section" style="border-top:none">
+        <table class="diff-table">
+          <tr><th>Rule / Aspect</th><th>Old (DE Rules 2009)</th><th>New (DE Rules 2026)</th></tr>
+          <tr class="row-chg"><td class="dt-label">Maximum Chances</td><td>10 (post-2010 exams count)</td><td class="dt-new">10 (explicitly codified; post-2010 attempts count)</td></tr>
+          <tr class="row-add"><td class="dt-label">Minimum Chances for Paper IV</td><td class="dt-old">Not applicable</td><td class="dt-new">Candidates with &lt;3 chances left get 3 extra chances exclusively for Paper IV</td></tr>
+          <tr><td class="dt-label">Pass Marks — General</td><td>50%</td><td class="dt-new">50% (unchanged)</td></tr>
+          <tr><td class="dt-label">Pass Marks — SC/ST/PwBD</td><td>45%</td><td class="dt-new">45% (unchanged)</td></tr>
+          <tr><td class="dt-label">Grace Marks</td><td>Max 5 (2 per paper for exemption; 5 for full qualification)</td><td class="dt-new">Same policy retained</td></tr>
+          <tr class="row-add"><td class="dt-label">AI / Generative AI Ban</td><td class="dt-old">Not mentioned</td><td class="dt-new">Explicitly banned — use of AI assist / Gen AI / undisclosed LLM / voice-relay through scribes is an unfair means offence</td></tr>
+          <tr class="row-add"><td class="dt-label">Digital Evidence (Unfair Means)</td><td class="dt-old">Not mentioned</td><td class="dt-new">Certified digital logs of devices can be used as evidence</td></tr>
+          <tr class="row-chg"><td class="dt-label">Old Pattern (1998 Rules)</td><td>Still valid for partial qualifiers</td><td class="dt-new">DE Rules 1998 discontinued from 2026; only 2009 pattern partial qualifiers get transitional relief</td></tr>
+          <tr class="row-add"><td class="dt-label">Answer Key Challenge</td><td class="dt-old">Not detailed</td><td class="dt-new">7-day online window on incometaxindia.gov.in; Expert Committee decision is final</td></tr>
+          <tr class="row-add"><td class="dt-label">Exam Frequency</td><td class="dt-old">Once a year</td><td class="dt-new">Once a year, preferably first half of calendar year (codified)</td></tr>
+          <tr class="row-add"><td class="dt-label">Scribe Rules (PwBD)</td><td class="dt-old">Basic provisions</td><td class="dt-new">Detailed provisions — own scribe, qualification of scribe, flexibility to change scribe, 20 min/hr compensatory time</td></tr>
+          <tr class="row-chg"><td class="dt-label">Negative Marking</td><td>¼ mark per wrong answer</td><td class="dt-new">¼ mark per wrong answer (unchanged)</td></tr>
+        </table>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<!-- FOOTER -->
+<footer style="background:var(--dark);padding:1.5rem;text-align:center;border-top:2px solid var(--t3)">
+  <p style="color:rgba(255,255,255,.35);font-size:.7rem">© 2026 Toppers11. Not affiliated with the Income Tax Department of India. Based on CBDT DE Rules 2026 official document.</p>
+  <p style="margin-top:.5rem"><a href="syllabus-iti.html" style="color:var(--t3);font-size:.75rem;text-decoration:none;font-weight:600">← View Full Updated Syllabus 2026</a></p>
+</footer>
+
+<script>
+function toggle(header){
+  const card = header.closest('.comp-card');
+  card.classList.toggle('open');
+}
+const obs = new IntersectionObserver(entries=>{
+  entries.forEach(e=>{ if(e.isIntersecting) e.target.classList.add('vis'); });
+},{threshold:.08,rootMargin:'0px 0px -20px 0px'});
+document.querySelectorAll('.fade-up').forEach(el=>obs.observe(el));
+// Open all cards by default
+document.querySelectorAll('.comp-card').forEach(c=>c.classList.add('open'));
+</script>
+</body>
+</html>
