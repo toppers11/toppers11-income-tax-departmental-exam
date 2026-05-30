@@ -196,6 +196,43 @@ footer{background:var(--dark);padding:2.8rem 0 0;position:relative;overflow:hidd
 @media(max-width:768px){nav .nav-link{display:none}#mob-toggle{display:flex;justify-content:center;align-items:center}.nav-inner{padding:.4rem 1.2rem}.compare-grid{grid-template-columns:1fr}}
 @media(max-width:640px){.top-inner{flex-direction:column;align-items:center;gap:.6rem;padding:.8rem 1rem}.logo-box{text-align:center;align-items:center}.action-cards{display:grid;grid-template-columns:repeat(3,1fr);gap:.4rem;width:100%;max-width:400px}.ac{min-width:0;width:100%;padding:.5rem .3rem}.ac svg{width:22px;height:22px}.ac-title{font-size:.5rem}.ac-sub{font-size:.44rem}.free-badge{font-size:.4rem;padding:.08rem .22rem}.hero{padding:36px 0 48px}.hero-title{font-size:1.6rem}.exam-switcher{display:grid;grid-template-columns:repeat(2,1fr);gap:.5rem;max-width:360px;margin:0 auto}.exam-pill:last-child{grid-column:1/-1;max-width:180px;margin:0 auto}.page-wrap{padding:1.25rem 1rem 3rem}.paper-header{padding:.9rem 1rem}.paper-body{padding:0 1rem 1.1rem}.cta-inner{text-align:center;flex-direction:column}.cta-right{align-items:center}.cta-btns{flex-direction:column;align-items:stretch}.foot-top{flex-direction:column}.foot-brand .site-name{font-size:2rem}}
 @media(max-width:380px){.action-cards{grid-template-columns:repeat(2,1fr)}}
+
+/* ── WHO APPEARS IN WHICH EXAM ── */
+.candidate-section{margin-bottom:2rem}
+.candidate-tabs{display:flex;gap:.5rem;margin-bottom:1rem;flex-wrap:wrap}
+.ctab{cursor:pointer;border:1.5px solid var(--bdr);border-radius:999px;padding:.45rem 1.1rem;font-size:.75rem;font-weight:700;background:#fff;color:var(--muted);transition:all .2s;white-space:nowrap}
+.ctab.active-new{background:#004d3f;color:#fff;border-color:#004d3f}
+.ctab.active-old{background:#1e3a5f;color:#fff;border-color:#1e3a5f}
+.ctab.active-partial{background:#7c2d12;color:#fff;border-color:#7c2d12}
+.candidate-panel{display:none}
+.candidate-panel.show{display:block}
+.cand-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:1rem;margin-bottom:1rem}
+.cand-card{border-radius:14px;padding:1.1rem 1.2rem;border:1.5px solid}
+.cand-card.cc-new{background:#f0fdf8;border-color:#A7F3D0}
+.cand-card.cc-old{background:#eff6ff;border-color:#BFDBFE}
+.cand-card.cc-warn{background:#fffbeb;border-color:#FDE68A}
+.cand-card.cc-red{background:#fef2f2;border-color:#fecaca}
+.cand-card-head{font-size:.78rem;font-weight:800;margin-bottom:.55rem;display:flex;align-items:center;gap:.5rem}
+.cand-card.cc-new .cand-card-head{color:#065f46}
+.cand-card.cc-old .cand-card-head{color:#1e3a8a}
+.cand-card.cc-warn .cand-card-head{color:#92400e}
+.cand-card.cc-red .cand-card-head{color:#991b1b}
+.cand-card ul{list-style:none;display:flex;flex-direction:column;gap:.3rem}
+.cand-card ul li{font-size:.77rem;color:#374151;line-height:1.55;padding-left:1rem;position:relative}
+.cand-card ul li::before{content:'\25B8';position:absolute;left:0;font-size:.65rem;top:.1rem}
+.cand-card.cc-new ul li::before{color:#10b981}
+.cand-card.cc-old ul li::before{color:#3b82f6}
+.cand-card.cc-warn ul li::before{color:#f59e0b}
+.cand-card.cc-red ul li::before{color:#ef4444}
+.cand-note{font-size:.74rem;color:var(--muted);padding:.65rem .9rem;background:#fafafa;border-radius:8px;border-left:3px solid var(--bdr);line-height:1.6;margin-top:.5rem}
+.cand-note strong{color:var(--ink)}
+.paper-match-table{width:100%;border-collapse:collapse;font-size:.76rem;margin-top:.75rem}
+.paper-match-table th{background:#f3f4f6;color:var(--muted);font-weight:700;text-align:left;padding:.5rem .75rem;border:1px solid #e5e7eb;font-size:.68rem;letter-spacing:.04em;text-transform:uppercase}
+.paper-match-table td{padding:.5rem .75rem;border:1px solid #e5e7eb;color:#374151;vertical-align:top;line-height:1.5}
+.paper-match-table tr:nth-child(even) td{background:#fafafa}
+.paper-match-table .td-old{color:#1e40af;font-weight:600}
+.paper-match-table .td-new{color:#065f46;font-weight:600}
+.highlight-row td{background:#f0fdf8 !important;border-color:#A7F3D0}
 </style>
 </head>
 <body>
@@ -271,6 +308,159 @@ footer{background:var(--dark);padding:2.8rem 0 0;position:relative;overflow:hidd
     <div class="feature-item"><span class="fi-icon">📊</span><span class="fi-text"><strong>500 Marks</strong> Total · 50% to Pass Each Paper</span></div>
     <div class="feature-item"><span class="fi-icon">🎯</span><span class="fi-text"><strong>AI Leveled Practice Sets</strong> to Match Real Exam Difficulty</span></div>
     <div class="feature-item"><span class="fi-icon">⚖️</span><span class="fi-text"><strong>1/4 Negative</strong> Marking per Wrong Answer</span></div>
+  </div>
+
+
+  <!-- WHO APPEARS IN WHICH EXAM -->
+  <div class="section-heading fade-up">Which Exam Do You Appear In?</div>
+  <div class="candidate-section fade-up">
+    <div class="candidate-tabs">
+      <button class="ctab active-new" onclick="showPanel('new','new')">&#x1F7E2; Fresh / New Candidates</button>
+      <button class="ctab" onclick="showPanel('partial','partial')">&#x1F7E1; Partially Qualified (Old Pattern 1998)</button>
+      <button class="ctab" onclick="showPanel('scst','old')">&#x1F535; SC/ST/PwBD Betterment</button>
+    </div>
+
+    <!-- NEW CANDIDATES -->
+    <div class="candidate-panel show" id="panel-new">
+      <div class="cand-grid">
+        <div class="cand-card cc-new">
+          <div class="cand-card-head">&#x2705; Who qualifies as a "New Candidate"?</div>
+          <ul>
+            <li><strong>Directly recruited Office Superintendents</strong> (for confirmation in service)</li>
+            <li><strong>Tax Assistants (TA)</strong> (for promotion)</li>
+            <li><strong>MTS, Notice Server (NS), and LDC</strong> who have qualified Data Entry Skill Test (for promotion)</li>
+            <li><strong>Stenographer Grade I &amp; II</strong> (to become eligible to appear in the ITI Exam)</li>
+            <li>Anyone who has <strong>not yet attempted</strong> the MS exam under old rules OR attempted but <strong>not qualified any paper</strong></li>
+          </ul>
+        </div>
+        <div class="cand-card cc-new">
+          <div class="cand-card-head">&#x1F4CB; Papers to Appear In</div>
+          <ul>
+            <li><strong>All 5 papers</strong> of the New Pattern (DE Rules 2026) are mandatory</li>
+            <li>Paper I &#x2014; IT Law &amp; Taxpayer Services (with books)</li>
+            <li>Paper II &#x2014; Income Tax Computation (with books)</li>
+            <li>Paper III &#x2014; Office Procedure (with books)</li>
+            <li>Paper IV &#x2014; IT Applications &amp; Operations (without books) <span style="color:#065f46;font-weight:700">&#x2605; New paper</span></li>
+            <li>Paper V &#x2014; Rajbhasha Hindi (without books, subjective)</li>
+            <li><strong>No choice</strong> &#x2014; old pattern (DE Rules 1998) is fully discontinued from 2026</li>
+          </ul>
+        </div>
+        <div class="cand-card cc-new">
+          <div class="cand-card-head">&#x1F4CC; Key Rules &#x2014; MS-Specific</div>
+          <ul>
+            <li>Maximum <strong>10 chances</strong> to qualify the examination</li>
+            <li><strong>Chances prior to 2026 Examination are NOT counted</strong> &#x2014; the counter starts fresh from 2026 (unlike ITI/ITO which count from 2010)</li>
+            <li>No age bar for appearing</li>
+            <li>Pass marks: <strong>50% in each paper</strong> (45% for SC/ST/PwBD)</li>
+            <li>Once you pass a paper, exempt from re-appearing in that paper</li>
+            <li>Hindi paper (Paper V) can be passed independently at any time</li>
+          </ul>
+        </div>
+      </div>
+      <div class="cand-note">&#x2139;&#xFE0F; <strong>Important MS-specific rule:</strong> Unlike ITI and ITO exams where chances are counted from 2010, for MS exam the <strong>10-chance count starts fresh from 2026</strong>. Previous attempts under DE Rules 1998 do not count towards the ceiling.</div>
+    </div>
+
+    <!-- PARTIALLY QUALIFIED -->
+    <div class="candidate-panel" id="panel-partial">
+      <div class="cand-grid">
+        <div class="cand-card cc-warn">
+          <div class="cand-card-head">&#x26A0;&#xFE0F; Who is a "Partially Qualified" Candidate?</div>
+          <ul>
+            <li>Someone who attempted the exam under <strong>DE Rules 1998</strong> (old pattern) and has already passed <strong>some but not all papers</strong></li>
+            <li>Specifically: <strong>3 or fewer papers still unqualified</strong> under old pattern (excluding Rajbhasha Hindi)</li>
+            <li>You are <strong>NOT required</strong> to re-appear in already-qualified papers from 1998 rules</li>
+            <li>Old pattern was entirely <strong>subjective / descriptive</strong> &#x2014; note that new matching papers are all objective MCQs</li>
+          </ul>
+        </div>
+        <div class="cand-card cc-warn">
+          <div class="cand-card-head">&#x1F4CB; What Papers to Appear In?</div>
+          <ul>
+            <li>Appear only in the <strong>unqualified papers</strong> &#x2014; matched to new pattern equivalents (see table below)</li>
+            <li>You <strong>must also qualify Paper IV</strong> (IT Applications &amp; Operations) &#x2014; newly introduced with no old equivalent, compulsory for all</li>
+            <li>Hindi paper (Paper V) can be cleared separately at any time</li>
+          </ul>
+        </div>
+      </div>
+
+      <div style="overflow-x:auto;margin-top:.5rem">
+        <table class="paper-match-table">
+          <thead>
+            <tr>
+              <th>Unqualified Paper (Old Pattern 1998 &#x2014; Subjective)</th>
+              <th>Matching Paper to Appear In (New Pattern 2026 &#x2014; Objective)</th>
+              <th>Type</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td class="td-old">Paper 3 &#x2014; Office Procedure (Income-Tax) (Without Books)</td>
+              <td class="td-new">Paper I &#x2014; Income Tax Law and Taxpayer Services (With Books)</td>
+              <td>Objective</td>
+            </tr>
+            <tr>
+              <td class="td-old">Paper 4 &#x2014; Practical Test (With Books)</td>
+              <td class="td-new">Paper II &#x2014; Income Tax Computation (With Books)</td>
+              <td>Objective</td>
+            </tr>
+            <tr>
+              <td class="td-old">Paper 2 &#x2014; Office Procedure (FRs, SRs, GFRs etc.) (With Books)</td>
+              <td class="td-new">Paper III &#x2014; Office Procedure (With Books)</td>
+              <td>Objective</td>
+            </tr>
+            <tr>
+              <td class="td-old">Paper 1 &#x2014; Pr&eacute;cis &amp; Drafting</td>
+              <td class="td-new">Paper IV &#x2014; IT Applications &amp; Operations (Without Books)</td>
+              <td>Objective</td>
+            </tr>
+            <tr>
+              <td class="td-old">Hindi Test</td>
+              <td class="td-new">Paper V &#x2014; Rajbhasha Hindi (Without Books)</td>
+              <td>Subjective</td>
+            </tr>
+            <tr class="highlight-row">
+              <td><em>No equivalent in old pattern</em></td>
+              <td class="td-new"><strong>Paper IV &#x2014; IT Applications &amp; Operations</strong> &#x2014; compulsory for ALL partially qualified candidates regardless of what was qualified under 1998 rules</td>
+              <td>Objective</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="cand-note">&#x26A0;&#xFE0F; <strong>Critical note on Paper mapping:</strong> Old <strong>Paper 1 (Pr&eacute;cis &amp; Drafting)</strong> now maps to <strong>Paper IV (IT Applications &amp; Operations)</strong> &#x2014; these are entirely different subjects. Old Paper 3 (IT Office Procedure) now maps to Paper I which covers IT Act 2025 and Taxpayer Services &#x2014; significantly broader. Also, all old subjective papers now have <strong>objective MCQ equivalents</strong>. Prepare accordingly.</div>
+    </div>
+
+    <!-- SC/ST BETTERMENT -->
+    <div class="candidate-panel" id="panel-scst">
+      <div class="cand-grid">
+        <div class="cand-card cc-old">
+          <div class="cand-card-head">&#x1F535; Who Can Avail Betterment Chance?</div>
+          <ul>
+            <li>SC/ST/PwBD candidates who have <strong>already fully qualified</strong> the examination &#x2014; but under <strong>relaxed standards</strong> (at 45% instead of 50%)</li>
+            <li>They can re-appear to <strong>improve their marks</strong> to general standard (50%+)</li>
+            <li>Candidates who have <strong>NOT fully qualified</strong> are NOT eligible for betterment</li>
+            <li>Candidates who already qualified a paper at <strong>general standard (50%+)</strong> under 1998 rules are <strong>exempt</strong> from betterment for that paper</li>
+          </ul>
+        </div>
+        <div class="cand-card cc-old">
+          <div class="cand-card-head">&#x1F4CB; Papers for Betterment</div>
+          <ul>
+            <li>If qualified under <strong>Old Pattern 1998</strong> with relaxed standard: appear in the matching paper(s) as per the matching table above</li>
+            <li>If qualified under <strong>New Pattern 2026</strong> with relaxed standard: appear in the specific paper(s) of the new pattern</li>
+            <li>Subject to overall ceiling of <strong>10 total chances</strong></li>
+            <li>Must pass at <strong>50%</strong> (general standard under DE Rules 2026)</li>
+          </ul>
+        </div>
+        <div class="cand-card cc-red">
+          <div class="cand-card-head">&#x274C; What Betterment Candidates Cannot Do</div>
+          <ul>
+            <li>Cannot appear in papers already qualified at <strong>general standard (50%+)</strong></li>
+            <li>Cannot exceed the overall 10-chance limit</li>
+            <li>Betterment is only for SC/ST/PwBD &#x2014; general candidates have no betterment provision</li>
+            <li>Cannot avail betterment without having fully qualified the entire examination first</li>
+          </ul>
+        </div>
+      </div>
+      <div class="cand-note">&#x2139;&#xFE0F; <strong>MS-specific betterment note:</strong> Unlike ITI/ITO where the 10-chance count starts from 2010, the MS exam counter starts from 2026. So even if an SC/ST/PwBD candidate had many attempts under 1998 rules, the betterment ceiling is counted only from 2026 onwards.</div>
+    </div>
   </div>
 
   <div class="section-heading fade-up">Paper-wise Detailed Syllabus — DE Rules 2026</div>
@@ -590,6 +780,13 @@ footer{background:var(--dark);padding:2.8rem 0 0;position:relative;overflow:hidd
 </footer>
 
 <script>
+function showPanel(id,style){
+  document.querySelectorAll('.candidate-panel').forEach(p=>p.classList.remove('show'));
+  document.getElementById('panel-'+id).classList.add('show');
+  document.querySelectorAll('.ctab').forEach(t=>t.classList.remove('active-new','active-old','active-partial'));
+  var map={new:'active-new',partial:'active-partial',old:'active-old'};
+  event.currentTarget.classList.add(map[style]||'active-new');
+}
 function toggleCard(h){h.closest('.paper-card').classList.toggle('open')}
 function toggleCompare(id,cb){document.getElementById(id).classList.toggle('show',cb.checked)}
 const obs=new IntersectionObserver(entries=>{entries.forEach(e=>{if(e.isIntersecting)e.target.classList.add('visible')})},{threshold:.1,rootMargin:'0px 0px -30px 0px'});
