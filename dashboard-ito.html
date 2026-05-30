@@ -651,20 +651,20 @@ body{background:var(--bg);color:var(--ink);font-family:'Open Sans',sans-serif;ov
           </div>
           <div class="subject-grid" id="subject-grid">
             <div class="subj-card" data-key="p1" onclick="selectSubjCard('p1')">
-              <h5>Paper 1 — Income Tax Law &amp; Computation</h5>
-              <p>21 Tests · 150 Marks</p>
+              <h5>Paper 1 — IT Law &amp; Taxpayer Services</h5>
+              <p>21 Tests · 100 Marks · With Books</p>
             </div>
             <div class="subj-card" data-key="p2" onclick="selectSubjCard('p2')">
               <h5>Paper 2 — Advance Accountancy</h5>
               <p>21 Tests · 100 Marks</p>
             </div>
             <div class="subj-card" data-key="p3" onclick="selectSubjCard('p3')">
-              <h5>Paper 3 — Allied Laws</h5>
-              <p>21 Tests · 100 Marks</p>
+              <h5>Paper 3 — Allied Laws &amp; Office Administration</h5>
+              <p>21 Tests · 100 Marks · With Books</p>
             </div>
-            <div class="subj-card" data-key="p4" onclick="selectSubjCard('p4')">
-              <h5>Paper 4 — Office Procedure &amp; GK</h5>
-              <p>21 Tests · 100 Marks</p>
+            <div class="subj-card" data-key="p5" onclick="selectSubjCard('p5')">
+              <h5>Paper 4 — IT Applications &amp; Operations</h5>
+              <p>21 Tests · 100 Marks · New Paper</p>
             </div>
           </div>
           <button class="btn-subj-cont" id="subj-cont-btn" disabled onclick="doContinue()">Select a subject to continue</button>
@@ -830,30 +830,30 @@ let selSubjectKey=null;
 let selPlan=null;
 
 const PAPERS=[
-  {key:'p1',name:'Income Tax Law & Computation',hasFree:true,topics:'Income Tax Act 1961, heads of income, TDS, deductions, assessment, total income computation.',type:'Objective',marks:150,tests:[
-    {id:'ito-p1-pyq25',lbl:'PYQ 2025',title:'IT Law & Computation — 2025 PYQ',free:true,pyq:true,qs:100,mins:120},
-    {id:'ito-p1-pyq24',lbl:'PYQ 2024',title:'IT Law & Computation — 2024 PYQ',free:false,pyq:true,qs:100,mins:120},
-    {id:'ito-p1-pyq23',lbl:'PYQ 2023',title:'IT Law & Computation — 2023 PYQ',free:false,pyq:true,qs:100,mins:120},
-    {id:'ito-p1-pyq22',lbl:'PYQ 2022',title:'IT Law & Computation — 2022 PYQ',free:false,pyq:true,qs:100,mins:120},
-    {id:'ito-p1-pyq21',lbl:'PYQ 2021',title:'IT Law & Computation — 2021 PYQ',free:false,pyq:true,qs:100,mins:120},
-    {id:'ito-p1-s06',lbl:'Series 06',title:'IT Law & Computation — Series 06',free:false,pyq:false,qs:100,mins:120},
-    {id:'ito-p1-s07',lbl:'Series 07',title:'IT Law & Computation — Series 07',free:false,pyq:false,qs:100,mins:120},
-    {id:'ito-p1-s08',lbl:'Series 08',title:'IT Law & Computation — Series 08',free:false,pyq:false,qs:100,mins:120},
-    {id:'ito-p1-s09',lbl:'Series 09',title:'IT Law & Computation — Series 09',free:false,pyq:false,qs:100,mins:120},
-    {id:'ito-p1-s10',lbl:'Series 10',title:'IT Law & Computation — Series 10',free:false,pyq:false,qs:100,mins:120},
-    {id:'ito-p1-s11',lbl:'Series 11',title:'IT Law & Computation — Series 11',free:false,pyq:false,qs:100,mins:120},
-    {id:'ito-p1-s12',lbl:'Series 12',title:'IT Law & Computation — Series 12',free:false,pyq:false,qs:100,mins:120},
-    {id:'ito-p1-s13',lbl:'Series 13',title:'IT Law & Computation — Series 13',free:false,pyq:false,qs:100,mins:120},
-    {id:'ito-p1-s14',lbl:'Series 14',title:'IT Law & Computation — Series 14',free:false,pyq:false,qs:100,mins:120},
-    {id:'ito-p1-s15',lbl:'Series 15',title:'IT Law & Computation — Series 15',free:false,pyq:false,qs:100,mins:120},
-    {id:'ito-p1-s16',lbl:'Series 16',title:'IT Law & Computation — Series 16',free:false,pyq:false,qs:100,mins:120},
-    {id:'ito-p1-s17',lbl:'Series 17',title:'IT Law & Computation — Series 17',free:false,pyq:false,qs:100,mins:120},
-    {id:'ito-p1-s18',lbl:'Series 18',title:'IT Law & Computation — Series 18',free:false,pyq:false,qs:100,mins:120},
-    {id:'ito-p1-s19',lbl:'Series 19',title:'IT Law & Computation — Series 19',free:false,pyq:false,qs:100,mins:120},
-    {id:'ito-p1-s20',lbl:'Series 20',title:'IT Law & Computation — Series 20',free:false,pyq:false,qs:100,mins:120},
-    {id:'ito-p1-s21',lbl:'Series 21',title:'IT Law & Computation — Series 21',free:false,pyq:false,qs:100,mins:120},
+  {key:'p1',name:'IT Law & Taxpayer Services',hasFree:true,topics:'IT Act 1961 & 2025, Taxpayer Services, TRACES, 26AS, e-PAN, Prefilled ITR, ASK, SEVOTTAM, CPGRAM, SC case laws by topic.',type:'Objective',marks:100,tests:[
+    {id:'ito-p1-pyq25',lbl:'PYQ 2025',title:'IT Law & Taxpayer Services — 2025 PYQ',free:true,pyq:true,qs:100,mins:120},
+    {id:'ito-p1-pyq24',lbl:'PYQ 2024',title:'IT Law & Taxpayer Services — 2024 PYQ',free:false,pyq:true,qs:100,mins:120},
+    {id:'ito-p1-pyq23',lbl:'PYQ 2023',title:'IT Law & Taxpayer Services — 2023 PYQ',free:false,pyq:true,qs:100,mins:120},
+    {id:'ito-p1-pyq22',lbl:'PYQ 2022',title:'IT Law & Taxpayer Services — 2022 PYQ',free:false,pyq:true,qs:100,mins:120},
+    {id:'ito-p1-pyq21',lbl:'PYQ 2021',title:'IT Law & Taxpayer Services — 2021 PYQ',free:false,pyq:true,qs:100,mins:120},
+    {id:'ito-p1-s06',lbl:'Series 06',title:'IT Law & Taxpayer Services — Series 06',free:false,pyq:false,qs:100,mins:120},
+    {id:'ito-p1-s07',lbl:'Series 07',title:'IT Law & Taxpayer Services — Series 07',free:false,pyq:false,qs:100,mins:120},
+    {id:'ito-p1-s08',lbl:'Series 08',title:'IT Law & Taxpayer Services — Series 08',free:false,pyq:false,qs:100,mins:120},
+    {id:'ito-p1-s09',lbl:'Series 09',title:'IT Law & Taxpayer Services — Series 09',free:false,pyq:false,qs:100,mins:120},
+    {id:'ito-p1-s10',lbl:'Series 10',title:'IT Law & Taxpayer Services — Series 10',free:false,pyq:false,qs:100,mins:120},
+    {id:'ito-p1-s11',lbl:'Series 11',title:'IT Law & Taxpayer Services — Series 11',free:false,pyq:false,qs:100,mins:120},
+    {id:'ito-p1-s12',lbl:'Series 12',title:'IT Law & Taxpayer Services — Series 12',free:false,pyq:false,qs:100,mins:120},
+    {id:'ito-p1-s13',lbl:'Series 13',title:'IT Law & Taxpayer Services — Series 13',free:false,pyq:false,qs:100,mins:120},
+    {id:'ito-p1-s14',lbl:'Series 14',title:'IT Law & Taxpayer Services — Series 14',free:false,pyq:false,qs:100,mins:120},
+    {id:'ito-p1-s15',lbl:'Series 15',title:'IT Law & Taxpayer Services — Series 15',free:false,pyq:false,qs:100,mins:120},
+    {id:'ito-p1-s16',lbl:'Series 16',title:'IT Law & Taxpayer Services — Series 16',free:false,pyq:false,qs:100,mins:120},
+    {id:'ito-p1-s17',lbl:'Series 17',title:'IT Law & Taxpayer Services — Series 17',free:false,pyq:false,qs:100,mins:120},
+    {id:'ito-p1-s18',lbl:'Series 18',title:'IT Law & Taxpayer Services — Series 18',free:false,pyq:false,qs:100,mins:120},
+    {id:'ito-p1-s19',lbl:'Series 19',title:'IT Law & Taxpayer Services — Series 19',free:false,pyq:false,qs:100,mins:120},
+    {id:'ito-p1-s20',lbl:'Series 20',title:'IT Law & Taxpayer Services — Series 20',free:false,pyq:false,qs:100,mins:120},
+    {id:'ito-p1-s21',lbl:'Series 21',title:'IT Law & Taxpayer Services — Series 21',free:false,pyq:false,qs:100,mins:120},
   ]},
-  {key:'p2',name:'Advance Accountancy',hasFree:true,topics:'Double entry, financial statements, company accounts, auditing, cost accounting, partnership.',type:'Objective',marks:100,tests:[
+  {key:'p2',name:'Advance Accountancy',hasFree:true,topics:'Partnership, company accounts, hire purchase, depreciation, 12 Accounting Standards (AS-1,2,7,9,10,11,12,13,16,19,22,29), amalgamation.',type:'Objective',marks:100,tests:[
     {id:'ito-p2-pyq25',lbl:'PYQ 2025',title:'Advance Accountancy — 2025 PYQ',free:true,pyq:true,qs:100,mins:120},
     {id:'ito-p2-pyq24',lbl:'PYQ 2024',title:'Advance Accountancy — 2024 PYQ',free:false,pyq:true,qs:100,mins:120},
     {id:'ito-p2-pyq23',lbl:'PYQ 2023',title:'Advance Accountancy — 2023 PYQ',free:false,pyq:true,qs:100,mins:120},
@@ -876,51 +876,51 @@ const PAPERS=[
     {id:'ito-p2-s20',lbl:'Series 20',title:'Advance Accountancy — Series 20',free:false,pyq:false,qs:100,mins:120},
     {id:'ito-p2-s21',lbl:'Series 21',title:'Advance Accountancy — Series 21',free:false,pyq:false,qs:100,mins:120},
   ]},
-  {key:'p3',name:'Allied Laws',hasFree:true,topics:'Transfer of Property Act, Registration Act, Succession Act, Hindu Law, Trusts Act, RTI Act 2005.',type:'Objective',marks:100,tests:[
-    {id:'ito-p3-pyq25',lbl:'PYQ 2025',title:'Allied Laws — 2025 PYQ',free:true,pyq:true,qs:100,mins:120},
-    {id:'ito-p3-pyq24',lbl:'PYQ 2024',title:'Allied Laws — 2024 PYQ',free:false,pyq:true,qs:100,mins:120},
-    {id:'ito-p3-pyq23',lbl:'PYQ 2023',title:'Allied Laws — 2023 PYQ',free:false,pyq:true,qs:100,mins:120},
-    {id:'ito-p3-pyq22',lbl:'PYQ 2022',title:'Allied Laws — 2022 PYQ',free:false,pyq:true,qs:100,mins:120},
-    {id:'ito-p3-pyq21',lbl:'PYQ 2021',title:'Allied Laws — 2021 PYQ',free:false,pyq:true,qs:100,mins:120},
-    {id:'ito-p3-s06',lbl:'Series 06',title:'Allied Laws — Series 06',free:false,pyq:false,qs:100,mins:120},
-    {id:'ito-p3-s07',lbl:'Series 07',title:'Allied Laws — Series 07',free:false,pyq:false,qs:100,mins:120},
-    {id:'ito-p3-s08',lbl:'Series 08',title:'Allied Laws — Series 08',free:false,pyq:false,qs:100,mins:120},
-    {id:'ito-p3-s09',lbl:'Series 09',title:'Allied Laws — Series 09',free:false,pyq:false,qs:100,mins:120},
-    {id:'ito-p3-s10',lbl:'Series 10',title:'Allied Laws — Series 10',free:false,pyq:false,qs:100,mins:120},
-    {id:'ito-p3-s11',lbl:'Series 11',title:'Allied Laws — Series 11',free:false,pyq:false,qs:100,mins:120},
-    {id:'ito-p3-s12',lbl:'Series 12',title:'Allied Laws — Series 12',free:false,pyq:false,qs:100,mins:120},
-    {id:'ito-p3-s13',lbl:'Series 13',title:'Allied Laws — Series 13',free:false,pyq:false,qs:100,mins:120},
-    {id:'ito-p3-s14',lbl:'Series 14',title:'Allied Laws — Series 14',free:false,pyq:false,qs:100,mins:120},
-    {id:'ito-p3-s15',lbl:'Series 15',title:'Allied Laws — Series 15',free:false,pyq:false,qs:100,mins:120},
-    {id:'ito-p3-s16',lbl:'Series 16',title:'Allied Laws — Series 16',free:false,pyq:false,qs:100,mins:120},
-    {id:'ito-p3-s17',lbl:'Series 17',title:'Allied Laws — Series 17',free:false,pyq:false,qs:100,mins:120},
-    {id:'ito-p3-s18',lbl:'Series 18',title:'Allied Laws — Series 18',free:false,pyq:false,qs:100,mins:120},
-    {id:'ito-p3-s19',lbl:'Series 19',title:'Allied Laws — Series 19',free:false,pyq:false,qs:100,mins:120},
-    {id:'ito-p3-s20',lbl:'Series 20',title:'Allied Laws — Series 20',free:false,pyq:false,qs:100,mins:120},
-    {id:'ito-p3-s21',lbl:'Series 21',title:'Allied Laws — Series 21',free:false,pyq:false,qs:100,mins:120},
+  {key:'p3',name:'Allied Laws & Office Administration',hasFree:true,topics:'Contract Act, TP Act, Hindu Succession Act, Companies Act, LLP Act, RTI Act, FR/SR, CCS Rules, POSH, RPwD Act, GeM, DFPR 2024.',type:'Objective',marks:100,tests:[
+    {id:'ito-p3-pyq25',lbl:'PYQ 2025',title:'Allied Laws & Office Admin — 2025 PYQ',free:true,pyq:true,qs:100,mins:120},
+    {id:'ito-p3-pyq24',lbl:'PYQ 2024',title:'Allied Laws & Office Admin — 2024 PYQ',free:false,pyq:true,qs:100,mins:120},
+    {id:'ito-p3-pyq23',lbl:'PYQ 2023',title:'Allied Laws & Office Admin — 2023 PYQ',free:false,pyq:true,qs:100,mins:120},
+    {id:'ito-p3-pyq22',lbl:'PYQ 2022',title:'Allied Laws & Office Admin — 2022 PYQ',free:false,pyq:true,qs:100,mins:120},
+    {id:'ito-p3-pyq21',lbl:'PYQ 2021',title:'Allied Laws & Office Admin — 2021 PYQ',free:false,pyq:true,qs:100,mins:120},
+    {id:'ito-p3-s06',lbl:'Series 06',title:'Allied Laws & Office Admin — Series 06',free:false,pyq:false,qs:100,mins:120},
+    {id:'ito-p3-s07',lbl:'Series 07',title:'Allied Laws & Office Admin — Series 07',free:false,pyq:false,qs:100,mins:120},
+    {id:'ito-p3-s08',lbl:'Series 08',title:'Allied Laws & Office Admin — Series 08',free:false,pyq:false,qs:100,mins:120},
+    {id:'ito-p3-s09',lbl:'Series 09',title:'Allied Laws & Office Admin — Series 09',free:false,pyq:false,qs:100,mins:120},
+    {id:'ito-p3-s10',lbl:'Series 10',title:'Allied Laws & Office Admin — Series 10',free:false,pyq:false,qs:100,mins:120},
+    {id:'ito-p3-s11',lbl:'Series 11',title:'Allied Laws & Office Admin — Series 11',free:false,pyq:false,qs:100,mins:120},
+    {id:'ito-p3-s12',lbl:'Series 12',title:'Allied Laws & Office Admin — Series 12',free:false,pyq:false,qs:100,mins:120},
+    {id:'ito-p3-s13',lbl:'Series 13',title:'Allied Laws & Office Admin — Series 13',free:false,pyq:false,qs:100,mins:120},
+    {id:'ito-p3-s14',lbl:'Series 14',title:'Allied Laws & Office Admin — Series 14',free:false,pyq:false,qs:100,mins:120},
+    {id:'ito-p3-s15',lbl:'Series 15',title:'Allied Laws & Office Admin — Series 15',free:false,pyq:false,qs:100,mins:120},
+    {id:'ito-p3-s16',lbl:'Series 16',title:'Allied Laws & Office Admin — Series 16',free:false,pyq:false,qs:100,mins:120},
+    {id:'ito-p3-s17',lbl:'Series 17',title:'Allied Laws & Office Admin — Series 17',free:false,pyq:false,qs:100,mins:120},
+    {id:'ito-p3-s18',lbl:'Series 18',title:'Allied Laws & Office Admin — Series 18',free:false,pyq:false,qs:100,mins:120},
+    {id:'ito-p3-s19',lbl:'Series 19',title:'Allied Laws & Office Admin — Series 19',free:false,pyq:false,qs:100,mins:120},
+    {id:'ito-p3-s20',lbl:'Series 20',title:'Allied Laws & Office Admin — Series 20',free:false,pyq:false,qs:100,mins:120},
+    {id:'ito-p3-s21',lbl:'Series 21',title:'Allied Laws & Office Admin — Series 21',free:false,pyq:false,qs:100,mins:120},
   ]},
-  {key:'p4',name:'Office Procedure & GK',hasFree:true,topics:'FR/SR, CCS Conduct Rules, Pension Rules, IT Records Management, RTI Act, leave rules, TA.',type:'Objective',marks:100,tests:[
-    {id:'ito-p4-pyq25',lbl:'PYQ 2025',title:'Office Procedure & GK — 2025 PYQ',free:true,pyq:true,qs:100,mins:120},
-    {id:'ito-p4-pyq24',lbl:'PYQ 2024',title:'Office Procedure & GK — 2024 PYQ',free:false,pyq:true,qs:100,mins:120},
-    {id:'ito-p4-pyq23',lbl:'PYQ 2023',title:'Office Procedure & GK — 2023 PYQ',free:false,pyq:true,qs:100,mins:120},
-    {id:'ito-p4-pyq22',lbl:'PYQ 2022',title:'Office Procedure & GK — 2022 PYQ',free:false,pyq:true,qs:100,mins:120},
-    {id:'ito-p4-pyq21',lbl:'PYQ 2021',title:'Office Procedure & GK — 2021 PYQ',free:false,pyq:true,qs:100,mins:120},
-    {id:'ito-p4-s06',lbl:'Series 06',title:'Office Procedure & GK — Series 06',free:false,pyq:false,qs:100,mins:120},
-    {id:'ito-p4-s07',lbl:'Series 07',title:'Office Procedure & GK — Series 07',free:false,pyq:false,qs:100,mins:120},
-    {id:'ito-p4-s08',lbl:'Series 08',title:'Office Procedure & GK — Series 08',free:false,pyq:false,qs:100,mins:120},
-    {id:'ito-p4-s09',lbl:'Series 09',title:'Office Procedure & GK — Series 09',free:false,pyq:false,qs:100,mins:120},
-    {id:'ito-p4-s10',lbl:'Series 10',title:'Office Procedure & GK — Series 10',free:false,pyq:false,qs:100,mins:120},
-    {id:'ito-p4-s11',lbl:'Series 11',title:'Office Procedure & GK — Series 11',free:false,pyq:false,qs:100,mins:120},
-    {id:'ito-p4-s12',lbl:'Series 12',title:'Office Procedure & GK — Series 12',free:false,pyq:false,qs:100,mins:120},
-    {id:'ito-p4-s13',lbl:'Series 13',title:'Office Procedure & GK — Series 13',free:false,pyq:false,qs:100,mins:120},
-    {id:'ito-p4-s14',lbl:'Series 14',title:'Office Procedure & GK — Series 14',free:false,pyq:false,qs:100,mins:120},
-    {id:'ito-p4-s15',lbl:'Series 15',title:'Office Procedure & GK — Series 15',free:false,pyq:false,qs:100,mins:120},
-    {id:'ito-p4-s16',lbl:'Series 16',title:'Office Procedure & GK — Series 16',free:false,pyq:false,qs:100,mins:120},
-    {id:'ito-p4-s17',lbl:'Series 17',title:'Office Procedure & GK — Series 17',free:false,pyq:false,qs:100,mins:120},
-    {id:'ito-p4-s18',lbl:'Series 18',title:'Office Procedure & GK — Series 18',free:false,pyq:false,qs:100,mins:120},
-    {id:'ito-p4-s19',lbl:'Series 19',title:'Office Procedure & GK — Series 19',free:false,pyq:false,qs:100,mins:120},
-    {id:'ito-p4-s20',lbl:'Series 20',title:'Office Procedure & GK — Series 20',free:false,pyq:false,qs:100,mins:120},
-    {id:'ito-p4-s21',lbl:'Series 21',title:'Office Procedure & GK — Series 21',free:false,pyq:false,qs:100,mins:120},
+  {key:'p5',name:'IT Applications & Operations',hasFree:true,topics:'ITBA modules, Faceless Assessment, HRMS, Insight Portal, ITD Information Security Policy 2020, Digital Forensics (DIALs, disk/mobile/cloud forensics).',type:'Objective',marks:100,tests:[
+    {id:'ito-p5-pyq25',lbl:'PYQ 2025',title:'IT Applications & Operations — 2025 PYQ',free:true,pyq:true,qs:100,mins:120},
+    {id:'ito-p5-pyq24',lbl:'PYQ 2024',title:'IT Applications & Operations — 2024 PYQ',free:false,pyq:true,qs:100,mins:120},
+    {id:'ito-p5-pyq23',lbl:'PYQ 2023',title:'IT Applications & Operations — 2023 PYQ',free:false,pyq:true,qs:100,mins:120},
+    {id:'ito-p5-pyq22',lbl:'PYQ 2022',title:'IT Applications & Operations — 2022 PYQ',free:false,pyq:true,qs:100,mins:120},
+    {id:'ito-p5-pyq21',lbl:'PYQ 2021',title:'IT Applications & Operations — 2021 PYQ',free:false,pyq:true,qs:100,mins:120},
+    {id:'ito-p5-s06',lbl:'Series 06',title:'IT Applications & Operations — Series 06',free:false,pyq:false,qs:100,mins:120},
+    {id:'ito-p5-s07',lbl:'Series 07',title:'IT Applications & Operations — Series 07',free:false,pyq:false,qs:100,mins:120},
+    {id:'ito-p5-s08',lbl:'Series 08',title:'IT Applications & Operations — Series 08',free:false,pyq:false,qs:100,mins:120},
+    {id:'ito-p5-s09',lbl:'Series 09',title:'IT Applications & Operations — Series 09',free:false,pyq:false,qs:100,mins:120},
+    {id:'ito-p5-s10',lbl:'Series 10',title:'IT Applications & Operations — Series 10',free:false,pyq:false,qs:100,mins:120},
+    {id:'ito-p5-s11',lbl:'Series 11',title:'IT Applications & Operations — Series 11',free:false,pyq:false,qs:100,mins:120},
+    {id:'ito-p5-s12',lbl:'Series 12',title:'IT Applications & Operations — Series 12',free:false,pyq:false,qs:100,mins:120},
+    {id:'ito-p5-s13',lbl:'Series 13',title:'IT Applications & Operations — Series 13',free:false,pyq:false,qs:100,mins:120},
+    {id:'ito-p5-s14',lbl:'Series 14',title:'IT Applications & Operations — Series 14',free:false,pyq:false,qs:100,mins:120},
+    {id:'ito-p5-s15',lbl:'Series 15',title:'IT Applications & Operations — Series 15',free:false,pyq:false,qs:100,mins:120},
+    {id:'ito-p5-s16',lbl:'Series 16',title:'IT Applications & Operations — Series 16',free:false,pyq:false,qs:100,mins:120},
+    {id:'ito-p5-s17',lbl:'Series 17',title:'IT Applications & Operations — Series 17',free:false,pyq:false,qs:100,mins:120},
+    {id:'ito-p5-s18',lbl:'Series 18',title:'IT Applications & Operations — Series 18',free:false,pyq:false,qs:100,mins:120},
+    {id:'ito-p5-s19',lbl:'Series 19',title:'IT Applications & Operations — Series 19',free:false,pyq:false,qs:100,mins:120},
+    {id:'ito-p5-s20',lbl:'Series 20',title:'IT Applications & Operations — Series 20',free:false,pyq:false,qs:100,mins:120},
+    {id:'ito-p5-s21',lbl:'Series 21',title:'IT Applications & Operations — Series 21',free:false,pyq:false,qs:100,mins:120},
   ]},
 ];
 
@@ -1010,7 +1010,7 @@ function buildCards(p,i){
       <div class="bp"><svg viewBox="0 0 24 24" fill=none height=11 stroke=rgba(255,255,255,.65) stroke-width=2 width=11><path d="M5 13l4 4L19 7"/></svg>5 Previous Year Question (PYQ) Tests — 2021 to 2025</div>
       <div class="bp"><svg viewBox="0 0 24 24" fill=none height=11 stroke=rgba(255,255,255,.65) stroke-width=2 width=11><path d="M5 13l4 4L19 7"/></svg>16 AI-Leveled Practice Series (Series 06–21)</div>
       <div class="bp"><svg viewBox="0 0 24 24" fill=none height=11 stroke=rgba(255,255,255,.65) stroke-width=2 width=11><path d="M5 13l4 4L19 7"/></svg>Topics: ${p.topics.substring(0,80)}…</div>
-      <div class="bp"><svg viewBox="0 0 24 24" fill=none height=11 stroke=rgba(255,255,255,.65) stroke-width=2 width=11><path d="M5 13l4 4L19 7"/></svg>1/8th negative marking · Timed auto-submit</div>
+      <div class="bp"><svg viewBox="0 0 24 24" fill=none height=11 stroke=rgba(255,255,255,.65) stroke-width=2 width=11><path d="M5 13l4 4L19 7"/></svg>1/4 negative marking · Timed auto-submit</div>
     </div>
   </div>
   <div class="bundle-plans">
@@ -1292,7 +1292,7 @@ async function activate(){
     if(!subjects.includes(selSubjectKey))subjects.push(selSubjectKey);
     saveUser({...user,paid:true,plan:selPlan,purchased_subjects:subjects});
   }else if(selPlan==='bunch-ito'){
-    saveUser({...user,paid:true,plan:selPlan,purchased_subjects:['p1','p2','p3','p4']});
+    saveUser({...user,paid:true,plan:selPlan,purchased_subjects:['p1','p2','p3','p5']});
   }
 
   const record={
@@ -1387,7 +1387,7 @@ window.addEventListener('DOMContentLoaded',async()=>{
           const updated={
             ...user,paid:true,
             plan:hasBunch?'bunch-ito':'single-ito',
-            purchased_subjects:hasBunch?['p1','p2','p3','p4']:subjects
+            purchased_subjects:hasBunch?['p1','p2','p3','p5']:subjects
           };
           saveUser(updated);
         }
