@@ -601,7 +601,7 @@ body{background:var(--bg);color:var(--ink);font-family:'Open Sans',sans-serif;ov
   <div class="hero-inner">
     <div>
       <div class="hero-title"><span style="font-family:'Open Sans',sans-serif;font-weight:800;letter-spacing:.01em">ITO</span> <em>Exam Dashboard</em></div>
-      <div class="hero-sub-text">Income Tax Officer — 4 Papers, 84 Tests</div>
+      <div class="hero-sub-text">Income Tax Officer — 4 Papers, 80 Tests</div>
     </div>
   </div>
 </section>
@@ -652,19 +652,19 @@ body{background:var(--bg);color:var(--ink);font-family:'Open Sans',sans-serif;ov
           <div class="subject-grid" id="subject-grid">
             <div class="subj-card" data-key="p1" onclick="selectSubjCard('p1')">
               <h5>Paper 1 — IT Law &amp; Taxpayer Services</h5>
-              <p>21 Tests · 100 Marks · With Books</p>
+              <p>20 Tests · 100 Marks · With Books</p>
             </div>
             <div class="subj-card" data-key="p2" onclick="selectSubjCard('p2')">
               <h5>Paper 2 — Advance Accountancy</h5>
-              <p>21 Tests · 100 Marks</p>
+              <p>20 Tests · 100 Marks</p>
             </div>
             <div class="subj-card" data-key="p3" onclick="selectSubjCard('p3')">
               <h5>Paper 3 — Allied Laws &amp; Office Administration</h5>
-              <p>21 Tests · 100 Marks · With Books</p>
+              <p>20 Tests · 100 Marks · With Books</p>
             </div>
             <div class="subj-card" data-key="p5" onclick="selectSubjCard('p5')">
               <h5>Paper 4 — IT Applications &amp; Operations</h5>
-              <p>21 Tests · 100 Marks · New Paper</p>
+              <p>20 Tests · 100 Marks · New Paper</p>
             </div>
           </div>
           <button class="btn-subj-cont" id="subj-cont-btn" disabled onclick="doContinue()">Select a subject to continue</button>
@@ -821,8 +821,8 @@ function nextUpiId(){_upiIdx=(_upiIdx+1)%UPI_POOL.length;return UPI_POOL[_upiIdx
 
 /* ── Plans ── */
 const PLANS={
-  'single-ito':{label:'ITO Single Subject',amount:355,desc:'All 21 tests for 1 paper · Best for targeted prep',requiresPaperSelect:true},
-  'bunch-ito':{label:'ITO Complete Bunch (All 4 Papers)',amount:955,desc:'All 84 tests — save ₹465 vs buying individually',best:true,requiresPaperSelect:false}
+  'single-ito':{label:'ITO Single Subject',amount:355,desc:'All 20 tests for 1 paper · Best for targeted prep',requiresPaperSelect:true},
+  'bunch-ito':{label:'ITO Complete Bunch (All 4 Papers)',amount:955,desc:'All 80 tests — save ₹465 vs buying individually',best:true,requiresPaperSelect:false}
 };
 
 /* ── Track selected paper for single-subject purchase ── */
@@ -851,7 +851,6 @@ const PAPERS=[
     {id:'ito-p1-s18',lbl:'Series 18',title:'IT Law & Taxpayer Services — Series 18',free:false,pyq:false,qs:100,mins:120},
     {id:'ito-p1-s19',lbl:'Series 19',title:'IT Law & Taxpayer Services — Series 19',free:false,pyq:false,qs:100,mins:120},
     {id:'ito-p1-s20',lbl:'Series 20',title:'IT Law & Taxpayer Services — Series 20',free:false,pyq:false,qs:100,mins:120},
-    {id:'ito-p1-s21',lbl:'Series 21',title:'IT Law & Taxpayer Services — Series 21',free:false,pyq:false,qs:100,mins:120},
   ]},
   {key:'p2',name:'Advance Accountancy',hasFree:true,topics:'Partnership, company accounts, hire purchase, depreciation, 12 Accounting Standards (AS-1,2,7,9,10,11,12,13,16,19,22,29), amalgamation.',type:'Objective',marks:100,tests:[
     {id:'ito-p2-pyq25',lbl:'PYQ 2025',title:'Advance Accountancy — 2025 PYQ',free:true,pyq:true,qs:100,mins:120},
@@ -874,7 +873,6 @@ const PAPERS=[
     {id:'ito-p2-s18',lbl:'Series 18',title:'Advance Accountancy — Series 18',free:false,pyq:false,qs:100,mins:120},
     {id:'ito-p2-s19',lbl:'Series 19',title:'Advance Accountancy — Series 19',free:false,pyq:false,qs:100,mins:120},
     {id:'ito-p2-s20',lbl:'Series 20',title:'Advance Accountancy — Series 20',free:false,pyq:false,qs:100,mins:120},
-    {id:'ito-p2-s21',lbl:'Series 21',title:'Advance Accountancy — Series 21',free:false,pyq:false,qs:100,mins:120},
   ]},
   {key:'p3',name:'Allied Laws & Office Administration',hasFree:true,topics:'Contract Act, TP Act, Hindu Succession Act, Companies Act, LLP Act, RTI Act, FR/SR, CCS Rules, POSH, RPwD Act, GeM, DFPR 2024.',type:'Objective',marks:100,tests:[
     {id:'ito-p3-pyq25',lbl:'PYQ 2025',title:'Allied Laws & Office Admin — 2025 PYQ',free:true,pyq:true,qs:100,mins:120},
@@ -897,7 +895,6 @@ const PAPERS=[
     {id:'ito-p3-s18',lbl:'Series 18',title:'Allied Laws & Office Admin — Series 18',free:false,pyq:false,qs:100,mins:120},
     {id:'ito-p3-s19',lbl:'Series 19',title:'Allied Laws & Office Admin — Series 19',free:false,pyq:false,qs:100,mins:120},
     {id:'ito-p3-s20',lbl:'Series 20',title:'Allied Laws & Office Admin — Series 20',free:false,pyq:false,qs:100,mins:120},
-    {id:'ito-p3-s21',lbl:'Series 21',title:'Allied Laws & Office Admin — Series 21',free:false,pyq:false,qs:100,mins:120},
   ]},
   {key:'p5',name:'IT Applications & Operations',hasFree:true,topics:'ITBA modules, Faceless Assessment, HRMS, Insight Portal, ITD Information Security Policy 2020, Digital Forensics (DIALs, disk/mobile/cloud forensics).',type:'Objective',marks:100,tests:[
     {id:'ito-p5-pyq25',lbl:'PYQ 2025',title:'IT Applications & Operations — 2025 PYQ',free:true,pyq:true,qs:100,mins:120},
@@ -920,7 +917,6 @@ const PAPERS=[
     {id:'ito-p5-s18',lbl:'Series 18',title:'IT Applications & Operations — Series 18',free:false,pyq:false,qs:100,mins:120},
     {id:'ito-p5-s19',lbl:'Series 19',title:'IT Applications & Operations — Series 19',free:false,pyq:false,qs:100,mins:120},
     {id:'ito-p5-s20',lbl:'Series 20',title:'IT Applications & Operations — Series 20',free:false,pyq:false,qs:100,mins:120},
-    {id:'ito-p5-s21',lbl:'Series 21',title:'IT Applications & Operations — Series 21',free:false,pyq:false,qs:100,mins:120},
   ]},
 ];
 
@@ -1005,10 +1001,10 @@ function buildCards(p,i){
   <div class="bundle-in" style="position:relative;z-index:2;"><div>
     <div class="bundle-badge">⭐ Best Value</div>
     <div class="bundle-title">ITO Paper ${i+1} — ${p.name}</div>
-    <div class="bundle-sub">21 Tests · 5 PYQs + 16 AI-Crafted Series · ${p.marks} Marks · Objective</div>
+    <div class="bundle-sub">20 Tests · 5 PYQs + 15 AI-Crafted Series · ${p.marks} Marks · Objective</div>
     <div class="bundle-papers">
       <div class="bp"><svg viewBox="0 0 24 24" fill=none height=11 stroke=rgba(255,255,255,.65) stroke-width=2 width=11><path d="M5 13l4 4L19 7"/></svg>5 Previous Year Question (PYQ) Tests — 2021 to 2025</div>
-      <div class="bp"><svg viewBox="0 0 24 24" fill=none height=11 stroke=rgba(255,255,255,.65) stroke-width=2 width=11><path d="M5 13l4 4L19 7"/></svg>16 AI-Leveled Practice Series (Series 06–21)</div>
+      <div class="bp"><svg viewBox="0 0 24 24" fill=none height=11 stroke=rgba(255,255,255,.65) stroke-width=2 width=11><path d="M5 13l4 4L19 7"/></svg>15 AI-Leveled Practice Series (Series 06–20)</div>
       <div class="bp"><svg viewBox="0 0 24 24" fill=none height=11 stroke=rgba(255,255,255,.65) stroke-width=2 width=11><path d="M5 13l4 4L19 7"/></svg>Topics: ${p.topics.substring(0,80)}…</div>
       <div class="bp"><svg viewBox="0 0 24 24" fill=none height=11 stroke=rgba(255,255,255,.65) stroke-width=2 width=11><path d="M5 13l4 4L19 7"/></svg>1/4 negative marking · Timed auto-submit</div>
     </div>
@@ -1016,13 +1012,13 @@ function buildCards(p,i){
   <div class="bundle-plans">
     <div class="bpc" data-plan="single-ito" onclick="selectBundlePlan('single-ito')">
       <div class="bpc-radio"><div class="bpc-radio-dot"></div></div>
-      <div class="bpc-info"><h4>ITO Single Subject</h4><p>All 21 tests for 1 paper · Best for targeted prep</p></div>
+      <div class="bpc-info"><h4>ITO Single Subject</h4><p>All 20 tests for 1 paper · Best for targeted prep</p></div>
       <div class="bpc-price">₹355</div>
     </div>
     <div class="bpc bpc-best" data-plan="bunch-ito" onclick="selectBundlePlan('bunch-ito')">
       <div class="bpc-badge">Best Value</div>
       <div class="bpc-radio"><div class="bpc-radio-dot"></div></div>
-      <div class="bpc-info"><h4>ITO Complete Bunch (All 4 Papers)</h4><p>All 84 tests — save ₹465 vs buying individually</p></div>
+      <div class="bpc-info"><h4>ITO Complete Bunch (All 4 Papers)</h4><p>All 80 tests — save ₹465 vs buying individually</p></div>
       <div class="bpc-price">₹955</div>
     </div>
     <button class="btn-bpc-go" id="btn-bpc-go-${i}" onclick="openModalFromBundle()" disabled>Choose Your Plan →</button>
@@ -1036,7 +1032,7 @@ function buildCards(p,i){
       </div>
     </div>
     ${!isPaidForPaper(p.key)?bundleHTML:''}
-    <div class="papers-lbl">All 21 Tests — ${p.tests.filter(t=>t.pyq).length} PYQs + ${p.tests.filter(t=>!t.pyq).length} Series</div>
+    <div class="papers-lbl">All 20 Tests — ${p.tests.filter(t=>t.pyq).length} PYQs + ${p.tests.filter(t=>!t.pyq).length} Series</div>
     <div class="tests-grid" id="grid-${p.key}"></div>`;
 
   document.getElementById('panels').appendChild(div);
