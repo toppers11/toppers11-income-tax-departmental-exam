@@ -465,7 +465,7 @@ body{background:var(--bg);color:var(--ink);font-family:'Open Sans',sans-serif;ov
   <div class="hero-inner">
     <div>
       <div class="hero-title"><span style="font-family:'Open Sans',sans-serif;font-weight:800;letter-spacing:.01em">MS</span> <em>Exam Dashboard</em></div>
-      <div class="hero-sub-text">Ministerial Staff — 5 Papers, 105 Objective MCQ Tests · DE Rules 2026</div>
+      <div class="hero-sub-text">Ministerial Staff — 4 Papers, 80 Objective MCQ Tests · DE Rules 2026</div>
     </div>
   </div>
 </section>
@@ -634,11 +634,11 @@ let selPlan=null;
 
 const PAPERS=[
   {key:'p1',name:'IT Law & Taxpayer Services',hasFree:true,topics:'IT Act 1961 & 2025, Basis of Charge, Deductions, Set-off of losses, Return of income, Appeals, Taxpayer Charter, TRACES, 26AS, e-PAN, Prefilled ITR, ASK, SEVOTTAM, CPGRAM, e-Nivaran.',type:'Objective MCQ',marks:100,tests:[
-    {id:'ms-p1-pyq26',lbl:'PYQ 2026',title:'IT Law & Taxpayer Services — 2026 PYQ',free:true,pyq:true,qs:100,mins:120},
-    {id:'ms-p1-pyq25',lbl:'PYQ 2025',title:'IT Law & Taxpayer Services — 2025 PYQ',free:false,pyq:true,qs:100,mins:120},
-    {id:'ms-p1-pyq24',lbl:'PYQ 2024',title:'IT Law & Taxpayer Services — 2024 PYQ',free:false,pyq:true,qs:100,mins:120},
-    {id:'ms-p1-pyq23',lbl:'PYQ 2023',title:'IT Law & Taxpayer Services — 2023 PYQ',free:false,pyq:true,qs:100,mins:120},
-    {id:'ms-p1-pyq22',lbl:'PYQ 2022',title:'IT Law & Taxpayer Services — 2022 PYQ',free:false,pyq:true,qs:100,mins:120},
+    {id:'ms-p1-s01',lbl:'Series 01',title:'IT Law & Taxpayer Services — Series 01',free:true,pyq:false,qs:100,mins:120},
+    {id:'ms-p1-s02',lbl:'Series 02',title:'IT Law & Taxpayer Services — Series 02',free:false,pyq:false,qs:100,mins:120},
+    {id:'ms-p1-s03',lbl:'Series 03',title:'IT Law & Taxpayer Services — Series 03',free:false,pyq:false,qs:100,mins:120},
+    {id:'ms-p1-s04',lbl:'Series 04',title:'IT Law & Taxpayer Services — Series 04',free:false,pyq:false,qs:100,mins:120},
+    {id:'ms-p1-s05',lbl:'Series 05',title:'IT Law & Taxpayer Services — Series 05',free:false,pyq:false,qs:100,mins:120},
     {id:'ms-p1-s06',lbl:'Series 06',title:'IT Law & Taxpayer Services — Series 06',free:false,pyq:false,qs:100,mins:120},
     {id:'ms-p1-s07',lbl:'Series 07',title:'IT Law & Taxpayer Services — Series 07',free:false,pyq:false,qs:100,mins:120},
     {id:'ms-p1-s08',lbl:'Series 08',title:'IT Law & Taxpayer Services — Series 08',free:false,pyq:false,qs:100,mins:120},
@@ -650,6 +650,10 @@ const PAPERS=[
     {id:'ms-p1-s14',lbl:'Series 14',title:'IT Law & Taxpayer Services — Series 14',free:false,pyq:false,qs:100,mins:120},
     {id:'ms-p1-s15',lbl:'Series 15',title:'IT Law & Taxpayer Services — Series 15',free:false,pyq:false,qs:100,mins:120},
     {id:'ms-p1-s16',lbl:'Series 16',title:'IT Law & Taxpayer Services — Series 16',free:false,pyq:false,qs:100,mins:120},
+    {id:'ms-p1-s17',lbl:'Series 17',title:'IT Law & Taxpayer Services — Series 17',free:false,pyq:false,qs:100,mins:120},
+    {id:'ms-p1-s18',lbl:'Series 18',title:'IT Law & Taxpayer Services — Series 18',free:false,pyq:false,qs:100,mins:120},
+    {id:'ms-p1-s19',lbl:'Series 19',title:'IT Law & Taxpayer Services — Series 19',free:false,pyq:false,qs:100,mins:120},
+    {id:'ms-p1-s20',lbl:'Series 20',title:'IT Law & Taxpayer Services — Series 20',free:false,pyq:false,qs:100,mins:120},
   ]},
   {key:'p2',name:'Income Tax Computation',hasFree:true,topics:'Computation under all heads of income, Set-off & carry forward, Exemptions & deductions, Advance tax, TDS, Self-assessment tax, Tax for individual/firm/company, Interests, Depreciation (SLM & WDV), Demand/Refund on OGE/rectification orders.',type:'Objective MCQ',marks:100,tests:[
     {id:'ms-p2-pyq26',lbl:'PYQ 2026',title:'IT Computation — 2026 PYQ',free:true,pyq:true,qs:100,mins:120},
@@ -704,24 +708,6 @@ const PAPERS=[
     {id:'ms-p4-s14',lbl:'Series 14',title:'IT Applications & Operations — Series 14',free:false,pyq:false,qs:100,mins:120},
     {id:'ms-p4-s15',lbl:'Series 15',title:'IT Applications & Operations — Series 15',free:false,pyq:false,qs:100,mins:120},
     {id:'ms-p4-s16',lbl:'Series 16',title:'IT Applications & Operations — Series 16',free:false,pyq:false,qs:100,mins:120},
-  ]},
-  {key:'p5',name:'Rajbhasha Hindi',hasFree:true,topics:'Part A: Hindi to English translation (20 marks), Part B: English to Hindi translation (20 marks), Part C: Reading comprehension — official passages (20 marks), Part D: Official terminology & correct usage (20 marks), Part E: Brief official writing in Hindi (20 marks).',type:'Subjective',marks:100,tests:[
-    {id:'ms-p5-pyq26',lbl:'PYQ 2026',title:'Rajbhasha Hindi — 2026 PYQ',free:true,pyq:true,qs:5,mins:120},
-    {id:'ms-p5-pyq25',lbl:'PYQ 2025',title:'Rajbhasha Hindi — 2025 PYQ',free:false,pyq:true,qs:5,mins:120},
-    {id:'ms-p5-pyq24',lbl:'PYQ 2024',title:'Rajbhasha Hindi — 2024 PYQ',free:false,pyq:true,qs:5,mins:120},
-    {id:'ms-p5-pyq23',lbl:'PYQ 2023',title:'Rajbhasha Hindi — 2023 PYQ',free:false,pyq:true,qs:5,mins:120},
-    {id:'ms-p5-pyq22',lbl:'PYQ 2022',title:'Rajbhasha Hindi — 2022 PYQ',free:false,pyq:true,qs:5,mins:120},
-    {id:'ms-p5-s06',lbl:'Series 06',title:'Rajbhasha Hindi — Series 06',free:false,pyq:false,qs:5,mins:120},
-    {id:'ms-p5-s07',lbl:'Series 07',title:'Rajbhasha Hindi — Series 07',free:false,pyq:false,qs:5,mins:120},
-    {id:'ms-p5-s08',lbl:'Series 08',title:'Rajbhasha Hindi — Series 08',free:false,pyq:false,qs:5,mins:120},
-    {id:'ms-p5-s09',lbl:'Series 09',title:'Rajbhasha Hindi — Series 09',free:false,pyq:false,qs:5,mins:120},
-    {id:'ms-p5-s10',lbl:'Series 10',title:'Rajbhasha Hindi — Series 10',free:false,pyq:false,qs:5,mins:120},
-    {id:'ms-p5-s11',lbl:'Series 11',title:'Rajbhasha Hindi — Series 11',free:false,pyq:false,qs:5,mins:120},
-    {id:'ms-p5-s12',lbl:'Series 12',title:'Rajbhasha Hindi — Series 12',free:false,pyq:false,qs:5,mins:120},
-    {id:'ms-p5-s13',lbl:'Series 13',title:'Rajbhasha Hindi — Series 13',free:false,pyq:false,qs:5,mins:120},
-    {id:'ms-p5-s14',lbl:'Series 14',title:'Rajbhasha Hindi — Series 14',free:false,pyq:false,qs:5,mins:120},
-    {id:'ms-p5-s15',lbl:'Series 15',title:'Rajbhasha Hindi — Series 15',free:false,pyq:false,qs:5,mins:120},
-    {id:'ms-p5-s16',lbl:'Series 16',title:'Rajbhasha Hindi — Series 16',free:false,pyq:false,qs:5,mins:120},
   ]},
 ];
 
