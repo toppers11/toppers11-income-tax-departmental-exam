@@ -465,7 +465,7 @@ body{background:var(--bg);color:var(--ink);font-family:'Open Sans',sans-serif;ov
   <div class="hero-inner">
     <div>
       <div class="hero-title"><span style="font-family:'Open Sans',sans-serif;font-weight:800;letter-spacing:.01em">MS</span> <em>Exam Dashboard</em></div>
-      <div class="hero-sub-text">Ministerial Staff — 4 Papers, 84 Subjective Tests</div>
+      <div class="hero-sub-text">Ministerial Staff — 5 Papers, 105 Objective MCQ Tests · DE Rules 2026</div>
     </div>
   </div>
 </section>
@@ -483,7 +483,7 @@ body{background:var(--bg);color:var(--ink);font-family:'Open Sans',sans-serif;ov
           Exam Rule
         </div>
         <div class="rn-title">3 Attempts Per Assessment</div>
-        <div class="rn-msg">You have <strong>3 total attempts</strong> for each test in this series. Once all 3 attempts are used, the test will be marked <strong>Completed</strong>. Each paper is <strong>Subjective / Descriptive</strong> — answers are evaluated on structure and content.</div>
+        <div class="rn-msg">You have <strong>3 total attempts</strong> for each test in this series. Once all 3 attempts are used, the test will be marked <strong>Completed</strong>. Papers I–IV are <strong>Objective MCQ</strong> (1/4 negative marking). Paper V (Hindi) is <strong>Subjective</strong>. Pass mark is <strong>50%</strong> in each paper (45% for SC/ST/PwBD).</div>
       </div>
       <div class="rn-chips">
         <div class="rn-chip">
@@ -503,7 +503,7 @@ body{background:var(--bg);color:var(--ink);font-family:'Open Sans',sans-serif;ov
 <!-- PURCHASE MODAL -->
 <div class="overlay" id="overlay" role="dialog" aria-modal="true" aria-labelledby="modal-title" onclick="overlayClick(event)">
   <div class="modal">
-    <div class="mh"><h3 id="modal-title">Unlock MS Tests</h3><button class="btn-x" aria-label="Close" onclick="closeModal()">✕</button></div>
+    <div class="mh"><h3 id="modal-title">Unlock MS Tests — DE Rules 2026</h3><button class="btn-x" aria-label="Close" onclick="closeModal()">✕</button></div>
     <div class="mb">
       <div id="step1">
         <p style="font-size:.77rem;color:var(--muted);margin-bottom:.85rem;">Choose your plan:</p>
@@ -626,104 +626,102 @@ function getUpiId(){return UPI_POOL[_upiIdx];}
 function nextUpiId(){_upiIdx=(_upiIdx+1)%UPI_POOL.length;return UPI_POOL[_upiIdx];}
 
 const PLANS={
-  'single-ms':{label:'MS Single Paper',amount:355,desc:'All 21 tests for 1 subject · Best for targeted prep',requiresPaperSelect:false},
-  'bunch-ms':{label:'MS Complete (All 4 Papers)',amount:955,desc:'All 84 tests — save ₹465 vs buying individually',best:true,requiresPaperSelect:false}
+  'single-ms':{label:'MS Single Paper (1 of 5)',amount:195,desc:'All 21 tests for 1 subject · Best for targeted prep',requiresPaperSelect:false},
+  'bunch-ms':{label:'MS Complete — All 5 Papers',amount:655,desc:'All 105 tests — save ₹320 vs buying individually',best:true,requiresPaperSelect:false}
 };
 
 let selPlan=null;
 
 const PAPERS=[
-  {key:'p1',name:'Précis & Draft Writing',hasFree:true,topics:'Précis writing, essay drafting, letter writing, comprehension passages, note-making, report writing.',type:'Subjective',marks:100,tests:[
-    {id:'ms-p1-pyq25',lbl:'PYQ 2025',title:'Précis & Draft Writing — 2025 PYQ',free:true,pyq:true,qs:5,mins:120},
-    {id:'ms-p1-pyq24',lbl:'PYQ 2024',title:'Précis & Draft Writing — 2024 PYQ',free:false,pyq:true,qs:5,mins:120},
-    {id:'ms-p1-pyq23',lbl:'PYQ 2023',title:'Précis & Draft Writing — 2023 PYQ',free:false,pyq:true,qs:5,mins:120},
-    {id:'ms-p1-pyq22',lbl:'PYQ 2022',title:'Précis & Draft Writing — 2022 PYQ',free:false,pyq:true,qs:5,mins:120},
-    {id:'ms-p1-pyq21',lbl:'PYQ 2021',title:'Précis & Draft Writing — 2021 PYQ',free:false,pyq:true,qs:5,mins:120},
-    {id:'ms-p1-s06',lbl:'Series 06',title:'Précis & Draft Writing — Series 06',free:false,pyq:false,qs:5,mins:120},
-    {id:'ms-p1-s07',lbl:'Series 07',title:'Précis & Draft Writing — Series 07',free:false,pyq:false,qs:5,mins:120},
-    {id:'ms-p1-s08',lbl:'Series 08',title:'Précis & Draft Writing — Series 08',free:false,pyq:false,qs:5,mins:120},
-    {id:'ms-p1-s09',lbl:'Series 09',title:'Précis & Draft Writing — Series 09',free:false,pyq:false,qs:5,mins:120},
-    {id:'ms-p1-s10',lbl:'Series 10',title:'Précis & Draft Writing — Series 10',free:false,pyq:false,qs:5,mins:120},
-    {id:'ms-p1-s11',lbl:'Series 11',title:'Précis & Draft Writing — Series 11',free:false,pyq:false,qs:5,mins:120},
-    {id:'ms-p1-s12',lbl:'Series 12',title:'Précis & Draft Writing — Series 12',free:false,pyq:false,qs:5,mins:120},
-    {id:'ms-p1-s13',lbl:'Series 13',title:'Précis & Draft Writing — Series 13',free:false,pyq:false,qs:5,mins:120},
-    {id:'ms-p1-s14',lbl:'Series 14',title:'Précis & Draft Writing — Series 14',free:false,pyq:false,qs:5,mins:120},
-    {id:'ms-p1-s15',lbl:'Series 15',title:'Précis & Draft Writing — Series 15',free:false,pyq:false,qs:5,mins:120},
-    {id:'ms-p1-s16',lbl:'Series 16',title:'Précis & Draft Writing — Series 16',free:false,pyq:false,qs:5,mins:120},
-    {id:'ms-p1-s17',lbl:'Series 17',title:'Précis & Draft Writing — Series 17',free:false,pyq:false,qs:5,mins:120},
-    {id:'ms-p1-s18',lbl:'Series 18',title:'Précis & Draft Writing — Series 18',free:false,pyq:false,qs:5,mins:120},
-    {id:'ms-p1-s19',lbl:'Series 19',title:'Précis & Draft Writing — Series 19',free:false,pyq:false,qs:5,mins:120},
-    {id:'ms-p1-s20',lbl:'Series 20',title:'Précis & Draft Writing — Series 20',free:false,pyq:false,qs:5,mins:120},
-    {id:'ms-p1-s21',lbl:'Series 21',title:'Précis & Draft Writing — Series 21',free:false,pyq:false,qs:5,mins:120},
+  {key:'p1',name:'IT Law & Taxpayer Services',hasFree:true,topics:'IT Act 1961 & 2025, Basis of Charge, Deductions, Set-off of losses, Return of income, Appeals, Taxpayer Charter, TRACES, 26AS, e-PAN, Prefilled ITR, ASK, SEVOTTAM, CPGRAM, e-Nivaran.',type:'Objective MCQ',marks:100,tests:[
+    {id:'ms-p1-pyq26',lbl:'PYQ 2026',title:'IT Law & Taxpayer Services — 2026 PYQ',free:true,pyq:true,qs:100,mins:120},
+    {id:'ms-p1-pyq25',lbl:'PYQ 2025',title:'IT Law & Taxpayer Services — 2025 PYQ',free:false,pyq:true,qs:100,mins:120},
+    {id:'ms-p1-pyq24',lbl:'PYQ 2024',title:'IT Law & Taxpayer Services — 2024 PYQ',free:false,pyq:true,qs:100,mins:120},
+    {id:'ms-p1-pyq23',lbl:'PYQ 2023',title:'IT Law & Taxpayer Services — 2023 PYQ',free:false,pyq:true,qs:100,mins:120},
+    {id:'ms-p1-pyq22',lbl:'PYQ 2022',title:'IT Law & Taxpayer Services — 2022 PYQ',free:false,pyq:true,qs:100,mins:120},
+    {id:'ms-p1-s06',lbl:'Series 06',title:'IT Law & Taxpayer Services — Series 06',free:false,pyq:false,qs:100,mins:120},
+    {id:'ms-p1-s07',lbl:'Series 07',title:'IT Law & Taxpayer Services — Series 07',free:false,pyq:false,qs:100,mins:120},
+    {id:'ms-p1-s08',lbl:'Series 08',title:'IT Law & Taxpayer Services — Series 08',free:false,pyq:false,qs:100,mins:120},
+    {id:'ms-p1-s09',lbl:'Series 09',title:'IT Law & Taxpayer Services — Series 09',free:false,pyq:false,qs:100,mins:120},
+    {id:'ms-p1-s10',lbl:'Series 10',title:'IT Law & Taxpayer Services — Series 10',free:false,pyq:false,qs:100,mins:120},
+    {id:'ms-p1-s11',lbl:'Series 11',title:'IT Law & Taxpayer Services — Series 11',free:false,pyq:false,qs:100,mins:120},
+    {id:'ms-p1-s12',lbl:'Series 12',title:'IT Law & Taxpayer Services — Series 12',free:false,pyq:false,qs:100,mins:120},
+    {id:'ms-p1-s13',lbl:'Series 13',title:'IT Law & Taxpayer Services — Series 13',free:false,pyq:false,qs:100,mins:120},
+    {id:'ms-p1-s14',lbl:'Series 14',title:'IT Law & Taxpayer Services — Series 14',free:false,pyq:false,qs:100,mins:120},
+    {id:'ms-p1-s15',lbl:'Series 15',title:'IT Law & Taxpayer Services — Series 15',free:false,pyq:false,qs:100,mins:120},
+    {id:'ms-p1-s16',lbl:'Series 16',title:'IT Law & Taxpayer Services — Series 16',free:false,pyq:false,qs:100,mins:120},
   ]},
-  {key:'p2',name:'Office Procedure (With Books)',hasFree:true,topics:'FR/SR, CCS Conduct Rules, Leave Rules, TA Rules, Pension Rules, DPC, RTI Act, office noting & drafting.',type:'Subjective',marks:100,tests:[
-    {id:'ms-p2-pyq25',lbl:'PYQ 2025',title:'Office Procedure — 2025 PYQ',free:true,pyq:true,qs:5,mins:120},
-    {id:'ms-p2-pyq24',lbl:'PYQ 2024',title:'Office Procedure — 2024 PYQ',free:false,pyq:true,qs:5,mins:120},
-    {id:'ms-p2-pyq23',lbl:'PYQ 2023',title:'Office Procedure — 2023 PYQ',free:false,pyq:true,qs:5,mins:120},
-    {id:'ms-p2-pyq22',lbl:'PYQ 2022',title:'Office Procedure — 2022 PYQ',free:false,pyq:true,qs:5,mins:120},
-    {id:'ms-p2-pyq21',lbl:'PYQ 2021',title:'Office Procedure — 2021 PYQ',free:false,pyq:true,qs:5,mins:120},
-    {id:'ms-p2-s06',lbl:'Series 06',title:'Office Procedure — Series 06',free:false,pyq:false,qs:5,mins:120},
-    {id:'ms-p2-s07',lbl:'Series 07',title:'Office Procedure — Series 07',free:false,pyq:false,qs:5,mins:120},
-    {id:'ms-p2-s08',lbl:'Series 08',title:'Office Procedure — Series 08',free:false,pyq:false,qs:5,mins:120},
-    {id:'ms-p2-s09',lbl:'Series 09',title:'Office Procedure — Series 09',free:false,pyq:false,qs:5,mins:120},
-    {id:'ms-p2-s10',lbl:'Series 10',title:'Office Procedure — Series 10',free:false,pyq:false,qs:5,mins:120},
-    {id:'ms-p2-s11',lbl:'Series 11',title:'Office Procedure — Series 11',free:false,pyq:false,qs:5,mins:120},
-    {id:'ms-p2-s12',lbl:'Series 12',title:'Office Procedure — Series 12',free:false,pyq:false,qs:5,mins:120},
-    {id:'ms-p2-s13',lbl:'Series 13',title:'Office Procedure — Series 13',free:false,pyq:false,qs:5,mins:120},
-    {id:'ms-p2-s14',lbl:'Series 14',title:'Office Procedure — Series 14',free:false,pyq:false,qs:5,mins:120},
-    {id:'ms-p2-s15',lbl:'Series 15',title:'Office Procedure — Series 15',free:false,pyq:false,qs:5,mins:120},
-    {id:'ms-p2-s16',lbl:'Series 16',title:'Office Procedure — Series 16',free:false,pyq:false,qs:5,mins:120},
-    {id:'ms-p2-s17',lbl:'Series 17',title:'Office Procedure — Series 17',free:false,pyq:false,qs:5,mins:120},
-    {id:'ms-p2-s18',lbl:'Series 18',title:'Office Procedure — Series 18',free:false,pyq:false,qs:5,mins:120},
-    {id:'ms-p2-s19',lbl:'Series 19',title:'Office Procedure — Series 19',free:false,pyq:false,qs:5,mins:120},
-    {id:'ms-p2-s20',lbl:'Series 20',title:'Office Procedure — Series 20',free:false,pyq:false,qs:5,mins:120},
-    {id:'ms-p2-s21',lbl:'Series 21',title:'Office Procedure — Series 21',free:false,pyq:false,qs:5,mins:120},
+  {key:'p2',name:'Income Tax Computation',hasFree:true,topics:'Computation under all heads of income, Set-off & carry forward, Exemptions & deductions, Advance tax, TDS, Self-assessment tax, Tax for individual/firm/company, Interests, Depreciation (SLM & WDV), Demand/Refund on OGE/rectification orders.',type:'Objective MCQ',marks:100,tests:[
+    {id:'ms-p2-pyq26',lbl:'PYQ 2026',title:'IT Computation — 2026 PYQ',free:true,pyq:true,qs:100,mins:120},
+    {id:'ms-p2-pyq25',lbl:'PYQ 2025',title:'IT Computation — 2025 PYQ',free:false,pyq:true,qs:100,mins:120},
+    {id:'ms-p2-pyq24',lbl:'PYQ 2024',title:'IT Computation — 2024 PYQ',free:false,pyq:true,qs:100,mins:120},
+    {id:'ms-p2-pyq23',lbl:'PYQ 2023',title:'IT Computation — 2023 PYQ',free:false,pyq:true,qs:100,mins:120},
+    {id:'ms-p2-pyq22',lbl:'PYQ 2022',title:'IT Computation — 2022 PYQ',free:false,pyq:true,qs:100,mins:120},
+    {id:'ms-p2-s06',lbl:'Series 06',title:'IT Computation — Series 06',free:false,pyq:false,qs:100,mins:120},
+    {id:'ms-p2-s07',lbl:'Series 07',title:'IT Computation — Series 07',free:false,pyq:false,qs:100,mins:120},
+    {id:'ms-p2-s08',lbl:'Series 08',title:'IT Computation — Series 08',free:false,pyq:false,qs:100,mins:120},
+    {id:'ms-p2-s09',lbl:'Series 09',title:'IT Computation — Series 09',free:false,pyq:false,qs:100,mins:120},
+    {id:'ms-p2-s10',lbl:'Series 10',title:'IT Computation — Series 10',free:false,pyq:false,qs:100,mins:120},
+    {id:'ms-p2-s11',lbl:'Series 11',title:'IT Computation — Series 11',free:false,pyq:false,qs:100,mins:120},
+    {id:'ms-p2-s12',lbl:'Series 12',title:'IT Computation — Series 12',free:false,pyq:false,qs:100,mins:120},
+    {id:'ms-p2-s13',lbl:'Series 13',title:'IT Computation — Series 13',free:false,pyq:false,qs:100,mins:120},
+    {id:'ms-p2-s14',lbl:'Series 14',title:'IT Computation — Series 14',free:false,pyq:false,qs:100,mins:120},
+    {id:'ms-p2-s15',lbl:'Series 15',title:'IT Computation — Series 15',free:false,pyq:false,qs:100,mins:120},
+    {id:'ms-p2-s16',lbl:'Series 16',title:'IT Computation — Series 16',free:false,pyq:false,qs:100,mins:120},
   ]},
-  {key:'p3',name:'IT Office Procedure',hasFree:true,topics:'Income Tax Department procedures, records management, file movement, IT office manuals, departmental hierarchy, circulars.',type:'Subjective',marks:100,tests:[
-    {id:'ms-p3-pyq25',lbl:'PYQ 2025',title:'IT Office Procedure — 2025 PYQ',free:true,pyq:true,qs:5,mins:120},
-    {id:'ms-p3-pyq24',lbl:'PYQ 2024',title:'IT Office Procedure — 2024 PYQ',free:false,pyq:true,qs:5,mins:120},
-    {id:'ms-p3-pyq23',lbl:'PYQ 2023',title:'IT Office Procedure — 2023 PYQ',free:false,pyq:true,qs:5,mins:120},
-    {id:'ms-p3-pyq22',lbl:'PYQ 2022',title:'IT Office Procedure — 2022 PYQ',free:false,pyq:true,qs:5,mins:120},
-    {id:'ms-p3-pyq21',lbl:'PYQ 2021',title:'IT Office Procedure — 2021 PYQ',free:false,pyq:true,qs:5,mins:120},
-    {id:'ms-p3-s06',lbl:'Series 06',title:'IT Office Procedure — Series 06',free:false,pyq:false,qs:5,mins:120},
-    {id:'ms-p3-s07',lbl:'Series 07',title:'IT Office Procedure — Series 07',free:false,pyq:false,qs:5,mins:120},
-    {id:'ms-p3-s08',lbl:'Series 08',title:'IT Office Procedure — Series 08',free:false,pyq:false,qs:5,mins:120},
-    {id:'ms-p3-s09',lbl:'Series 09',title:'IT Office Procedure — Series 09',free:false,pyq:false,qs:5,mins:120},
-    {id:'ms-p3-s10',lbl:'Series 10',title:'IT Office Procedure — Series 10',free:false,pyq:false,qs:5,mins:120},
-    {id:'ms-p3-s11',lbl:'Series 11',title:'IT Office Procedure — Series 11',free:false,pyq:false,qs:5,mins:120},
-    {id:'ms-p3-s12',lbl:'Series 12',title:'IT Office Procedure — Series 12',free:false,pyq:false,qs:5,mins:120},
-    {id:'ms-p3-s13',lbl:'Series 13',title:'IT Office Procedure — Series 13',free:false,pyq:false,qs:5,mins:120},
-    {id:'ms-p3-s14',lbl:'Series 14',title:'IT Office Procedure — Series 14',free:false,pyq:false,qs:5,mins:120},
-    {id:'ms-p3-s15',lbl:'Series 15',title:'IT Office Procedure — Series 15',free:false,pyq:false,qs:5,mins:120},
-    {id:'ms-p3-s16',lbl:'Series 16',title:'IT Office Procedure — Series 16',free:false,pyq:false,qs:5,mins:120},
-    {id:'ms-p3-s17',lbl:'Series 17',title:'IT Office Procedure — Series 17',free:false,pyq:false,qs:5,mins:120},
-    {id:'ms-p3-s18',lbl:'Series 18',title:'IT Office Procedure — Series 18',free:false,pyq:false,qs:5,mins:120},
-    {id:'ms-p3-s19',lbl:'Series 19',title:'IT Office Procedure — Series 19',free:false,pyq:false,qs:5,mins:120},
-    {id:'ms-p3-s20',lbl:'Series 20',title:'IT Office Procedure — Series 20',free:false,pyq:false,qs:5,mins:120},
-    {id:'ms-p3-s21',lbl:'Series 21',title:'IT Office Procedure — Series 21',free:false,pyq:false,qs:5,mins:120},
+  {key:'p3',name:'Office Procedure (With Books)',hasFree:true,topics:'FR & SR (Pay, Leave, TA, Joining Time), CCS (CCA) Rules 1965, CCS Conduct Rules 1964, CCS Leave Rules 1972, CCS Pension Rules 2021, DFPR 2024, GFR 2017, Manual of Office Procedure Vol I-III, POSH Act 2013, RPwD Act 2016, GeM & Contract Management.',type:'Objective MCQ',marks:100,tests:[
+    {id:'ms-p3-pyq26',lbl:'PYQ 2026',title:'Office Procedure — 2026 PYQ',free:true,pyq:true,qs:100,mins:120},
+    {id:'ms-p3-pyq25',lbl:'PYQ 2025',title:'Office Procedure — 2025 PYQ',free:false,pyq:true,qs:100,mins:120},
+    {id:'ms-p3-pyq24',lbl:'PYQ 2024',title:'Office Procedure — 2024 PYQ',free:false,pyq:true,qs:100,mins:120},
+    {id:'ms-p3-pyq23',lbl:'PYQ 2023',title:'Office Procedure — 2023 PYQ',free:false,pyq:true,qs:100,mins:120},
+    {id:'ms-p3-pyq22',lbl:'PYQ 2022',title:'Office Procedure — 2022 PYQ',free:false,pyq:true,qs:100,mins:120},
+    {id:'ms-p3-s06',lbl:'Series 06',title:'Office Procedure — Series 06',free:false,pyq:false,qs:100,mins:120},
+    {id:'ms-p3-s07',lbl:'Series 07',title:'Office Procedure — Series 07',free:false,pyq:false,qs:100,mins:120},
+    {id:'ms-p3-s08',lbl:'Series 08',title:'Office Procedure — Series 08',free:false,pyq:false,qs:100,mins:120},
+    {id:'ms-p3-s09',lbl:'Series 09',title:'Office Procedure — Series 09',free:false,pyq:false,qs:100,mins:120},
+    {id:'ms-p3-s10',lbl:'Series 10',title:'Office Procedure — Series 10',free:false,pyq:false,qs:100,mins:120},
+    {id:'ms-p3-s11',lbl:'Series 11',title:'Office Procedure — Series 11',free:false,pyq:false,qs:100,mins:120},
+    {id:'ms-p3-s12',lbl:'Series 12',title:'Office Procedure — Series 12',free:false,pyq:false,qs:100,mins:120},
+    {id:'ms-p3-s13',lbl:'Series 13',title:'Office Procedure — Series 13',free:false,pyq:false,qs:100,mins:120},
+    {id:'ms-p3-s14',lbl:'Series 14',title:'Office Procedure — Series 14',free:false,pyq:false,qs:100,mins:120},
+    {id:'ms-p3-s15',lbl:'Series 15',title:'Office Procedure — Series 15',free:false,pyq:false,qs:100,mins:120},
+    {id:'ms-p3-s16',lbl:'Series 16',title:'Office Procedure — Series 16',free:false,pyq:false,qs:100,mins:120},
   ]},
-  {key:'p4',name:'IT Law & Computation (Descriptive)',hasFree:true,topics:'Income Tax Act 1961, computation of total income, deductions, TDS, advance tax, penalties — descriptive & numerical.',type:'Subjective',marks:100,tests:[
-    {id:'ms-p4-pyq25',lbl:'PYQ 2025',title:'IT Law & Computation — 2025 PYQ',free:true,pyq:true,qs:5,mins:180},
-    {id:'ms-p4-pyq24',lbl:'PYQ 2024',title:'IT Law & Computation — 2024 PYQ',free:false,pyq:true,qs:5,mins:180},
-    {id:'ms-p4-pyq23',lbl:'PYQ 2023',title:'IT Law & Computation — 2023 PYQ',free:false,pyq:true,qs:5,mins:180},
-    {id:'ms-p4-pyq22',lbl:'PYQ 2022',title:'IT Law & Computation — 2022 PYQ',free:false,pyq:true,qs:5,mins:180},
-    {id:'ms-p4-pyq21',lbl:'PYQ 2021',title:'IT Law & Computation — 2021 PYQ',free:false,pyq:true,qs:5,mins:180},
-    {id:'ms-p4-s06',lbl:'Series 06',title:'IT Law & Computation — Series 06',free:false,pyq:false,qs:5,mins:180},
-    {id:'ms-p4-s07',lbl:'Series 07',title:'IT Law & Computation — Series 07',free:false,pyq:false,qs:5,mins:180},
-    {id:'ms-p4-s08',lbl:'Series 08',title:'IT Law & Computation — Series 08',free:false,pyq:false,qs:5,mins:180},
-    {id:'ms-p4-s09',lbl:'Series 09',title:'IT Law & Computation — Series 09',free:false,pyq:false,qs:5,mins:180},
-    {id:'ms-p4-s10',lbl:'Series 10',title:'IT Law & Computation — Series 10',free:false,pyq:false,qs:5,mins:180},
-    {id:'ms-p4-s11',lbl:'Series 11',title:'IT Law & Computation — Series 11',free:false,pyq:false,qs:5,mins:180},
-    {id:'ms-p4-s12',lbl:'Series 12',title:'IT Law & Computation — Series 12',free:false,pyq:false,qs:5,mins:180},
-    {id:'ms-p4-s13',lbl:'Series 13',title:'IT Law & Computation — Series 13',free:false,pyq:false,qs:5,mins:180},
-    {id:'ms-p4-s14',lbl:'Series 14',title:'IT Law & Computation — Series 14',free:false,pyq:false,qs:5,mins:180},
-    {id:'ms-p4-s15',lbl:'Series 15',title:'IT Law & Computation — Series 15',free:false,pyq:false,qs:5,mins:180},
-    {id:'ms-p4-s16',lbl:'Series 16',title:'IT Law & Computation — Series 16',free:false,pyq:false,qs:5,mins:180},
-    {id:'ms-p4-s17',lbl:'Series 17',title:'IT Law & Computation — Series 17',free:false,pyq:false,qs:5,mins:180},
-    {id:'ms-p4-s18',lbl:'Series 18',title:'IT Law & Computation — Series 18',free:false,pyq:false,qs:5,mins:180},
-    {id:'ms-p4-s19',lbl:'Series 19',title:'IT Law & Computation — Series 19',free:false,pyq:false,qs:5,mins:180},
-    {id:'ms-p4-s20',lbl:'Series 20',title:'IT Law & Computation — Series 20',free:false,pyq:false,qs:5,mins:180},
-    {id:'ms-p4-s21',lbl:'Series 21',title:'IT Law & Computation — Series 21',free:false,pyq:false,qs:5,mins:180},
+  {key:'p4',name:'IT Applications & Operations',hasFree:true,topics:'ITBA modules (ITR processing, Rectification, Recovery, Audit, Faceless Appeal, OGE, Penalty, e-Nivaran, PAN/TAN, TDS, MIS Reports, Email & VC), HRMS in ITBA (user roles, access control), Insight Portal (data handling, e-verification, third-party reporting), ITD Information Security Policy 2020.',type:'Objective MCQ',marks:100,tests:[
+    {id:'ms-p4-pyq26',lbl:'PYQ 2026',title:'IT Applications & Operations — 2026 PYQ',free:true,pyq:true,qs:100,mins:120},
+    {id:'ms-p4-pyq25',lbl:'PYQ 2025',title:'IT Applications & Operations — 2025 PYQ',free:false,pyq:true,qs:100,mins:120},
+    {id:'ms-p4-pyq24',lbl:'PYQ 2024',title:'IT Applications & Operations — 2024 PYQ',free:false,pyq:true,qs:100,mins:120},
+    {id:'ms-p4-pyq23',lbl:'PYQ 2023',title:'IT Applications & Operations — 2023 PYQ',free:false,pyq:true,qs:100,mins:120},
+    {id:'ms-p4-pyq22',lbl:'PYQ 2022',title:'IT Applications & Operations — 2022 PYQ',free:false,pyq:true,qs:100,mins:120},
+    {id:'ms-p4-s06',lbl:'Series 06',title:'IT Applications & Operations — Series 06',free:false,pyq:false,qs:100,mins:120},
+    {id:'ms-p4-s07',lbl:'Series 07',title:'IT Applications & Operations — Series 07',free:false,pyq:false,qs:100,mins:120},
+    {id:'ms-p4-s08',lbl:'Series 08',title:'IT Applications & Operations — Series 08',free:false,pyq:false,qs:100,mins:120},
+    {id:'ms-p4-s09',lbl:'Series 09',title:'IT Applications & Operations — Series 09',free:false,pyq:false,qs:100,mins:120},
+    {id:'ms-p4-s10',lbl:'Series 10',title:'IT Applications & Operations — Series 10',free:false,pyq:false,qs:100,mins:120},
+    {id:'ms-p4-s11',lbl:'Series 11',title:'IT Applications & Operations — Series 11',free:false,pyq:false,qs:100,mins:120},
+    {id:'ms-p4-s12',lbl:'Series 12',title:'IT Applications & Operations — Series 12',free:false,pyq:false,qs:100,mins:120},
+    {id:'ms-p4-s13',lbl:'Series 13',title:'IT Applications & Operations — Series 13',free:false,pyq:false,qs:100,mins:120},
+    {id:'ms-p4-s14',lbl:'Series 14',title:'IT Applications & Operations — Series 14',free:false,pyq:false,qs:100,mins:120},
+    {id:'ms-p4-s15',lbl:'Series 15',title:'IT Applications & Operations — Series 15',free:false,pyq:false,qs:100,mins:120},
+    {id:'ms-p4-s16',lbl:'Series 16',title:'IT Applications & Operations — Series 16',free:false,pyq:false,qs:100,mins:120},
+  ]},
+  {key:'p5',name:'Rajbhasha Hindi',hasFree:true,topics:'Part A: Hindi to English translation (20 marks), Part B: English to Hindi translation (20 marks), Part C: Reading comprehension — official passages (20 marks), Part D: Official terminology & correct usage (20 marks), Part E: Brief official writing in Hindi (20 marks).',type:'Subjective',marks:100,tests:[
+    {id:'ms-p5-pyq26',lbl:'PYQ 2026',title:'Rajbhasha Hindi — 2026 PYQ',free:true,pyq:true,qs:5,mins:120},
+    {id:'ms-p5-pyq25',lbl:'PYQ 2025',title:'Rajbhasha Hindi — 2025 PYQ',free:false,pyq:true,qs:5,mins:120},
+    {id:'ms-p5-pyq24',lbl:'PYQ 2024',title:'Rajbhasha Hindi — 2024 PYQ',free:false,pyq:true,qs:5,mins:120},
+    {id:'ms-p5-pyq23',lbl:'PYQ 2023',title:'Rajbhasha Hindi — 2023 PYQ',free:false,pyq:true,qs:5,mins:120},
+    {id:'ms-p5-pyq22',lbl:'PYQ 2022',title:'Rajbhasha Hindi — 2022 PYQ',free:false,pyq:true,qs:5,mins:120},
+    {id:'ms-p5-s06',lbl:'Series 06',title:'Rajbhasha Hindi — Series 06',free:false,pyq:false,qs:5,mins:120},
+    {id:'ms-p5-s07',lbl:'Series 07',title:'Rajbhasha Hindi — Series 07',free:false,pyq:false,qs:5,mins:120},
+    {id:'ms-p5-s08',lbl:'Series 08',title:'Rajbhasha Hindi — Series 08',free:false,pyq:false,qs:5,mins:120},
+    {id:'ms-p5-s09',lbl:'Series 09',title:'Rajbhasha Hindi — Series 09',free:false,pyq:false,qs:5,mins:120},
+    {id:'ms-p5-s10',lbl:'Series 10',title:'Rajbhasha Hindi — Series 10',free:false,pyq:false,qs:5,mins:120},
+    {id:'ms-p5-s11',lbl:'Series 11',title:'Rajbhasha Hindi — Series 11',free:false,pyq:false,qs:5,mins:120},
+    {id:'ms-p5-s12',lbl:'Series 12',title:'Rajbhasha Hindi — Series 12',free:false,pyq:false,qs:5,mins:120},
+    {id:'ms-p5-s13',lbl:'Series 13',title:'Rajbhasha Hindi — Series 13',free:false,pyq:false,qs:5,mins:120},
+    {id:'ms-p5-s14',lbl:'Series 14',title:'Rajbhasha Hindi — Series 14',free:false,pyq:false,qs:5,mins:120},
+    {id:'ms-p5-s15',lbl:'Series 15',title:'Rajbhasha Hindi — Series 15',free:false,pyq:false,qs:5,mins:120},
+    {id:'ms-p5-s16',lbl:'Series 16',title:'Rajbhasha Hindi — Series 16',free:false,pyq:false,qs:5,mins:120},
   ]},
 ];
 
@@ -785,17 +783,17 @@ function buildCards(p,i){
   <div class="bundle-in" style="position:relative;z-index:2;"><div>
     <div class="bundle-badge">⭐ Best Value</div>
     <div class="bundle-title">MS Paper ${i+1} — ${p.name}</div>
-    <div class="bundle-sub">21 Tests · 5 PYQs + 16 AI-Crafted Series · ${p.marks} Marks · Subjective</div>
+    <div class="bundle-sub">21 Tests · 5 PYQs + 16 AI-Crafted Series · ${p.marks} Marks · ${p.type}</div>
     <div class="bundle-papers">
       <div class="bp"><svg viewBox="0 0 24 24" fill=none height=11 stroke=rgba(255,255,255,.65) stroke-width=2 width=11><path d="M5 13l4 4L19 7"/></svg>5 Previous Year Question (PYQ) Tests — 2021 to 2025</div>
       <div class="bp"><svg viewBox="0 0 24 24" fill=none height=11 stroke=rgba(255,255,255,.65) stroke-width=2 width=11><path d="M5 13l4 4L19 7"/></svg>16 AI-Leveled Descriptive Series (Series 06–21)</div>
       <div class="bp"><svg viewBox="0 0 24 24" fill=none height=11 stroke=rgba(255,255,255,.65) stroke-width=2 width=11><path d="M5 13l4 4L19 7"/></svg>Topics: ${p.topics.substring(0,80)}…</div>
-      <div class="bp"><svg viewBox="0 0 24 24" fill=none height=11 stroke=rgba(255,255,255,.65) stroke-width=2 width=11><path d="M5 13l4 4L19 7"/></svg>Subjective / Descriptive · Model answers provided</div>
+      <div class="bp"><svg viewBox="0 0 24 24" fill=none height=11 stroke=rgba(255,255,255,.65) stroke-width=2 width=11><path d="M5 13l4 4L19 7"/></svg>${p.type === "Subjective" ? "Subjective — model answers provided" : "Objective MCQ · 1/4 negative marking"}</div>
     </div>
   </div>
   <div style="display:flex;flex-direction:column;align-items:flex-end;gap:.65rem;flex-shrink:0">
-    <div><div class="bundle-price">₹355</div><div class="bundle-psub">per paper</div></div>
-    <div class="bundle-save">₹465 saved on bunch</div>
+    <div><div class="bundle-price">₹195</div><div class="bundle-psub">per paper</div></div>
+    <div class="bundle-save">₹320 saved on bunch</div>
     <button class="btn-bunch" onclick="openModal()">Unlock This Paper →</button>
   </div></div></div>`;
 
