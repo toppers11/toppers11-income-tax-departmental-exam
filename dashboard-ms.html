@@ -626,8 +626,8 @@ function getUpiId(){return UPI_POOL[_upiIdx];}
 function nextUpiId(){_upiIdx=(_upiIdx+1)%UPI_POOL.length;return UPI_POOL[_upiIdx];}
 
 const PLANS={
-  'single-ms':{label:'MS Single Paper (1 of 5)',amount:195,desc:'All 21 tests for 1 subject · Best for targeted prep',requiresPaperSelect:false},
-  'bunch-ms':{label:'MS Complete — All 5 Papers',amount:655,desc:'All 105 tests — save ₹320 vs buying individually',best:true,requiresPaperSelect:false}
+  'single-ms':{label:'MS Single Paper',amount:355,desc:'All 20 tests for 1 subject · ₹355 / yr',requiresPaperSelect:false},
+  'bunch-ms':{label:'MS Complete — All 4 Papers',amount:955,desc:'All 80 tests · ₹955 / Calendar Year · All 4 Papers — save ₹465',best:true,requiresPaperSelect:false}
 };
 
 let selPlan=null;
@@ -778,8 +778,8 @@ function buildCards(p,i){
     </div>
   </div>
   <div style="display:flex;flex-direction:column;align-items:flex-end;gap:.65rem;flex-shrink:0">
-    <div><div class="bundle-price">₹195</div><div class="bundle-psub">per paper</div></div>
-    <div class="bundle-save">₹320 saved on bunch</div>
+    <div><div class="bundle-price">₹355</div><div class="bundle-psub">/ yr &nbsp;·&nbsp; per paper</div></div>
+    <div class="bundle-save">₹465 saved on bunch</div>
     <button class="btn-bunch" onclick="openModal()">Unlock This Paper →</button>
   </div></div></div>`;
 
