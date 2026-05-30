@@ -483,7 +483,7 @@ body{background:var(--bg);color:var(--ink);font-family:'Open Sans',sans-serif;ov
           Exam Rule
         </div>
         <div class="rn-title">3 Attempts Per Assessment</div>
-        <div class="rn-msg">You have <strong>3 total attempts</strong> for each test in this series. Once all 3 attempts are used, the test will be marked <strong>Completed</strong>. Papers I–IV are <strong>Objective MCQ</strong> (1/4 negative marking). Paper V (Hindi) is <strong>Subjective</strong>. Pass mark is <strong>50%</strong> in each paper (45% for SC/ST/PwBD).</div>
+        <div class="rn-msg">You have <strong>3 total attempts</strong> for each test in this series. Once all 3 attempts are used, the test will be marked <strong>Completed</strong>. Papers I–IV are <strong>Objective MCQ</strong> (1/4 negative marking).</div>
       </div>
       <div class="rn-chips">
         <div class="rn-chip">
@@ -781,17 +781,25 @@ function buildCards(p,i){
   <div class="bundle-in" style="position:relative;z-index:2;"><div>
     <div class="bundle-badge">⭐ Best Value</div>
     <div class="bundle-title">MS Paper ${i+1} — ${p.name}</div>
-    <div class="bundle-sub">21 Tests · 5 PYQs + 16 AI-Crafted Series · ${p.marks} Marks · ${p.type}</div>
+    <div class="bundle-sub">20 Tests · 20 AI-Crafted Series · ${p.marks} Marks · ${p.type}</div>
     <div class="bundle-papers">
-      <div class="bp"><svg viewBox="0 0 24 24" fill=none height=11 stroke=rgba(255,255,255,.65) stroke-width=2 width=11><path d="M5 13l4 4L19 7"/></svg>5 Previous Year Question (PYQ) Tests — 2021 to 2025</div>
-      <div class="bp"><svg viewBox="0 0 24 24" fill=none height=11 stroke=rgba(255,255,255,.65) stroke-width=2 width=11><path d="M5 13l4 4L19 7"/></svg>16 AI-Leveled Descriptive Series (Series 06–21)</div>
+      <div class="bp"><svg viewBox="0 0 24 24" fill=none height=11 stroke=rgba(255,255,255,.65) stroke-width=2 width=11><path d="M5 13l4 4L19 7"/></svg>20 AI-Leveled Series Tests (Series 01–20)</div>
       <div class="bp"><svg viewBox="0 0 24 24" fill=none height=11 stroke=rgba(255,255,255,.65) stroke-width=2 width=11><path d="M5 13l4 4L19 7"/></svg>Topics: ${p.topics.substring(0,80)}…</div>
       <div class="bp"><svg viewBox="0 0 24 24" fill=none height=11 stroke=rgba(255,255,255,.65) stroke-width=2 width=11><path d="M5 13l4 4L19 7"/></svg>${p.type === "Subjective" ? "Subjective — model answers provided" : "Objective MCQ · 1/4 negative marking"}</div>
     </div>
   </div>
   <div style="display:flex;flex-direction:column;align-items:flex-end;gap:.65rem;flex-shrink:0">
-    <div><div class="bundle-price">₹355</div><div class="bundle-psub">/ yr &nbsp;·&nbsp; per paper</div></div>
-    <div class="bundle-save">₹465 saved on bunch</div>
+    <div style="display:flex;flex-direction:column;align-items:flex-end;gap:.55rem">
+      <div style="display:flex;flex-direction:column;align-items:flex-end;background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.2);border-radius:10px;padding:.55rem .85rem;gap:.1rem">
+        <div style="font-size:.52rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:rgba(255,255,255,.65)">Per Subject</div>
+        <div style="font-size:1.6rem;font-weight:900;color:#fff;line-height:1">₹355 <span style="font-size:.65rem;font-weight:600;opacity:.75">/ paper</span></div>
+      </div>
+      <div style="display:flex;flex-direction:column;align-items:flex-end;background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.2);border-radius:10px;padding:.55rem .85rem;gap:.1rem">
+        <div style="font-size:.52rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:rgba(255,255,255,.65)">Complete Bunch</div>
+        <div style="font-size:.62rem;font-weight:700;color:rgba(255,255,255,.5);text-decoration:line-through;line-height:1">₹1420</div>
+        <div style="font-size:1.6rem;font-weight:900;color:var(--yellow);line-height:1">₹955 <span style="font-size:.65rem;font-weight:600;color:rgba(255,255,255,.75)">/ all 4</span></div>
+      </div>
+    </div>
     <button class="btn-bunch" onclick="openModal()">Unlock This Paper →</button>
   </div></div></div>`;
 
