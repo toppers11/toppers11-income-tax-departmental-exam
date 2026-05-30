@@ -215,6 +215,43 @@ footer{background:var(--dark);padding:2.8rem 0 0;position:relative;overflow:hidd
 .foot-bottom{text-align:center;border-top:1px solid rgba(255,255,255,.07);padding:1rem 0}
 .foot-bottom p{color:rgba(255,255,255,.25);font-size:.65rem}
 
+/* ── WHO APPEARS IN WHICH EXAM ── */
+.candidate-section{margin-bottom:2rem}
+.candidate-tabs{display:flex;gap:.5rem;margin-bottom:1rem;flex-wrap:wrap}
+.ctab{cursor:pointer;border:1.5px solid var(--bdr);border-radius:999px;padding:.45rem 1.1rem;font-size:.75rem;font-weight:700;background:#fff;color:var(--muted);transition:all .2s;white-space:nowrap}
+.ctab.active-new{background:#004d3f;color:#fff;border-color:#004d3f}
+.ctab.active-old{background:#1e3a5f;color:#fff;border-color:#1e3a5f}
+.ctab.active-partial{background:#7c2d12;color:#fff;border-color:#7c2d12}
+.candidate-panel{display:none}
+.candidate-panel.show{display:block}
+.cand-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:1rem;margin-bottom:1rem}
+.cand-card{border-radius:14px;padding:1.1rem 1.2rem;border:1.5px solid}
+.cand-card.cc-new{background:#f0fdf8;border-color:#A7F3D0}
+.cand-card.cc-old{background:#eff6ff;border-color:#BFDBFE}
+.cand-card.cc-warn{background:#fffbeb;border-color:#FDE68A}
+.cand-card.cc-red{background:#fef2f2;border-color:#fecaca}
+.cand-card-head{font-size:.78rem;font-weight:800;margin-bottom:.55rem;display:flex;align-items:center;gap:.5rem}
+.cand-card.cc-new .cand-card-head{color:#065f46}
+.cand-card.cc-old .cand-card-head{color:#1e3a8a}
+.cand-card.cc-warn .cand-card-head{color:#92400e}
+.cand-card.cc-red .cand-card-head{color:#991b1b}
+.cand-card ul{list-style:none;display:flex;flex-direction:column;gap:.3rem}
+.cand-card ul li{font-size:.77rem;color:#374151;line-height:1.55;padding-left:1rem;position:relative}
+.cand-card ul li::before{content:'▸';position:absolute;left:0;font-size:.65rem;top:.1rem}
+.cand-card.cc-new ul li::before{color:#10b981}
+.cand-card.cc-old ul li::before{color:#3b82f6}
+.cand-card.cc-warn ul li::before{color:#f59e0b}
+.cand-card.cc-red ul li::before{color:#ef4444}
+.cand-note{font-size:.74rem;color:var(--muted);padding:.65rem .9rem;background:#fafafa;border-radius:8px;border-left:3px solid var(--bdr);line-height:1.6;margin-top:.5rem}
+.cand-note strong{color:var(--ink)}
+.paper-match-table{width:100%;border-collapse:collapse;font-size:.76rem;margin-top:.75rem}
+.paper-match-table th{background:#f3f4f6;color:var(--muted);font-weight:700;text-align:left;padding:.5rem .75rem;border:1px solid #e5e7eb;font-size:.68rem;letter-spacing:.04em;text-transform:uppercase}
+.paper-match-table td{padding:.5rem .75rem;border:1px solid #e5e7eb;color:#374151;vertical-align:top;line-height:1.5}
+.paper-match-table tr:nth-child(even) td{background:#fafafa}
+.paper-match-table .td-old{color:#1e40af;font-weight:600}
+.paper-match-table .td-new{color:#065f46;font-weight:600}
+.highlight-row td{background:#f0fdf8 !important;border-color:#A7F3D0}
+
 .fade-up{opacity:0;transform:translateY(22px);transition:opacity .6s ease,transform .6s ease}
 .fade-up.visible{opacity:1;transform:translateY(0)}
 .delay-1{transition-delay:.1s}.delay-2{transition-delay:.2s}.delay-3{transition-delay:.3s}
@@ -395,6 +432,150 @@ footer{background:var(--dark);padding:2.8rem 0 0;position:relative;overflow:hidd
     <div class="feature-item">
       <span class="fi-icon">⚖️</span>
       <span class="fi-text"><strong>1/4 Negative</strong> Marking per Wrong Answer</span>
+    </div>
+  </div>
+
+  <!-- ── WHO APPEARS IN WHICH EXAM ── -->
+  <div class="section-heading fade-up">Which Exam Do You Appear In?</div>
+  <div class="candidate-section fade-up">
+    <div class="candidate-tabs">
+      <button class="ctab active-new" onclick="showPanel('new','new')">🟢 Fresh / New Candidates</button>
+      <button class="ctab" onclick="showPanel('partial','partial')">🟡 Partially Qualified (Old Pattern)</button>
+      <button class="ctab" onclick="showPanel('scst','old')">🔵 SC/ST/PwBD Betterment</button>
+    </div>
+
+    <!-- NEW CANDIDATES -->
+    <div class="candidate-panel show" id="panel-new">
+      <div class="cand-grid">
+        <div class="cand-card cc-new">
+          <div class="cand-card-head">✅ Who qualifies as a "New Candidate"?</div>
+          <ul>
+            <li>Income Tax Inspectors who have passed the Departmental Exam for Inspectors</li>
+            <li>Office Superintendents who have passed the Inspector exam</li>
+            <li>Tax Assistants who have passed the Inspector exam</li>
+            <li>Steno Grade-I &amp; II who have passed the Inspector exam</li>
+            <li>Anyone who has <strong>not yet attempted</strong> the ITO exam under old rules OR attempted but <strong>not qualified any paper</strong></li>
+          </ul>
+        </div>
+        <div class="cand-card cc-new">
+          <div class="cand-card-head">📋 Papers to Appear In</div>
+          <ul>
+            <li><strong>All 5 papers</strong> of the New Pattern (DE Rules 2026) are mandatory</li>
+            <li>Paper I — IT Law &amp; Taxpayer Services (with books)</li>
+            <li>Paper II — Advance Accountancy (without books)</li>
+            <li>Paper III — Allied Laws &amp; Office Administration (with books)</li>
+            <li>Paper IV — Computation &amp; Drafting (subjective)</li>
+            <li>Paper V — IT Applications &amp; Operations (without books)</li>
+            <li><strong>No choice</strong> — old pattern is not available to new candidates from 2026</li>
+          </ul>
+        </div>
+        <div class="cand-card cc-new">
+          <div class="cand-card-head">📌 Key Rules</div>
+          <ul>
+            <li>Maximum <strong>10 chances</strong> to qualify the examination</li>
+            <li>Chances counted from 2010 examination onwards</li>
+            <li>No age bar for appearing</li>
+            <li>Pass marks: <strong>50%</strong> in each paper (45% for SC/ST/PwBD)</li>
+            <li>Once you pass a paper, exempt from re-appearing in that paper</li>
+            <li>Withdrawal not allowed once application is permitted</li>
+          </ul>
+        </div>
+      </div>
+      <div class="cand-note">ℹ️ <strong>Simple rule for new candidates:</strong> You have <strong>no choice</strong> — the New Pattern (DE Rules 2026) with all 5 new papers is the only option. The old DE Rules 2009 pattern is discontinued from 2026 onwards.</div>
+    </div>
+
+    <!-- PARTIALLY QUALIFIED -->
+    <div class="candidate-panel" id="panel-partial">
+      <div class="cand-grid">
+        <div class="cand-card cc-warn">
+          <div class="cand-card-head">⚠️ Who is a "Partially Qualified" Candidate?</div>
+          <ul>
+            <li>Someone who attempted the exam under <strong>DE Rules 2009</strong> (old pattern) and has already passed <strong>1, 2, or 3 papers</strong> but not all 5</li>
+            <li>Specifically: <strong>3 or fewer papers still unqualified</strong> under old pattern</li>
+            <li>You are <strong>NOT required</strong> to re-appear in already-qualified papers</li>
+            <li>Old DE Rules 1998 candidates who were mid-way through 2009 matching also fall here</li>
+          </ul>
+        </div>
+        <div class="cand-card cc-warn">
+          <div class="cand-card-head">📋 What Papers to Appear In?</div>
+          <ul>
+            <li>Appear only in the <strong>unqualified papers</strong> — matched to new pattern equivalents (see table below)</li>
+            <li>You <strong>must also qualify Paper V</strong> (IT Applications &amp; Operations) — compulsory for all regardless of old qualification status</li>
+            <li>If you have less than 3 chances left, a <strong>minimum 3 chances are guaranteed exclusively for Paper V</strong></li>
+          </ul>
+        </div>
+      </div>
+
+      <div style="overflow-x:auto;margin-top:.5rem">
+        <table class="paper-match-table">
+          <thead>
+            <tr>
+              <th>Unqualified Paper (Old Pattern 2009)</th>
+              <th>Matching Paper to Appear In (New Pattern 2026)</th>
+              <th>Type</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td class="td-old">Paper 1 — IT Law &amp; Computation (Without Books)</td>
+              <td class="td-new">Paper I — IT Law &amp; Taxpayer Services (With Books)</td>
+              <td>Objective</td>
+            </tr>
+            <tr>
+              <td class="td-old">Paper 2 — Advanced Accountancy (Without Books)</td>
+              <td class="td-new">Paper II — Advance Accountancy (Without Books)</td>
+              <td>Objective</td>
+            </tr>
+            <tr>
+              <td class="td-old">Paper 3 — Allied Laws (Without Books)</td>
+              <td class="td-new">Paper III — Allied Laws &amp; Office Administration (With Books)</td>
+              <td>Objective</td>
+            </tr>
+            <tr>
+              <td class="td-old">Paper 4 — IT &amp; Accountancy Combined Practical (With IT Act)</td>
+              <td class="td-new">Paper IV — Computation of Income &amp; Drafting (With IT Act)</td>
+              <td>Subjective</td>
+            </tr>
+            <tr class="highlight-row">
+              <td><em>No equivalent in old pattern</em></td>
+              <td class="td-new"><strong>Paper V — IT Applications &amp; Operations</strong> — compulsory for ALL partially qualified candidates</td>
+              <td>Objective</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="cand-note">⚠️ <strong>Important:</strong> Passing the matched papers does NOT complete your exam — you <strong>must also pass Paper V</strong> (new addition with no old equivalent). Note that matched papers in 2026 have <strong>broader syllabus</strong> — e.g. Paper III now includes Office Administration which was not in old Paper 3.</div>
+    </div>
+
+    <!-- SC/ST BETTERMENT -->
+    <div class="candidate-panel" id="panel-scst">
+      <div class="cand-grid">
+        <div class="cand-card cc-old">
+          <div class="cand-card-head">🔵 Who Can Avail Betterment Chance?</div>
+          <ul>
+            <li>SC/ST/PwBD candidates who have <strong>already fully qualified</strong> the examination — but under <strong>relaxed standards</strong> (at 45% instead of 50%)</li>
+            <li>They can re-appear to <strong>improve their marks</strong> to general standard (50%+)</li>
+            <li>Candidates who have <strong>NOT fully qualified</strong> are NOT eligible for betterment — they must first complete all papers</li>
+          </ul>
+        </div>
+        <div class="cand-card cc-old">
+          <div class="cand-card-head">📋 Papers for Betterment</div>
+          <ul>
+            <li>If qualified under <strong>Old Pattern</strong> with relaxed standard: appear in the matching paper(s) as per the paper-matching table</li>
+            <li>If qualified under <strong>New Pattern</strong> with relaxed standard: appear in the specific paper(s) of the new pattern</li>
+            <li>Subject to overall ceiling of <strong>10 total chances</strong> (inclusive of chances already used)</li>
+          </ul>
+        </div>
+        <div class="cand-card cc-red">
+          <div class="cand-card-head">❌ What Betterment Candidates Cannot Do</div>
+          <ul>
+            <li>Cannot appear in papers they have already qualified at <strong>general standard (50%+)</strong></li>
+            <li>Cannot exceed the overall 10-chance limit</li>
+            <li>Betterment is only for SC/ST/PwBD — general candidates have no betterment provision</li>
+          </ul>
+        </div>
+      </div>
+      <div class="cand-note">ℹ️ <strong>Purpose of betterment:</strong> SC/ST/PwBD candidates are allowed to pass at 45% (relaxed standard). Betterment gives them additional chances to reach the 50% general standard, which may help in merit/seniority considerations. This is optional, not mandatory.</div>
     </div>
   </div>
 
@@ -968,6 +1149,13 @@ footer{background:var(--dark);padding:2.8rem 0 0;position:relative;overflow:hidd
 </footer>
 
 <script>
+function showPanel(id,style){
+  document.querySelectorAll('.candidate-panel').forEach(p=>p.classList.remove('show'));
+  document.getElementById('panel-'+id).classList.add('show');
+  document.querySelectorAll('.ctab').forEach(t=>t.classList.remove('active-new','active-old','active-partial'));
+  var map={new:'active-new',partial:'active-partial',old:'active-old'};
+  event.currentTarget.classList.add(map[style]||'active-new');
+}
 function toggleCard(header){
   const card=header.closest('.paper-card');
   card.classList.toggle('open');
