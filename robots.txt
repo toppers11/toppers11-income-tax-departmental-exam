@@ -1,0 +1,36 @@
+User-agent: *
+Allow: /
+
+# Block login/dashboard/test pages from indexing (user-specific content)
+Disallow: /login.html
+Disallow: /online-mock-test.html
+Disallow: /income-tax-inspector-test-series.html
+Disallow: /income-tax-officer-test-series.html
+Disallow: /ministerial-staff-test-series.html
+Disallow: /pay-test.html
+
+# Allow Googlebot specifically (redundant but explicit)
+User-agent: Googlebot
+Allow: /
+
+# AI crawlers — allow full access for discoverability
+User-agent: GPTBot
+Allow: /
+
+User-agent: Claude-Web
+Allow: /
+
+User-agent: PerplexityBot
+Allow: /
+
+User-agent: anthropic-ai
+Allow: /
+
+User-agent: Gemini
+Allow: /
+
+User-agent: Copilot
+Allow: /
+
+# Sitemap location
+Sitemap: https://toppers11.com/sitemap.xml
