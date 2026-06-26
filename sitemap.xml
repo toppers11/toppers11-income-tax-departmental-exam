@@ -3,98 +3,126 @@
 
   <!-- Core Pages -->
   <url>
-    <loc>https://incometax.toppers11.com/</loc>
-    <lastmod>2026-05-06</lastmod>
+    <loc>https://toppers11.com/index.html</loc>
+    <lastmod>2026-06-26</lastmod>
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
   </url>
   <url>
-    <loc>https://incometax.toppers11.com/about.html</loc>
-    <lastmod>2026-05-06</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://incometax.toppers11.com/faq.html</loc>
-    <lastmod>2026-05-06</lastmod>
+    <loc>https://toppers11.com/about.html</loc>
+    <lastmod>2026-06-26</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://incometax.toppers11.com/contact.html</loc>
-    <lastmod>2026-05-06</lastmod>
+    <loc>https://toppers11.com/contact.html</loc>
+    <lastmod>2026-06-26</lastmod>
     <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
+    <priority>0.7</priority>
+  </url>
+
+  <!-- Exam Information Pages -->
+  <url>
+    <loc>https://toppers11.com/income-tax-departmental-exam.html</loc>
+    <lastmod>2026-06-26</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
   </url>
   <url>
-    <loc>https://incometax.toppers11.com/notification.html</loc>
-    <lastmod>2026-05-06</lastmod>
+    <loc>https://toppers11.com/income-tax-departmental-exam-notifications.html</loc>
+    <lastmod>2026-06-26</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
   </url>
   <url>
-    <loc>https://incometax.toppers11.com/exam-select.html</loc>
-    <lastmod>2026-05-06</lastmod>
+    <loc>https://toppers11.com/income-tax-departmental-exam-faq.html</loc>
+    <lastmod>2026-06-26</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
 
   <!-- Syllabus Pages (high SEO value) -->
   <url>
-    <loc>https://incometax.toppers11.com/syllabus-iti.html</loc>
-    <lastmod>2026-05-06</lastmod>
+    <loc>https://toppers11.com/income-tax-inspector-syllabus.html</loc>
+    <lastmod>2026-06-26</lastmod>
     <changefreq>monthly</changefreq>
+    <priority>0.95</priority>
+  </url>
+  <url>
+    <loc>https://toppers11.com/income-tax-officer-syllabus.html</loc>
+    <lastmod>2026-06-26</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.95</priority>
+  </url>
+  <url>
+    <loc>https://toppers11.com/ministerial-staff-syllabus.html</loc>
+    <lastmod>2026-06-26</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.95</priority>
+  </url>
+
+  <!-- Test Series Pages (primary revenue pages) -->
+  <url>
+    <loc>https://toppers11.com/income-tax-inspector-test-series.html</loc>
+    <lastmod>2026-06-26</lastmod>
+    <changefreq>weekly</changefreq>
     <priority>0.9</priority>
   </url>
   <url>
-    <loc>https://incometax.toppers11.com/syllabus-ito.html</loc>
-    <lastmod>2026-05-06</lastmod>
-    <changefreq>monthly</changefreq>
+    <loc>https://toppers11.com/income-tax-officer-test-series.html</loc>
+    <lastmod>2026-06-26</lastmod>
+    <changefreq>weekly</changefreq>
     <priority>0.9</priority>
   </url>
   <url>
-    <loc>https://incometax.toppers11.com/syllabus-ms.html</loc>
-    <lastmod>2026-05-06</lastmod>
-    <changefreq>monthly</changefreq>
+    <loc>https://toppers11.com/ministerial-staff-test-series.html</loc>
+    <lastmod>2026-06-26</lastmod>
+    <changefreq>weekly</changefreq>
     <priority>0.9</priority>
   </url>
 
-  <!-- Dashboard Pages -->
+  <!-- Tool & Access Pages -->
   <url>
-    <loc>https://incometax.toppers11.com/dashboard-iti.html</loc>
-    <lastmod>2026-05-06</lastmod>
+    <loc>https://toppers11.com/online-mock-test.html</loc>
+    <lastmod>2026-06-26</lastmod>
     <changefreq>weekly</changefreq>
-    <priority>0.7</priority>
+    <priority>0.85</priority>
   </url>
   <url>
-    <loc>https://incometax.toppers11.com/dashboard-ito.html</loc>
-    <lastmod>2026-05-06</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://incometax.toppers11.com/dashboard-ms.html</loc>
-    <lastmod>2026-05-06</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.7</priority>
-  </url>
-
-  <!-- Utility Pages -->
-  <url>
-    <loc>https://incometax.toppers11.com/login.html</loc>
-    <lastmod>2026-05-06</lastmod>
+    <loc>https://toppers11.com/login.html</loc>
+    <lastmod>2026-06-26</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://incometax.toppers11.com/test-engine.html</loc>
-    <lastmod>2026-05-06</lastmod>
+    <loc>https://toppers11.com/pay-test.html</loc>
+    <lastmod>2026-06-26</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>
   </url>
+
+  <!-- Policy & Navigation Pages -->
   <url>
-    <loc>https://incometax.toppers11.com/sitemap.html</loc>
-    <lastmod>2026-05-06</lastmod>
+    <loc>https://toppers11.com/privacy-policy.html</loc>
+    <lastmod>2026-06-26</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  <url>
+    <loc>https://toppers11.com/refund-policy.html</loc>
+    <lastmod>2026-06-26</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  <url>
+    <loc>https://toppers11.com/terms-and-conditions.html</loc>
+    <lastmod>2026-06-26</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  <url>
+    <loc>https://toppers11.com/sitemap.html</loc>
+    <lastmod>2026-06-26</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.4</priority>
   </url>
