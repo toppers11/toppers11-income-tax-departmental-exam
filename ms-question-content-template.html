@@ -1,0 +1,107 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>MS Paper I — Content Template (Sample, Not Real Exam Content)</title>
+<style>
+  :root{--green:#059669;--ink:#111827;--muted:#6B7280;--border:#E5E7EB;--bg:#F0FDF4}
+  *{box-sizing:border-box}
+  body{font-family:'Segoe UI',Arial,sans-serif;background:var(--bg);color:var(--ink);margin:0;padding:2rem 1rem}
+  .wrap{max-width:900px;margin:0 auto}
+  .warn{background:#FEF2F2;border:1.5px solid #FECACA;color:#991B1B;border-radius:10px;padding:1rem 1.25rem;margin-bottom:1.5rem;font-size:.9rem;line-height:1.6}
+  .warn strong{display:block;margin-bottom:.25rem;font-size:.95rem}
+  h1{font-size:1.5rem;margin-bottom:.25rem}
+  .sub{color:var(--muted);font-size:.9rem;margin-bottom:1.5rem}
+  h2{font-size:1.1rem;margin-top:2.5rem;border-bottom:2px solid var(--green);padding-bottom:.4rem}
+  table{width:100%;border-collapse:collapse;margin:1rem 0;font-size:.85rem;background:#fff}
+  th,td{border:1px solid var(--border);padding:.6rem .7rem;text-align:left;vertical-align:top}
+  th{background:#ECFDF5;font-weight:700}
+  code{background:#F3F4F6;padding:.1rem .4rem;border-radius:4px;font-size:.82rem}
+  .card{background:#fff;border:1px solid var(--border);border-radius:12px;padding:1.25rem 1.5rem;margin-bottom:1rem}
+  .q-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:.5rem}
+  .q-num{font-weight:700;color:var(--green)}
+  .marks{background:#FEF3C7;color:#92400E;font-size:.75rem;font-weight:700;padding:.15rem .6rem;border-radius:999px}
+  .q-text{font-size:.95rem;line-height:1.6;margin-bottom:.5rem}
+  .hint{background:#EFF6FF;border-left:3px solid #3B82F6;color:#1E40AF;font-size:.82rem;padding:.5rem .8rem;border-radius:6px}
+  .placeholder-tag{display:inline-block;background:#FDE68A;color:#78350F;font-size:.7rem;font-weight:700;letter-spacing:.03em;padding:.15rem .5rem;border-radius:4px;margin-bottom:.4rem}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <div class="warn">
+    <strong>⚠️ Sample structure only — not real exam content</strong>
+    I don't have access to actual MS Paper I past-year questions, so the questions below are placeholders
+    that illustrate the correct format and fields only. Replace the text with real, verified questions
+    before loading this into Supabase — do not publish these placeholder questions to the live site.
+  </div>
+
+  <h1>MS Paper I — Précis Writing &amp; Composition</h1>
+  <div class="sub">Content template for Supabase table <code>ms_paper1_2025_pyq</code> (subjective type)</div>
+
+  <h2>1. Required Supabase table schema</h2>
+  <p style="font-size:.88rem;color:var(--muted)">
+    This mirrors the columns the existing MCQ tables use, plus two columns
+    (<code>marks</code>, <code>hint</code>) that subjective-type tests need but the current
+    fetch query doesn't request yet — see the code note at the bottom.
+  </p>
+  <table>
+    <tr><th>Column</th><th>Type</th><th>Notes</th></tr>
+    <tr><td><code>id</code></td><td>int / text</td><td>Unique per question, used for ordering</td></tr>
+    <tr><td><code>question_en</code></td><td>text</td><td>Question prompt in English</td></tr>
+    <tr><td><code>question_hi</code></td><td>text</td><td>Question prompt in Hindi (optional)</td></tr>
+    <tr><td><code>marks</code></td><td>int</td><td>Marks allotted — shown as a badge on the question card</td></tr>
+    <tr><td><code>hint</code></td><td>text</td><td>Optional guidance shown under the question</td></tr>
+    <tr><td><code>explanation_en</code></td><td>text</td><td>Model answer / evaluation notes (English)</td></tr>
+    <tr><td><code>explanation_hi</code></td><td>text</td><td>Model answer / evaluation notes (Hindi, optional)</td></tr>
+  </table>
+
+  <h2>2. Sample rows (placeholder content — replace before publishing)</h2>
+
+  <div class="card">
+    <div class="placeholder-tag">PLACEHOLDER</div>
+    <div class="q-head"><span class="q-num">Q1</span><span class="marks">15 Marks</span></div>
+    <div class="q-text">[Sample only] Write a précis of the given passage in not more than one-third of its original length, and suggest a suitable title.</div>
+    <div class="hint">💡 Hint: Focus on the main argument; avoid copying phrases verbatim from the passage.</div>
+  </div>
+
+  <div class="card">
+    <div class="placeholder-tag">PLACEHOLDER</div>
+    <div class="q-head"><span class="q-num">Q2</span><span class="marks">10 Marks</span></div>
+    <div class="q-text">[Sample only] Draft an official letter to a department head requesting approval for a proposed office procedure change.</div>
+    <div class="hint">💡 Hint: Use formal register and standard government-letter format.</div>
+  </div>
+
+  <div class="card">
+    <div class="placeholder-tag">PLACEHOLDER</div>
+    <div class="q-head"><span class="q-num">Q3</span><span class="marks">10 Marks</span></div>
+    <div class="q-text">[Sample only] Write a short essay (250 words) on a given topic relevant to public administration.</div>
+  </div>
+
+  <div class="card">
+    <div class="placeholder-tag">PLACEHOLDER</div>
+    <div class="q-head"><span class="q-num">Q4</span><span class="marks">10 Marks</span></div>
+    <div class="q-text">[Sample only] Summarize a given circular/notification in your own words, highlighting the key directives.</div>
+  </div>
+
+  <div class="card">
+    <div class="placeholder-tag">PLACEHOLDER</div>
+    <div class="q-head"><span class="q-num">Q5</span><span class="marks">5 Marks</span></div>
+    <div class="q-text">[Sample only] Correct the given passage for grammar, punctuation, and clarity.</div>
+  </div>
+
+  <h2>3. Code fix still needed in <code>online-mock-test.html</code></h2>
+  <p style="font-size:.88rem;line-height:1.7">
+    Even once a real Supabase table like <code>ms_paper1_2025_pyq</code> exists with the columns above,
+    the current fetch query (around the <code>Q_COLS</code> constant) only selects MCQ fields —
+    it doesn't request <code>marks</code> or <code>hint</code>, and the row-mapping step
+    (<code>QUESTIONS = data.map(...)</code>) doesn't set them on each question object either.
+    <code>renderSubjective()</code> already knows how to display <code>q.marks</code> and <code>q.hint</code> —
+    they just never get populated from the database today. This needs a small edit before real MS content
+    will display correctly, separate from the content itself.
+  </p>
+
+</div>
+</body>
+</html>
