@@ -204,6 +204,11 @@ body{background:var(--bg);color:var(--ink);font-family:'Open Sans',sans-serif;ov
 .pi p{font-size:.68rem;color:var(--muted)}
 .pp{margin-left:auto;font-size:1.2rem;font-weight:800;white-space:nowrap;color:var(--ink)}
 .best-m{position:absolute;top:-7px;right:8px;background:var(--t3);color:#fff;font-size:.52rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;padding:.12rem .45rem;border-radius:999px}
+.pc-m.disabled{cursor:not-allowed;opacity:.5;background:#f7f7f8}
+.pc-m.disabled:hover{border-color:var(--bdr)}
+.pc-m.disabled .pp{color:var(--muted)}
+.soon-m{position:absolute;top:-7px;right:8px;background:var(--muted);color:#fff;font-size:.52rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;padding:.12rem .45rem;border-radius:999px}
+.plan-note{font-size:.68rem;color:var(--t3);font-weight:700;margin:-.35rem 0 .85rem;text-align:center}
 .btn-cont{width:100%;padding:.78rem;border:none;border-radius:9px;font-size:.88rem;font-weight:700;cursor:pointer;background:linear-gradient(135deg,var(--t1),var(--t3));color:#fff;margin-top:.5rem;font-family:'Open Sans',sans-serif}
 .btn-cont:hover{background:var(--t1)}
 
@@ -627,7 +632,7 @@ function nextUpiId(){_upiIdx=(_upiIdx+1)%UPI_POOL.length;return UPI_POOL[_upiIdx
 
 const PLANS={
   'single-ms':{label:'MS Single Paper',amount:355,desc:'All 20 tests for 1 subject · ₹355 / yr',requiresPaperSelect:false},
-  'bunch-ms':{label:'MS Complete — All 4 Papers',amount:955,desc:'All 80 tests · ₹955 / Calendar Year · All 4 Papers — save ₹465',best:true,requiresPaperSelect:false}
+  'bunch-ms':{label:'MS Complete — All 4 Papers',amount:955,desc:'All 80 tests · ₹955 / Calendar Year · All 4 Papers — save ₹465',best:true,requiresPaperSelect:false,disabled:true}
 };
 
 let selPlan=null;
@@ -867,15 +872,20 @@ function buildPlans(){
   const pc=document.getElementById('plan-cards');pc.innerHTML='';
   Object.entries(PLANS).forEach(([k,p])=>{
     const d=document.createElement('div');
-    d.className='pc-m'+(k===selPlan?' sel':'');
-    d.onclick=()=>selectModalPlan(k);
-    d.innerHTML=`<div class="pr"><div class="pd-dot"></div></div><div class="pi"><h4>${p.label}</h4><p>${p.desc}</p></div><div class="pp">₹${p.amount}</div>${p.best?'<span class="best-m">Best Value</span>':''}`;
+    d.className='pc-m'+(k===selPlan?' sel':'')+(p.disabled?' disabled':'');
+    if(!p.disabled)d.onclick=()=>selectModalPlan(k);
+    const badge=p.disabled?'<span class="soon-m">Coming Soon</span>':(p.best?'<span class="best-m">Best Value</span>':'');
+    d.innerHTML=`<div class="pr"><div class="pd-dot"></div></div><div class="pi"><h4>${p.label}</h4><p>${p.desc}</p></div><div class="pp">₹${p.amount}</div>${badge}`;
     pc.appendChild(d);
   });
+  const note=document.createElement('p');
+  note.className='plan-note';
+  note.textContent='Only for Paper 4 Ministerial Staff Exam';
+  pc.appendChild(note);
   const cb=document.getElementById('cont-btn');
   if(cb)cb.textContent=selPlan?`Pay ₹${PLANS[selPlan].amount} via UPI →`:'Select a plan to continue';
 }
-function selectModalPlan(k){selPlan=k;buildPlans();}
+function selectModalPlan(k){if(PLANS[k]&&PLANS[k].disabled)return;selPlan=k;buildPlans();}
 function openModal(){document.getElementById('overlay').classList.add('show');document.getElementById('step1').style.display='';document.getElementById('step2').style.display='none';buildPlans();}
 function closeModal(){document.getElementById('overlay').classList.remove('show');}
 function overlayClick(e){if(e.target===document.getElementById('overlay'))closeModal();}
