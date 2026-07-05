@@ -356,6 +356,26 @@ body::before{
   background:var(--green);
   flex-shrink:0;margin-top:5px;
 }
+.dot-muted{background:#d1d5db;}
+.plist li.li-soon{color:#b0b0b0;}
+.plist li.li-active{color:#374151;font-weight:600;}
+.soon-tag{
+  margin-left:auto;flex-shrink:0;
+  font-size:8.5px;font-weight:700;
+  letter-spacing:0.08em;text-transform:uppercase;
+  color:#9ca3af;background:#f3f4f6;
+  border:1px solid #e5e7eb;border-radius:999px;
+  padding:2px 8px;
+}
+.new-tag{
+  margin-left:auto;flex-shrink:0;
+  font-size:8.5px;font-weight:800;
+  letter-spacing:0.06em;text-transform:uppercase;
+  color:#fff;background:linear-gradient(90deg,#059669,#0ea56a);
+  border-radius:999px;padding:2px 8px;
+  box-shadow:0 1px 6px rgba(5,150,105,0.3);
+  white-space:nowrap;
+}
 
 /* Price box — clean white with green border */
 .price-box{
@@ -594,32 +614,28 @@ body::before{
         </div>
         <div class="card-pills">
           <span class="card-pill">✓ 1 Free MS Test</span>
-          <span class="card-pill">4 Papers</span>
-          <span class="card-pill">400 Marks</span>
+          <span class="card-pill">1 Paper Available</span>
           <span class="card-pill">Promo Exam</span>
         </div>
       </div>
       <div class="card-body">
         <ul class="plist">
-          <li><span class="dot"></span>Paper I — IT Law &amp; Taxpayer Services</li>
-          <li><span class="dot"></span>Paper II — Income Tax Computation</li>
-          <li><span class="dot"></span>Paper III — Office Procedure</li>
-          <li><span class="dot"></span>Paper IV — IT Applications &amp; Operations</li>
+          <li class="li-soon"><span class="dot dot-muted"></span>Paper I — IT Law &amp; Taxpayer Services<span class="soon-tag">Coming Soon</span></li>
+          <li class="li-soon"><span class="dot dot-muted"></span>Paper II — Income Tax Computation<span class="soon-tag">Coming Soon</span></li>
+          <li class="li-soon"><span class="dot dot-muted"></span>Paper III — Office Procedure<span class="soon-tag">Coming Soon</span></li>
+          <li class="li-active"><span class="dot"></span>Paper IV — IT Applications &amp; Operations (without books)<span class="new-tag">★ New paper</span></li>
         </ul>
         <div class="price-box">
           <div class="ptop">
-            <span class="plabel">Complete Bunch</span>
-            <span class="save-pill">Save ₹465</span>
+            <span class="plabel">Paper IV — IT Applications &amp; Operations</span>
           </div>
           <div class="price-row">
-            <span class="price-strike">₹1420</span>
-            <span class="price-final">₹955</span>
+            <span class="price-final">₹355</span>
             <span class="price-period">/ yr</span>
           </div>
-          <div class="price-per">Per paper: <span>₹355 / yr</span></div>
         </div>
         <div class="card-actions">
-          <button class="btn-main" onclick="window.location.href='ministerial-staff-test-series.html'">GET MS BUNCH →</button>
+          <button class="btn-main" onclick="window.location.href='ministerial-staff-test-series.html'">GET PAPER IV →</button>
           <button class="btn-free" onclick="window.location.href='online-mock-test.html?id=ms-p4-2026-t1'">✦ FREE TEST</button>
         </div>
       </div>
