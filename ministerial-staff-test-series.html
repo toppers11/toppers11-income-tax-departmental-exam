@@ -233,6 +233,7 @@ body{background:var(--bg);color:var(--ink);font-family:'Open Sans',sans-serif;ov
 .utr-label span{font-weight:400;color:var(--muted)}
 .utr-input{width:100%;padding:.55rem .65rem;border:1.5px solid #ddd;border-radius:8px;font-size:.82rem;font-family:'Open Sans',sans-serif;color:var(--ink);transition:border-color .15s}
 .utr-input:focus{outline:none;border-color:var(--t3)}
+.utr-input.invalid{border-color:#d33;background:#fff6f6}
 .pending-banner{display:flex;align-items:flex-start;gap:.6rem;background:#fffaeb;border:1.5px solid #f5deA0;border-radius:12px;padding:.75rem .9rem;margin-bottom:1rem;font-size:.78rem;color:#6b4e00;line-height:1.55}
 .pending-banner strong{color:#4d3900}
 .al-err{padding:.55rem .8rem;border-radius:8px;font-size:.75rem;font-weight:500;margin-bottom:.75rem;display:none;background:#fef2f2;border:1px solid #fecaca;color:#991b1b}
@@ -559,8 +560,8 @@ body{background:var(--bg);color:var(--ink);font-family:'Open Sans',sans-serif;ov
               <div id="confirm-sublabel" style="font-size:.75rem;color:var(--muted);line-height:1.55">Check your payment app for a success message, then submit below for verification.</div>
             </div>
             <div class="utr-field-wrap">
-              <label for="utr-input" class="utr-label">UPI transaction / reference ID <span>(optional — speeds up verification)</span></label>
-              <input type="text" id="utr-input" class="utr-input" placeholder="e.g. 402816558211" maxlength="40" autocomplete="off">
+              <label for="utr-input" class="utr-label">UPI transaction / reference ID <span>(required — found in your payment app's success screen)</span></label>
+              <input type="text" id="utr-input" class="utr-input" placeholder="e.g. 402816558211" maxlength="40" autocomplete="off" required>
             </div>
             <div class="al-err" id=utr-err></div>
             <button class=btn-act id=act-btn onclick=submitPayment() style="margin-bottom:.55rem">
@@ -908,7 +909,9 @@ function showConfirmScreen(){
   const p=PLANS[selPlan]||{};
   const lbl=document.getElementById('confirm-sublabel');
   if(lbl)lbl.innerHTML=`You selected <strong style="color:var(--t1)">${p.label}</strong> for <strong style="color:var(--t1)">₹${p.amount}</strong>. If your payment app showed a success screen, submit it below — we'll verify and unlock your tests.`;
-  const utrInput=document.getElementById('utr-input');if(utrInput)utrInput.value='';
+  const utrInput=document.getElementById('utr-input');
+  if(utrInput){utrInput.value='';utrInput.classList.remove('invalid');}
+  const errEl2=document.getElementById('utr-err');if(errEl2){errEl2.classList.remove('show');errEl2.textContent='';}
 }
 function showPendingScreen(){
   document.getElementById('pay-screen').style.display='none';document.getElementById('confirm-screen').style.display='none';document.getElementById('pending-screen').style.display='';
@@ -952,11 +955,20 @@ function onPaidClick(){
 async function submitPayment(){
   const btn=document.getElementById('act-btn');
   const errEl=document.getElementById('utr-err');
+  const utrInput=document.getElementById('utr-input');
   if(errEl){errEl.classList.remove('show');errEl.textContent='';}
-  const user=getUser();const plan=PLANS[selPlan]||{};
-  const utrRaw=(document.getElementById('utr-input')||{}).value||'';
-  const utr=utrRaw.trim().slice(0,40)||null;
+  if(utrInput)utrInput.classList.remove('invalid');
 
+  const utrRaw=(utrInput||{}).value||'';
+  const utr=utrRaw.trim().slice(0,40);
+
+  if(utr.length<6){
+    if(errEl){errEl.textContent='Please enter your UPI transaction / reference ID — check the success screen in your payment app.';errEl.classList.add('show');}
+    if(utrInput){utrInput.classList.add('invalid');utrInput.focus();}
+    return;
+  }
+
+  const user=getUser();const plan=PLANS[selPlan]||{};
   btn.disabled=true;btn.innerHTML='<span class="spin"></span> Submitting…';
 
   // NOTE: status is always sent as 'pending_verification' — this app never grants
@@ -1009,6 +1021,12 @@ function showSkeleton(){
 }
 
 window.addEventListener('DOMContentLoaded',async()=>{
+  const utrInputEl=document.getElementById('utr-input');
+  if(utrInputEl)utrInputEl.addEventListener('input',()=>{
+    utrInputEl.classList.remove('invalid');
+    const errEl=document.getElementById('utr-err');if(errEl){errEl.classList.remove('show');errEl.textContent='';}
+  });
+
   const user=getUser();
   if(!isSessionValid(user)){window.location.href='login.html';return;}
   showSkeleton();
