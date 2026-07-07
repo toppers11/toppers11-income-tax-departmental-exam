@@ -1044,7 +1044,11 @@ async function syncPaymentStatus(){
     const emailEnc=encodeURIComponent((user.email||'').toLowerCase());
     const rows=await sbFetch('payments?email=eq.'+emailEnc+'&status=in.(verified,pending_verification)&exam_type=eq.MS&select=subject_name,status&limit=20');
     const verifiedNames=(rows||[]).filter(r=>r.status==='verified').map(r=>r.subject_name);
-    const pendingNames=(rows||[]).filter(r=>r.status==='pending_verification').map(r=>r.subject_name);
+    const knownNames=new Set([BUNCH_LABEL,...PAPERS.map(p=>p.name)]);
+    // Only surface pending rows whose subject_name matches a real paper/bunch —
+    // stale or malformed rows (e.g. old test data with an unrecognized name)
+    // can never resolve into an unlock, so don't confuse the user with them.
+    const pendingNames=(rows||[]).filter(r=>r.status==='pending_verification'&&knownNames.has(r.subject_name)).map(r=>r.subject_name);
 
     const bunchUnlocked=verifiedNames.includes(BUNCH_LABEL);
     const unlockedPapers=PAPERS.filter(p=>verifiedNames.includes(p.name)).map(p=>p.key);
