@@ -228,6 +228,13 @@ body{background:var(--bg);color:var(--ink);font-family:'Open Sans',sans-serif;ov
 .btn-paid:hover{transform:translateY(-1px);box-shadow:0 6px 20px rgba(0,0,0,.35)}
 .btn-paid:active{transform:translateY(0)}
 .utr-box{background:#fff;border:2px solid #c6ede0;border-radius:12px;padding:.65rem .75rem .6rem;box-shadow:0 2px 12px rgba(0,109,91,.07)}
+.utr-field-wrap{margin-bottom:.65rem;text-align:left}
+.utr-label{display:block;font-size:.68rem;font-weight:700;color:var(--ink);margin-bottom:.3rem}
+.utr-label span{font-weight:400;color:var(--muted)}
+.utr-input{width:100%;padding:.55rem .65rem;border:1.5px solid #ddd;border-radius:8px;font-size:.82rem;font-family:'Open Sans',sans-serif;color:var(--ink);transition:border-color .15s}
+.utr-input:focus{outline:none;border-color:var(--t3)}
+.pending-banner{display:flex;align-items:flex-start;gap:.6rem;background:#fffaeb;border:1.5px solid #f5deA0;border-radius:12px;padding:.75rem .9rem;margin-bottom:1rem;font-size:.78rem;color:#6b4e00;line-height:1.55}
+.pending-banner strong{color:#4d3900}
 .al-err{padding:.55rem .8rem;border-radius:8px;font-size:.75rem;font-weight:500;margin-bottom:.75rem;display:none;background:#fef2f2;border:1px solid #fecaca;color:#991b1b}
 .al-err.show{display:block}
 .btn-act{width:100%;padding:.55rem;border:none;border-radius:8px;font-size:.78rem;font-weight:800;cursor:pointer;background:linear-gradient(135deg,var(--t1),var(--t3));color:#fff;display:flex;align-items:center;justify-content:center;gap:.4rem;font-family:'Open Sans',sans-serif;letter-spacing:.01em;box-shadow:0 3px 14px rgba(0,109,91,.22);transition:all .2s;position:relative;overflow:hidden}
@@ -474,6 +481,10 @@ body{background:var(--bg);color:var(--ink);font-family:'Open Sans',sans-serif;ov
 
 <!-- MAIN -->
 <main class="main" id="main-content" aria-label="Dashboard content">
+  <div class="pending-banner" id="pending-banner" style="display:none">
+    <svg width=18 height=18 fill=none stroke="var(--yellow2)" stroke-width=2.2 viewBox="0 0 24 24"><circle cx=12 cy=12 r=10/><path d="M12 7v5l3.5 2"/></svg>
+    <div><strong>Payment under review</strong> — <span id="pending-banner-txt">your submission is being verified.</span> Tests will unlock automatically once approved, usually within a few hours.</div>
+  </div>
   <div class="retest-notice">
     <div class="rn-accent"></div>
     <div class="rn-body">
@@ -544,17 +555,34 @@ body{background:var(--bg);color:var(--ink);font-family:'Open Sans',sans-serif;ov
               <div style="width:54px;height:54px;border-radius:50%;background:linear-gradient(135deg,var(--t-dark),var(--t3));display:grid;place-items:center;margin:0 auto .65rem">
                 <svg width=22 height=22 fill=none stroke=#fff stroke-width=2.5 viewBox="0 0 24 24"><circle cx=12 cy=12 r=10/><path d="M12 8v4l3 3"/></svg>
               </div>
-              <div style="font-size:1rem;font-weight:800;color:var(--ink);margin-bottom:.3rem">Did your payment go through?</div>
-              <div id="confirm-sublabel" style="font-size:.75rem;color:var(--muted);line-height:1.55">Check your payment app for a success message, then tap below.</div>
+              <div style="font-size:1rem;font-weight:800;color:var(--ink);margin-bottom:.3rem">Confirm your payment</div>
+              <div id="confirm-sublabel" style="font-size:.75rem;color:var(--muted);line-height:1.55">Check your payment app for a success message, then submit below for verification.</div>
+            </div>
+            <div class="utr-field-wrap">
+              <label for="utr-input" class="utr-label">UPI transaction / reference ID <span>(optional — speeds up verification)</span></label>
+              <input type="text" id="utr-input" class="utr-input" placeholder="e.g. 402816558211" maxlength="40" autocomplete="off">
             </div>
             <div class="al-err" id=utr-err></div>
-            <button class=btn-act id=act-btn onclick=activate() style="margin-bottom:.55rem">
+            <button class=btn-act id=act-btn onclick=submitPayment() style="margin-bottom:.55rem">
               <svg width=14 height=14 fill=none stroke=currentColor stroke-width=2.5 viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>
-              ✅ Yes, Payment Done — Unlock Now
+              ✅ Submit for Verification
             </button>
             <button onclick="showPayScreen()" style="width:100%;background:none;border:1.5px solid #e0e0e0;border-radius:8px;padding:.48rem;font-size:.75rem;font-weight:600;color:var(--muted);cursor:pointer;transition:all .15s;font-family:'Open Sans',sans-serif" onmouseover="this.style.borderColor='var(--t3)';this.style.color='var(--t3)'" onmouseout="this.style.borderColor='#e0e0e0';this.style.color='var(--muted)'">
               ← Payment not done yet — go back
             </button>
+          </div>
+        </div>
+        <!-- PENDING SCREEN -->
+        <div id="pending-screen" style="display:none">
+          <div class=utr-box style="border-color:var(--yellow2);padding:1.2rem 1rem 1rem">
+            <div style="text-align:center">
+              <div style="width:54px;height:54px;border-radius:50%;background:linear-gradient(135deg,var(--yellow2),var(--yellow));display:grid;place-items:center;margin:0 auto .65rem">
+                <svg width=22 height=22 fill=none stroke="var(--t-dark)" stroke-width=2.5 viewBox="0 0 24 24"><circle cx=12 cy=12 r=10/><path d="M12 7v5l3.5 2"/></svg>
+              </div>
+              <div style="font-size:1rem;font-weight:800;color:var(--ink);margin-bottom:.35rem">Payment submitted for review</div>
+              <div style="font-size:.75rem;color:var(--muted);line-height:1.6;margin-bottom:1rem">We manually verify each payment against our bank/UPI records. This usually takes a few hours. <strong>Your tests will unlock automatically</strong> the next time you open this page after we verify it — no need to pay again.</div>
+            </div>
+            <button class=btn-cont onclick=closeModal()>Got it</button>
           </div>
         </div>
       </div>
@@ -874,12 +902,16 @@ async function doContinue(){
 
 let _upiAppOpened=false;let _visibilityHandler=null;
 
-function showPayScreen(){_upiAppOpened=false;document.getElementById('pay-screen').style.display='';document.getElementById('confirm-screen').style.display='none';document.getElementById('utr-err').classList.remove('show');}
+function showPayScreen(){_upiAppOpened=false;document.getElementById('pay-screen').style.display='';document.getElementById('confirm-screen').style.display='none';document.getElementById('pending-screen').style.display='none';document.getElementById('utr-err').classList.remove('show');}
 function showConfirmScreen(){
-  document.getElementById('pay-screen').style.display='none';document.getElementById('confirm-screen').style.display='';
+  document.getElementById('pay-screen').style.display='none';document.getElementById('confirm-screen').style.display='';document.getElementById('pending-screen').style.display='none';
   const p=PLANS[selPlan]||{};
   const lbl=document.getElementById('confirm-sublabel');
-  if(lbl)lbl.innerHTML=`You selected <strong style="color:var(--t1)">${p.label}</strong> for <strong style="color:var(--t1)">₹${p.amount}</strong>. If your payment app showed a success screen, tap below to unlock your tests instantly.`;
+  if(lbl)lbl.innerHTML=`You selected <strong style="color:var(--t1)">${p.label}</strong> for <strong style="color:var(--t1)">₹${p.amount}</strong>. If your payment app showed a success screen, submit it below — we'll verify and unlock your tests.`;
+  const utrInput=document.getElementById('utr-input');if(utrInput)utrInput.value='';
+}
+function showPendingScreen(){
+  document.getElementById('pay-screen').style.display='none';document.getElementById('confirm-screen').style.display='none';document.getElementById('pending-screen').style.display='';
 }
 
 function onUpiAppClick(e,el){
@@ -917,28 +949,45 @@ function onPaidClick(){
   showConfirmScreen();
 }
 
-async function activate(){
+async function submitPayment(){
   const btn=document.getElementById('act-btn');
   const errEl=document.getElementById('utr-err');
-  if(errEl)errEl.classList.remove('show');
-  btn.disabled=true;btn.innerHTML='<span class="spin"></span> Unlocking…';
+  if(errEl){errEl.classList.remove('show');errEl.textContent='';}
   const user=getUser();const plan=PLANS[selPlan]||{};
+  const utrRaw=(document.getElementById('utr-input')||{}).value||'';
+  const utr=utrRaw.trim().slice(0,40)||null;
 
-  // Grant access locally — instant unlock
-  saveUser({...user,paid:true,plan:selPlan});
+  btn.disabled=true;btn.innerHTML='<span class="spin"></span> Submitting…';
 
-  const record={email:(user.email||'').toLowerCase(),name:user.name||'',plan_key:selPlan,plan_label:plan.label||'',amount:plan.amount||0,exam_type:'MS',upi_ref:null,activated_at:new Date().toISOString(),status:'verified'};
+  // NOTE: status is always sent as 'pending_verification' — this app never grants
+  // access on its own. A human must check the payment (bank/UPI statement) and
+  // flip this row's status to 'verified' in Supabase for the test series to unlock.
+  const record={email:(user.email||'').toLowerCase(),name:user.name||'',plan_key:selPlan,plan_label:plan.label||'',amount:plan.amount||0,exam_type:'MS',upi_ref:utr,activated_at:new Date().toISOString(),status:'pending_verification'};
+
+  const result=await sbInsert('payments',record);
+  if(!result.ok){
+    btn.disabled=false;btn.innerHTML='✅ Submit for Verification';
+    if(errEl){errEl.textContent='Could not submit right now — please check your connection and try again.';errEl.classList.add('show');}
+    return;
+  }
+
+  // Keep a local copy too, and mark the user as "pending" (NOT paid) so we can
+  // show a review banner. Access only turns on once the Supabase sync below
+  // finds a row with status='verified' for this email.
   const payments=JSON.parse(localStorage.getItem('t11_payments')||'[]');payments.push(record);localStorage.setItem('t11_payments',JSON.stringify(payments));
-
-  // Push to Supabase in background
-  sbInsert('payments',record).then(result=>{if(!result.ok)console.error('Supabase sync failed:',result.status,result.error);});
-
-  // Update users table
-  try{await fetchWithTimeout(SUPABASE_URL+'/rest/v1/users?email=eq.'+encodeURIComponent((user.email||'').toLowerCase()),{method:'PATCH',headers:{'Content-Type':'application/json','apikey':SUPABASE_ANON_KEY,'Authorization':'Bearer '+SUPABASE_ANON_KEY,'Prefer':'return=minimal'},body:JSON.stringify({paid:true,plan:selPlan})});}catch(e){console.warn('User update failed',e);}
+  saveUser({...user,pendingPlan:selPlan,pendingAt:new Date().toISOString()});
 
   if(_visibilityHandler){document.removeEventListener('visibilitychange',_visibilityHandler);_visibilityHandler=null;}
-  closeModal();showToast('🎉 All MS tests unlocked! Start practising now.');render();
-  btn.disabled=false;btn.innerHTML='✅ Yes, Payment Done — Unlock Now';
+  showPendingScreen();
+  showPendingBanner(plan.label);
+  btn.disabled=false;btn.innerHTML='✅ Submit for Verification';
+}
+
+function showPendingBanner(planLabel){
+  const b=document.getElementById('pending-banner');if(!b)return;
+  const t=document.getElementById('pending-banner-txt');
+  if(t)t.textContent=`your ${planLabel||'payment'} submission is being verified.`;
+  b.style.display='flex';
 }
 
 function showToast(msg){const t=document.getElementById('toast');document.getElementById('toast-msg').textContent=msg;t.classList.add('show');setTimeout(()=>t.classList.remove('show'),3500);}
@@ -964,15 +1013,25 @@ window.addEventListener('DOMContentLoaded',async()=>{
   if(!isSessionValid(user)){window.location.href='login.html';return;}
   showSkeleton();
 
-  // Sync from Supabase — auto-unlock on login
+  // Sync from Supabase — auto-unlock ONLY on verified payments.
+  // pending_verification must NEVER unlock access — a human has to approve it
+  // by changing the row's status to 'verified' in Supabase first.
   try{
     if(sbRateOk()){
       const emailEnc=encodeURIComponent((user.email||'').toLowerCase());
-      const rows=await sbFetch('payments?email=eq.'+emailEnc+'&status=in.(verified,pending_verification)&exam_type=eq.MS&select=plan_key,status&limit=5');
-      if(rows&&rows.length){
-        const hasBunch=rows.some(r=>r.plan_key==='bunch-ms');
-        const hasSingle=rows.some(r=>r.plan_key==='single-ms');
-        if(hasBunch||hasSingle){saveUser({...user,paid:true,plan:hasBunch?'bunch-ms':'single-ms'});}
+      const rows=await sbFetch('payments?email=eq.'+emailEnc+'&status=in.(verified,pending_verification)&exam_type=eq.MS&select=plan_key,status,plan_label&limit=10');
+      const verifiedRows=(rows||[]).filter(r=>r.status==='verified');
+      const pendingRows=(rows||[]).filter(r=>r.status==='pending_verification');
+
+      if(verifiedRows.length){
+        const hasBunch=verifiedRows.some(r=>r.plan_key==='bunch-ms');
+        const hasSingle=verifiedRows.some(r=>r.plan_key==='single-ms');
+        if(hasBunch||hasSingle){
+          const u=getUser();
+          saveUser({...u,paid:true,plan:hasBunch?'bunch-ms':'single-ms',pendingPlan:null,pendingAt:null});
+        }
+      }else if(pendingRows.length){
+        showPendingBanner(pendingRows[0].plan_label);
       }
     }
   }catch(e){console.warn('Plan sync failed — using cached status',e);}
@@ -1056,9 +1115,9 @@ document.addEventListener('keydown',e=>{
 
 Object.assign(window,{
   toggleProfile,openEditModal,closeEditModal,saveProfile,logout,
-  closeModal,overlayClick,doContinue,activate,backToPlan,
+  closeModal,overlayClick,doContinue,submitPayment,backToPlan,
   buildTabs,switchTab,render,
-  onUpiAppClick,onPaidClick,showPayScreen,showConfirmScreen
+  onUpiAppClick,onPaidClick,showPayScreen,showConfirmScreen,showPendingScreen
 });
 
 })();
