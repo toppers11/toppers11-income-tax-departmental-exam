@@ -633,8 +633,10 @@ const PLANS={
   'single-ms':{label:'MS Single Paper',amount:355,desc:'All 20 tests for 1 subject · ₹355 / yr',requiresPaperSelect:false},
   'bunch-ms':{label:'MS Complete — All 4 Papers',amount:955,desc:'All 80 tests · ₹955 / Calendar Year · All 4 Papers — save ₹465',best:true,requiresPaperSelect:false,disabled:true}
 };
+const BUNCH_LABEL='All 4 Papers (Complete Bunch)';
 
 let selPlan=null;
+let modalPaperKey=null; // which paper (p1..p4) the open modal is unlocking; null for bunch
 
 const PAPERS=[
   {key:'p1',name:'IT Law & Taxpayer Services',hasFree:true,topics:'IT Act 1961 & 2025, Basis of Charge, Deductions, Set-off of losses, Return of income, Appeals, Taxpayer Charter, TRACES, 26AS, e-PAN, Prefilled ITR, ASK, SEVOTTAM, CPGRAM, e-Nivaran.',type:'Objective MCQ',marks:100,tests:[
@@ -737,8 +739,8 @@ function isSessionValid(user){
   if(user.loginAt){const age=Date.now()-new Date(user.loginAt).getTime();if(age>86400000){localStorage.removeItem('t11_user');return false;}}
   return true;
 }
-function isPaid(){const u=getUser();return u.paid&&(!u.plan||u.plan.includes('bunch-ms')||u.plan.includes('single-ms'));}
-function isUnlocked(t){return t.free||isPaid();}
+function isPaperUnlocked(paperKey){const u=getUser();return !!u.bunchUnlocked||(u.unlockedPapers||[]).includes(paperKey);}
+function isUnlocked(t,paperKey){return t.free||isPaperUnlocked(paperKey);}
 function getScore(id){try{return JSON.parse(localStorage.getItem('t11_score_'+id)||'null')}catch(e){return null}}
 function getAttempts(id){try{return parseInt(localStorage.getItem('t11_attempts_'+id)||'0',10);}catch(e){return 0;}}
 function recordAttempt(id){const n=getAttempts(id)+1;localStorage.setItem('t11_attempts_'+id,n);}
@@ -804,7 +806,7 @@ function buildCards(p,i){
         <div style="font-size:1.6rem;font-weight:900;color:var(--yellow);line-height:1">₹955 <span style="font-size:.65rem;font-weight:600;color:rgba(255,255,255,.75)">/ all 4</span></div>
       </div>
     </div>
-    <button class="btn-bunch" onclick="openModal()">Unlock This Paper →</button>
+    <button class="btn-bunch" onclick="openModal('${p.key}')">Unlock This Paper →</button>
   </div></div></div>`;
 
   div.innerHTML=`
@@ -814,7 +816,7 @@ function buildCards(p,i){
         <p>${p.tests.length} tests &nbsp;·&nbsp; ${p.tests[0].qs} questions &nbsp;·&nbsp; ${p.tests[0].mins} min each &nbsp;·&nbsp; ${p.marks} marks &nbsp;·&nbsp; ${p.type}</p>
       </div>
     </div>
-    ${!isPaid()?bundleHTML:''}
+    ${!isPaperUnlocked(p.key)?bundleHTML:''}
     <div class="papers-lbl">All 21 Tests — ${p.tests.filter(t=>t.pyq).length} PYQs + ${p.tests.filter(t=>!t.pyq).length} Series</div>
     <div class="tests-grid" id="grid-${p.key}"></div>`;
 
@@ -822,7 +824,7 @@ function buildCards(p,i){
   const grid=document.getElementById('grid-'+p.key);
 
   p.tests.forEach(t=>{
-    const unlocked=isUnlocked(t);
+    const unlocked=isUnlocked(t,p.key);
     const score=getScore(t.id);
     const attempts=getAttempts(t.id);
     const maxed=unlocked&&score&&attempts>=3;
@@ -855,7 +857,7 @@ function buildCards(p,i){
         </div>
       </div>
       <div class="cf">${footerBtn}</div>`;
-    if(!unlocked)card.onclick=()=>openModal();
+    if(!unlocked)card.onclick=()=>openModal(p.key);
     wrap.appendChild(card);grid.appendChild(wrap);
   });
 }
@@ -885,7 +887,16 @@ function buildPlans(){
   if(cb)cb.textContent=selPlan?`Pay ₹${PLANS[selPlan].amount} via UPI →`:'Select a plan to continue';
 }
 function selectModalPlan(k){if(PLANS[k]&&PLANS[k].disabled)return;selPlan=k;buildPlans();}
-function openModal(){document.getElementById('overlay').classList.add('show');document.getElementById('step1').style.display='';document.getElementById('step2').style.display='none';buildPlans();}
+function openModal(paperKey){
+  modalPaperKey=paperKey||null;
+  document.getElementById('overlay').classList.add('show');
+  document.getElementById('step1').style.display='';
+  document.getElementById('step2').style.display='none';
+  const paperObj=PAPERS.find(x=>x.key===modalPaperKey);
+  const titleEl=document.getElementById('modal-title');
+  if(titleEl)titleEl.textContent=paperObj?`Unlock Paper — ${paperObj.name}`:'Unlock MS Tests — DE Rules 2026';
+  buildPlans();
+}
 function closeModal(){document.getElementById('overlay').classList.remove('show');}
 function overlayClick(e){if(e.target===document.getElementById('overlay'))closeModal();}
 
@@ -907,8 +918,10 @@ function showPayScreen(){_upiAppOpened=false;document.getElementById('pay-screen
 function showConfirmScreen(){
   document.getElementById('pay-screen').style.display='none';document.getElementById('confirm-screen').style.display='';document.getElementById('pending-screen').style.display='none';
   const p=PLANS[selPlan]||{};
+  const paperObj=PAPERS.find(x=>x.key===modalPaperKey);
+  const subjectPhrase=selPlan==='bunch-ms'?BUNCH_LABEL:(paperObj?paperObj.name:p.label);
   const lbl=document.getElementById('confirm-sublabel');
-  if(lbl)lbl.innerHTML=`You selected <strong style="color:var(--t1)">${p.label}</strong> for <strong style="color:var(--t1)">₹${p.amount}</strong>. If your payment app showed a success screen, submit it below — we'll verify and unlock your tests.`;
+  if(lbl)lbl.innerHTML=`You selected <strong style="color:var(--t1)">${subjectPhrase}</strong> for <strong style="color:var(--t1)">₹${p.amount}</strong>. If your payment app showed a success screen, submit it below — we'll verify and unlock your tests.`;
   const utrInput=document.getElementById('utr-input');
   if(utrInput){utrInput.value='';utrInput.classList.remove('invalid');}
   const errEl2=document.getElementById('utr-err');if(errEl2){errEl2.classList.remove('show');errEl2.textContent='';}
@@ -969,12 +982,17 @@ async function submitPayment(){
   }
 
   const user=getUser();const plan=PLANS[selPlan]||{};
+  const paperObj=PAPERS.find(x=>x.key===modalPaperKey);
+  const subjectName=selPlan==='bunch-ms'?BUNCH_LABEL:(paperObj?paperObj.name:plan.label||'MS Exam');
+
   btn.disabled=true;btn.innerHTML='<span class="spin"></span> Submitting…';
 
   // NOTE: status is always sent as 'pending_verification' — this app never grants
   // access on its own. A human must check the payment (bank/UPI statement) and
-  // flip this row's status to 'verified' in Supabase for the test series to unlock.
-  const record={email:(user.email||'').toLowerCase(),name:user.name||'',plan_key:selPlan,plan_label:plan.label||'',amount:plan.amount||0,exam_type:'MS',upi_ref:utr,activated_at:new Date().toISOString(),status:'pending_verification'};
+  // flip this row's status to 'verified' in Supabase for the specific paper to unlock.
+  // subject_name identifies exactly WHICH paper/series this payment is for —
+  // access is only granted for that paper, not every paper.
+  const record={email:(user.email||'').toLowerCase(),name:user.name||'',subject_name:subjectName,amount:plan.amount||0,exam_type:'MS',upi_ref:utr,activated_at:new Date().toISOString(),status:'pending_verification'};
 
   const result=await sbInsert('payments',record);
   if(!result.ok){
@@ -983,22 +1001,24 @@ async function submitPayment(){
     return;
   }
 
-  // Keep a local copy too, and mark the user as "pending" (NOT paid) so we can
-  // show a review banner. Access only turns on once the Supabase sync below
-  // finds a row with status='verified' for this email.
+  // Keep a local copy too, and mark the specific paper as "pending" (NOT unlocked).
+  // Access only turns on once the Supabase sync below finds a row with
+  // status='verified' and a matching subject_name for this email.
   const payments=JSON.parse(localStorage.getItem('t11_payments')||'[]');payments.push(record);localStorage.setItem('t11_payments',JSON.stringify(payments));
-  saveUser({...user,pendingPlan:selPlan,pendingAt:new Date().toISOString()});
+  const pendingPapers=Array.from(new Set([...(user.pendingPapers||[]),subjectName]));
+  saveUser({...user,pendingPapers,pendingAt:new Date().toISOString()});
 
   if(_visibilityHandler){document.removeEventListener('visibilitychange',_visibilityHandler);_visibilityHandler=null;}
   showPendingScreen();
-  showPendingBanner(plan.label);
+  showPendingBanner(subjectName);
   btn.disabled=false;btn.innerHTML='✅ Submit for Verification';
 }
 
-function showPendingBanner(planLabel){
+function showPendingBanner(subjectNameOrList){
   const b=document.getElementById('pending-banner');if(!b)return;
   const t=document.getElementById('pending-banner-txt');
-  if(t)t.textContent=`your ${planLabel||'payment'} submission is being verified.`;
+  const text=Array.isArray(subjectNameOrList)?subjectNameOrList.join(', '):(subjectNameOrList||'your payment');
+  if(t)t.textContent=`your submission for "${text}" is being verified.`;
   b.style.display='flex';
 }
 
@@ -1031,25 +1051,26 @@ window.addEventListener('DOMContentLoaded',async()=>{
   if(!isSessionValid(user)){window.location.href='login.html';return;}
   showSkeleton();
 
-  // Sync from Supabase — auto-unlock ONLY on verified payments.
-  // pending_verification must NEVER unlock access — a human has to approve it
-  // by changing the row's status to 'verified' in Supabase first.
+  // Sync from Supabase — auto-unlock ONLY on verified payments, and ONLY for
+  // the specific paper (subject_name) that was verified. pending_verification
+  // must NEVER unlock access — a human has to approve it by changing the
+  // row's status to 'verified' in Supabase first.
   try{
     if(sbRateOk()){
       const emailEnc=encodeURIComponent((user.email||'').toLowerCase());
-      const rows=await sbFetch('payments?email=eq.'+emailEnc+'&status=in.(verified,pending_verification)&exam_type=eq.MS&select=plan_key,status,plan_label&limit=10');
-      const verifiedRows=(rows||[]).filter(r=>r.status==='verified');
-      const pendingRows=(rows||[]).filter(r=>r.status==='pending_verification');
+      const rows=await sbFetch('payments?email=eq.'+emailEnc+'&status=in.(verified,pending_verification)&exam_type=eq.MS&select=subject_name,status&limit=20');
+      const verifiedNames=(rows||[]).filter(r=>r.status==='verified').map(r=>r.subject_name);
+      const pendingNames=(rows||[]).filter(r=>r.status==='pending_verification').map(r=>r.subject_name);
 
-      if(verifiedRows.length){
-        const hasBunch=verifiedRows.some(r=>r.plan_key==='bunch-ms');
-        const hasSingle=verifiedRows.some(r=>r.plan_key==='single-ms');
-        if(hasBunch||hasSingle){
-          const u=getUser();
-          saveUser({...u,paid:true,plan:hasBunch?'bunch-ms':'single-ms',pendingPlan:null,pendingAt:null});
-        }
-      }else if(pendingRows.length){
-        showPendingBanner(pendingRows[0].plan_label);
+      const bunchUnlocked=verifiedNames.includes(BUNCH_LABEL);
+      const unlockedPapers=PAPERS.filter(p=>verifiedNames.includes(p.name)).map(p=>p.key);
+
+      if(bunchUnlocked||unlockedPapers.length){
+        const u=getUser();
+        saveUser({...u,bunchUnlocked,unlockedPapers,pendingPapers:(u.pendingPapers||[]).filter(n=>!verifiedNames.includes(n))});
+      }
+      if(!bunchUnlocked&&pendingNames.length){
+        showPendingBanner(pendingNames);
       }
     }
   }catch(e){console.warn('Plan sync failed — using cached status',e);}
@@ -1065,8 +1086,10 @@ function populateProfile(user,users){
   setText('uname',(user.name||'User').split(' ')[0]);
   setText('pd-av-lg',init);setText('pd-nm',user.name||'—');setText('pd-em-hdr',user.email||'—');setText('pd-em',user.email||'—');
   setText('pd-mob',s.mobile?'+91 '+s.mobile:'Not provided');setText('pd-reg',s.region||'Not selected');
-  const planLabel=user.paid?(user.plan?user.plan.replace('bunch-','').replace('single-','').toUpperCase()+' Access':'Premium Access'):'Free (1 Test)';
-  setText('pd-plan-v',planLabel);setText('pd-plan-badge-txt',user.paid?'Premium':'Free Plan');
+  const unlockedCount=user.bunchUnlocked?PAPERS.length:(user.unlockedPapers||[]).length;
+  const hasAnyAccess=user.bunchUnlocked||unlockedCount>0;
+  const planLabel=user.bunchUnlocked?'All 4 Papers (Premium)':unlockedCount>0?`${unlockedCount} Paper${unlockedCount>1?'s':''} Unlocked`:'Free (1 Test)';
+  setText('pd-plan-v',planLabel);setText('pd-plan-badge-txt',hasAnyAccess?'Premium':'Free Plan');
 }
 
 function toggleProfile(){
