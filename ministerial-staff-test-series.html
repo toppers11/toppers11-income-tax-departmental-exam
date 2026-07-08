@@ -105,6 +105,13 @@ body{background:var(--bg);color:var(--ink);font-family:'Open Sans',sans-serif;ov
 .tab-btn.active{color:var(--t3);font-weight:700;background:rgba(0,171,132,.04)}
 .tab-btn span{font:inherit;color:inherit;letter-spacing:inherit;opacity:1;line-height:inherit}
 .tab-sep{margin:0 .3em;opacity:.45}
+.tab-soon{margin-left:.4em;font-size:.55rem;font-weight:800;letter-spacing:.03em;background:#fff3d6;color:#8a6300;padding:.12rem .4rem;border-radius:999px;text-transform:uppercase}
+.coming-soon-box{display:flex;flex-direction:column;align-items:center;text-align:center;gap:.5rem;padding:3rem 1.5rem;border:1.5px dashed #cfe8de;border-radius:14px;background:#f7fbf9;margin-top:1rem}
+.coming-soon-box .cs-title{font-size:1.05rem;font-weight:800;color:var(--ink)}
+.coming-soon-box .cs-sub{font-size:.8rem;color:var(--muted);max-width:460px;line-height:1.6}
+.coming-soon-box .cs-sub strong{color:var(--t1)}
+.btn-cs-goto{margin-top:.4rem;background:linear-gradient(135deg,var(--t-dark),var(--t3));color:#fff;border:none;border-radius:8px;padding:.55rem 1.1rem;font-size:.78rem;font-weight:700;cursor:pointer;font-family:'Open Sans',sans-serif;transition:all .15s}
+.btn-cs-goto:hover{transform:translateY(-1px);box-shadow:0 4px 14px rgba(0,90,70,.3)}
 
 /* ── MAIN ── */
 .main{max-width:1200px;margin:0 auto;padding:1.5rem 1.2rem 5rem}
@@ -648,7 +655,7 @@ let selPlan=null;
 let modalPaperKey=null; // which paper (p1..p4) the open modal is unlocking; null for bunch
 
 const PAPERS=[
-  {key:'p1',name:'IT Law & Taxpayer Services',hasFree:true,topics:'IT Act 1961 & 2025, Basis of Charge, Deductions, Set-off of losses, Return of income, Appeals, Taxpayer Charter, TRACES, 26AS, e-PAN, Prefilled ITR, ASK, SEVOTTAM, CPGRAM, e-Nivaran.',type:'Objective MCQ',marks:100,tests:[
+  {key:'p1',name:'IT Law & Taxpayer Services',hasFree:true,comingSoon:true,topics:'IT Act 1961 & 2025, Basis of Charge, Deductions, Set-off of losses, Return of income, Appeals, Taxpayer Charter, TRACES, 26AS, e-PAN, Prefilled ITR, ASK, SEVOTTAM, CPGRAM, e-Nivaran.',type:'Objective MCQ',marks:100,tests:[
     {id:'ms-p4-2026-t1',lbl:'Series 01',title:'IT Law & Taxpayer Services — Series 01',free:true,pyq:false,qs:100,mins:120},
     {id:'ms_paper4_test02',lbl:'Series 02',title:'IT Law & Taxpayer Services — Series 02',free:false,pyq:false,qs:100,mins:120},
     {id:'ms_paper4_test03',lbl:'Series 03',title:'IT Law & Taxpayer Services — Series 03',free:false,pyq:false,qs:100,mins:120},
@@ -670,7 +677,7 @@ const PAPERS=[
     {id:'ms_paper4_test19',lbl:'Series 19',title:'IT Law & Taxpayer Services — Series 19',free:false,pyq:false,qs:100,mins:120},
     {id:'ms_paper4_test20',lbl:'Series 20',title:'IT Law & Taxpayer Services — Series 20',free:false,pyq:false,qs:100,mins:120},
   ]},
-  {key:'p2',name:'Income Tax Computation',hasFree:true,topics:'Computation under all heads of income, Set-off & carry forward, Exemptions & deductions, Advance tax, TDS, Self-assessment tax, Tax for individual/firm/company, Interests, Depreciation (SLM & WDV), Demand/Refund on OGE/rectification orders.',type:'Objective MCQ',marks:100,tests:[
+  {key:'p2',name:'Income Tax Computation',hasFree:true,comingSoon:true,topics:'Computation under all heads of income, Set-off & carry forward, Exemptions & deductions, Advance tax, TDS, Self-assessment tax, Tax for individual/firm/company, Interests, Depreciation (SLM & WDV), Demand/Refund on OGE/rectification orders.',type:'Objective MCQ',marks:100,tests:[
     {id:'ms-p2-s01',lbl:'Series 01',title:'IT Computation — Series 01',free:true,pyq:false,qs:100,mins:120},
     {id:'ms-p2-s02',lbl:'Series 02',title:'IT Computation — Series 02',free:false,pyq:false,qs:100,mins:120},
     {id:'ms-p2-s03',lbl:'Series 03',title:'IT Computation — Series 03',free:false,pyq:false,qs:100,mins:120},
@@ -692,7 +699,7 @@ const PAPERS=[
     {id:'ms-p2-s19',lbl:'Series 19',title:'IT Computation — Series 19',free:false,pyq:false,qs:100,mins:120},
     {id:'ms-p2-s20',lbl:'Series 20',title:'IT Computation — Series 20',free:false,pyq:false,qs:100,mins:120},
   ]},
-  {key:'p3',name:'Office Procedure (With Books)',hasFree:true,topics:'FR & SR (Pay, Leave, TA, Joining Time), CCS (CCA) Rules 1965, CCS Conduct Rules 1964, CCS Leave Rules 1972, CCS Pension Rules 2021, DFPR 2024, GFR 2017, Manual of Office Procedure Vol I-III, POSH Act 2013, RPwD Act 2016, GeM & Contract Management.',type:'Objective MCQ',marks:100,tests:[
+  {key:'p3',name:'Office Procedure (With Books)',hasFree:true,comingSoon:true,topics:'FR & SR (Pay, Leave, TA, Joining Time), CCS (CCA) Rules 1965, CCS Conduct Rules 1964, CCS Leave Rules 1972, CCS Pension Rules 2021, DFPR 2024, GFR 2017, Manual of Office Procedure Vol I-III, POSH Act 2013, RPwD Act 2016, GeM & Contract Management.',type:'Objective MCQ',marks:100,tests:[
     {id:'ms-p3-s01',lbl:'Series 01',title:'Office Procedure — Series 01',free:true,pyq:false,qs:100,mins:120},
     {id:'ms-p3-s02',lbl:'Series 02',title:'Office Procedure — Series 02',free:false,pyq:false,qs:100,mins:120},
     {id:'ms-p3-s03',lbl:'Series 03',title:'Office Procedure — Series 03',free:false,pyq:false,qs:100,mins:120},
@@ -738,7 +745,7 @@ const PAPERS=[
   ]},
 ];
 
-let activeTab=0;
+let activeTab=0; // reassigned in render() to the first live paper, if any
 
 function getUser(){try{return JSON.parse(localStorage.getItem('t11_user')||'{}')}catch(e){return{}}}
 function saveUser(u){localStorage.setItem('t11_user',JSON.stringify(u))}
@@ -760,7 +767,7 @@ function buildTabs(){
   PAPERS.forEach((p,i)=>{
     const btn=document.createElement('button');
     btn.className='tab-btn'+(i===activeTab?' active':'');
-    btn.innerHTML=`Paper ${i+1}<span class="tab-sep">·</span>${p.name}`;
+    btn.innerHTML=`Paper ${i+1}<span class="tab-sep">·</span>${p.name}${p.comingSoon?'<span class="tab-soon">Soon</span>':''}`;
     btn.onclick=()=>switchTab(i);
     bar.appendChild(btn);
   });
@@ -773,8 +780,27 @@ function switchTab(i){
 
 function buildCards(p,i){
   const div=document.createElement('div');
-  div.className='panel'+(i===0?' active':'');
+  div.className='panel'+(i===activeTab?' active':'');
   div.id='panel-'+p.key;
+
+  if(p.comingSoon){
+    const liveIdx=PAPERS.findIndex(x=>!x.comingSoon);
+    div.innerHTML=`
+      <div class="ph">
+        <div class="ph-left">
+          <h2>Paper ${i+1} — ${p.name}</h2>
+          <p>${p.marks} marks &nbsp;·&nbsp; ${p.type}</p>
+        </div>
+      </div>
+      <div class="coming-soon-box">
+        <svg width=40 height=40 fill=none stroke="var(--t3)" stroke-width=1.6 viewBox="0 0 24 24"><circle cx=12 cy=12 r=10/><path d="M12 7v5l3.5 2"/></svg>
+        <div class="cs-title">Coming Soon</div>
+        <div class="cs-sub">We're building out the test series for this paper. ${liveIdx>-1?`In the meantime, <strong>Paper ${liveIdx+1} — ${PAPERS[liveIdx].name}</strong> is live and ready to practice.`:''}</div>
+        ${liveIdx>-1?`<button class="btn-cs-goto" onclick="switchTab(${liveIdx})">Go to Paper ${liveIdx+1} →</button>`:''}
+      </div>`;
+    document.getElementById('panels').appendChild(div);
+    return;
+  }
 
   const bundleHTML=`<div class="bundle" style="position:relative;overflow:hidden;">
   <div style="position:absolute;inset:0;z-index:0;pointer-events:none;overflow:hidden;">
@@ -872,6 +898,8 @@ function buildCards(p,i){
 }
 
 function render(){
+  const liveIdx=PAPERS.findIndex(x=>!x.comingSoon);
+  if(liveIdx>-1&&PAPERS[activeTab]&&PAPERS[activeTab].comingSoon)activeTab=liveIdx;
   document.getElementById('panels').innerHTML='';
   PAPERS.forEach((p,i)=>buildCards(p,i));
   buildTabs();
