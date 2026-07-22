@@ -169,6 +169,23 @@ body{
 
 <script>
 'use strict';
+const SUPABASE_URL='https://tvstcvinatkokhmoeqlx.supabase.co';
+const SUPABASE_ANON_KEY='eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InR2c3RjdmluYXRrb2tobW9lcWx4Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3Nzc5MzU5NDMsImV4cCI6MjA5MzUxMTk0M30.MNT5dOgqeCmJmgQPgmh8t5ivKnTZ90nB8UzQhfqquh8';
+function fetchWithTimeout(url, opts, ms){
+  ms = ms || 8000;
+  var ctrl = new AbortController();
+  var id = setTimeout(function(){ ctrl.abort(); }, ms);
+  return fetch(url, Object.assign({}, opts, { signal: ctrl.signal })).finally(function(){ clearTimeout(id); });
+}
+async function sbFetch(path){
+  try{
+    var res = await fetchWithTimeout(SUPABASE_URL + '/rest/v1/' + path, {
+      headers: { 'apikey': SUPABASE_ANON_KEY, 'Authorization': 'Bearer ' + SUPABASE_ANON_KEY }
+    });
+    if (!res.ok) return [];
+    return res.json();
+  } catch(e){ return []; }
+}
 
 // Auth guard
 var user = null;
@@ -201,9 +218,33 @@ function showToast(msg){
   back.href = (ref && ref.indexOf(location.host) !== -1) ? ref : 'income-tax-departmental-exam.html';
 })();
 
-// Pre-fill the form
-(function(){
+// Pre-fill the form (from cache first, then refresh from backend)
+(async function(){
   if (!user) return;
+  fillForm();
+
+  try {
+    var emailEnc = encodeURIComponent((user.email || '').toLowerCase());
+    var profRows = await sbFetch('users?email=eq.' + emailEnc + '&select=full_name,mobile,region');
+    if (profRows && profRows.length) {
+      var dbProf = profRows[0];
+      var key = (user.email || '').toLowerCase();
+      var users = getUsers();
+      users[key] = Object.assign({}, users[key] || {}, {
+        mobile: dbProf.mobile || (users[key] || {}).mobile || '',
+        region: dbProf.region || (users[key] || {}).region || ''
+      });
+      saveUsers(users);
+      if (dbProf.full_name && dbProf.full_name !== user.name) {
+        user = Object.assign({}, user, { name: dbProf.full_name });
+        saveUser(user);
+      }
+      fillForm();
+    }
+  } catch(e) { console.warn('Profile sync failed — using cached data', e); }
+})();
+
+function fillForm(){
   var users = getUsers();
   var key = (user.email || '').toLowerCase();
   var s = users[key] || {};
@@ -222,8 +263,9 @@ function showToast(msg){
   } else {
     hint.innerHTML = '⚠️ Mobile number can only be updated <strong>once</strong>.';
     hint.style.color = '#d97706';
+    minp.disabled = false; minp.style.background = ''; minp.style.cursor = '';
   }
-})();
+}
 
 function saveProfile(){
   var name = sanitize(document.getElementById('ef-name').value.trim());

@@ -791,21 +791,68 @@ body::before{
 </button>
 
 <script>
-// Auth guard
-(function(){
-  try {
-    var user = JSON.parse(localStorage.getItem('t11_user') || 'null');
-    if (!user || !user.token) { window.location.href = 'login.html'; return; }
-    if (user.name) {
-      var parts = user.name.trim().split(' ');
-      document.getElementById('nav-name').textContent = parts[0] + (parts[1] ? ' ' + parts[1][0] + '.' : '');
-    }
-    populateProfile(user, getUsers());
-  } catch(e) { window.location.href = 'login.html'; }
-})();
+'use strict';
+const SUPABASE_URL='https://tvstcvinatkokhmoeqlx.supabase.co';
+const SUPABASE_ANON_KEY='eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InR2c3RjdmluYXRrb2tobW9lcWx4Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3Nzc5MzU5NDMsImV4cCI6MjA5MzUxMTk0M30.MNT5dOgqeCmJmgQPgmh8t5ivKnTZ90nB8UzQhfqquh8';
+function fetchWithTimeout(url, opts, ms){
+  ms = ms || 8000;
+  var ctrl = new AbortController();
+  var id = setTimeout(function(){ ctrl.abort(); }, ms);
+  return fetch(url, Object.assign({}, opts, { signal: ctrl.signal })).finally(function(){ clearTimeout(id); });
+}
+async function sbFetch(path){
+  try{
+    var res = await fetchWithTimeout(SUPABASE_URL + '/rest/v1/' + path, {
+      headers: { 'apikey': SUPABASE_ANON_KEY, 'Authorization': 'Bearer ' + SUPABASE_ANON_KEY }
+    });
+    if (!res.ok) return [];
+    return res.json();
+  } catch(e){ return []; }
+}
 
 function getUser(){ try{ return JSON.parse(localStorage.getItem('t11_user') || '{}'); } catch(e){ return {}; } }
+function saveUser(u){ localStorage.setItem('t11_user', JSON.stringify(u)); }
 function getUsers(){ try{ return JSON.parse(localStorage.getItem('t11_users') || '{}'); } catch(e){ return {}; } }
+function saveUsers(u){ localStorage.setItem('t11_users', JSON.stringify(u)); }
+
+// Auth guard
+(async function(){
+  var user;
+  try {
+    user = JSON.parse(localStorage.getItem('t11_user') || 'null');
+    if (!user || !user.token) { window.location.href = 'login.html'; return; }
+  } catch(e) { window.location.href = 'login.html'; return; }
+
+  if (user.name) {
+    var parts = user.name.trim().split(' ');
+    document.getElementById('nav-name').textContent = parts[0] + (parts[1] ? ' ' + parts[1][0] + '.' : '');
+  }
+
+  // Show cached data immediately, then refresh mobile/region/name from the backend
+  populateProfile(user, getUsers());
+
+  try {
+    var emailEnc2 = encodeURIComponent((user.email || '').toLowerCase());
+    var profRows = await sbFetch('users?email=eq.' + emailEnc2 + '&select=full_name,mobile,region');
+    if (profRows && profRows.length) {
+      var dbProf = profRows[0];
+      var key = (user.email || '').toLowerCase();
+      var users = getUsers();
+      users[key] = Object.assign({}, users[key] || {}, {
+        mobile: dbProf.mobile || (users[key] || {}).mobile || '',
+        region: dbProf.region || (users[key] || {}).region || ''
+      });
+      saveUsers(users);
+      if (dbProf.full_name && dbProf.full_name !== user.name) {
+        user = Object.assign({}, getUser(), { name: dbProf.full_name });
+        saveUser(user);
+        var parts2 = user.name.trim().split(' ');
+        document.getElementById('nav-name').textContent = parts2[0] + (parts2[1] ? ' ' + parts2[1][0] + '.' : '');
+      }
+      populateProfile(getUser(), getUsers());
+    }
+  } catch(e) { console.warn('Profile sync failed — using cached data', e); }
+})();
 
 function setText(id, val){ var el = document.getElementById(id); if (el) el.textContent = val; }
 
