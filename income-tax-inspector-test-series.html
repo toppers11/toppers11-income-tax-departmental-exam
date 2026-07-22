@@ -547,25 +547,24 @@ try{
 if(sbRateOk()){
 const emailEnc=encodeURIComponent((user.email||'').toLowerCase());
 const rows=await sbFetch('payments?email=eq.'+emailEnc+'&status=in.(verified,pending_verification)&select=plan_key,subject_key,subject_name,status');
-if(rows&&rows.length){
 const subjects=[];
 let hasBunch=false;
-rows.forEach(r=>{
+(rows||[]).forEach(r=>{
 if(r.plan_key==='bunch-iti'){hasBunch=true;}
 if(r.plan_key==='single-iti'&&r.subject_key&&!subjects.includes(r.subject_key)){
 subjects.push(r.subject_key);
 }
 });
-if(hasBunch||subjects.length){
+// Always persist the freshly computed state — including downgrades —
+// so a revoked/deleted payment in Supabase correctly locks the paper
+// again instead of leaving stale "unlocked" data cached forever.
 const updated={
 ...user,
-paid:true,
-plan:hasBunch?'bunch-iti':'single-iti',
+paid:hasBunch||subjects.length>0,
+plan:hasBunch?'bunch-iti':(subjects.length?'single-iti':null),
 purchased_subjects:hasBunch?['p1','p2','p3','p4']:subjects
 };
 saveUser(updated);
-}
-}
 }
 }catch(e){console.warn('Plan sync failed — using cached status',e);}
 try{

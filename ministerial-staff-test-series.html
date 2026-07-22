@@ -1089,10 +1089,11 @@ async function syncPaymentStatus(){
 
     const newlyActivated=verifiedNames.filter(n=>!before.has(n)&&(n===BUNCH_LABEL||PAPERS.some(p=>p.name===n)));
 
-    if(bunchUnlocked||unlockedPapers.length){
-      const u=getUser();
-      saveUser({...u,bunchUnlocked,unlockedPapers,pendingPapers:(u.pendingPapers||[]).filter(n=>!verifiedNames.includes(n))});
-    }
+    // Always persist the freshly computed state — including downgrades —
+    // so a revoked/deleted payment in Supabase correctly locks the paper
+    // again instead of leaving stale "unlocked" data cached forever.
+    const u=getUser();
+    saveUser({...u,bunchUnlocked,unlockedPapers,pendingPapers:(u.pendingPapers||[]).filter(n=>!verifiedNames.includes(n))});
 
     const banner=document.getElementById('pending-banner');
     if(!bunchUnlocked&&pendingNames.length){showPendingBanner(pendingNames);}

@@ -1381,24 +1381,23 @@ window.addEventListener('DOMContentLoaded',async()=>{
       const emailEnc=encodeURIComponent((user.email||'').toLowerCase());
       // Accept verified AND pending_verification so users get instant access after UPI payment
       const rows=await sbFetch('payments?email=eq.'+emailEnc+'&status=in.(verified,pending_verification)&exam_type=eq.ITO&select=plan_key,subject_key,subject_name,status');
-      if(rows&&rows.length){
-        const subjects=[];
-        let hasBunch=false;
-        rows.forEach(r=>{
-          if(r.plan_key==='bunch-ito'){hasBunch=true;}
-          if(r.plan_key==='single-ito'&&r.subject_key&&!subjects.includes(r.subject_key)){
-            subjects.push(r.subject_key);
-          }
-        });
-        if(hasBunch||subjects.length){
-          const updated={
-            ...user,paid:true,
-            plan:hasBunch?'bunch-ito':'single-ito',
-            purchased_subjects:hasBunch?['p1','p2','p3','p5']:subjects
-          };
-          saveUser(updated);
+      const subjects=[];
+      let hasBunch=false;
+      (rows||[]).forEach(r=>{
+        if(r.plan_key==='bunch-ito'){hasBunch=true;}
+        if(r.plan_key==='single-ito'&&r.subject_key&&!subjects.includes(r.subject_key)){
+          subjects.push(r.subject_key);
         }
-      }
+      });
+      // Always persist the freshly computed state — including downgrades —
+      // so a revoked/deleted payment in Supabase correctly locks the paper
+      // again instead of leaving stale "unlocked" data cached forever.
+      const updated={
+        ...user,paid:hasBunch||subjects.length>0,
+        plan:hasBunch?'bunch-ito':(subjects.length?'single-ito':null),
+        purchased_subjects:hasBunch?['p1','p2','p3','p5']:subjects
+      };
+      saveUser(updated);
     }
   }catch(e){console.warn('Plan sync failed — using cached status',e);}
 
