@@ -338,28 +338,6 @@ body{background:var(--bg);color:var(--ink);font-family:'Open Sans',sans-serif;ov
 .toast.show{display:flex}
 
 /* ── EDIT MODAL ── */
-.edit-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.45);z-index:9999;align-items:center;justify-content:center;padding:1rem}
-.edit-overlay.open{display:flex}
-.edit-box{background:#fff;border-radius:20px;width:100%;max-width:520px;max-height:90vh;overflow-y:auto;box-shadow:0 24px 64px rgba(0,0,0,.18)}
-.edit-hdr{background:linear-gradient(135deg,var(--t-dark),var(--t3));padding:1.4rem 1.75rem;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0}
-.edit-hdr h2{font-family:'Open Sans',sans-serif;font-size:1.3rem;font-weight:800;color:#fff}
-.edit-cls{background:rgba(255,255,255,.18);border:none;color:#fff;width:32px;height:32px;border-radius:8px;cursor:pointer;font-size:1.1rem;display:grid;place-items:center}
-.edit-cls:hover{background:rgba(255,255,255,.28)}
-.edit-bdy{padding:1.5rem 1.75rem 2rem}
-.ef-grp{margin-bottom:1rem}
-.ef-lbl{display:block;font-size:.78rem;font-weight:600;color:var(--ink);margin-bottom:.4rem;font-family:'Open Sans',sans-serif}
-.ef-inp,.ef-sel{width:100%;padding:.72rem .9rem;border:1.5px solid var(--bdr);border-radius:9px;font-family:'Open Sans',sans-serif;font-size:.875rem;color:var(--ink);background:#fff;outline:none;transition:border-color .15s,box-shadow .15s}
-.ef-inp:focus,.ef-sel:focus{border-color:var(--t3);box-shadow:0 0 0 3px rgba(0,171,132,.1)}
-.ef-sel{appearance:none;background-image:url("data:image/svg+xml,%3Csvg width='12' height='8' fill='none' stroke='%236B7280' stroke-width='1.5' viewBox='0 0 12 8' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M1 1l5 5 5-5'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right .9rem center;padding-right:2.2rem}
-.ef-hint{font-size:.72rem;color:var(--muted);margin-top:.3rem}
-.ef-ph-grp{display:flex}
-.ef-ph-pre{display:flex;align-items:center;padding:.72rem .75rem;background:#f9fafb;border:1.5px solid var(--bdr);border-right:none;border-radius:9px 0 0 9px;font-size:.875rem;color:var(--muted);font-weight:600}
-.ef-ph-grp .ef-inp{border-radius:0 9px 9px 0;flex:1}
-.ef-row{display:grid;grid-template-columns:1fr 1fr;gap:.75rem}
-.ef-err{padding:.7rem 1rem;border-radius:9px;font-size:.8rem;font-weight:500;margin-bottom:1rem;display:none;background:#fef2f2;border:1px solid #fecaca;color:#991b1b}
-.ef-err.show{display:block}
-.ef-save{width:100%;padding:.82rem;border:none;border-radius:10px;font-family:'Open Sans',sans-serif;font-size:.9rem;font-weight:700;cursor:pointer;background:linear-gradient(135deg,var(--t1),var(--t3));color:#fff;margin-top:.75rem}
-.ef-save:hover{filter:brightness(1.05)}
 
 /* Back-to-top */
 #btt{background:var(--t1);color:#fff;cursor:pointer;opacity:0;z-index:400;border:none;border-radius:50%;place-items:center;width:40px;height:40px;transition:opacity .3s,transform .3s;display:grid;position:fixed;bottom:1.8rem;right:1.6rem;transform:translateY(12px);box-shadow:0 4px 14px rgba(0,109,91,.4)}
@@ -403,11 +381,9 @@ body{background:var(--bg);color:var(--ink);font-family:'Open Sans',sans-serif;ov
   .tests-grid{grid-template-columns:1fr}
   .bundle-in{flex-direction:column}
   .bundle-right{align-items:flex-start}
-  .ef-row{grid-template-columns:1fr}
+  
   .overlay{padding:0;align-items:flex-end}
   .modal{border-radius:20px 20px 0 0;max-height:92vh;overflow-y:auto}
-  .edit-overlay{padding:0;align-items:flex-end}
-  .edit-box{border-radius:20px 20px 0 0;max-height:92vh}
   .uname{display:none}
   .toast{left:1rem;right:1rem;bottom:1rem;justify-content:center}
 }
@@ -493,10 +469,10 @@ body{background:var(--bg);color:var(--ink);font-family:'Open Sans',sans-serif;ov
           </div>
           <div class="pd-divider"></div>
           <div class="pd-ftr">
-            <button class="pd-btn-ed" aria-label="Edit your profile" onclick="openEditModal()">
+            <a class="pd-btn-ed" aria-label="Edit your profile" href="profile.html">
               <svg width=13 height=13 fill=none stroke="currentColor" stroke-width=2.2 viewBox="0 0 24 24"><path d="M11 4H4a2 2 0 00-2 2v14a2 2 0 002 2h14a2 2 0 002-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 013 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
               Edit Profile
-            </button>
+            </a>
             <button class="pd-btn-lo" aria-label="Sign out" onclick="logout()">
               <svg width=13 height=13 fill=none stroke="currentColor" stroke-width=2.2 viewBox="0 0 24 24"><path d="M9 21H5a2 2 0 01-2-2V5a2 2 0 012-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
               Sign Out
@@ -509,53 +485,6 @@ body{background:var(--bg);color:var(--ink);font-family:'Open Sans',sans-serif;ov
 </div>
 
 <!-- EDIT PROFILE MODAL -->
-<div class="edit-overlay" id="edit-modal" onclick="if(event.target===this)closeEditModal()">
-  <div class="edit-box">
-    <div class="edit-hdr">
-      <h2>Edit Profile</h2>
-      <button class="edit-cls" aria-label="Close" onclick="closeEditModal()">✕</button>
-    </div>
-    <div class="edit-bdy">
-      <div class="ef-err" id="ef-error"></div>
-      <div class="ef-grp">
-        <label class="ef-lbl" for="ef-name">Full Name</label>
-        <input class="ef-inp" id="ef-name" type="text" placeholder="Your full name" autocomplete="name">
-      </div>
-      <div class="ef-grp">
-        <label class="ef-lbl" for="ef-email">Email</label>
-        <input class="ef-inp" id="ef-email" type="email" placeholder="you@example.com" autocomplete="email">
-      </div>
-      <div class="ef-grp">
-        <label class="ef-lbl" for="ef-mobile">Mobile <span id="ef-mob-badge" style="display:none;font-size:.6rem;background:#fee2e2;color:#991b1b;border-radius:4px;padding:.1rem .35rem;font-weight:700;margin-left:.3rem">LOCKED</span></label>
-        <div class="ef-ph-grp">
-          <span class="ef-ph-pre">+91</span>
-          <input class="ef-inp" id="ef-mobile" type="tel" placeholder="10-digit number" maxlength="10" autocomplete="tel-national">
-        </div>
-        <div class="ef-hint" id="ef-mob-hint">⚠️ Mobile number can only be updated <strong>once</strong>.</div>
-      </div>
-      <div class="ef-grp">
-        <label class="ef-lbl" for="ef-region">Region / State</label>
-        <select class="ef-sel" id="ef-region">
-          <option value="">Select your region</option>
-          <option>Andhra Pradesh</option><option>Arunachal Pradesh</option><option>Assam</option><option>Bihar</option><option>Chhattisgarh</option><option>Goa</option><option>Gujarat</option><option>Haryana</option><option>Himachal Pradesh</option><option>Jharkhand</option><option>Karnataka</option><option>Kerala</option><option>Madhya Pradesh</option><option>Maharashtra</option><option>Manipur</option><option>Meghalaya</option><option>Mizoram</option><option>Nagaland</option><option>Odisha</option><option>Punjab</option><option>Rajasthan</option><option>Sikkim</option><option>Tamil Nadu</option><option>Telangana</option><option>Tripura</option><option>Uttar Pradesh</option><option>Uttarakhand</option><option>West Bengal</option><option>Delhi</option><option>Jammu &amp; Kashmir</option><option>Ladakh</option>
-        </select>
-      </div>
-      <div class="ef-row">
-        <div class="ef-grp">
-          <label class="ef-lbl" for="ef-pass">New Password</label>
-          <input class="ef-inp" id="ef-pass" type="password" placeholder="Leave blank to keep" autocomplete="new-password">
-        </div>
-        <div class="ef-grp">
-          <label class="ef-lbl" for="ef-pass2">Confirm Password</label>
-          <input class="ef-inp" id="ef-pass2" type="password" placeholder="Repeat new password" autocomplete="new-password">
-        </div>
-      </div>
-      <button class="ef-save" onclick="saveProfile()">Save Changes</button>
-    </div>
-  </div>
-</div>
-
-<!-- HERO -->
 <section class="hero">
   <!-- Large yellow 3D triangle — top right -->
   <div class="tri tri-tr">
@@ -1454,63 +1383,6 @@ document.addEventListener('click',e=>{
   if(wrap&&!wrap.contains(e.target)){const dd=document.getElementById('profile-dropdown');if(dd)dd.classList.remove('open');wrap.classList.remove('open');}
 });
 
-function openEditModal(){
-  const dd=document.getElementById('profile-dropdown');if(dd)dd.classList.remove('open');
-  const wrap=document.getElementById('chip-wrap');if(wrap)wrap.classList.remove('open');
-  const user=getUser();const users=getUsers();const key=(user?.email||'').toLowerCase();const s=users[key]||{};
-  document.getElementById('ef-name').value=user?.name||'';
-  document.getElementById('ef-email').value=user?.email||'';
-  document.getElementById('ef-mobile').value=s.mobile||'';
-  document.getElementById('ef-region').value=s.region||'';
-  document.getElementById('ef-pass').value='';document.getElementById('ef-pass2').value='';
-  const locked=s.mobileUpdateUsed===true;
-  document.getElementById('ef-mob-badge').style.display=locked?'inline':'none';
-  const hint=document.getElementById('ef-mob-hint');const minp=document.getElementById('ef-mobile');
-  if(locked){hint.innerHTML='🔒 Mobile update already used. Contact support.';hint.style.color='#991b1b';minp.disabled=true;minp.style.background='#f9fafb';minp.style.cursor='not-allowed';}
-  else{hint.innerHTML='⚠️ Mobile number can only be updated <strong>once</strong>.';hint.style.color='#d97706';minp.disabled=false;minp.style.background='';minp.style.cursor='';}
-  document.getElementById('ef-error').classList.remove('show');
-  document.getElementById('edit-modal').classList.add('open');
-}
-function closeEditModal(){document.getElementById('edit-modal').classList.remove('open');}
-function saveProfile(){
-  const name=sanitize(document.getElementById('ef-name').value.trim());
-  const email=sanitize(document.getElementById('ef-email').value.trim().toLowerCase());
-  const mobile=document.getElementById('ef-mobile').value.trim().replace(/\D/g,'');
-  const region=sanitize(document.getElementById('ef-region').value);
-  const pass=document.getElementById('ef-pass').value;
-  const pass2=document.getElementById('ef-pass2').value;
-  const errEl=document.getElementById('ef-error');errEl.classList.remove('show');
-  function err(m){errEl.textContent=m;errEl.classList.add('show');}
-  if(!name||name.length<2){err('Full name must be at least 2 characters.');return;}
-  if(name.length>80){err('Name is too long (max 80 characters).');return;}
-  if(!email||!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)){err('Please enter a valid email address.');return;}
-  if(mobile&&!/^\d{10}$/.test(mobile)){err('Mobile must be exactly 10 digits.');return;}
-  if(pass&&pass.length<8){err('New password must be at least 8 characters.');return;}
-  if(pass&&pass!==pass2){err('Passwords do not match.');return;}
-  if(pass&&/^(.)\1+$/.test(pass)){err('Password is too simple.');return;}
-  const user=getUser();const users=getUsers();
-  const oldKey=(user?.email||'').toLowerCase();const newKey=email;
-  if(!users[oldKey]){err('Session error. Please log in again.');return;}
-  const ex=users[oldKey];
-  if(mobile&&ex.mobile&&ex.mobile!==mobile&&ex.mobileUpdateUsed){err('Mobile number can only be updated once.');return;}
-  const changed=mobile&&ex.mobile&&ex.mobile!==mobile;
-  const rec={...ex,name,mobile,region};
-  if(changed)rec.mobileUpdateUsed=true;
-  if(pass){
-    sbInsert('password_change_requests',{email:newKey,requested_at:new Date().toISOString()})
-      .then(()=>showToast('🔑 Password change request sent.'))
-      .catch(()=>{});
-  }
-  if(newKey!==oldKey){if(users[newKey]){err('That email is already registered.');return;}delete users[oldKey];}
-  users[newKey]=rec;saveUsers(users);
-  const upd={...user,name,email:newKey};saveUser(upd);
-  sbUpdate('users','email=eq.'+encodeURIComponent(oldKey),{full_name:name,mobile:mobile||null,region:region||null,email:newKey})
-    .then(result=>{if(!result.ok)console.error('Supabase profile sync failed:',result.status,result.error);})
-    .catch(()=>{});
-  populateProfile(upd,users);closeEditModal();
-  showToast('✓ Profile updated successfully!');
-}
-
 window.addEventListener('scroll',()=>{
   const prog=document.getElementById('progress');const pct=scrollY/(document.documentElement.scrollHeight-innerHeight)*100;
   if(prog)prog.style.width=pct+'%';
@@ -1520,14 +1392,12 @@ window.addEventListener('scroll',()=>{
 document.addEventListener('keydown',e=>{
   if(e.key==='Escape'){
     const overlay=document.getElementById('overlay');
-    const editModal=document.getElementById('edit-modal');
     if(overlay&&overlay.classList.contains('show'))closeModal();
-    if(editModal&&editModal.classList.contains('open'))closeEditModal();
   }
 });
 
 Object.assign(window,{
-  toggleProfile,openEditModal,closeEditModal,saveProfile,logout,
+  toggleProfile,logout,
   closeModal,overlayClick,doContinue,activate,switchUpi,backToPlan,
   copyUpi,selectBundlePlan,openModalFromBundle,buildTabs,switchTab,render,
   onUpiAppClick,showPayScreen,showConfirmScreen,selectSubjCard
