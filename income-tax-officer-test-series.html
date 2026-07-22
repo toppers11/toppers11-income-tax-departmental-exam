@@ -797,6 +797,17 @@ async function sbFetch(path){
     return res.json();
   }catch(e){return[];}
 }
+async function sbUpdate(table,filter,patch){
+  try{
+    const res=await fetchWithTimeout(SUPABASE_URL+'/rest/v1/'+table+'?'+filter,{
+      method:'PATCH',
+      headers:{'Content-Type':'application/json','apikey':SUPABASE_ANON_KEY,'Authorization':'Bearer '+SUPABASE_ANON_KEY,'Prefer':'return=minimal'},
+      body:JSON.stringify(patch)
+    });
+    if(!res.ok){const errText=await res.text().catch(()=>'');console.error('Supabase update error:',res.status,errText);return{ok:false,status:res.status,error:errText};}
+    return{ok:true};
+  }catch(e){if(e.name!=='AbortError')console.error('Supabase unreachable:',e);return{ok:false,error:e.message};}
+}
 async function fetchAndUpdateQuestionCounts(){
   try{
     const allIds=PAPERS.flatMap(p=>p.tests.map(t=>t.id));
@@ -1391,6 +1402,19 @@ window.addEventListener('DOMContentLoaded',async()=>{
     }
   }catch(e){console.warn('Plan sync failed — using cached status',e);}
 
+  try{
+    const emailEnc2=encodeURIComponent((user.email||'').toLowerCase());
+    const profRows=await sbFetch('users?email=eq.'+emailEnc2+'&select=full_name,mobile,region');
+    if(profRows&&profRows.length){
+      const dbProf=profRows[0];
+      const key=(user.email||'').toLowerCase();
+      const users=getUsers();
+      users[key]={...(users[key]||{}),mobile:dbProf.mobile||(users[key]||{}).mobile||'',region:dbProf.region||(users[key]||{}).region||''};
+      saveUsers(users);
+      if(dbProf.full_name&&dbProf.full_name!==user.name){saveUser({...getUser(),name:dbProf.full_name});}
+    }
+  }catch(e){console.warn('Profile sync failed — using cached data',e);}
+
   populateProfile(getUser(),getUsers());
   render();
   fetchAndUpdateQuestionCounts();
@@ -1481,6 +1505,9 @@ function saveProfile(){
   if(newKey!==oldKey){if(users[newKey]){err('That email is already registered.');return;}delete users[oldKey];}
   users[newKey]=rec;saveUsers(users);
   const upd={...user,name,email:newKey};saveUser(upd);
+  sbUpdate('users','email=eq.'+encodeURIComponent(oldKey),{full_name:name,mobile:mobile||null,region:region||null,email:newKey})
+    .then(result=>{if(!result.ok)console.error('Supabase profile sync failed:',result.status,result.error);})
+    .catch(()=>{});
   populateProfile(upd,users);closeEditModal();
   showToast('✓ Profile updated successfully!');
 }
