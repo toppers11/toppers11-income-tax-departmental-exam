@@ -300,6 +300,9 @@ body{background:var(--bg);color:var(--ink);font-family:'Open Sans',sans-serif;ov
 .qr-amount-pill{background:rgba(255,255,255,.12);border:1.5px solid rgba(255,255,255,.25);border-radius:999px;padding:.2rem .7rem;font-size:.72rem;font-weight:800;color:#fff;display:inline-flex;align-items:center;gap:.3rem;margin-bottom:.35rem}
 .qr-amount-pill span{color:var(--yellow);font-size:.92rem;font-weight:900}
 .qr-bottom{position:relative;z-index:1;background:rgba(0,0,0,.18);border-top:1px solid rgba(255,255,255,.1);padding:.45rem .7rem}
+.qr-hint{text-align:center;font-size:.66rem;color:rgba(255,255,255,.78);line-height:1.55;margin-bottom:.55rem}
+.btn-paid{width:100%;padding:.7rem;border:none;border-radius:9px;font-size:.82rem;font-weight:800;cursor:pointer;background:linear-gradient(135deg,var(--yellow2),var(--yellow));color:var(--t-dark);display:flex;align-items:center;justify-content:center;gap:.4rem;font-family:'Open Sans',sans-serif;letter-spacing:.01em;box-shadow:0 3px 14px rgba(0,0,0,.25);transition:all .2s}
+.btn-paid:hover{filter:brightness(1.05)}
 .upi-row{display:flex;align-items:center;justify-content:center;gap:.5rem;background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.2);border-radius:7px;padding:.28rem .6rem;margin-bottom:.32rem;cursor:pointer;transition:background .15s}
 .upi-row:hover{background:rgba(255,255,255,.16)}
 .upi-txt{font-family:monospace;font-size:.82rem;font-weight:700;color:#fff;letter-spacing:.02em}
@@ -622,61 +625,11 @@ Check Status
       </div>
       <div id="step2" style="display:none">
         <!-- PAY SCREEN -->
-        <div id="pay-screen">
-          <div class=qr-box>
-            <div class=qr-top>
-              <div class=qr-lbl>
-                <svg width=9 height=9 viewBox="0 0 24 24" fill="rgba(255,255,255,.8)"><circle cx=12 cy=12 r=10/></svg>
-                <span id=qr-lbl>Scan &amp; Pay</span>
-              </div>
-              <div class=qr-img id=qr-canvas></div>
-              <div class=qr-amount-pill>
-                Amount: <span id=amt-lbl>₹355</span>
-              </div>
-            </div>
-            <div class=qr-bottom>
-              <div class=upi-row onclick=copyUpi()>
-                <svg width=13 height=13 fill=none stroke="rgba(255,255,255,.6)" stroke-width=2 viewBox="0 0 24 24"><rect x=9 y=9 width=13 height=13 rx=2/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/></svg>
-                <span class=upi-txt id=upi-disp></span>
-                <button class=cp-btn id=cp-btn>Copy</button>
-              </div>
-              <div style="display:flex;flex-direction:column;gap:.42rem;margin:.5rem 0 .35rem">
-                <a id=gpay-a href=# onclick="onUpiAppClick(event,this)" class=upi-pay-btn style="background:linear-gradient(135deg,#1a73e8,#0d47a1)">
-                  <svg width=16 height=16 viewBox="0 0 48 48" fill="none"><circle cx="24" cy="24" r="24" fill="white" fill-opacity=".15"/><text x="50%" y="55%" dominant-baseline="middle" text-anchor="middle" font-size="22" font-family="Arial" fill="white">G</text></svg>
-                  Pay with Google Pay
-                  <svg width=13 height=13 fill=none stroke="rgba(255,255,255,.7)" stroke-width=2.5 viewBox="0 0 24 24" style="margin-left:auto"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
-                </a>
-                <a id=phonepe-a href=# onclick="onUpiAppClick(event,this)" class=upi-pay-btn style="background:linear-gradient(135deg,#6739b7,#4a2080)">
-                  <svg width=16 height=16 viewBox="0 0 24 24" fill=none stroke="rgba(255,255,255,.9)" stroke-width=2><circle cx=12 cy=12 r=10/><path d="M8 12h8M12 8v8"/></svg>
-                  Pay with PhonePe
-                  <svg width=13 height=13 fill=none stroke="rgba(255,255,255,.7)" stroke-width=2.5 viewBox="0 0 24 24" style="margin-left:auto"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
-                </a>
-                <a id=paytm-a href=# onclick="onUpiAppClick(event,this)" class=upi-pay-btn style="background:linear-gradient(135deg,#00b9f1,#0074b7)">
-                  <svg width=16 height=16 viewBox="0 0 24 24" fill=none stroke="rgba(255,255,255,.9)" stroke-width=2><rect x=2 y=5 width=20 height=14 rx=2/><path d="M2 10h20"/></svg>
-                  Pay with Paytm
-                  <svg width=13 height=13 fill=none stroke="rgba(255,255,255,.7)" stroke-width=2.5 viewBox="0 0 24 24" style="margin-left:auto"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
-                </a>
-              </div>
-              <div class=upi-switch-wrap>
-                <button onclick=switchUpi() class=upi-switch-btn>
-                  <svg width=11 height=11 fill=none stroke=currentColor stroke-width=2.2 viewBox="0 0 24 24"><path d="M1 4v6h6M23 20v-6h-6"/><path d="M20.49 9A9 9 0 005.64 5.64L1 10M23 14l-4.64 4.36A9 9 0 013.51 15"/></svg>
-                  Switch UPI ID
-                  <span id=upi-switch-badge style="opacity:.55;font-size:.6rem;background:rgba(255,255,255,.12);padding:.05rem .3rem;border-radius:999px">1/3</span>
-                </button>
-              </div>
-              <button onclick="showConfirmScreen()" style="width:100%;margin-top:.5rem;background:linear-gradient(135deg,#00b96b,#008f50);color:#fff;border:none;border-radius:9px;padding:.62rem;font-size:.78rem;font-weight:700;cursor:pointer;font-family:'Open Sans',sans-serif;letter-spacing:.02em;display:flex;align-items:center;justify-content:center;gap:.4rem;">
-                ✅ I've Made the Payment
-              </button>
-            </div>
-          </div>
-          <button class=btn-bk onclick=backToPlan()>
-            <svg width=13 height=13 fill=none stroke=currentColor stroke-width=2 viewBox="0 0 24 24"><path d="M19 12H5M12 5l-7 7 7 7"/></svg>
+        <div id="pay-screen"><div class=qr-box><div class=qr-top><div class=qr-lbl><svg width=9 height=9 viewBox="0 0 24 24" fill="rgba(255,255,255,.8)"><circle cx=12 cy=12 r=10/></svg><span id=qr-lbl>Scan &amp; Pay</span></div><a id=qr-tap-link href="#" onclick="onUpiAppClick(event,this)" aria-label="Tap to pay with any UPI app"><div class=qr-img id=qr-canvas></div></a><div class=qr-amount-pill>Amount: <span id=amt-lbl>₹355</span></div></div><div class=qr-bottom><div class=qr-hint>Scan with <strong>any UPI app</strong> — Google Pay, PhonePe, Paytm &amp; more. On mobile, you can tap the QR instead.</div><button class=btn-paid id=paid-btn onclick=onPaidClick()><svg width=14 height=14 fill=none stroke=currentColor stroke-width=2.5 viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>
+                I've Made the Payment
+              </button></div></div><button class=btn-bk onclick=backToPlan()><svg width=13 height=13 fill=none stroke=currentColor stroke-width=2 viewBox="0 0 24 24"><path d="M19 12H5M12 5l-7 7 7 7"/></svg>
             Change Plan
-          </button>
-        </div>
-
-        <!-- CONFIRM SCREEN -->
-        <div id="confirm-screen" style="display:none;"><div class=utr-box style="border-color:var(--t3);padding:1.2rem 1rem 1rem;"><div style="text-align:center;margin-bottom:1rem;"><div style="width:54px;height:54px;border-radius:50%;background:linear-gradient(135deg,var(--t-dark),var(--t3));display:grid;place-items:center;margin:0 auto .65rem;"><svg width=22 height=22 fill=none stroke=#fff stroke-width=2.5 viewBox="0 0 24 24"><circle cx=12 cy=12 r=10/><path d="M12 8v4l3 3"/></svg></div><div style="font-size:1rem;font-weight:800;color:var(--ink);margin-bottom:.3rem;">Confirm your payment</div><div id="confirm-sublabel" style="font-size:.75rem;color:var(--muted);line-height:1.55;">Check your payment app for a success message, then submit below for verification.</div></div><div class="utr-field-wrap"><label for="utr-input" class="utr-label">UPI transaction / reference ID <span>(required — found in your payment app's success screen)</span></label><input type="text" id="utr-input" class="utr-input" placeholder="e.g. 402816558211" maxlength="40" autocomplete="off" required></div><div class="al-err" id=utr-err></div><button class=btn-act id=act-btn onclick=submitPayment() style="margin-bottom:.55rem;"><svg width=14 height=14 fill=none stroke=currentColor stroke-width=2.5 viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>
+          </button></div><div id="confirm-screen" style="display:none;"><div class=utr-box style="border-color:var(--t3);padding:1.2rem 1rem 1rem;"><div style="text-align:center;margin-bottom:1rem;"><div style="width:54px;height:54px;border-radius:50%;background:linear-gradient(135deg,var(--t-dark),var(--t3));display:grid;place-items:center;margin:0 auto .65rem;"><svg width=22 height=22 fill=none stroke=#fff stroke-width=2.5 viewBox="0 0 24 24"><circle cx=12 cy=12 r=10/><path d="M12 8v4l3 3"/></svg></div><div style="font-size:1rem;font-weight:800;color:var(--ink);margin-bottom:.3rem;">Confirm your payment</div><div id="confirm-sublabel" style="font-size:.75rem;color:var(--muted);line-height:1.55;">Check your payment app for a success message, then submit below for verification.</div></div><div class="utr-field-wrap"><label for="utr-input" class="utr-label">UPI transaction / reference ID <span>(required — found in your payment app's success screen)</span></label><input type="text" id="utr-input" class="utr-input" placeholder="e.g. 402816558211" maxlength="40" autocomplete="off" required></div><div class="al-err" id=utr-err></div><button class=btn-act id=act-btn onclick=submitPayment() style="margin-bottom:.55rem;"><svg width=14 height=14 fill=none stroke=currentColor stroke-width=2.5 viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>
               ✅ Submit for Verification
             </button><button onclick="showPayScreen()" style="width:100%;background:none;border:1.5px solid #e0e0e0;border-radius:8px;padding:.48rem;font-size:.75rem;font-weight:600;color:var(--muted);cursor:pointer;transition:all .15s;font-family:'Open Sans',sans-serif;" onmouseover="this.style.borderColor='var(--t3)';this.style.color='var(--t3)';" onmouseout="this.style.borderColor='#e0e0e0';this.style.color='var(--muted)';">
               ← Payment not done yet — go back
@@ -1189,6 +1142,11 @@ function onUpiAppClick(e,el){
   });
 }
 
+function onPaidClick(){
+  if(_visibilityHandler){document.removeEventListener('visibilitychange',_visibilityHandler);_visibilityHandler=null;}
+  showConfirmScreen();
+}
+
 function renderUpiStep(){
   if(!selPlan)return;
   showPayScreen();
@@ -1198,22 +1156,18 @@ function renderUpiStep(){
   const payNote=selPlan==='single-ito'&&subjectPaper
     ?`Paper ${PAPERS.indexOf(subjectPaper)+1} - ${subjectPaper.name} (ITO)`
     :`ITO Complete Bunch (All 4 Papers)`;
-  document.getElementById('upi-disp').textContent=uid;
   const qrLbl=document.getElementById('qr-lbl');
   if(qrLbl){
     const forLabel=selPlan==='single-ito'&&subjectPaper?`Paper ${PAPERS.indexOf(subjectPaper)+1} — ${subjectPaper.name}`:'All 4 Papers';
     qrLbl.textContent=forLabel+' · ₹'+p.amount;
   }
+  document.getElementById('amt-lbl').textContent='₹'+p.amount;
   const upiStr=`upi://pay?pa=${uid}&pn=${encodeURIComponent(UPI_NAME)}&am=${p.amount}&cu=INR&tn=${encodeURIComponent(payNote)}`;
-  const gpayHref=`tez://upi/pay?pa=${uid}&pn=${encodeURIComponent(UPI_NAME)}&am=${p.amount}&cu=INR&tn=${encodeURIComponent(payNote)}`;
-  const paytmHref=`paytmmp://pay?pa=${uid}&pn=${encodeURIComponent(UPI_NAME)}&am=${p.amount}&cu=INR&tn=${encodeURIComponent(payNote)}`;
-  document.getElementById('gpay-a').href=gpayHref;
-  document.getElementById('phonepe-a').href=upiStr;
-  document.getElementById('paytm-a').href=paytmHref;
+  const tapLink=document.getElementById('qr-tap-link');
+  if(tapLink)tapLink.href=upiStr;
   const qc=document.getElementById('qr-canvas');qc.innerHTML='';
   try{new QRCode(qc,{text:upiStr,width:104,height:104,colorDark:'#004d3f',colorLight:'#fff',correctLevel:QRCode.CorrectLevel.M});}
-  catch(e){qc.innerHTML='<div style="padding:1rem;font-size:.7rem;color:#6b7280">Use UPI ID below</div>';}
-  const badge=document.getElementById('upi-switch-badge');if(badge)badge.textContent=`${_upiIdx+1}/${UPI_POOL.length}`;
+  catch(e){qc.innerHTML=`<div style="padding:.6rem;font-size:.62rem;line-height:1.5;color:#333;text-align:center">QR unavailable —<br>pay ₹${p.amount} to<br><strong>${uid}</strong></div>`;}
 }
 
 function switchUpi(){nextUpiId();renderUpiStep();showToast('🔄 Switched to UPI ID '+(_upiIdx+1)+' of '+UPI_POOL.length);}
@@ -1485,7 +1439,7 @@ Object.assign(window,{
   toggleProfile,logout,
   closeModal,overlayClick,doContinue,submitPayment,checkPaymentStatus,switchUpi,backToPlan,
   copyUpi,selectBundlePlan,openModalFromBundle,buildTabs,switchTab,render,
-  onUpiAppClick,showPayScreen,showConfirmScreen,showPendingScreen,selectSubjCard
+  onUpiAppClick,onPaidClick,showPayScreen,showConfirmScreen,showPendingScreen,selectSubjCard
 });
 
 })();
