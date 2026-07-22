@@ -216,36 +216,6 @@ body::before{
 .pd-btn-lo{flex:1;display:inline-flex;align-items:center;justify-content:center;gap:.35rem;padding:.48rem .4rem;font-size:.72rem;font-weight:600;font-family:'Poppins',sans-serif;background:var(--green-deeper);color:#fff;border:1.5px solid var(--green-deeper);border-radius:8px;cursor:pointer;transition:all .16s;letter-spacing:.01em;}
 .pd-btn-lo:hover{background:#054433;border-color:#054433;}
 
-/* Edit profile modal */
-.edit-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.45);z-index:9999;align-items:center;justify-content:center;padding:1rem;}
-.edit-overlay.open{display:flex;}
-.edit-box{background:#fff;border-radius:20px;width:100%;max-width:480px;max-height:90vh;overflow-y:auto;box-shadow:0 24px 64px rgba(0,0,0,.18);}
-.edit-hdr{background:linear-gradient(135deg,var(--green-deeper),var(--green-dark));padding:1.2rem 1.5rem;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;}
-.edit-hdr h2{font-family:'Poppins',sans-serif;font-size:1.15rem;font-weight:700;color:#fff;}
-.edit-cls{background:rgba(255,255,255,.18);border:none;color:#fff;width:30px;height:30px;border-radius:8px;cursor:pointer;font-size:1rem;display:grid;place-items:center;}
-.edit-cls:hover{background:rgba(255,255,255,.28);}
-.edit-bdy{padding:1.3rem 1.5rem 1.75rem;}
-.ef-grp{margin-bottom:.9rem;}
-.ef-lbl{display:block;font-size:.75rem;font-weight:600;color:var(--ink);margin-bottom:.35rem;font-family:'Poppins',sans-serif;}
-.ef-inp,.ef-sel{width:100%;padding:.65rem .85rem;border:1.5px solid var(--border);border-radius:9px;font-family:'Poppins',sans-serif;font-size:.85rem;color:var(--ink);background:#fff;outline:none;transition:border-color .15s,box-shadow .15s;}
-.ef-inp:focus,.ef-sel:focus{border-color:var(--green-dark);box-shadow:0 0 0 3px rgba(16,185,129,.12);}
-.ef-sel{appearance:none;background-image:url("data:image/svg+xml,%3Csvg width='12' height='8' fill='none' stroke='%236B7280' stroke-width='1.5' viewBox='0 0 12 8' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M1 1l5 5 5-5'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right .85rem center;padding-right:2.1rem;}
-.ef-hint{font-size:.68rem;color:var(--muted);margin-top:.3rem;}
-.ef-ph-grp{display:flex;}
-.ef-ph-pre{display:flex;align-items:center;padding:.65rem .7rem;background:#f9fafb;border:1.5px solid var(--border);border-right:none;border-radius:9px 0 0 9px;font-size:.85rem;color:var(--muted);font-weight:600;}
-.ef-ph-grp .ef-inp{border-radius:0 9px 9px 0;flex:1;}
-.ef-row{display:grid;grid-template-columns:1fr 1fr;gap:.7rem;}
-.ef-err{padding:.65rem .9rem;border-radius:9px;font-size:.78rem;font-weight:500;margin-bottom:.9rem;display:none;background:#fef2f2;border:1px solid #fecaca;color:#991b1b;}
-.ef-err.show{display:block;}
-.ef-save{width:100%;padding:.78rem;border:none;border-radius:10px;font-family:'Poppins',sans-serif;font-size:.88rem;font-weight:700;cursor:pointer;background:linear-gradient(135deg,var(--green-deeper),var(--green-dark));color:#fff;margin-top:.6rem;}
-.ef-save:hover{filter:brightness(1.05);}
-@media(max-width:640px){.ef-row{grid-template-columns:1fr;}.edit-overlay{padding:0;align-items:flex-end;}.edit-box{border-radius:20px 20px 0 0;max-height:92vh;}}
-
-/* Toast */
-.pd-toast{position:fixed;bottom:1.5rem;right:1.5rem;background:var(--green-deeper);color:#fff;padding:.7rem 1rem;border-radius:10px;font-size:.8rem;font-weight:600;box-shadow:0 6px 22px rgba(0,0,0,.18);z-index:99999;display:none;align-items:center;gap:.4rem;}
-.pd-toast.show{display:flex;}
-@media(max-width:640px){.pd-toast{left:1rem;right:1rem;bottom:1rem;justify-content:center;}}
-
 /* ── MAIN CONTENT WRAP ── */
 .page-wrap{
   flex:1;
@@ -629,10 +599,10 @@ body::before{
         </div>
         <div class="pd-divider"></div>
         <div class="pd-ftr">
-          <button class="pd-btn-ed" onclick="openEditModal()">
+          <a class="pd-btn-ed" href="profile.html">
             <svg width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24"><path d="M11 4H4a2 2 0 00-2 2v14a2 2 0 002 2h14a2 2 0 002-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 013 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
             Edit Profile
-          </button>
+          </a>
           <button class="pd-btn-lo" onclick="logout()">
             <svg width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24"><path d="M9 21H5a2 2 0 01-2-2V5a2 2 0 012-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
             Sign Out
@@ -644,78 +614,6 @@ body::before{
   </div>
   </div>
 </nav>
-
-<!-- Edit Profile Modal -->
-<div class="edit-overlay" id="edit-modal" role="dialog" aria-modal="true" aria-labelledby="edit-modal-title" onclick="if(event.target===this)closeEditModal()">
-  <div class="edit-box">
-    <div class="edit-hdr">
-      <h2 id="edit-modal-title">Edit Profile</h2>
-      <button class="edit-cls" aria-label="Close edit profile dialog" onclick="closeEditModal()">✕</button>
-    </div>
-    <div class="edit-bdy">
-      <div class="ef-err" id="ef-error"></div>
-      <div class="ef-row">
-        <div class="ef-grp">
-          <label class="ef-lbl">Full Name *</label>
-          <input type="text" class="ef-inp" id="ef-name" placeholder="e.g. Rajesh Kumar"/>
-        </div>
-        <div class="ef-grp">
-          <label class="ef-lbl">Email Address *</label>
-          <input type="email" class="ef-inp" id="ef-email" placeholder="you@example.com"/>
-        </div>
-      </div>
-      <div class="ef-grp">
-        <label class="ef-lbl">Mobile Number
-          <span id="ef-mob-badge" style="display:none;font-size:.66rem;font-weight:600;color:#991b1b;background:#fef2f2;border:1px solid #fecaca;border-radius:999px;padding:.1rem .5rem;margin-left:.3rem;">Update used — locked</span>
-        </label>
-        <div class="ef-ph-grp">
-          <span class="ef-ph-pre">🇮🇳 +91</span>
-          <input type="tel" class="ef-inp" id="ef-mobile" placeholder="98765 43210" maxlength="10"/>
-        </div>
-        <div class="ef-hint" id="ef-mob-hint" style="color:#d97706;">⚠️ Mobile number can only be updated <strong>once</strong>.</div>
-      </div>
-      <div class="ef-grp">
-        <label class="ef-lbl">Select your Region</label>
-        <select class="ef-sel" id="ef-region">
-          <option value="">— Select Region —</option>
-          <optgroup label="🔵 North India">
-            <option>Delhi</option>
-            <option>North West Region (NWR) – Chandigarh, Punjab, Haryana, HP, J&amp;K</option>
-            <option>UP West &amp; Uttarakhand – HQ Kanpur</option>
-            <option>UP East – HQ Lucknow</option>
-          </optgroup>
-          <optgroup label="🟠 West India">
-            <option>Mumbai</option>
-            <option>Pune – Covers rest of Maharashtra</option>
-            <option>Gujarat – HQ Ahmedabad</option>
-          </optgroup>
-          <optgroup label="🟢 South India">
-            <option>Tamil Nadu &amp; Puducherry – HQ Chennai</option>
-            <option>Karnataka &amp; Goa – HQ Bengaluru</option>
-            <option>Kerala – HQ Kochi</option>
-            <option>Andhra Pradesh &amp; Telangana – HQ Hyderabad</option>
-          </optgroup>
-          <optgroup label="🟡 East India">
-            <option>West Bengal &amp; Sikkim – HQ Kolkata</option>
-            <option>North Eastern Region (NER)</option>
-            <option>Odisha – HQ Bhubaneswar</option>
-            <option>Bihar &amp; Jharkhand – HQ Patna</option>
-          </optgroup>
-          <optgroup label="🔴 Central India">
-            <option>Madhya Pradesh &amp; Chhattisgarh – HQ Bhopal</option>
-            <option>Rajasthan – HQ Jaipur</option>
-          </optgroup>
-        </select>
-      </div>
-      <button class="ef-save" onclick="saveProfile()">Save Changes</button>
-    </div>
-  </div>
-</div>
-
-<div class="pd-toast" id="pd-toast" role="status" aria-live="polite" aria-atomic="true">
-  <svg width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>
-  <span id="pd-toast-msg"></span>
-</div>
 
 <!-- PAGE CONTENT -->
 <div class="page-wrap">
@@ -907,9 +805,7 @@ body::before{
 })();
 
 function getUser(){ try{ return JSON.parse(localStorage.getItem('t11_user') || '{}'); } catch(e){ return {}; } }
-function saveUser(u){ localStorage.setItem('t11_user', JSON.stringify(u)); }
 function getUsers(){ try{ return JSON.parse(localStorage.getItem('t11_users') || '{}'); } catch(e){ return {}; } }
-function saveUsers(u){ localStorage.setItem('t11_users', JSON.stringify(u)); }
 
 function setText(id, val){ var el = document.getElementById(id); if (el) el.textContent = val; }
 
@@ -945,103 +841,6 @@ window.addEventListener('scroll', function() {
   document.getElementById('btt').classList.toggle('vis', scrollY > 300);
 }, { passive: true });
 function logout(){ localStorage.removeItem('t11_user'); window.location.href='login.html'; }
-
-function sanitize(str){
-  var d = document.createElement('div');
-  d.appendChild(document.createTextNode(String(str || '')));
-  return d.innerHTML;
-}
-
-function showToast(msg){
-  var t = document.getElementById('pd-toast');
-  document.getElementById('pd-toast-msg').textContent = msg;
-  t.classList.add('show');
-  setTimeout(function(){ t.classList.remove('show'); }, 3500);
-}
-
-function openEditModal(){
-  document.getElementById('dd').classList.remove('open');
-  var user = getUser();
-  var users = getUsers();
-  var key = (user && user.email || '').toLowerCase();
-  var s = users[key] || {};
-  document.getElementById('ef-name').value = user && user.name || '';
-  document.getElementById('ef-email').value = user && user.email || '';
-  document.getElementById('ef-mobile').value = s.mobile || '';
-  document.getElementById('ef-region').value = s.region || '';
-  var locked = s.mobileUpdateUsed === true;
-  document.getElementById('ef-mob-badge').style.display = locked ? 'inline' : 'none';
-  var hint = document.getElementById('ef-mob-hint');
-  var minp = document.getElementById('ef-mobile');
-  if (locked) {
-    hint.innerHTML = '🔒 Mobile update already used. Contact support.';
-    hint.style.color = '#991b1b';
-    minp.disabled = true; minp.style.background = '#f9fafb'; minp.style.cursor = 'not-allowed';
-  } else {
-    hint.innerHTML = '⚠️ Mobile number can only be updated <strong>once</strong>.';
-    hint.style.color = '#d97706';
-    minp.disabled = false; minp.style.background = ''; minp.style.cursor = '';
-  }
-  document.getElementById('ef-error').classList.remove('show');
-  document.getElementById('edit-modal').classList.add('open');
-}
-
-function closeEditModal(){
-  document.getElementById('edit-modal').classList.remove('open');
-}
-
-function saveProfile(){
-  var name = sanitize(document.getElementById('ef-name').value.trim());
-  var email = sanitize(document.getElementById('ef-email').value.trim().toLowerCase());
-  var mobile = document.getElementById('ef-mobile').value.trim().replace(/\D/g, '');
-  var region = sanitize(document.getElementById('ef-region').value);
-  var errEl = document.getElementById('ef-error');
-  errEl.classList.remove('show');
-  function err(m){ errEl.textContent = m; errEl.classList.add('show'); }
-
-  if (!name || name.length < 2) { err('Full name must be at least 2 characters.'); return; }
-  if (name.length > 80) { err('Name is too long (max 80 characters).'); return; }
-  if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) { err('Please enter a valid email address.'); return; }
-  if (mobile && !/^\d{10}$/.test(mobile)) { err('Mobile must be exactly 10 digits.'); return; }
-
-  var user = getUser();
-  var users = getUsers();
-  var oldKey = (user && user.email || '').toLowerCase();
-  var newKey = email;
-  var ex = users[oldKey] || {};
-
-  if (mobile && ex.mobile && ex.mobile !== mobile && ex.mobileUpdateUsed) {
-    err('Mobile number can only be updated once.'); return;
-  }
-  var changed = mobile && ex.mobile && ex.mobile !== mobile;
-  var rec = Object.assign({}, ex, { mobile: mobile, region: region });
-  if (changed) rec.mobileUpdateUsed = true;
-
-  if (newKey !== oldKey) {
-    if (users[newKey]) { err('That email is already registered.'); return; }
-    delete users[oldKey];
-  }
-  users[newKey] = rec;
-  saveUsers(users);
-
-  var upd = Object.assign({}, user, { name: name, email: newKey });
-  saveUser(upd);
-
-  if (user.name) {
-    var parts = name.trim().split(' ');
-    document.getElementById('nav-name').textContent = parts[0] + (parts[1] ? ' ' + parts[1][0] + '.' : '');
-  }
-  populateProfile(upd, users);
-  closeEditModal();
-  showToast('✅ Profile updated successfully.');
-}
-
-document.addEventListener('keydown', function(e){
-  if (e.key === 'Escape') {
-    var editModal = document.getElementById('edit-modal');
-    if (editModal && editModal.classList.contains('open')) closeEditModal();
-  }
-});
 </script>
 </body>
 </html>

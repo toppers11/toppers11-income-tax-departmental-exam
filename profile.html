@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Edit Profile — Toppers11</title>
+<meta name="robots" content="noindex, nofollow">
+<meta name="theme-color" content="#00AB84">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{
+  --t1:#006d5b;--t3:#00ab84;--t-dark:#004d3f;
+  --ink:#111827;--muted:#6B7280;--border:#E5E7EB;--bg:#F0FDF4;
+  --green-pale:#ECFDF5;
+}
+*{box-sizing:border-box;margin:0;padding:0;}
+body{
+  font-family:'Poppins',sans-serif;
+  color:var(--ink);
+  min-height:100vh;
+  background:var(--bg);
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+}
+
+/* Top bar */
+.top-bar{width:100%;background:#fff;border-bottom:2px solid var(--t3);padding:.85rem 0;}
+.top-inner{max-width:640px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;padding:0 1.2rem;}
+.logo-box{display:inline-flex;flex-direction:column;text-decoration:none;line-height:1;}
+.logo-box .site-name{font-size:1.4rem;font-weight:400;color:#1a1a2e;text-transform:lowercase;}
+.logo-box .site-name .logo-num{color:var(--t3);font-weight:800;}
+.back-link{display:inline-flex;align-items:center;gap:.35rem;font-size:.8rem;font-weight:600;color:var(--t1);text-decoration:none;background:var(--green-pale);border:1.5px solid #a7f3d0;border-radius:999px;padding:.4rem 1rem;transition:all .15s;}
+.back-link:hover{background:#d1fae5;border-color:var(--t3);}
+
+/* Card */
+.wrap{width:100%;max-width:520px;padding:2rem 1.2rem 4rem;}
+.card{background:#fff;border-radius:18px;overflow:hidden;box-shadow:0 8px 32px rgba(0,0,0,.08);}
+.card-hdr{background:linear-gradient(135deg,var(--t-dark),var(--t3));padding:1.5rem 1.75rem;}
+.card-hdr h1{color:#fff;font-size:1.35rem;font-weight:800;margin-bottom:.25rem;}
+.card-hdr p{color:rgba(255,255,255,.8);font-size:.8rem;}
+.card-bdy{padding:1.6rem 1.75rem 2rem;}
+
+.ef-err{padding:.7rem 1rem;border-radius:9px;font-size:.8rem;font-weight:500;margin-bottom:1rem;display:none;background:#fef2f2;border:1px solid #fecaca;color:#991b1b;}
+.ef-err.show{display:block;}
+.ef-ok{padding:.7rem 1rem;border-radius:9px;font-size:.8rem;font-weight:500;margin-bottom:1rem;display:none;background:var(--green-pale);border:1px solid #a7f3d0;color:var(--t1);}
+.ef-ok.show{display:block;}
+
+.ef-grp{margin-bottom:1rem;}
+.ef-lbl{display:block;font-size:.78rem;font-weight:600;color:var(--ink);margin-bottom:.4rem;}
+.ef-inp,.ef-sel{width:100%;padding:.72rem .9rem;border:1.5px solid var(--border);border-radius:9px;font-family:'Poppins',sans-serif;font-size:.875rem;color:var(--ink);background:#fff;outline:none;transition:border-color .15s,box-shadow .15s;}
+.ef-inp:focus,.ef-sel:focus{border-color:var(--t3);box-shadow:0 0 0 3px rgba(0,171,132,.1);}
+.ef-sel{appearance:none;background-image:url("data:image/svg+xml,%3Csvg width='12' height='8' fill='none' stroke='%236B7280' stroke-width='1.5' viewBox='0 0 12 8' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M1 1l5 5 5-5'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right .9rem center;padding-right:2.2rem;}
+.ef-hint{font-size:.72rem;color:var(--muted);margin-top:.3rem;}
+.ef-ph-grp{display:flex;}
+.ef-ph-pre{display:flex;align-items:center;padding:.72rem .75rem;background:#f9fafb;border:1.5px solid var(--border);border-right:none;border-radius:9px 0 0 9px;font-size:.875rem;color:var(--muted);font-weight:600;}
+.ef-ph-grp .ef-inp{border-radius:0 9px 9px 0;flex:1;}
+.ef-row{display:grid;grid-template-columns:1fr 1fr;gap:.75rem;}
+.ef-save{width:100%;padding:.82rem;border:none;border-radius:10px;font-family:'Poppins',sans-serif;font-size:.9rem;font-weight:700;cursor:pointer;background:linear-gradient(135deg,var(--t1),var(--t3));color:#fff;margin-top:.75rem;}
+.ef-save:hover{filter:brightness(1.05);}
+
+.toast{position:fixed;bottom:1.5rem;right:1.5rem;background:var(--t-dark);color:#fff;padding:.72rem 1rem;border-radius:10px;font-size:.8rem;font-weight:600;box-shadow:0 6px 22px rgba(0,0,0,.18);z-index:999;display:none;align-items:center;gap:.4rem;}
+.toast.show{display:flex;}
+
+@media(max-width:640px){
+  .ef-row{grid-template-columns:1fr;}
+  .toast{left:1rem;right:1rem;bottom:1rem;justify-content:center;}
+}
+</style>
+</head>
+<body>
+
+<div class="top-bar">
+  <div class="top-inner">
+    <a class="logo-box" href="index.html"><span class="site-name">toppers<span class="logo-num">11</span></span></a>
+    <a class="back-link" href="#" id="back-link">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+      Back
+    </a>
+  </div>
+</div>
+
+<div class="wrap">
+  <div class="card">
+    <div class="card-hdr">
+      <h1>Edit Profile</h1>
+      <p>Update your personal details and account settings</p>
+    </div>
+    <div class="card-bdy">
+      <div class="ef-err" id="ef-error"></div>
+      <div class="ef-ok" id="ef-ok">✅ Profile updated successfully.</div>
+
+      <div class="ef-row">
+        <div class="ef-grp">
+          <label class="ef-lbl">Full Name *</label>
+          <input type="text" class="ef-inp" id="ef-name" placeholder="e.g. Rajesh Kumar"/>
+        </div>
+        <div class="ef-grp">
+          <label class="ef-lbl">Email Address *</label>
+          <input type="email" class="ef-inp" id="ef-email" placeholder="you@example.com"/>
+        </div>
+      </div>
+
+      <div class="ef-grp">
+        <label class="ef-lbl">Mobile Number
+          <span id="ef-mob-badge" style="display:none;font-size:.68rem;font-weight:600;color:#991b1b;background:#fef2f2;border:1px solid #fecaca;border-radius:999px;padding:.1rem .5rem;margin-left:.3rem;">Update used — locked</span>
+        </label>
+        <div class="ef-ph-grp">
+          <span class="ef-ph-pre">🇮🇳 +91</span>
+          <input type="tel" class="ef-inp" id="ef-mobile" placeholder="98765 43210" maxlength="10"/>
+        </div>
+        <div class="ef-hint" id="ef-mob-hint" style="color:#d97706;">⚠️ Mobile number can only be updated <strong>once</strong>.</div>
+      </div>
+
+      <div class="ef-grp">
+        <label class="ef-lbl">Select your Region</label>
+        <select class="ef-sel" id="ef-region">
+          <option value="">— Select Region —</option>
+          <optgroup label="🔵 North India">
+            <option>Delhi</option>
+            <option>North West Region (NWR) – Chandigarh, Punjab, Haryana, HP, J&amp;K</option>
+            <option>UP West &amp; Uttarakhand – HQ Kanpur</option>
+            <option>UP East – HQ Lucknow</option>
+          </optgroup>
+          <optgroup label="🟠 West India">
+            <option>Mumbai</option>
+            <option>Pune – Covers rest of Maharashtra</option>
+            <option>Gujarat – HQ Ahmedabad</option>
+          </optgroup>
+          <optgroup label="🟢 South India">
+            <option>Tamil Nadu &amp; Puducherry – HQ Chennai</option>
+            <option>Karnataka &amp; Goa – HQ Bengaluru</option>
+            <option>Kerala – HQ Kochi</option>
+            <option>Andhra Pradesh &amp; Telangana – HQ Hyderabad</option>
+          </optgroup>
+          <optgroup label="🟡 East India">
+            <option>West Bengal &amp; Sikkim – HQ Kolkata</option>
+            <option>North Eastern Region (NER)</option>
+            <option>Odisha – HQ Bhubaneswar</option>
+            <option>Bihar &amp; Jharkhand – HQ Patna</option>
+          </optgroup>
+          <optgroup label="🔴 Central India">
+            <option>Madhya Pradesh &amp; Chhattisgarh – HQ Bhopal</option>
+            <option>Rajasthan – HQ Jaipur</option>
+          </optgroup>
+        </select>
+      </div>
+
+      <div class="ef-grp">
+        <label class="ef-lbl">New Password <span style="font-weight:400;color:var(--muted)">(blank = keep current)</span></label>
+        <input type="password" class="ef-inp" id="ef-pass" placeholder="Min. 8 characters"/>
+      </div>
+      <div class="ef-grp">
+        <label class="ef-lbl">Confirm New Password</label>
+        <input type="password" class="ef-inp" id="ef-pass2" placeholder="Repeat new password"/>
+      </div>
+
+      <button class="ef-save" onclick="saveProfile()">Save Changes</button>
+    </div>
+  </div>
+</div>
+
+<div class="toast" id="toast" role="status" aria-live="polite" aria-atomic="true">
+  <svg width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>
+  <span id="toast-msg"></span>
+</div>
+
+<script>
+'use strict';
+
+// Auth guard
+var user = null;
+try {
+  user = JSON.parse(localStorage.getItem('t11_user') || 'null');
+  if (!user || !user.token) { window.location.href = 'login.html'; }
+} catch(e) { window.location.href = 'login.html'; }
+
+function getUsers(){ try{ return JSON.parse(localStorage.getItem('t11_users') || '{}'); } catch(e){ return {}; } }
+function saveUsers(u){ localStorage.setItem('t11_users', JSON.stringify(u)); }
+function saveUser(u){ localStorage.setItem('t11_user', JSON.stringify(u)); }
+
+function sanitize(str){
+  var d = document.createElement('div');
+  d.appendChild(document.createTextNode(String(str || '')));
+  return d.innerHTML;
+}
+
+function showToast(msg){
+  var t = document.getElementById('toast');
+  document.getElementById('toast-msg').textContent = msg;
+  t.classList.add('show');
+  setTimeout(function(){ t.classList.remove('show'); }, 3500);
+}
+
+// Back link — go to wherever the user came from, default to the exam picker
+(function(){
+  var back = document.getElementById('back-link');
+  var ref = document.referrer;
+  back.href = (ref && ref.indexOf(location.host) !== -1) ? ref : 'income-tax-departmental-exam.html';
+})();
+
+// Pre-fill the form
+(function(){
+  if (!user) return;
+  var users = getUsers();
+  var key = (user.email || '').toLowerCase();
+  var s = users[key] || {};
+  document.getElementById('ef-name').value = user.name || '';
+  document.getElementById('ef-email').value = user.email || '';
+  document.getElementById('ef-mobile').value = s.mobile || '';
+  document.getElementById('ef-region').value = s.region || '';
+  var locked = s.mobileUpdateUsed === true;
+  document.getElementById('ef-mob-badge').style.display = locked ? 'inline' : 'none';
+  var hint = document.getElementById('ef-mob-hint');
+  var minp = document.getElementById('ef-mobile');
+  if (locked) {
+    hint.innerHTML = '🔒 Mobile update already used. Contact support.';
+    hint.style.color = '#991b1b';
+    minp.disabled = true; minp.style.background = '#f9fafb'; minp.style.cursor = 'not-allowed';
+  } else {
+    hint.innerHTML = '⚠️ Mobile number can only be updated <strong>once</strong>.';
+    hint.style.color = '#d97706';
+  }
+})();
+
+function saveProfile(){
+  var name = sanitize(document.getElementById('ef-name').value.trim());
+  var email = sanitize(document.getElementById('ef-email').value.trim().toLowerCase());
+  var mobile = document.getElementById('ef-mobile').value.trim().replace(/\D/g, '');
+  var region = sanitize(document.getElementById('ef-region').value);
+  var pass = document.getElementById('ef-pass').value;
+  var pass2 = document.getElementById('ef-pass2').value;
+
+  var errEl = document.getElementById('ef-error');
+  var okEl = document.getElementById('ef-ok');
+  errEl.classList.remove('show'); okEl.classList.remove('show');
+  function err(m){ errEl.textContent = m; errEl.classList.add('show'); }
+
+  if (!name || name.length < 2) { err('Full name must be at least 2 characters.'); return; }
+  if (name.length > 80) { err('Name is too long (max 80 characters).'); return; }
+  if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) { err('Please enter a valid email address.'); return; }
+  if (mobile && !/^\d{10}$/.test(mobile)) { err('Mobile must be exactly 10 digits.'); return; }
+  if (pass && pass.length < 8) { err('New password must be at least 8 characters.'); return; }
+  if (pass && pass !== pass2) { err('Passwords do not match.'); return; }
+  if (pass && /^(.)\1+$/.test(pass)) { err('Password is too simple — avoid repeated characters.'); return; }
+
+  var users = getUsers();
+  var oldKey = (user && user.email || '').toLowerCase();
+  var newKey = email;
+  var ex = users[oldKey] || {};
+
+  if (mobile && ex.mobile && ex.mobile !== mobile && ex.mobileUpdateUsed) {
+    err('Mobile number can only be updated once.'); return;
+  }
+  var changed = mobile && ex.mobile && ex.mobile !== mobile;
+  var rec = Object.assign({}, ex, { mobile: mobile, region: region });
+  if (changed) rec.mobileUpdateUsed = true;
+
+  if (newKey !== oldKey) {
+    if (users[newKey]) { err('That email is already registered.'); return; }
+    delete users[oldKey];
+  }
+  users[newKey] = rec;
+  saveUsers(users);
+
+  var upd = Object.assign({}, user, { name: name, email: newKey });
+  saveUser(upd);
+  user = upd;
+
+  if (pass) showToast('🔑 Password updated.');
+  else { okEl.classList.add('show'); showToast('✅ Profile updated successfully.'); }
+
+  document.getElementById('ef-pass').value = '';
+  document.getElementById('ef-pass2').value = '';
+}
+</script>
+</body>
+</html>
