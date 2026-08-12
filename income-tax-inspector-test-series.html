@@ -181,11 +181,11 @@ const PAPERS=[
 {id:'iti-p3-s20',lbl:'Series 20',title:'Allied Laws & Office Procedure — Series 20',free:false,pyq:false,qs:100,mins:120},
 ]},
 {key:'p4',name:'IT Applications & Operations',hasFree:true,topics:'ITBA Modules, ITR Processing, Faceless Assessment, HRMS, Insight Portal, Digital Forensics, PAN/TAN, TDS, MIS Reports.',type:'Objective',marks:100,tests:[
-{id:'iti-p4-pyq25',lbl:'PYQ 2025',title:'IT Applications & Operations — 2025 PYQ',free:true,pyq:true,qs:100,mins:120},
-{id:'iti-p4-pyq24',lbl:'PYQ 2024',title:'IT Applications & Operations — 2024 PYQ',free:false,pyq:true,qs:100,mins:120},
-{id:'iti-p4-pyq23',lbl:'PYQ 2023',title:'IT Applications & Operations — 2023 PYQ',free:false,pyq:true,qs:100,mins:120},
-{id:'iti-p4-pyq22',lbl:'PYQ 2022',title:'IT Applications & Operations — 2022 PYQ',free:false,pyq:true,qs:100,mins:120},
-{id:'iti-p4-pyq21',lbl:'PYQ 2021',title:'IT Applications & Operations — 2021 PYQ',free:false,pyq:true,qs:100,mins:120},
+{id:'iti-p4-pyq25',lbl:'PYQ 2025',title:'2025 PYQ — Old Paper 4 (Office Procedure)',free:true,pyq:true,topics:'Office Procedure, CCS Rules, Leave & Pension, Income-tax Procedures',qs:100,mins:120},
+{id:'iti-p4-pyq24',lbl:'PYQ 2024',title:'2024 PYQ — Old Paper 4 (Office Procedure)',free:false,pyq:true,topics:'Office Procedure, CCS Rules, Leave & Pension, Income-tax Procedures',qs:100,mins:120},
+{id:'iti-p4-pyq23',lbl:'PYQ 2023',title:'2023 PYQ — Old Paper 4 (Office Procedure)',free:false,pyq:true,topics:'Office Procedure, CCS Rules, Leave & Pension, Income-tax Procedures',qs:100,mins:120},
+{id:'iti-p4-pyq22',lbl:'PYQ 2022',title:'2022 PYQ — Old Paper 4 (Office Procedure)',free:false,pyq:true,topics:'Office Procedure, CCS Rules, Leave & Pension, Income-tax Procedures',qs:100,mins:120},
+{id:'iti-p4-pyq21',lbl:'PYQ 2021',title:'2021 PYQ — Old Paper 4 (Office Procedure)',free:false,pyq:true,topics:'Office Procedure, CCS Rules, Leave & Pension, Income-tax Procedures',qs:100,mins:120},
 {id:'iti-p4-s06',lbl:'Series 06',title:'IT Applications & Operations — Series 06',free:false,pyq:false,qs:100,mins:120},
 {id:'iti-p4-s07',lbl:'Series 07',title:'IT Applications & Operations — Series 07',free:false,pyq:false,qs:100,mins:120},
 {id:'iti-p4-s08',lbl:'Series 08',title:'IT Applications & Operations — Series 08',free:false,pyq:false,qs:100,mins:120},
@@ -293,7 +293,7 @@ bottomHTML=`<div class="pc-btns"><span class="pb pb-free">${score?'Retake Test':
 bottomHTML=`<div class="pc-btns"><button class="pb pb-lock" onclick="openModal('${p.key}')">🔒 Locked</button></div>`;
 }
 card.innerHTML=`
-<div class="ct"><span class="lbl ${t.pyq?'lbl-pyq':'lbl-reg'}">${t.lbl}</span><span class="st ${maxed?'st-done':unlocked?'st-open':'st-lock'}">${maxed?'DONE':unlocked?'OPEN':'LOCK'}</span></div><div class="cb"><div class="ctitle">${t.title}</div><div class="ctopics">${p.topics.split(',').slice(0,2).join(', ')}${p.topics.split(',').length>2?'…':''}</div><div class="cmeta"><span class="mi"><svg width="9" height="9" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>${t.mins} min</span><span class="mi"><svg width="9" height="9" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M9 11l3 3L22 4"/></svg>${t.qs} Qs</span><span class="pc-type type-obj">${p.type}</span></div></div><div class="cf">${bottomHTML}</div>`;
+<div class="ct"><span class="lbl ${t.pyq?'lbl-pyq':'lbl-reg'}">${t.lbl}</span><span class="st ${maxed?'st-done':unlocked?'st-open':'st-lock'}">${maxed?'DONE':unlocked?'OPEN':'LOCK'}</span></div><div class="cb"><div class="ctitle">${t.title}</div><div class="ctopics">${(t.topics||p.topics).split(',').slice(0,2).join(', ')}${(t.topics||p.topics).split(',').length>2?'…':''}</div><div class="cmeta"><span class="mi"><svg width="9" height="9" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>${t.mins} min</span><span class="mi"><svg width="9" height="9" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M9 11l3 3L22 4"/></svg>${t.qs} Qs</span><span class="pc-type type-obj">${p.type}</span></div></div><div class="cf">${bottomHTML}</div>`;
 if(!unlocked) card.onclick=()=>openModal(p.key);
 wrap.appendChild(card);
 grid.appendChild(wrap);
