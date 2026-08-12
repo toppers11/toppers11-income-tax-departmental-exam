@@ -518,7 +518,7 @@ body{background:var(--bg);color:var(--ink);font-family:'Open Sans',sans-serif;ov
               <div id="confirm-sublabel" style="font-size:.75rem;color:var(--muted);line-height:1.55">Check your payment app for a success message, then submit below for verification.</div>
             </div>
             <div class="utr-field-wrap">
-              <label for="utr-input" class="utr-label">UPI transaction / reference ID <span>(required — found in your payment app's success screen)</span></label>
+              <label for="utr-input" class="utr-label">UPI transaction / reference ID/UTR <span>(required — found in your payment app's success screen)</span></label>
               <input type="text" id="utr-input" class="utr-input" placeholder="e.g. 402816558211" maxlength="40" autocomplete="off" required>
             </div>
             <div class="al-err" id=utr-err></div>
@@ -961,7 +961,7 @@ async function submitPayment(){
   const utr=utrRaw.trim().slice(0,40);
 
   if(utr.length<6){
-    if(errEl){errEl.textContent='Please enter your UPI transaction / reference ID — check the success screen in your payment app.';errEl.classList.add('show');}
+    if(errEl){errEl.textContent='Please enter your UPI transaction / reference ID/UTR — check the success screen in your payment app.';errEl.classList.add('show');}
     if(utrInput){utrInput.classList.add('invalid');utrInput.focus();}
     return;
   }
