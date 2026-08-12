@@ -137,6 +137,24 @@ nav{z-index:200;background:#fff;border-bottom:none;position:sticky;top:0}
 .success-msg{display:none;background:#00ab841a;border:1px solid #00ab844d;border-radius:8px;padding:1rem 1.2rem;font-size:.83rem;color:var(--t-dark);margin-top:1rem;text-align:center}
 .success-msg.show{display:block}
 
+/* ── FILE ATTACH ── */
+.file-drop{border:1.5px dashed var(--bdr);border-radius:8px;padding:.9rem 1rem;display:flex;align-items:center;gap:.7rem;cursor:pointer;transition:border-color .15s,background .15s;background:#fafafa}
+.file-drop:hover,.file-drop.drag{border-color:var(--t3);background:#00ab840d}
+.file-drop svg{flex-shrink:0;color:var(--t3)}
+.file-drop-text{font-size:.8rem;color:var(--muted);line-height:1.4}
+.file-drop-text b{color:var(--ink)}
+.file-hint{font-size:.7rem;color:#999;margin-top:.35rem}
+.file-preview{display:none;align-items:center;gap:.7rem;margin-top:.6rem;background:#fff;border:1px solid var(--bdr);border-radius:8px;padding:.5rem .6rem}
+.file-preview.show{display:flex}
+.file-preview img{width:44px;height:44px;object-fit:cover;border-radius:6px;flex-shrink:0;border:1px solid var(--bdr)}
+.file-preview-info{flex:1;min-width:0}
+.file-preview-name{font-size:.78rem;font-weight:700;color:var(--ink);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.file-preview-size{font-size:.7rem;color:var(--muted)}
+.file-remove{cursor:pointer;background:#f0f0f0;border:none;border-radius:50%;width:24px;height:24px;flex-shrink:0;display:grid;place-items:center;color:#666;transition:background .15s}
+.file-remove:hover{background:#fde2e2;color:#c0392b}
+.file-error{display:none;font-size:.72rem;color:#c0392b;margin-top:.35rem}
+.file-error.show{display:block}
+
 /* ── INFO STRIP ── */
 .info-strip{background:var(--t1);padding:1.6rem 0;margin-bottom:2.5rem}
 .info-strip-inner{max-width:1200px;margin:0 auto;padding:0 1.2rem;display:grid;grid-template-columns:repeat(3,1fr);gap:1.5rem}
@@ -389,6 +407,27 @@ footer{background:var(--dark);padding:2.8rem 0 0;position:relative;overflow:hidd
         <textarea class="form-textarea" id="f-message" placeholder="Describe your query in detail…"></textarea>
       </div>
 
+      <div class="form-group">
+        <label class="form-label">Attach Screenshot (optional)</label>
+        <label class="file-drop" for="f-attachment" id="file-drop">
+          <svg width="26" height="26" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
+          <span class="file-drop-text"><b>Click to upload</b> or drag an image here<br>Helpful if you're reporting an error — a screenshot shows us exactly what you saw</span>
+        </label>
+        <input type="file" id="f-attachment" accept="image/*" style="display:none">
+        <div class="file-hint">PNG, JPG or WEBP · up to 5 MB</div>
+        <div class="file-preview" id="file-preview">
+          <img id="file-preview-img" alt="Screenshot preview">
+          <div class="file-preview-info">
+            <div class="file-preview-name" id="file-preview-name"></div>
+            <div class="file-preview-size" id="file-preview-size"></div>
+          </div>
+          <button type="button" class="file-remove" id="file-remove" aria-label="Remove attachment">
+            <svg width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M18 6L6 18M6 6l12 12"/></svg>
+          </button>
+        </div>
+        <div class="file-error" id="file-error"></div>
+      </div>
+
       <button class="btn-submit" onclick="submitForm()">
         <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg>
         Send Message
@@ -455,6 +494,94 @@ footer{background:var(--dark);padding:2.8rem 0 0;position:relative;overflow:hidd
 const SUPA_URL  = 'https://tvstcvinatkokhmoeqlx.supabase.co';
 const SUPA_KEY  = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InR2c3RjdmluYXRrb2tobW9lcWx4Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3Nzc5MzU5NDMsImV4cCI6MjA5MzUxMTk0M30.MNT5dOgqeCmJmgQPgmh8t5ivKnTZ90nB8UzQhfqquh8';
 const SUPA_TABLE = 'contact_messages';
+const SUPA_BUCKET = 'contact-attachments'; // must exist as a PUBLIC bucket in Supabase Storage
+
+/* ── ATTACHMENT HANDLING ── */
+let selectedFile = null;
+const MAX_FILE_MB = 5;
+
+const fileInput   = document.getElementById('f-attachment');
+const fileDrop     = document.getElementById('file-drop');
+const filePreview  = document.getElementById('file-preview');
+const filePreviewImg  = document.getElementById('file-preview-img');
+const filePreviewName = document.getElementById('file-preview-name');
+const filePreviewSize = document.getElementById('file-preview-size');
+const fileError    = document.getElementById('file-error');
+
+function showFileError(msg){
+  fileError.textContent = msg;
+  fileError.classList.add('show');
+}
+function clearFileError(){
+  fileError.classList.remove('show');
+  fileError.textContent = '';
+}
+
+function handleFile(file){
+  clearFileError();
+  if(!file) return;
+  if(!file.type.startsWith('image/')){
+    showFileError('Please attach an image file (PNG, JPG or WEBP).');
+    return;
+  }
+  if(file.size > MAX_FILE_MB * 1024 * 1024){
+    showFileError(`That image is too large. Please attach a file under ${MAX_FILE_MB} MB.`);
+    return;
+  }
+  selectedFile = file;
+  filePreviewImg.src = URL.createObjectURL(file);
+  filePreviewName.textContent = file.name;
+  filePreviewSize.textContent = (file.size / 1024).toFixed(0) + ' KB';
+  filePreview.classList.add('show');
+  fileDrop.style.display = 'none';
+}
+
+function resetFile(){
+  selectedFile = null;
+  fileInput.value = '';
+  filePreview.classList.remove('show');
+  fileDrop.style.display = 'flex';
+  clearFileError();
+}
+
+fileInput.addEventListener('change', e => handleFile(e.target.files[0]));
+document.getElementById('file-remove').addEventListener('click', () => resetFile());
+
+['dragover','dragenter'].forEach(evt => fileDrop.addEventListener(evt, e => {
+  e.preventDefault();
+  fileDrop.classList.add('drag');
+}));
+['dragleave','drop'].forEach(evt => fileDrop.addEventListener(evt, e => {
+  e.preventDefault();
+  fileDrop.classList.remove('drag');
+}));
+fileDrop.addEventListener('drop', e => {
+  if(e.dataTransfer.files && e.dataTransfer.files[0]) handleFile(e.dataTransfer.files[0]);
+});
+
+/* Uploads the selected screenshot to Supabase Storage and returns its public URL, or null if there's no file. */
+async function uploadAttachment(){
+  if(!selectedFile) return null;
+  const ext = (selectedFile.name.split('.').pop() || 'png').toLowerCase();
+  const path = `${Date.now()}-${Math.random().toString(36).slice(2,8)}.${ext}`;
+
+  const res = await fetch(`${SUPA_URL}/storage/v1/object/${SUPA_BUCKET}/${path}`, {
+    method: 'POST',
+    headers: {
+      'apikey': SUPA_KEY,
+      'Authorization': `Bearer ${SUPA_KEY}`,
+      'Content-Type': selectedFile.type
+    },
+    body: selectedFile
+  });
+
+  if(!res.ok){
+    const err = await res.json().catch(()=>({}));
+    throw new Error(err.message || `Upload failed (HTTP ${res.status})`);
+  }
+
+  return `${SUPA_URL}/storage/v1/object/public/${SUPA_BUCKET}/${path}`;
+}
 
 async function submitForm(){
   const name     = document.getElementById('f-name').value.trim();
@@ -476,6 +603,18 @@ async function submitForm(){
   btn.innerHTML = '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" style="animation:spin .8s linear infinite"><path d="M12 2v4M12 18v4M4.93 4.93l2.83 2.83M16.24 16.24l2.83 2.83M2 12h4M18 12h4M4.93 19.07l2.83-2.83M16.24 7.76l2.83-2.83"/></svg> Sending…';
 
   try {
+    let attachment_url = null;
+    if(selectedFile){
+      try {
+        attachment_url = await uploadAttachment();
+      } catch(uploadErr){
+        console.error('[Toppers11] Attachment upload error:', uploadErr);
+        // Don't block the whole submission just because the image failed to upload.
+        attachment_url = null;
+        alert('Your message will be sent, but the screenshot could not be uploaded. You can email it to support@toppers11.com instead.');
+      }
+    }
+
     const res = await fetch(`${SUPA_URL}/rest/v1/${SUPA_TABLE}`, {
       method: 'POST',
       headers: {
@@ -484,7 +623,7 @@ async function submitForm(){
         'Authorization': `Bearer ${SUPA_KEY}`,
         'Prefer': 'return=minimal'
       },
-      body: JSON.stringify({ name, email, phone, category, subject, message })
+      body: JSON.stringify({ name, email, phone, category, subject, message, attachment_url })
     });
 
     if(!res.ok){
@@ -496,6 +635,7 @@ async function submitForm(){
     ['f-name','f-email','f-phone','f-message'].forEach(id => document.getElementById(id).value = '');
     document.getElementById('f-category').value = '';
     document.getElementById('f-subject').value  = '';
+    resetFile();
 
     document.getElementById('success-msg').classList.add('show');
     setTimeout(() => document.getElementById('success-msg').classList.remove('show'), 6000);
