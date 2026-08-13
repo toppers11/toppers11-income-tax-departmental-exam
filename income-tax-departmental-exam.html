@@ -176,6 +176,30 @@ body::before{
   color:rgba(255,255,255,0.6);
 }
 
+/* Quiz tiles (Everyday / Weekend / Weekly Test) */
+.nav-tile-btn.quiz-tile{position:relative;}
+.nav-tile-btn.quiz-weekend{background:#0a1a3a;}
+.nav-tile-btn.quiz-weekend:hover{background:#12234a;}
+.nav-tile-btn.quiz-free{background:#10B981;}
+.nav-tile-btn.quiz-free:hover{background:#0ea371;}
+.quiz-free-badge{
+  position:absolute;
+  top:-8px;
+  right:-6px;
+  background:#F5C518;
+  color:#111827;
+  font-family:'Poppins',sans-serif;
+  font-size:.42rem;
+  font-weight:800;
+  letter-spacing:.03em;
+  padding:2px 6px 2px 5px;
+  border-radius:999px;
+  display:flex;
+  align-items:center;
+  gap:2px;
+  box-shadow:0 2px 6px rgba(0,0,0,0.25);
+}
+
 /* Profile dropdown */
 .user-chip-wrap{position:relative;display:flex;align-items:center;}
 .profile-dropdown{
@@ -506,6 +530,12 @@ body::before{
 @media(max-width:960px){
   .cards-grid{grid-template-columns:1fr;max-width:460px;}
 }
+@media(max-width:900px){
+  .top-nav-inner{height:auto;flex-wrap:wrap;padding:.6rem 1rem;gap:.5rem;}
+  .nav-right{flex-wrap:nowrap;overflow-x:auto;width:100%;-webkit-overflow-scrolling:touch;padding-bottom:2px;}
+  .nav-right::-webkit-scrollbar{height:0;}
+  .nav-tile-btn{min-width:76px;padding:8px .6rem;}
+}
 @media(max-width:560px){
   .logo-wordmark{font-size:24px;}
   .page-wrap{padding:36px 16px 60px;}
@@ -547,6 +577,47 @@ body::before{
       </div>
       <span class="nav-tile-label">All Exams</span>
       <span class="nav-tile-sub">Switch Exam</span>
+    </a>
+
+    <!-- EVERYDAY QUIZ tile -->
+    <a href="everyday-quiz.html" class="nav-tile-btn quiz-tile">
+      <div class="nav-tile-icon">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.85)" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="12" cy="12" r="9"/>
+          <polyline points="12 7 12 12 15 14"/>
+        </svg>
+      </div>
+      <span class="nav-tile-label">Everyday Quiz</span>
+      <span class="nav-tile-sub">Win Everyday</span>
+    </a>
+
+    <!-- WEEKEND QUIZ tile -->
+    <a href="weekend-quiz.html" class="nav-tile-btn quiz-tile quiz-weekend">
+      <div class="nav-tile-icon">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.85)" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+          <rect x="3" y="4" width="18" height="18" rx="2"/>
+          <line x1="16" y1="2" x2="16" y2="6"/>
+          <line x1="8" y1="2" x2="8" y2="6"/>
+          <line x1="3" y1="10" x2="21" y2="10"/>
+        </svg>
+      </div>
+      <span class="nav-tile-label">Weekend Quiz</span>
+      <span class="nav-tile-sub">Win ₹500 / Week</span>
+    </a>
+
+    <!-- WEEKLY TEST tile -->
+    <a href="weekly-test.html" class="nav-tile-btn quiz-tile quiz-free">
+      <span class="quiz-free-badge">
+        <svg width="8" height="8" viewBox="0 0 24 24" fill="#111827"><polygon points="12 2 15 9 22 9 16.5 13.5 18.5 21 12 16.8 5.5 21 7.5 13.5 2 9 9 9"/></svg>
+        FREE
+      </span>
+      <div class="nav-tile-icon">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.9)" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2z"/>
+        </svg>
+      </div>
+      <span class="nav-tile-label">Weekly Test</span>
+      <span class="nav-tile-sub">Free Access</span>
     </a>
 
     <!-- MY ACCOUNT tile -->
