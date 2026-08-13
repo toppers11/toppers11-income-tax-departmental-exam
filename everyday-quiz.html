@@ -1,0 +1,851 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Toppers11 — Everyday Quiz (Coming Soon)</title>
+<meta name="robots" content="noindex, nofollow"/>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&family=Playfair+Display:wght@700;800&family=Nunito:wght@100;300;400;600;700;800;900&family=Righteous&family=Great+Vibes&display=swap" rel="stylesheet"/>
+<style>
+:root{
+  --green:#10B981;--green-dark:#059669;--green-deeper:#065F46;
+  --green-pale:#ECFDF5;--green-light:#D1FAE5;
+  --ink:#111827;--muted:#6B7280;--border:#E5E7EB;--bg:#F0FDF4;
+}
+*{box-sizing:border-box;margin:0;padding:0;}
+
+body{
+  font-family:'Poppins',sans-serif;
+  color:var(--ink);
+  min-height:100vh;
+  display:flex;
+  flex-direction:column;
+  background:#0e9e75;
+  position:relative;
+  overflow-x:hidden;
+}
+
+/* Subtle horizontal line texture */
+body::before{
+  content:'';
+  position:fixed;
+  inset:0;
+  background:
+    repeating-linear-gradient(
+      0deg,
+      rgba(255,255,255,0.035) 0px,
+      rgba(255,255,255,0.035) 1px,
+      transparent 1px,
+      transparent 28px
+    );
+  pointer-events:none;
+  z-index:0;
+}
+
+/* ── FLOATING 3D TRIANGLES ── */
+.tri{position:fixed;pointer-events:none;z-index:1;}
+@keyframes floatT-tl{0%,to{transform:rotate(-22deg)translateY(0)}50%{transform:rotate(-22deg)translateY(-14px)}}
+@keyframes floatT-tl2{0%,to{transform:rotate(55deg)translateY(0)}50%{transform:rotate(55deg)translateY(-12px)}}
+@keyframes floatT-tr{0%,to{transform:rotate(18deg)translateY(0)}50%{transform:rotate(18deg)translateY(-16px)}}
+@keyframes floatT-tr2{0%,to{transform:rotate(-40deg)translateY(0)}50%{transform:rotate(-40deg)translateY(-10px)}}
+@keyframes floatT-tr3{0%,to{transform:rotate(72deg)translateY(0)}50%{transform:rotate(72deg)translateY(-8px)}}
+@keyframes floatT-bl{0%,to{transform:rotate(135deg)translateY(0)}50%{transform:rotate(135deg)translateY(-13px)}}
+@keyframes floatT-bl2{0%,to{transform:rotate(-60deg)translateY(0)}50%{transform:rotate(-60deg)translateY(-9px)}}
+@keyframes floatT-bc{0%,to{transform:translate(-50%)rotate(30deg)translateY(0)}50%{transform:translate(-50%)rotate(30deg)translateY(-14px)}}
+@keyframes floatT-br{0%,to{transform:rotate(-15deg)translateY(0)}50%{transform:rotate(-15deg)translateY(-11px)}}
+@keyframes floatT-mr{0%,to{transform:rotate(80deg)translateY(0)}50%{transform:rotate(80deg)translateY(-15px)}}
+.tri-tl{width:90px;height:90px;animation:6s ease-in-out infinite floatT-tl;top:55px;left:6%}
+.tri-tl2{opacity:.7;filter:blur(2.5px);width:55px;height:55px;animation:8s ease-in-out 1s infinite floatT-tl2;top:25px;left:15%}
+.tri-tr{width:110px;height:110px;animation:7s ease-in-out .5s infinite floatT-tr;top:30px;right:7%}
+.tri-tr2{opacity:.75;filter:blur(1.5px);width:70px;height:70px;animation:9s ease-in-out 2s infinite floatT-tr2;top:18px;right:19%}
+.tri-tr3{opacity:.6;filter:blur(3px);width:45px;height:45px;animation:7s ease-in-out 3s infinite floatT-tr3;top:85px;right:13%}
+.tri-bl{width:80px;height:80px;animation:8s ease-in-out 1.5s infinite floatT-bl;bottom:45px;left:9%}
+.tri-bl2{opacity:.55;filter:blur(2px);width:40px;height:40px;animation:6s ease-in-out 3.5s infinite floatT-bl2;bottom:28px;left:21%}
+.tri-bc{width:100px;height:100px;animation:7s ease-in-out .8s infinite floatT-bc;bottom:15px;left:50%}
+.tri-br{opacity:.7;width:65px;height:65px;animation:9s ease-in-out 2.5s infinite floatT-br;bottom:55px;right:9%}
+.tri-mr{opacity:.65;filter:blur(1.8px);width:75px;height:75px;animation:10s ease-in-out 1s infinite floatT-mr;top:42%;right:3%}
+
+/* ── NAV ── */
+.top-nav{
+  background:transparent;
+  border-bottom:none;
+  padding:10px 1.5rem;
+  width:100%;
+  position:relative;
+  z-index:200;
+}
+.top-nav-inner{
+  max-width:1200px;
+  margin:0 auto;
+  height:58px;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  background:#0a6b4e;
+  border-radius:14px;
+  padding:0 1.5rem;
+}
+
+/* Logo */
+.logo-box{
+  display:inline-flex;
+  flex-direction:column;
+  gap:0;
+  line-height:1;
+  text-decoration:none;
+  padding:4px 0 10px;
+  flex-shrink:0;
+}
+.logo-wordmark{
+  font-family:'Nunito',sans-serif;
+  font-size:30px;
+  font-weight:100;
+  color:rgba(255,255,255,0.92);
+  letter-spacing:0.01em;
+  text-transform:lowercase;
+  line-height:1;
+  display:block;
+  margin-bottom:1px;
+}
+.logo-wordmark .logo-num{
+  font-family:'Righteous',cursive;
+  color:#5decbb;
+  font-size:inherit;
+}
+.logo-tag{
+  font-size:0.42rem;
+  font-weight:700;
+  letter-spacing:0.18em;
+  text-transform:uppercase;
+  color:rgba(255,255,255,0.45);
+  display:flex;
+  align-items:center;
+  gap:5px;
+}
+.logo-tag::before,.logo-tag::after{
+  content:'';
+  display:inline-block;
+  height:1px;
+  width:12px;
+  background:rgba(255,255,255,0.3);
+  flex-shrink:0;
+}
+.logo-box:hover .logo-wordmark{color:#fff;}
+
+/* Nav right — tile buttons (dashboard style) */
+.nav-right{display:flex;align-items:center;gap:.5rem;}
+
+.nav-tile-btn{
+  display:inline-flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  gap:3px;
+  min-width:88px;
+  padding:10px .8rem;
+  border-radius:10px;
+  text-decoration:none;
+  border:none;
+  background:rgba(255,255,255,0.13);
+  color:#fff;
+  transition:background .15s;
+  flex-shrink:0;
+  cursor:pointer;
+}
+.nav-tile-btn:hover{background:rgba(255,255,255,0.22);}
+.nav-tile-icon{
+  display:flex;align-items:center;justify-content:center;
+  width:22px;height:22px;
+  margin-bottom:2px;flex-shrink:0;
+}
+.nav-tile-label{
+  font-family:'Poppins',sans-serif;
+  font-size:.55rem;
+  font-weight:700;
+  letter-spacing:.07em;
+  text-transform:uppercase;
+  line-height:1;
+  color:rgba(255,255,255,0.95);
+}
+.nav-tile-sub{
+  font-size:.46rem;
+  font-weight:500;
+  letter-spacing:.05em;
+  text-transform:uppercase;
+  line-height:1;
+  color:rgba(255,255,255,0.6);
+}
+
+/* Quiz tiles (Everyday / Weekend / Weekly Test) */
+.nav-tile-btn.quiz-tile{position:relative;}
+.nav-tile-btn.quiz-weekend{background:#0a1a3a;}
+.nav-tile-btn.quiz-weekend:hover{background:#12234a;}
+.nav-tile-btn.quiz-free{background:#10B981;}
+.nav-tile-btn.quiz-free:hover{background:#0ea371;}
+.quiz-free-badge{
+  position:absolute;
+  top:-8px;
+  right:-6px;
+  background:#F5C518;
+  color:#111827;
+  font-family:'Poppins',sans-serif;
+  font-size:.42rem;
+  font-weight:800;
+  letter-spacing:.03em;
+  padding:2px 6px 2px 5px;
+  border-radius:999px;
+  display:flex;
+  align-items:center;
+  gap:2px;
+  box-shadow:0 2px 6px rgba(0,0,0,0.25);
+}
+
+/* Profile dropdown */
+.user-chip-wrap{position:relative;display:flex;align-items:center;}
+.profile-dropdown{
+  display:none;
+  position:absolute;
+  top:calc(100% + 10px);
+  right:0;
+  background:#fff;
+  border:1px solid var(--border);
+  border-radius:14px;
+  min-width:220px;
+  box-shadow:0 16px 48px rgba(0,0,0,0.15);
+  overflow:hidden;
+  z-index:300;
+}
+.profile-dropdown.open{display:block;animation:dropIn 0.2s ease;}
+@keyframes dropIn{from{opacity:0;transform:translateY(-8px);}to{opacity:1;transform:translateY(0);}}
+.profile-dropdown{width:292px;min-width:0;}
+.pd-hdr{background:#fff;padding:.95rem 1.1rem .8rem;border-bottom:1.5px solid #edf4f1;display:flex;flex-direction:column;gap:.5rem;}
+.pd-hdr-top{display:flex;align-items:center;gap:.75rem;}
+.pd-av-lg{width:38px;height:38px;border-radius:50%;background:var(--green-deeper);display:grid;place-items:center;font-size:.95rem;font-weight:800;color:#fff;flex-shrink:0;letter-spacing:0;}
+.pd-hdr-info{flex:1;min-width:0;}
+.pd-hdr-info h3{font-size:.88rem;font-weight:700;color:var(--ink);margin-bottom:.08rem;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;font-family:'Poppins',sans-serif;}
+.pd-hdr-info p{font-size:.68rem;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.pd-plan-badge{display:inline-flex;align-items:center;gap:.25rem;align-self:flex-start;background:var(--green-pale);border:1.5px solid #6ee7b7;border-radius:6px;padding:.18rem .6rem;font-size:.58rem;font-weight:700;color:var(--green-deeper);letter-spacing:.06em;text-transform:uppercase;}
+.pd-plan-badge svg{color:var(--green-dark);flex-shrink:0;}
+.pd-body{padding:.5rem .75rem .4rem;}
+.pd-row{display:flex;align-items:center;gap:.6rem;padding:.42rem .45rem;border-radius:8px;transition:background .12s;margin-bottom:.05rem;}
+.pd-row:hover{background:var(--green-pale);}
+.pd-ico{width:26px;height:26px;border-radius:7px;background:var(--green-pale);border:1px solid var(--green-light);display:grid;place-items:center;flex-shrink:0;}
+.pd-text{flex:1;min-width:0;}
+.pd-lbl{font-size:.55rem;font-weight:700;color:#9ca3af;letter-spacing:.08em;text-transform:uppercase;margin-bottom:.05rem;}
+.pd-val{font-size:.78rem;font-weight:400;color:var(--ink);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;font-family:'Poppins',sans-serif;}
+.pd-divider{height:1.5px;background:#edf4f1;margin:0 .75rem;}
+.pd-ftr{padding:.6rem .75rem .7rem;display:flex;gap:.5rem;}
+.pd-btn-ed{flex:1;display:inline-flex;align-items:center;justify-content:center;gap:.35rem;padding:.48rem .4rem;font-size:.72rem;font-weight:600;font-family:'Poppins',sans-serif;background:#fff;color:var(--green-deeper);border:1.5px solid #6ee7b7;border-radius:8px;cursor:pointer;transition:all .16s;letter-spacing:.01em;}
+.pd-btn-ed:hover{background:var(--green-pale);border-color:var(--green-dark);}
+.pd-btn-lo{flex:1;display:inline-flex;align-items:center;justify-content:center;gap:.35rem;padding:.48rem .4rem;font-size:.72rem;font-weight:600;font-family:'Poppins',sans-serif;background:var(--green-deeper);color:#fff;border:1.5px solid var(--green-deeper);border-radius:8px;cursor:pointer;transition:all .16s;letter-spacing:.01em;}
+.pd-btn-lo:hover{background:#054433;border-color:#054433;}
+
+/* ── MAIN CONTENT WRAP ── */
+.page-wrap{
+  flex:1;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  padding:52px 1.5rem 80px;
+  position:relative;
+  z-index:10;
+}
+
+/* ── SECTION HEADING ── */
+.sec-head{
+  text-align:center;
+  margin-bottom:40px;
+}
+.sec-over{
+  display:inline-block;
+  font-size:10px;
+  font-weight:700;
+  letter-spacing:0.2em;
+  text-transform:uppercase;
+  color:rgba(255,255,255,0.6);
+  margin-bottom:10px;
+  background:rgba(255,255,255,0.1);
+  border:1px solid rgba(255,255,255,0.2);
+  border-radius:999px;
+  padding:4px 14px;
+}
+.sec-title{
+  font-size:clamp(26px,4vw,36px);
+  font-weight:800;
+  color:#fff;
+  line-height:1.15;
+  margin-bottom:10px;
+  letter-spacing:-0.01em;
+}
+.sec-sub{
+  font-size:14px;
+  color:rgba(255,255,255,0.65);
+  max-width:500px;
+  margin:0 auto;
+  line-height:1.7;
+}
+.sec-sub strong{color:rgba(255,255,255,0.9);}
+
+/* ── CARDS GRID ── */
+.cards-grid{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:24px;
+  width:100%;
+  max-width:1200px;
+}
+
+/* Card base */
+.card{
+  background:#fff;
+  border-radius:20px;
+  overflow:hidden;
+  border:none;
+  box-shadow:0 8px 40px rgba(0,0,0,0.18),0 2px 10px rgba(0,0,0,0.08);
+  display:flex;
+  flex-direction:column;
+  transition:transform 0.25s ease,box-shadow 0.25s ease;
+  animation:cardIn 0.5s ease both;
+}
+.card:nth-child(1){animation-delay:0.05s;}
+.card:nth-child(2){animation-delay:0.15s;}
+.card:nth-child(3){animation-delay:0.25s;}
+@keyframes cardIn{from{opacity:0;transform:translateY(24px);}to{opacity:1;transform:translateY(0);}}
+.card:hover{
+  transform:translateY(-8px);
+  box-shadow:0 28px 72px rgba(0,0,0,0.22),0 4px 16px rgba(0,0,0,0.1);
+}
+
+/* ── Card Header — login.html auth-header style ── */
+.card-header{
+  background:linear-gradient(160deg,#0a5f38 0%,#0e7a4a 45%,#13a660 100%);
+  padding:1.5rem 1.6rem 1.3rem;
+  position:relative;
+  overflow:hidden;
+}
+/* subtle dot texture like login hero */
+.card-header::before{
+  content:'';
+  position:absolute;inset:0;
+  background:repeating-linear-gradient(0deg,rgba(255,255,255,0.03) 0px,rgba(255,255,255,0.03) 1px,transparent 1px,transparent 22px);
+  pointer-events:none;
+}
+.card-hd-top{
+  display:flex;align-items:flex-start;justify-content:space-between;
+  gap:10px;margin-bottom:10px;position:relative;z-index:1;
+}
+.card-icon{
+  width:46px;height:46px;border-radius:12px;
+  background:rgba(255,255,255,0.15);
+  border:1px solid rgba(255,255,255,0.25);
+  display:flex;align-items:center;justify-content:center;
+  font-size:22px;flex-shrink:0;
+}
+.card-code{
+  font-size:9.5px;font-weight:700;
+  letter-spacing:0.18em;text-transform:uppercase;
+  color:rgba(255,255,255,0.55);
+  margin-bottom:3px;
+}
+.card-title{
+  font-size:17px;font-weight:700;color:#fff;
+  line-height:1.2;letter-spacing:-0.01em;
+}
+/* free pills — login.html free-pill style */
+.card-pills{
+  display:flex;flex-wrap:wrap;gap:5px;
+  position:relative;z-index:1;
+}
+.card-pill{
+  display:inline-flex;align-items:center;gap:4px;
+  background:rgba(255,255,255,0.15);
+  border:1px solid rgba(255,255,255,0.28);
+  border-radius:999px;
+  padding:3px 10px;
+  font-size:9.5px;font-weight:600;
+  color:#fff;letter-spacing:0.02em;
+}
+
+/* ── Card Body ── */
+.card-body{padding:20px 22px 20px;display:flex;flex-direction:column;flex:1;}
+
+/* Paper list */
+.plist{list-style:none;margin-bottom:18px;}
+.plist li{
+  display:flex;align-items:flex-start;gap:10px;
+  font-size:12px;color:#909090;
+  padding:8px 0;
+  border-bottom:1px solid #f3f4f6;
+  line-height:1.45;
+  font-weight:400;
+}
+.plist li:last-child{border-bottom:none;}
+.dot{
+  width:6px;height:6px;border-radius:50%;
+  background:var(--green);
+  flex-shrink:0;margin-top:5px;
+}
+.dot-muted{background:#d1d5db;}
+.plist li.li-soon{color:#b0b0b0;}
+.plist li.li-active{color:#374151;font-weight:600;}
+.soon-tag{
+  margin-left:auto;flex-shrink:0;
+  font-size:8.5px;font-weight:700;
+  letter-spacing:0.08em;text-transform:uppercase;
+  color:#9ca3af;background:#f3f4f6;
+  border:1px solid #e5e7eb;border-radius:999px;
+  padding:2px 8px;
+}
+.new-tag{
+  margin-left:auto;flex-shrink:0;
+  font-size:8.5px;font-weight:800;
+  letter-spacing:0.06em;text-transform:uppercase;
+  color:#fff;background:linear-gradient(90deg,#059669,#0ea56a);
+  border-radius:999px;padding:2px 8px;
+  box-shadow:0 1px 6px rgba(5,150,105,0.3);
+  white-space:nowrap;
+}
+
+/* Price box — clean white with green border */
+.price-box{
+  background:#f9fafb;
+  border:1.5px solid #e5e7eb;
+  border-radius:12px;
+  padding:14px 16px;
+  margin-bottom:16px;
+}
+.ptop{
+  display:flex;align-items:center;justify-content:space-between;
+  margin-bottom:7px;
+}
+.plabel{
+  font-size:9px;font-weight:700;
+  letter-spacing:0.14em;text-transform:uppercase;color:#9ca3af;
+}
+.save-pill{
+  font-size:9.5px;font-weight:800;
+  background:linear-gradient(90deg,#059669,#0ea56a);
+  color:#fff;
+  border-radius:999px;padding:2px 10px;
+  letter-spacing:0.03em;
+  box-shadow:0 1px 6px rgba(5,150,105,0.3);
+}
+.price-row{
+  display:flex;align-items:baseline;gap:6px;
+  margin-bottom:4px;
+}
+.price-strike{font-size:13px;color:#d1d5db;text-decoration:line-through;}
+.price-final{font-size:32px;font-weight:800;color:var(--ink);line-height:1;}
+.price-period{font-size:12px;color:#9ca3af;}
+.price-per{font-size:11.5px;color:var(--muted);}
+.price-per span{font-weight:700;color:var(--ink);}
+
+/* Action buttons — login.html btn-primary style */
+.card-actions{display:flex;gap:10px;margin-top:auto;}
+.btn-main{
+  flex:1;padding:12px 16px;
+  background:linear-gradient(90deg,#059669 0%,#0ea56a 100%);
+  color:#fff;
+  border:none;border-radius:9px;
+  font-family:'Poppins',sans-serif;
+  font-size:12.5px;font-weight:600;
+  cursor:pointer;
+  transition:all 0.2s;
+  white-space:nowrap;
+  letter-spacing:0.01em;
+  box-shadow:0 2px 10px rgba(5,150,105,0.28);
+}
+.btn-main:hover{background:linear-gradient(90deg,#047857 0%,#0a9460 100%);box-shadow:0 4px 18px rgba(5,150,105,0.4);transform:translateY(-1px);}
+.btn-main:active{transform:scale(0.98);}
+
+.btn-free{
+  padding:12px 14px;
+  background:#fff;color:#374151;
+  border:1.5px solid #e5e7eb;
+  border-radius:9px;
+  font-family:'Poppins',sans-serif;
+  font-size:11.5px;font-weight:600;
+  cursor:pointer;white-space:nowrap;
+  transition:all 0.15s;
+}
+.btn-free:hover{border-color:#059669;color:var(--green-deeper);background:var(--green-pale);}
+
+/* Bottom note */
+.bnote{
+  text-align:center;font-size:12px;
+  color:rgba(255,255,255,0.5);
+  line-height:1.9;margin-top:44px;
+}
+.bnote a{color:rgba(255,255,255,0.75);text-decoration:underline;text-underline-offset:3px;}
+.bnote a:hover{color:#fff;}
+
+/* Trust badges */
+.trust-row{
+  display:flex;align-items:center;justify-content:center;
+  gap:6px;flex-wrap:wrap;
+  margin-top:28px;
+}
+.trust-pill{
+  background:rgba(255,255,255,0.1);
+  border:1px solid rgba(255,255,255,0.2);
+  border-radius:999px;
+  padding:5px 14px;
+  font-size:11px;font-weight:500;
+  color:rgba(255,255,255,0.75);
+  display:flex;align-items:center;gap:6px;
+}
+.trust-pill svg{opacity:0.7;}
+
+/* ── FIXED HELPERS ── */
+#wa{
+  position:fixed;bottom:5rem;right:1.5rem;z-index:400;
+  width:48px;height:48px;border-radius:50%;
+  background:#25d366;
+  display:flex;align-items:center;justify-content:center;
+  text-decoration:none;
+  box-shadow:0 4px 16px rgba(37,211,102,0.45);
+  transition:transform 0.2s;
+}
+#wa:hover{transform:scale(1.1);}
+#wa span{
+  position:absolute;inset:-4px;border-radius:50%;
+  border:2px solid #25d366;
+  animation:wap 2s ease-out 3s infinite;
+}
+@keyframes wap{0%{opacity:.7;transform:scale(1)}70%,100%{opacity:0;transform:scale(1.45)}}
+
+#btt{
+  position:fixed;bottom:1.8rem;right:1.5rem;z-index:400;
+  width:40px;height:40px;border-radius:50%;
+  background:var(--green-deeper);border:none;cursor:pointer;
+  display:flex;align-items:center;justify-content:center;
+  box-shadow:0 4px 14px rgba(6,95,70,0.4);
+  opacity:0;transform:translateY(12px);
+  transition:opacity 0.3s,transform 0.3s;
+}
+#btt.vis{opacity:1;transform:translateY(0);}
+#btt:hover{background:#004d3f;}
+
+/* ── RESPONSIVE ── */
+@media(max-width:960px){
+  .cards-grid{grid-template-columns:1fr;max-width:460px;}
+}
+@media(max-width:900px){
+  .top-nav-inner{height:auto;flex-wrap:wrap;padding:.6rem 1rem;gap:.5rem;}
+  .nav-right{flex-wrap:nowrap;overflow-x:auto;width:100%;-webkit-overflow-scrolling:touch;padding-bottom:2px;}
+  .nav-right::-webkit-scrollbar{height:0;}
+  .nav-tile-btn{min-width:76px;padding:8px .6rem;}
+}
+@media(max-width:560px){
+  .logo-wordmark{font-size:24px;}
+  .page-wrap{padding:36px 16px 60px;}
+  .card-body{padding:20px 20px 18px;}
+}
+
+/* ── COMING SOON ── */
+.cs-wrap{
+  flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;
+  text-align:center;padding:70px 1.5rem 90px;position:relative;z-index:10;max-width:560px;margin:0 auto;
+}
+.cs-icon{
+  width:88px;height:88px;border-radius:50%;
+  background:linear-gradient(135deg,var(--green) 0%,var(--green-deeper) 100%);
+  display:flex;align-items:center;justify-content:center;
+  margin-bottom:26px;box-shadow:0 10px 30px rgba(6,95,70,0.35);
+}
+.cs-badge{
+  display:inline-block;background:var(--green-pale);color:var(--green-deeper);
+  font-size:.72rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;
+  padding:.35rem .9rem;border-radius:999px;margin-bottom:18px;border:1px solid var(--green-light);
+}
+.cs-title{
+  font-family:'Poppins',sans-serif;font-weight:800;font-size:2rem;color:#fff;margin-bottom:14px;
+  text-shadow:0 2px 10px rgba(0,0,0,0.25);
+}
+.cs-sub{
+  font-size:1rem;color:rgba(255,255,255,0.85);line-height:1.6;margin-bottom:34px;max-width:440px;
+}
+.cs-actions{display:flex;gap:.75rem;flex-wrap:wrap;justify-content:center;}
+.cs-btn{
+  display:inline-flex;align-items:center;gap:.4rem;
+  padding:.85rem 1.6rem;border-radius:12px;font-weight:700;font-size:.9rem;
+  text-decoration:none;transition:all .15s;
+}
+.cs-btn-primary{background:#fff;color:var(--green-deeper);}
+.cs-btn-primary:hover{background:var(--green-pale);}
+.cs-btn-outline{background:rgba(255,255,255,0.12);color:#fff;border:1.5px solid rgba(255,255,255,0.35);}
+.cs-btn-outline:hover{background:rgba(255,255,255,0.22);}
+@media(max-width:560px){
+  .cs-title{font-size:1.5rem;}
+  .cs-icon{width:72px;height:72px;}
+}
+</style>
+</head>
+<body>
+
+<!-- 3D Floating triangle decorations — exact from login.html -->
+  <div class="tri tri-tl"><svg style="filter:drop-shadow(4px 8px 16px #00000059)" viewBox="0 0 120 120"><defs><linearGradient id="a1" x1="0%" x2="100%" y1="0%" y2="100%"><stop offset="0%" stop-color="#3ddbb0"/><stop offset="100%" stop-color="#00AB84"/></linearGradient><linearGradient id="a2" x1="100%" x2="0%" y1="0%" y2="100%"><stop offset="0%" stop-color="#006D5B"/><stop offset="100%" stop-color="#003d30"/></linearGradient></defs><polygon points="60,10 15,95 60,78" fill="url(#a1)"/><polygon points="60,10 105,95 60,78" fill="url(#a2)"/><polygon points="15,95 60,78 105,95" fill="#00AB84" opacity="0.75"/><line stroke="rgba(255,255,255,0.35)" stroke-width="1.2" x1="60" x2="60" y1="10" y2="78"/></svg></div>
+  <div class="tri tri-tl2"><svg style="filter:drop-shadow(2px 4px 8px #0003)" viewBox="0 0 120 120"><polygon points="60,10 15,95 60,78" fill="rgba(255,255,255,0.18)" stroke="rgba(255,255,255,0.5)" stroke-width="1.5"/><polygon points="60,10 105,95 60,78" fill="rgba(255,255,255,0.08)" stroke="rgba(255,255,255,0.3)" stroke-width="1.5"/><line stroke="rgba(255,255,255,0.4)" stroke-width="1" x1="60" x2="60" y1="10" y2="78"/></svg></div>
+  <div class="tri tri-tr"><svg style="filter:drop-shadow(4px 8px 18px #0006)" viewBox="0 0 120 120"><defs><linearGradient id="b1" x1="0%" x2="100%" y1="0%" y2="100%"><stop offset="0%" stop-color="#FFE97A"/><stop offset="100%" stop-color="#F5C518"/></linearGradient><linearGradient id="b2" x1="100%" x2="0%" y1="0%" y2="100%"><stop offset="0%" stop-color="#c9920a"/><stop offset="100%" stop-color="#8a5e00"/></linearGradient></defs><polygon points="60,10 15,95 60,78" fill="url(#b1)"/><polygon points="60,10 105,95 60,78" fill="url(#b2)"/><polygon points="15,95 60,78 105,95" fill="#E8A900" opacity="0.7"/><line stroke="rgba(255,255,255,0.45)" stroke-width="1.2" x1="60" x2="60" y1="10" y2="78"/></svg></div>
+  <div class="tri tri-tr2"><svg style="filter:drop-shadow(3px 6px 12px #0000004d)" viewBox="0 0 120 120"><defs><linearGradient id="b3" x1="0%" x2="100%" y1="0%" y2="100%"><stop offset="0%" stop-color="#2ecfa3"/><stop offset="100%" stop-color="#006D5B"/></linearGradient></defs><polygon points="60,10 15,95 60,78" fill="url(#b3)"/><polygon points="60,10 105,95 60,78" fill="#004D3F"/><polygon points="15,95 60,78 105,95" fill="#003d30" opacity="0.8"/><line stroke="rgba(255,255,255,0.3)" stroke-width="1" x1="60" x2="60" y1="10" y2="78"/></svg></div>
+  <div class="tri tri-tr3"><svg viewBox="0 0 120 120"><polygon points="60,10 15,95 60,78" fill="rgba(255,255,255,0.15)" stroke="rgba(255,255,255,0.45)" stroke-width="1.5"/><polygon points="60,10 105,95 60,78" fill="rgba(255,255,255,0.07)" stroke="rgba(255,255,255,0.25)" stroke-width="1.5"/></svg></div>
+  <div class="tri tri-bl"><svg style="filter:drop-shadow(4px 8px 16px #00000059)" viewBox="0 0 120 120"><defs><linearGradient id="c1" x1="0%" x2="100%" y1="0%" y2="100%"><stop offset="0%" stop-color="#FFE97A"/><stop offset="100%" stop-color="#F5C518"/></linearGradient><linearGradient id="c2" x1="100%" x2="0%" y1="0%" y2="100%"><stop offset="0%" stop-color="#c9920a"/><stop offset="100%" stop-color="#8a5e00"/></linearGradient></defs><polygon points="60,10 15,95 60,78" fill="url(#c1)"/><polygon points="60,10 105,95 60,78" fill="url(#c2)"/><polygon points="15,95 60,78 105,95" fill="#b87800" opacity="0.7"/><line stroke="rgba(255,255,255,0.4)" stroke-width="1.2" x1="60" x2="60" y1="10" y2="78"/></svg></div>
+  <div class="tri tri-bl2"><svg viewBox="0 0 120 120"><polygon points="60,10 15,95 60,78" fill="rgba(255,255,255,0.14)" stroke="rgba(255,255,255,0.4)" stroke-width="1.5"/><polygon points="60,10 105,95 60,78" fill="rgba(255,255,255,0.06)" stroke="rgba(255,255,255,0.2)" stroke-width="1.5"/></svg></div>
+  <div class="tri tri-bc"><svg style="filter:drop-shadow(4px 10px 20px #0006)" viewBox="0 0 120 120"><defs><linearGradient id="d1" x1="0%" x2="100%" y1="0%" y2="100%"><stop offset="0%" stop-color="#3ddbb0"/><stop offset="100%" stop-color="#00AB84"/></linearGradient></defs><polygon points="60,10 15,95 60,78" fill="url(#d1)"/><polygon points="60,10 105,95 60,78" fill="#005a48"/><polygon points="15,95 60,78 105,95" fill="#003d30" opacity="0.8"/><line stroke="rgba(255,255,255,0.35)" stroke-width="1.2" x1="60" x2="60" y1="10" y2="78"/></svg></div>
+  <div class="tri tri-br"><svg style="filter:drop-shadow(3px 6px 14px #0000004d)" viewBox="0 0 120 120"><defs><linearGradient id="e1" x1="0%" x2="100%" y1="0%" y2="100%"><stop offset="0%" stop-color="#2ecfa3"/><stop offset="100%" stop-color="#007a60"/></linearGradient></defs><polygon points="60,10 15,95 60,78" fill="url(#e1)"/><polygon points="60,10 105,95 60,78" fill="#004D3F"/><polygon points="15,95 60,78 105,95" fill="#003830" opacity="0.75"/><line stroke="rgba(255,255,255,0.3)" stroke-width="1" x1="60" x2="60" y1="10" y2="78"/></svg></div>
+  <div class="tri tri-mr"><svg style="filter:drop-shadow(4px 8px 16px #00000059)" viewBox="0 0 120 120"><defs><linearGradient id="f1" x1="0%" x2="100%" y1="0%" y2="100%"><stop offset="0%" stop-color="#FFE97A"/><stop offset="100%" stop-color="#F5C518"/></linearGradient><linearGradient id="f2" x1="100%" x2="0%" y1="0%" y2="100%"><stop offset="0%" stop-color="#c9920a"/><stop offset="100%" stop-color="#7a5000"/></linearGradient></defs><polygon points="60,10 15,95 60,78" fill="url(#f1)"/><polygon points="60,10 105,95 60,78" fill="url(#f2)"/><polygon points="15,95 60,78 105,95" fill="#a07000" opacity="0.7"/><line stroke="rgba(255,255,255,0.4)" stroke-width="1.2" x1="60" x2="60" y1="10" y2="78"/></svg></div>
+
+<!-- NAV -->
+<nav class="top-nav">
+  <div class="top-nav-inner">
+  <a class="logo-box" href="index.html">
+    <span class="logo-wordmark">toppers<span class="logo-num">11</span></span>
+    <span class="logo-tag">AI-Powered Test Series</span>
+  </a>
+
+  <div class="nav-right">
+
+    <!-- ALL EXAMS tile -->
+    <a href="https://toppers11.com/income-tax-departmental-exam.html" class="nav-tile-btn">
+      <div class="nav-tile-icon">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.85)" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M22 10v6M2 10l10-5 10 5-10 5z"/>
+          <path d="M6 12v5c0 1.657 2.686 3 6 3s6-1.343 6-3v-5"/>
+        </svg>
+      </div>
+      <span class="nav-tile-label">All Exams</span>
+      <span class="nav-tile-sub">Switch Exam</span>
+    </a>
+
+    <!-- EVERYDAY QUIZ tile -->
+    <a href="everyday-quiz.html" class="nav-tile-btn quiz-tile">
+      <div class="nav-tile-icon">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.85)" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="12" cy="12" r="9"/>
+          <polyline points="12 7 12 12 15 14"/>
+        </svg>
+      </div>
+      <span class="nav-tile-label">Everyday Quiz</span>
+      <span class="nav-tile-sub">Win Everyday</span>
+    </a>
+
+    <!-- WEEKEND QUIZ tile -->
+    <a href="weekend-quiz.html" class="nav-tile-btn quiz-tile quiz-weekend">
+      <div class="nav-tile-icon">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.85)" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+          <rect x="3" y="4" width="18" height="18" rx="2"/>
+          <line x1="16" y1="2" x2="16" y2="6"/>
+          <line x1="8" y1="2" x2="8" y2="6"/>
+          <line x1="3" y1="10" x2="21" y2="10"/>
+        </svg>
+      </div>
+      <span class="nav-tile-label">Weekend Quiz</span>
+      <span class="nav-tile-sub">Win ₹500 / Week</span>
+    </a>
+
+    <!-- WEEKLY TEST tile -->
+    <a href="weekly-test.html" class="nav-tile-btn quiz-tile quiz-free">
+      <span class="quiz-free-badge">
+        <svg width="8" height="8" viewBox="0 0 24 24" fill="#111827"><polygon points="12 2 15 9 22 9 16.5 13.5 18.5 21 12 16.8 5.5 21 7.5 13.5 2 9 9 9"/></svg>
+        FREE
+      </span>
+      <div class="nav-tile-icon">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.9)" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2z"/>
+        </svg>
+      </div>
+      <span class="nav-tile-label">Weekly Test</span>
+      <span class="nav-tile-sub">Free Access</span>
+    </a>
+
+    <!-- MY ACCOUNT tile -->
+    <div class="user-chip-wrap" id="pa">
+      <div class="nav-tile-btn" id="pb" role="button" tabindex="0"
+           aria-haspopup="true" aria-expanded="false" aria-label="User profile menu"
+           onclick="toggleDD()"
+           onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();toggleDD()}">
+        <div class="nav-tile-icon">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.85)" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="7" r="4"/>
+            <path d="M5.5 21c0-3.5 3-6 6.5-6s6.5 2.5 6.5 6"/>
+          </svg>
+        </div>
+        <span class="nav-tile-label">My Account</span>
+        <span class="nav-tile-sub" id="nav-name">User</span>
+      </div>
+
+      <div class="profile-dropdown" id="dd">
+        <div class="pd-hdr">
+          <div class="pd-hdr-top">
+            <div class="pd-av-lg" id="pd-av-lg">U</div>
+            <div class="pd-hdr-info">
+              <h3 id="dd-name">—</h3>
+              <p id="dd-email">—</p>
+            </div>
+          </div>
+          <div class="pd-plan-badge">
+            <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+            <span id="pd-plan-badge-txt">Free Plan</span>
+          </div>
+        </div>
+        <div class="pd-body">
+          <div class="pd-row">
+            <div class="pd-ico"><svg width="16" height="16" fill="none" stroke="var(--green-dark)" stroke-width="2" viewBox="0 0 24 24"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg></div>
+            <div class="pd-text"><div class="pd-lbl">Email</div><div class="pd-val" id="pd-em">—</div></div>
+          </div>
+          <div class="pd-row">
+            <div class="pd-ico"><svg width="16" height="16" fill="none" stroke="var(--green-dark)" stroke-width="2" viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 9.81 19.79 19.79 0 01.4 3.18 2 2 0 012 1h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L6.09 8.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"/></svg></div>
+            <div class="pd-text"><div class="pd-lbl">Mobile</div><div class="pd-val" id="pd-mob">—</div></div>
+          </div>
+          <div class="pd-row">
+            <div class="pd-ico"><svg width="16" height="16" fill="none" stroke="var(--green-dark)" stroke-width="2" viewBox="0 0 24 24"><path d="M21 10c0 7-9 13-9 13S3 17 3 10a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg></div>
+            <div class="pd-text"><div class="pd-lbl">Region</div><div class="pd-val" id="pd-reg">—</div></div>
+          </div>
+          <div class="pd-row">
+            <div class="pd-ico"><svg width="13" height="13" fill="none" stroke="var(--green-dark)" stroke-width="2.5" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg></div>
+            <div class="pd-text"><div class="pd-lbl">Plan</div><div class="pd-val" id="pd-plan-v">Free (4 Tests)</div></div>
+          </div>
+        </div>
+        <div class="pd-divider"></div>
+        <div class="pd-ftr">
+          <a class="pd-btn-ed" href="profile.html">
+            <svg width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24"><path d="M11 4H4a2 2 0 00-2 2v14a2 2 0 002 2h14a2 2 0 002-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 013 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
+            Edit Profile
+          </a>
+          <button class="pd-btn-lo" onclick="logout()">
+            <svg width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24"><path d="M9 21H5a2 2 0 01-2-2V5a2 2 0 012-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
+            Sign Out
+          </button>
+        </div>
+      </div>
+    </div>
+
+  </div>
+  </div>
+</nav>
+
+<!-- PAGE CONTENT -->
+<div class="cs-wrap">
+  <span class="cs-badge">Coming Soon</span>
+  <div class="cs-icon">
+    <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><polyline points="12 7 12 12 15 14"/></svg>
+  </div>
+  <h1 class="cs-title">Everyday Quiz — Coming Soon</h1>
+  <p class="cs-sub">We're building a fresh quiz every single day so you can practice a little and win a lot. Stay tuned — it launches soon!</p>
+  <div class="cs-actions">
+    <a class="cs-btn cs-btn-primary" href="income-tax-departmental-exam.html">Back to All Exams</a>
+    <a class="cs-btn cs-btn-outline" href="https://wa.me/918743865551" target="_blank">Notify Me</a>
+  </div>
+</div>
+<!-- WhatsApp button -->
+<a id="wa" href="https://wa.me/918743865551" target="_blank" aria-label="WhatsApp">
+  <svg width="24" height="24" viewBox="0 0 24 24" fill="#fff"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413z"/></svg>
+  <span></span>
+</a>
+
+<!-- Back to top -->
+<button id="btt" onclick="window.scrollTo({top:0,behavior:'smooth'})" aria-label="Back to top">
+  <svg width="18" height="18" viewBox="0 0 18 18" fill="none"><path d="M9 14V4M4 9l5-5 5 5" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+</button>
+
+<script>
+'use strict';
+const SUPABASE_URL='https://tvstcvinatkokhmoeqlx.supabase.co';
+const SUPABASE_ANON_KEY='eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InR2c3RjdmluYXRrb2tobW9lcWx4Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3Nzc5MzU5NDMsImV4cCI6MjA5MzUxMTk0M30.MNT5dOgqeCmJmgQPgmh8t5ivKnTZ90nB8UzQhfqquh8';
+function fetchWithTimeout(url, opts, ms){
+  ms = ms || 8000;
+  var ctrl = new AbortController();
+  var id = setTimeout(function(){ ctrl.abort(); }, ms);
+  return fetch(url, Object.assign({}, opts, { signal: ctrl.signal })).finally(function(){ clearTimeout(id); });
+}
+async function sbFetch(path){
+  try{
+    var res = await fetchWithTimeout(SUPABASE_URL + '/rest/v1/' + path, {
+      headers: { 'apikey': SUPABASE_ANON_KEY, 'Authorization': 'Bearer ' + SUPABASE_ANON_KEY }
+    });
+    if (!res.ok) return [];
+    return res.json();
+  } catch(e){ return []; }
+}
+
+function getUser(){ try{ return JSON.parse(localStorage.getItem('t11_user') || '{}'); } catch(e){ return {}; } }
+function saveUser(u){ localStorage.setItem('t11_user', JSON.stringify(u)); }
+function getUsers(){ try{ return JSON.parse(localStorage.getItem('t11_users') || '{}'); } catch(e){ return {}; } }
+function saveUsers(u){ localStorage.setItem('t11_users', JSON.stringify(u)); }
+
+// Auth guard
+(async function(){
+  var user;
+  try {
+    user = JSON.parse(localStorage.getItem('t11_user') || 'null');
+    if (!user || !user.token) { window.location.href = 'login.html'; return; }
+  } catch(e) { window.location.href = 'login.html'; return; }
+
+  if (user.name) {
+    var parts = user.name.trim().split(' ');
+    document.getElementById('nav-name').textContent = parts[0] + (parts[1] ? ' ' + parts[1][0] + '.' : '');
+  }
+
+  // Show cached data immediately, then refresh mobile/region/name from the backend
+  populateProfile(user, getUsers());
+
+  try {
+    var emailEnc2 = encodeURIComponent((user.email || '').toLowerCase());
+    var profRows = await sbFetch('users?email=eq.' + emailEnc2 + '&select=full_name,mobile,region');
+    if (profRows && profRows.length) {
+      var dbProf = profRows[0];
+      var key = (user.email || '').toLowerCase();
+      var users = getUsers();
+      users[key] = Object.assign({}, users[key] || {}, {
+        mobile: dbProf.mobile || (users[key] || {}).mobile || '',
+        region: dbProf.region || (users[key] || {}).region || ''
+      });
+      saveUsers(users);
+      if (dbProf.full_name && dbProf.full_name !== user.name) {
+        user = Object.assign({}, getUser(), { name: dbProf.full_name });
+        saveUser(user);
+        var parts2 = user.name.trim().split(' ');
+        document.getElementById('nav-name').textContent = parts2[0] + (parts2[1] ? ' ' + parts2[1][0] + '.' : '');
+      }
+      populateProfile(getUser(), getUsers());
+    }
+  } catch(e) { console.warn('Profile sync failed — using cached data', e); }
+})();
+
+function setText(id, val){ var el = document.getElementById(id); if (el) el.textContent = val; }
+
+function populateProfile(user, users){
+  user = user || {};
+  var key = (user.email || '').toLowerCase();
+  var s = (users && users[key]) || {};
+  var init = (user.name || 'U').charAt(0).toUpperCase();
+  setText('pd-av-lg', init);
+  setText('dd-name', user.name || '—');
+  setText('dd-email', user.email || '—');
+  setText('pd-em', user.email || '—');
+  setText('pd-mob', s.mobile ? '+91 ' + s.mobile : 'Not provided');
+  setText('pd-reg', s.region || 'Not selected');
+  var planLabel = user.paid
+    ? (user.plan ? user.plan.replace('bunch-', '').replace('single-', '').toUpperCase() + ' Access' : 'Premium Access')
+    : 'Free (4 Tests)';
+  setText('pd-plan-v', planLabel);
+  setText('pd-plan-badge-txt', user.paid ? 'Premium' : 'Free Plan');
+}
+
+function toggleDD() {
+  var open = document.getElementById('dd').classList.toggle('open');
+  document.getElementById('pb').setAttribute('aria-expanded', String(open));
+}
+document.addEventListener('click', function(e) {
+  if (!document.getElementById('pa').contains(e.target)) {
+    document.getElementById('dd').classList.remove('open');
+    document.getElementById('pb').setAttribute('aria-expanded','false');
+  }
+});
+window.addEventListener('scroll', function() {
+  document.getElementById('btt').classList.toggle('vis', scrollY > 300);
+}, { passive: true });
+function logout(){ localStorage.removeItem('t11_user'); window.location.href='login.html'; }
+</script>
+</body>
+</html>
