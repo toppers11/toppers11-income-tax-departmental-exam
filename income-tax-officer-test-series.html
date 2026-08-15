@@ -544,7 +544,7 @@ body{background:var(--bg);color:var(--ink);font-family:'Open Sans',sans-serif;ov
   <div class="hero-inner">
     <div>
       <div class="hero-title"><span style="font-family:'Open Sans',sans-serif;font-weight:800;letter-spacing:.01em">ITO</span> <em>Exam Dashboard</em></div>
-      <div class="hero-sub-text">Income Tax Officer — 4 Papers, 80 Tests</div>
+      <div class="hero-sub-text">Income Tax Officer — 4 Papers, 100 Tests</div>
     </div>
   </div>
 </section>
@@ -718,7 +718,7 @@ function nextUpiId(){_upiIdx=(_upiIdx+1)%UPI_POOL.length;return UPI_POOL[_upiIdx
 /* ── Plans ── */
 const PLANS={
   'single-ito':{label:'ITO Single Subject',amount:355,desc:'All 20 tests for 1 paper · Best for targeted prep',requiresPaperSelect:true},
-  'bunch-ito':{label:'ITO Complete Bunch (All 4 Papers)',amount:955,desc:'All 80 tests — save ₹465 vs buying individually',best:true,requiresPaperSelect:false}
+  'bunch-ito':{label:'ITO Complete Bunch (All 4 Papers)',amount:955,desc:'All 100 tests — save ₹465 vs buying individually',best:true,requiresPaperSelect:false}
 };
 
 /* ── Track selected paper for single-subject purchase ── */
@@ -934,7 +934,7 @@ function buildCards(p,i){
     <div class="bpc bpc-best" data-plan="bunch-ito" onclick="selectBundlePlan('bunch-ito')">
       <div class="bpc-badge">Best Value</div>
       <div class="bpc-radio"><div class="bpc-radio-dot"></div></div>
-      <div class="bpc-info"><h4>ITO Complete Bunch (All 4 Papers)</h4><p>All 80 tests — save ₹465 vs buying individually</p></div>
+      <div class="bpc-info"><h4>ITO Complete Bunch (All 4 Papers)</h4><p>All 100 tests — save ₹465 vs buying individually</p></div>
       <div class="bpc-price">₹955</div>
     </div>
     <button class="btn-bpc-go" id="btn-bpc-go-${i}" onclick="openModalFromBundle()" disabled>Choose Your Plan →</button>
