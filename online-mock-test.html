@@ -74,7 +74,7 @@ body{-webkit-user-select:none;-moz-user-select:none;user-select:none;}
 .inst-head h2{font-family:'Open Sans',sans-serif;font-size:1.05rem;font-weight:800;color:#fff;}
 .exam-badge-sm{background:rgba(255,255,255,.2);border:1px solid rgba(255,255,255,.35);color:#fff;font-size:.65rem;font-weight:700;padding:.18rem .6rem;border-radius:999px;letter-spacing:.06em;text-transform:uppercase;}
 .inst-head-iti{background:linear-gradient(135deg,var(--t-dark),var(--t1));}
-.inst-head-ito{background:linear-gradient(135deg,#92400E,#D97706);}
+.inst-head-ito{background:linear-gradient(135deg,var(--t2),var(--t3));}
 .inst-head-ms{background:linear-gradient(135deg,var(--t-dark),var(--t1));}
 .inst-bdy{padding:1.2rem 1.25rem;}
 .details-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:.65rem;margin-bottom:1.2rem;}
@@ -313,7 +313,7 @@ body{-webkit-user-select:none;-moz-user-select:none;user-select:none;}
     <a href="income-tax-departmental-exam.html" class="topbar-logo">
       <div class="logo-block">
         <span class="logo-main">toppers<span class="num">11</span></span>
-        <span class="logo-sub">AI-Powered Test Series</span>
+        <span class="logo-sub">Departmental Exam Test Series</span>
       </div>
     </a>
     <a id="back-link" href="income-tax-departmental-exam.html" class="back-link">
@@ -387,7 +387,7 @@ body{-webkit-user-select:none;-moz-user-select:none;user-select:none;}
     <a href="income-tax-departmental-exam.html" class="topbar-logo">
       <div class="logo-block">
         <span class="logo-main">toppers<span class="num">11</span></span>
-        <span class="logo-sub">AI-Powered Test Series</span>
+        <span class="logo-sub">Departmental Exam Test Series</span>
       </div>
     </a>
     <div class="topbar-right">
@@ -448,7 +448,7 @@ body{-webkit-user-select:none;-moz-user-select:none;user-select:none;}
     <a id="result-dash-link" href="income-tax-departmental-exam.html" class="topbar-logo">
       <div class="logo-block">
         <span class="logo-main">toppers<span class="num">11</span></span>
-        <span class="logo-sub">AI-Powered Test Series</span>
+        <span class="logo-sub">Departmental Exam Test Series</span>
       </div>
     </a>
     <div style="display:flex;align-items:center;gap:.65rem;">
@@ -500,7 +500,7 @@ body{-webkit-user-select:none;-moz-user-select:none;user-select:none;}
     <a href="income-tax-departmental-exam.html" class="topbar-logo">
       <div class="logo-block">
         <span class="logo-main">toppers<span class="num">11</span></span>
-        <span class="logo-sub">AI-Powered Test Series</span>
+        <span class="logo-sub">Departmental Exam Test Series</span>
       </div>
     </a>
     <div class="topbar-right">
@@ -907,7 +907,7 @@ window.addEventListener('DOMContentLoaded',async()=>{
   const headBar=document.getElementById('inst-head-bar');headBar.className=`inst-head inst-head-${META.exam}`;
   document.getElementById('inst-title').textContent=META.title;
   document.getElementById('inst-badge').textContent=META.paper;
-  const heroBox=document.getElementById('result-hero-box');if(heroBox){const heroMap={iti:'linear-gradient(135deg,var(--t-dark),var(--t1))',ito:'linear-gradient(135deg,#92400E,#D97706)',ms:'linear-gradient(135deg,#1E40AF,#3B82F6)'};heroBox.style.background=heroMap[META.exam]||heroMap['iti'];}
+  const heroBox=document.getElementById('result-hero-box');if(heroBox){const heroMap={iti:'linear-gradient(135deg,var(--t-dark),var(--t1))',ito:'linear-gradient(135deg,var(--t2),var(--t3))',ms:'linear-gradient(135deg,#1E40AF,#3B82F6)'};heroBox.style.background=heroMap[META.exam]||heroMap['iti'];}
   const isSub=META.type==='subjective';const hrs=META.mins/60;const durStr=Number.isInteger(hrs)?`${hrs} Hour${hrs>1?'s':''}`:` ${META.mins} mins`;
   document.getElementById('inst-details-grid').innerHTML=`<div class="detail-cell ${isSub?'blue':''}"><div class="detail-label">Questions</div><div class="detail-val">${META.qs}</div></div><div class="detail-cell ${isSub?'blue':''}"><div class="detail-label">Duration</div><div class="detail-val">${durStr}</div></div><div class="detail-cell ${isSub?'blue':''}"><div class="detail-label">Type</div><div class="detail-val">${isSub?'Descriptive':'MCQ'}</div></div><div class="detail-cell ${isSub?'blue':''}"><div class="detail-label">Negative Marking</div><div class="detail-val">${isSub?'None':'−1/8'}</div></div>`;
   if(isSub){document.getElementById('inst-mcq-section').style.display='none';document.getElementById('inst-subj-section').style.display='';document.getElementById('btn-start-test').className='btn-start blue';}
