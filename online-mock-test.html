@@ -1062,6 +1062,23 @@ function formatQ(str){
     }
   }
 
+  /* ── 3c. Inline numbered statements crammed into one paragraph (no line breaks) ── */
+  /* e.g. "...regarding X: 1. Statement one. 2. Statement two. 3. ... Which of the statements given above is/are correct?" */
+  if(!/\n/.test(str)){
+    const markerRe=/\s([1-9])\.\s(?=[A-Z'"‘“(\u0900-\u097F])/g;
+    const nums=[...str.matchAll(markerRe)].map(m=>parseInt(m[1],10));
+    let sequential=nums.length>=2&&nums[0]===1;
+    if(sequential){for(let k=1;k<nums.length;k++){if(nums[k]!==nums[k-1]+1){sequential=false;break;}}}
+    if(sequential){
+      let out=str.replace(markerRe,(m,d)=>'\n'+d+'. ');
+      out=out.replace(/\s+(Which of the (?:statements|following|codes|pairs)\b[^?]*\?)/i,'\n$1');
+      out=out.replace(/\s+(How many of the (?:above |following )?(?:statements|pairs)\b[^?]*\?)/i,'\n$1');
+      out=out.replace(/\s+((?:Select|Choose) the correct (?:answer|code|option)s?\b[^.\n]*[.:]?)/i,'\n$1');
+      out=out.replace(/\s+(In (?:the )?light of the above[^.\n]*[.:]?)/i,'\n$1');
+      str=out;
+    }
+  }
+
   /* ── 4. Default plain-text rendering ── */
   return str.split('\n').map(line=>{const t=line.trim();if(t.startsWith('To ')||t.startsWith('को ')||t.startsWith('के नामे '))return'<span class="journal-to">'+escHtml(t)+'</span>';return t===''?'<br>':escHtml(t)+'<br>';}).join('');
 }
