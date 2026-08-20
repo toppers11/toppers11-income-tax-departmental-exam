@@ -554,11 +554,10 @@ body::before{
   .user-chip-wrap{width:100%;}
   .user-chip-wrap .nav-tile-btn{width:100%;}
 
-  /* No ancestor clips overflow anymore, so a normal anchored panel works —
-     just cap its width so it can't run off a narrow screen */
+  /* Positioned dynamically via JS on mobile (see toggleDD) since the
+     My Account tile can land in either grid column */
   .profile-dropdown{
-    right:0;
-    left:auto;
+    position:fixed;
     width:min(292px, calc(100vw - 2rem));
   }
 }
@@ -977,9 +976,34 @@ function populateProfile(user, users){
 }
 
 function toggleDD() {
-  var open = document.getElementById('dd').classList.toggle('open');
+  var dd = document.getElementById('dd');
+  var open = dd.classList.toggle('open');
   document.getElementById('pb').setAttribute('aria-expanded', String(open));
+
+  if (open && window.innerWidth <= 900) {
+    // Mobile: the My Account tile can sit in either grid column, so
+    // anchor the panel to the viewport instead of the tile itself.
+    var navRect = document.querySelector('.top-nav-inner').getBoundingClientRect();
+    dd.style.top = (navRect.bottom + 10) + 'px';
+    dd.style.left = '1rem';
+    dd.style.right = '1rem';
+    dd.style.width = 'auto';
+  } else {
+    dd.style.top = '';
+    dd.style.left = '';
+    dd.style.right = '';
+    dd.style.width = '';
+  }
 }
+window.addEventListener('resize', function() {
+  var dd = document.getElementById('dd');
+  if (dd.classList.contains('open') && window.innerWidth > 900) {
+    dd.style.top = '';
+    dd.style.left = '';
+    dd.style.right = '';
+    dd.style.width = '';
+  }
+});
 document.addEventListener('click', function(e) {
   if (!document.getElementById('pa').contains(e.target)) {
     document.getElementById('dd').classList.remove('open');
