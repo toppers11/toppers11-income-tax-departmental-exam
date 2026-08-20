@@ -571,7 +571,7 @@ Check Status
           Exam Rule
         </div>
         <div class="rn-title">3 Attempts Per Assessment</div>
-        <div class="rn-msg">You have <strong>3 total attempts</strong> for each test in this series. Once all 3 attempts are used, the test will be marked <strong>Completed</strong>. This mirrors actual departmental exam rules.</div>
+        <div class="rn-msg">You have <strong>3 total attempts</strong> for each paid test in this series. Once all 3 attempts are used, the test will be marked <strong>Completed</strong>. This mirrors actual departmental exam rules. <strong>Free PYQ tests have unlimited attempts.</strong></div>
       </div>
       <div class="rn-chips">
         <div class="rn-chip">
@@ -728,10 +728,10 @@ let selPlan=null;
 const PAPERS=[
   {key:'p1',num:1,name:'IT Law & Taxpayer Services',hasFree:true,topics:'IT Act 1961 & 2025, Taxpayer Services, TRACES, 26AS, e-PAN, Prefilled ITR, ASK, SEVOTTAM, CPGRAM, SC case laws by topic.',type:'Objective',marks:100,tests:[
     {id:'ito-p1-pyq25',lbl:'PYQ 2025',title:'ITO Paper 1 - Previous Years questions of 2025',free:true,pyq:true,qs:100,mins:120},
-    {id:'ito-p1-pyq24',lbl:'PYQ 2024',title:'ITO Paper 1 - Previous Years questions of 2024',free:false,pyq:true,qs:100,mins:120},
-    {id:'ito-p1-pyq23',lbl:'PYQ 2023',title:'ITO Paper 1 - Previous Years questions of 2023',free:false,pyq:true,qs:100,mins:120},
-    {id:'ito-p1-pyq22',lbl:'PYQ 2022',title:'ITO Paper 1 - Previous Years questions of 2022',free:false,pyq:true,qs:100,mins:120},
-    {id:'ito-p1-pyq21',lbl:'PYQ 2021',title:'ITO Paper 1 - Previous Years questions of 2021',free:false,pyq:true,qs:100,mins:120},
+    {id:'ito-p1-pyq24',lbl:'PYQ 2024',title:'ITO Paper 1 - Previous Years questions of 2024',free:true,pyq:true,qs:100,mins:120},
+    {id:'ito-p1-pyq23',lbl:'PYQ 2023',title:'ITO Paper 1 - Previous Years questions of 2023',free:true,pyq:true,qs:100,mins:120},
+    {id:'ito-p1-pyq22',lbl:'PYQ 2022',title:'ITO Paper 1 - Previous Years questions of 2022',free:true,pyq:true,qs:100,mins:120},
+    {id:'ito-p1-pyq21',lbl:'PYQ 2021',title:'ITO Paper 1 - Previous Years questions of 2021',free:true,pyq:true,qs:100,mins:120},
     {id:'ito-p1-s06',lbl:'Series 06',title:'IT Law & Taxpayer Services — Series 06',free:false,pyq:false,qs:100,mins:120},
     {id:'ito-p1-s07',lbl:'Series 07',title:'IT Law & Taxpayer Services — Series 07',free:false,pyq:false,qs:100,mins:120},
     {id:'ito-p1-s08',lbl:'Series 08',title:'IT Law & Taxpayer Services — Series 08',free:false,pyq:false,qs:100,mins:120},
@@ -755,10 +755,10 @@ const PAPERS=[
   ]},
   {key:'p2',num:2,name:'Advance Accountancy',hasFree:true,topics:'Partnership, company accounts, hire purchase, depreciation, 12 Accounting Standards (AS-1,2,7,9,10,11,12,13,16,19,22,29), amalgamation.',type:'Objective',marks:100,tests:[
     {id:'ito-p2-pyq25',lbl:'PYQ 2025',title:'ITO Paper 2 - Previous Years questions of 2025',free:true,pyq:true,qs:100,mins:120},
-    {id:'ito-p2-pyq24',lbl:'PYQ 2024',title:'ITO Paper 2 - Previous Years questions of 2024',free:false,pyq:true,qs:100,mins:120},
-    {id:'ito-p2-pyq23',lbl:'PYQ 2023',title:'ITO Paper 2 - Previous Years questions of 2023',free:false,pyq:true,qs:100,mins:120},
-    {id:'ito-p2-pyq22',lbl:'PYQ 2022',title:'ITO Paper 2 - Previous Years questions of 2022',free:false,pyq:true,qs:100,mins:120},
-    {id:'ito-p2-pyq21',lbl:'PYQ 2021',title:'ITO Paper 2 - Previous Years questions of 2021',free:false,pyq:true,qs:100,mins:120},
+    {id:'ito-p2-pyq24',lbl:'PYQ 2024',title:'ITO Paper 2 - Previous Years questions of 2024',free:true,pyq:true,qs:100,mins:120},
+    {id:'ito-p2-pyq23',lbl:'PYQ 2023',title:'ITO Paper 2 - Previous Years questions of 2023',free:true,pyq:true,qs:100,mins:120},
+    {id:'ito-p2-pyq22',lbl:'PYQ 2022',title:'ITO Paper 2 - Previous Years questions of 2022',free:true,pyq:true,qs:100,mins:120},
+    {id:'ito-p2-pyq21',lbl:'PYQ 2021',title:'ITO Paper 2 - Previous Years questions of 2021',free:true,pyq:true,qs:100,mins:120},
     {id:'ito-p2-s06',lbl:'Series 06',title:'Advance Accountancy — Series 06',free:false,pyq:false,qs:100,mins:120},
     {id:'ito-p2-s07',lbl:'Series 07',title:'Advance Accountancy — Series 07',free:false,pyq:false,qs:100,mins:120},
     {id:'ito-p2-s08',lbl:'Series 08',title:'Advance Accountancy — Series 08',free:false,pyq:false,qs:100,mins:120},
@@ -782,10 +782,10 @@ const PAPERS=[
   ]},
   {key:'p3',num:3,name:'Allied Laws & Office Administration',hasFree:true,topics:'Contract Act, TP Act, Hindu Succession Act, Companies Act, LLP Act, RTI Act, FR/SR, CCS Rules, POSH, RPwD Act, GeM, DFPR 2024.',type:'Objective',marks:100,tests:[
     {id:'ito-p3-pyq25',lbl:'PYQ 2025',title:'ITO Paper 3 - Previous Years questions of 2025',free:true,pyq:true,qs:100,mins:120},
-    {id:'ito-p3-pyq24',lbl:'PYQ 2024',title:'ITO Paper 3 - Previous Years questions of 2024',free:false,pyq:true,qs:100,mins:120},
-    {id:'ito-p3-pyq23',lbl:'PYQ 2023',title:'ITO Paper 3 - Previous Years questions of 2023',free:false,pyq:true,qs:100,mins:120},
-    {id:'ito-p3-pyq22',lbl:'PYQ 2022',title:'ITO Paper 3 - Previous Years questions of 2022',free:false,pyq:true,qs:100,mins:120},
-    {id:'ito-p3-pyq21',lbl:'PYQ 2021',title:'ITO Paper 3 - Previous Years questions of 2021',free:false,pyq:true,qs:100,mins:120},
+    {id:'ito-p3-pyq24',lbl:'PYQ 2024',title:'ITO Paper 3 - Previous Years questions of 2024',free:true,pyq:true,qs:100,mins:120},
+    {id:'ito-p3-pyq23',lbl:'PYQ 2023',title:'ITO Paper 3 - Previous Years questions of 2023',free:true,pyq:true,qs:100,mins:120},
+    {id:'ito-p3-pyq22',lbl:'PYQ 2022',title:'ITO Paper 3 - Previous Years questions of 2022',free:true,pyq:true,qs:100,mins:120},
+    {id:'ito-p3-pyq21',lbl:'PYQ 2021',title:'ITO Paper 3 - Previous Years questions of 2021',free:true,pyq:true,qs:100,mins:120},
     {id:'ito-p3-s06',lbl:'Series 06',title:'Allied Laws & Office Admin — Series 06',free:false,pyq:false,qs:100,mins:120},
     {id:'ito-p3-s07',lbl:'Series 07',title:'Allied Laws & Office Admin — Series 07',free:false,pyq:false,qs:100,mins:120},
     {id:'ito-p3-s08',lbl:'Series 08',title:'Allied Laws & Office Admin — Series 08',free:false,pyq:false,qs:100,mins:120},
@@ -914,7 +914,7 @@ function buildCards(p,i){
     <div class="bundle-title">ITO Paper ${p.num} — ${p.name}</div>
     <div class="bundle-sub">${p.key==='p5'?`${p.tests.length} Tests · ${p.marks} Marks · Objective`:`25 Tests · 5 PYQs + 20 AI-Crafted Series · ${p.marks} Marks · Objective`}</div>
     <div class="bundle-papers">
-      ${p.key==='p5'?'':'<div class="bp"><svg viewBox="0 0 24 24" fill=none height=11 stroke=rgba(255,255,255,.65) stroke-width=2 width=11><path d="M5 13l4 4L19 7"/></svg>5 Previous Year Question (PYQ) Tests — 2021 to 2025</div><div class="bp"><svg viewBox="0 0 24 24" fill=none height=11 stroke=rgba(255,255,255,.65) stroke-width=2 width=11><path d="M5 13l4 4L19 7"/></svg>20 AI-Leveled Practice Series (Series 06–25)</div>'}
+      ${p.key==='p5'?'':'<div class="bp"><svg viewBox="0 0 24 24" fill=none height=11 stroke=rgba(255,255,255,.65) stroke-width=2 width=11><path d="M5 13l4 4L19 7"/></svg>5 Previous Year Question (PYQ) Tests — 2021 to 2025 · <strong style="color:#3ef0bc">FREE, unlimited attempts</strong></div><div class="bp"><svg viewBox="0 0 24 24" fill=none height=11 stroke=rgba(255,255,255,.65) stroke-width=2 width=11><path d="M5 13l4 4L19 7"/></svg>20 AI-Leveled Practice Series (Series 06–25)</div>'}
       <div class="bp"><svg viewBox="0 0 24 24" fill=none height=11 stroke=rgba(255,255,255,.65) stroke-width=2 width=11><path d="M5 13l4 4L19 7"/></svg>Topics: ${p.topics.substring(0,80)}…</div>
       <div class="bp"><svg viewBox="0 0 24 24" fill=none height=11 stroke=rgba(255,255,255,.65) stroke-width=2 width=11><path d="M5 13l4 4L19 7"/></svg>1/8 negative marking · Timed auto-submit</div>
     </div>
@@ -952,7 +952,7 @@ function buildCards(p,i){
     const unlocked=isUnlocked(t,p.key);
     const score=getScore(t.id);
     const attempts=getAttempts(t.id);
-    const maxed=unlocked&&score&&attempts>=3;
+    const maxed=unlocked&&score&&attempts>=3&&!t.free;
     const wrap=document.createElement('div');
     if(t.free){wrap.className='free-wrap';wrap.innerHTML='<div class="free-ribbon">★ FREE PYQ</div>';}
 
