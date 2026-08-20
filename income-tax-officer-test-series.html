@@ -1232,8 +1232,12 @@ async function submitPayment(){
   // grants access on its own. A human must check the payment (bank/UPI
   // statement) and flip this row's status to 'verified' in Supabase for the
   // specific paper to unlock.
+  const userKey=(user.email||'').toLowerCase();
+  const cachedUser=(getUsers()[userKey]||{});
+  const mobileNumber=String(cachedUser.mobile||user.mobile||'').trim();
   const record={
-    email:(user.email||'').toLowerCase(),
+    email:userKey,
+    mobile_number:mobileNumber||null,
     name:user.name||'',
     plan_key:selPlan,
     plan_label:plan.label||'',

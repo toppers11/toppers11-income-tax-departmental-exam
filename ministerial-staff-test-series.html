@@ -977,7 +977,10 @@ async function submitPayment(){
   // flip this row's status to 'verified' in Supabase for the specific paper to unlock.
   // subject_name identifies exactly WHICH paper/series this payment is for —
   // access is only granted for that paper, not every paper.
-  const record={email:(user.email||'').toLowerCase(),name:user.name||'',subject_name:subjectName,amount:plan.amount||0,exam_type:'MS',upi_ref:utr,activated_at:new Date().toISOString(),status:'pending_verification'};
+  const userKey=(user.email||'').toLowerCase();
+  const cachedUser=(getUsers()[userKey]||{});
+  const mobileNumber=String(cachedUser.mobile||user.mobile||'').trim();
+  const record={email:userKey,mobile_number:mobileNumber||null,name:user.name||'',subject_name:subjectName,amount:plan.amount||0,exam_type:'MS',upi_ref:utr,activated_at:new Date().toISOString(),status:'pending_verification'};
 
   const result=await sbInsert('payments',record);
   if(!result.ok){
