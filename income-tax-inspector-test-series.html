@@ -29,7 +29,7 @@ Check Status
 </div>
 </div><div class="retest-notice"><div class="rn-accent"></div><div class="rn-body"><div class="rn-body-text"><div class="rn-badge"><svg width=7 height=7 viewBox="0 0 24 24" fill="var(--t3)"><circle cx=12 cy=12 r=10/></svg>
           Exam Rule
-        </div><div class="rn-title">3 Attempts Per Assessment</div><div class="rn-msg">You have <strong>3 total attempts</strong> for each test in this series. Once all 3 attempts are used, the test will be marked <strong>Completed</strong>. This mirrors actual departmental exam rules.</div></div><div class="rn-chips"><div class="rn-chip"><span class="rn-chip-num">3</span><span class="rn-chip-lbl">Max<br>Attempts</span></div><div class="rn-chip"><svg width=16 height=16 fill=none stroke="var(--t3)" stroke-width=2.2 viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg><span class="rn-chip-lbl">Auto<br>Completes</span></div></div></div></div><div id="panels"></div></main><div class="overlay" id="overlay" role="dialog" aria-modal="true" aria-labelledby="modal-title" onclick="overlayClick(event)"><div class="modal"><div class="mh"><h3 id="modal-title">Unlock ITI Tests</h3><button class="btn-x" aria-label="Close unlock dialog" onclick="closeModal()">✕</button></div><div class="mb"><div id="step1"><p style="font-size:.77rem;color:var(--muted);margin-bottom:.85rem;">Choose your plan:</p><div class="plan-cards" id="plan-cards"></div><button class="btn-cont" id="cont-btn" onclick="doContinue()">Continue →</button></div><div id="step2" style="display:none;"><div id="pay-screen"><div class=qr-box><div class=qr-top><div class=qr-lbl><svg width=9 height=9 viewBox="0 0 24 24" fill="rgba(255,255,255,.8)"><circle cx=12 cy=12 r=10/></svg><span id=qr-lbl>Scan &amp; Pay</span></div><a id=qr-tap-link href="#" onclick="onUpiAppClick(event,this)" aria-label="Tap to pay with any UPI app"><div class=qr-img id=qr-canvas></div></a><div class=qr-amount-pill>Amount: <span id=amt-lbl>₹355</span></div></div><div class=qr-bottom><div class=qr-hint>Scan with <strong>any UPI app</strong> — Google Pay, PhonePe, Paytm &amp; more. On mobile, you can tap the QR instead.</div><button class=btn-paid id=paid-btn onclick=onPaidClick()><svg width=14 height=14 fill=none stroke=currentColor stroke-width=2.5 viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>
+        </div><div class="rn-title">3 Attempts Per Assessment</div><div class="rn-msg">You have <strong>3 total attempts</strong> for each paid Series test. Once all 3 attempts are used, the test will be marked <strong>Completed</strong>. This mirrors actual departmental exam rules. <strong>Free PYQ tests (2021–2025) are unlimited</strong> — retake them as many times as you like.</div></div><div class="rn-chips"><div class="rn-chip"><span class="rn-chip-num">3</span><span class="rn-chip-lbl">Max<br>Attempts</span></div><div class="rn-chip"><svg width=16 height=16 fill=none stroke="var(--t3)" stroke-width=2.2 viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg><span class="rn-chip-lbl">Auto<br>Completes</span></div><div class="rn-chip"><span class="rn-chip-num" style="font-size:.85rem;">∞</span><span class="rn-chip-lbl">Free PYQ<br>Attempts</span></div></div></div></div><div id="panels"></div></main><div class="overlay" id="overlay" role="dialog" aria-modal="true" aria-labelledby="modal-title" onclick="overlayClick(event)"><div class="modal"><div class="mh"><h3 id="modal-title">Unlock ITI Tests</h3><button class="btn-x" aria-label="Close unlock dialog" onclick="closeModal()">✕</button></div><div class="mb"><div id="step1"><p style="font-size:.77rem;color:var(--muted);margin-bottom:.85rem;">Choose your plan:</p><div class="plan-cards" id="plan-cards"></div><button class="btn-cont" id="cont-btn" onclick="doContinue()">Continue →</button></div><div id="step2" style="display:none;"><div id="pay-screen"><div class=qr-box><div class=qr-top><div class=qr-lbl><svg width=9 height=9 viewBox="0 0 24 24" fill="rgba(255,255,255,.8)"><circle cx=12 cy=12 r=10/></svg><span id=qr-lbl>Scan &amp; Pay</span></div><a id=qr-tap-link href="#" onclick="onUpiAppClick(event,this)" aria-label="Tap to pay with any UPI app"><div class=qr-img id=qr-canvas></div></a><div class=qr-amount-pill>Amount: <span id=amt-lbl>₹355</span></div></div><div class=qr-bottom><div class=qr-hint>Scan with <strong>any UPI app</strong> — Google Pay, PhonePe, Paytm &amp; more. On mobile, you can tap the QR instead.</div><button class=btn-paid id=paid-btn onclick=onPaidClick()><svg width=14 height=14 fill=none stroke=currentColor stroke-width=2.5 viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>
                 I've Made the Payment
               </button></div></div><button class=btn-bk onclick=backToPlan()><svg width=13 height=13 fill=none stroke=currentColor stroke-width=2 viewBox="0 0 24 24"><path d="M19 12H5M12 5l-7 7 7 7"/></svg>
             Change Plan
@@ -116,10 +116,10 @@ let selSubjectKey=null;
 const PAPERS=[
 {key:'p1',name:'IT Law, Computation & Taxpayer Services',hasFree:true,topics:'Income Tax Act 1961 & 2025, Taxpayer Services, heads of income, TDS, deductions, assessment, computation of total income.',type:'Objective',marks:100,tests:[
 {id:'iti-p1-pyq25',lbl:'PYQ 2025',title:'IT Law, Computation & Taxpayer Services — 2025 PYQ',free:true,pyq:true,qs:100,mins:120},
-{id:'iti-p1-pyq24',lbl:'PYQ 2024',title:'IT Law, Computation & Taxpayer Services — 2024 PYQ',free:false,pyq:true,qs:100,mins:120},
-{id:'iti-p1-pyq23',lbl:'PYQ 2023',title:'IT Law, Computation & Taxpayer Services — 2023 PYQ',free:false,pyq:true,qs:100,mins:120},
-{id:'iti-p1-pyq22',lbl:'PYQ 2022',title:'IT Law, Computation & Taxpayer Services — 2022 PYQ',free:false,pyq:true,qs:100,mins:120},
-{id:'iti-p1-pyq21',lbl:'PYQ 2021',title:'IT Law, Computation & Taxpayer Services — 2021 PYQ',free:false,pyq:true,qs:100,mins:120},
+{id:'iti-p1-pyq24',lbl:'PYQ 2024',title:'IT Law, Computation & Taxpayer Services — 2024 PYQ',free:true,pyq:true,qs:100,mins:120},
+{id:'iti-p1-pyq23',lbl:'PYQ 2023',title:'IT Law, Computation & Taxpayer Services — 2023 PYQ',free:true,pyq:true,qs:100,mins:120},
+{id:'iti-p1-pyq22',lbl:'PYQ 2022',title:'IT Law, Computation & Taxpayer Services — 2022 PYQ',free:true,pyq:true,qs:100,mins:120},
+{id:'iti-p1-pyq21',lbl:'PYQ 2021',title:'IT Law, Computation & Taxpayer Services — 2021 PYQ',free:true,pyq:true,qs:100,mins:120},
 {id:'iti-p1-s06',lbl:'Series 06',title:'IT Law, Computation & Taxpayer Services — Series 06',free:false,pyq:false,qs:100,mins:120},
 {id:'iti-p1-s07',lbl:'Series 07',title:'IT Law, Computation & Taxpayer Services — Series 07',free:false,pyq:false,qs:100,mins:120},
 {id:'iti-p1-s08',lbl:'Series 08',title:'IT Law, Computation & Taxpayer Services — Series 08',free:false,pyq:false,qs:100,mins:120},
@@ -143,10 +143,10 @@ const PAPERS=[
 ]},
 {key:'p2',name:'Accountancy & Book-Keeping',hasFree:true,topics:'Double entry system, trial balance, final accounts, bank reconciliation, depreciation, LLP & partnership accounts, 7 ICAI Accounting Standards.',type:'Objective',marks:100,tests:[
 {id:'iti-p2-pyq25',lbl:'PYQ 2025',title:'Accountancy & Book-Keeping — 2025 PYQ',free:true,pyq:true,qs:100,mins:120},
-{id:'iti-p2-pyq24',lbl:'PYQ 2024',title:'Accountancy & Book-Keeping — 2024 PYQ',free:false,pyq:true,qs:100,mins:120},
-{id:'iti-p2-pyq23',lbl:'PYQ 2023',title:'Accountancy & Book-Keeping — 2023 PYQ',free:false,pyq:true,qs:100,mins:120},
-{id:'iti-p2-pyq22',lbl:'PYQ 2022',title:'Accountancy & Book-Keeping — 2022 PYQ',free:false,pyq:true,qs:100,mins:120},
-{id:'iti-p2-pyq21',lbl:'PYQ 2021',title:'Accountancy & Book-Keeping — 2021 PYQ',free:false,pyq:true,qs:100,mins:120},
+{id:'iti-p2-pyq24',lbl:'PYQ 2024',title:'Accountancy & Book-Keeping — 2024 PYQ',free:true,pyq:true,qs:100,mins:120},
+{id:'iti-p2-pyq23',lbl:'PYQ 2023',title:'Accountancy & Book-Keeping — 2023 PYQ',free:true,pyq:true,qs:100,mins:120},
+{id:'iti-p2-pyq22',lbl:'PYQ 2022',title:'Accountancy & Book-Keeping — 2022 PYQ',free:true,pyq:true,qs:100,mins:120},
+{id:'iti-p2-pyq21',lbl:'PYQ 2021',title:'Accountancy & Book-Keeping — 2021 PYQ',free:true,pyq:true,qs:100,mins:120},
 {id:'iti-p2-s06',lbl:'Series 06',title:'Accountancy & Book-Keeping — Series 06',free:false,pyq:false,qs:100,mins:120},
 {id:'iti-p2-s07',lbl:'Series 07',title:'Accountancy & Book-Keeping — Series 07',free:false,pyq:false,qs:100,mins:120},
 {id:'iti-p2-s08',lbl:'Series 08',title:'Accountancy & Book-Keeping — Series 08',free:false,pyq:false,qs:100,mins:120},
@@ -170,10 +170,10 @@ const PAPERS=[
 ]},
 {key:'p3',name:'Allied Laws & Office Procedure',hasFree:true,topics:'Transfer of Property Act, Registration Act, Companies Act 2013, Bharatiya Sakshya Adhiniyam 2023, RTI Act, FR/SR, CCS Conduct & Leave Rules, GFR, POSH Act.',type:'Objective',marks:100,tests:[
 {id:'iti-p3-pyq25',lbl:'PYQ 2025',title:'2025 Previous Year Paper',topics:'Transfer of Property Act,Indian Registration Act,Civil Procedure Code,Right to Information Act,Old-syllabus topics: Succession Act, Trusts Act, Hindu Law',free:true,pyq:true,qs:100,mins:120},
-{id:'iti-p3-pyq24',lbl:'PYQ 2024',title:'2024 Previous Year Paper',topics:'Transfer of Property Act,Indian Registration Act,Civil Procedure Code,Right to Information Act,Old-syllabus topics: Succession Act, Trusts Act, Hindu Law',free:false,pyq:true,qs:100,mins:120},
-{id:'iti-p3-pyq23',lbl:'PYQ 2023',title:'2023 Previous Year Paper',topics:'Transfer of Property Act,Indian Registration Act,Civil Procedure Code,Right to Information Act,Old-syllabus topics: Succession Act, Trusts Act, Hindu Law',free:false,pyq:true,qs:100,mins:120},
-{id:'iti-p3-pyq22',lbl:'PYQ 2022',title:'2022 Previous Year Paper',topics:'Transfer of Property Act,Indian Registration Act,Civil Procedure Code,Right to Information Act,Old-syllabus topics: Succession Act, Trusts Act, Hindu Law',free:false,pyq:true,qs:100,mins:120},
-{id:'iti-p3-pyq21',lbl:'PYQ 2021',title:'2021 Previous Year Paper',topics:'Transfer of Property Act,Indian Registration Act,Civil Procedure Code,Right to Information Act,Old-syllabus topics: Succession Act, Trusts Act, Hindu Law',free:false,pyq:true,qs:100,mins:120},
+{id:'iti-p3-pyq24',lbl:'PYQ 2024',title:'2024 Previous Year Paper',topics:'Transfer of Property Act,Indian Registration Act,Civil Procedure Code,Right to Information Act,Old-syllabus topics: Succession Act, Trusts Act, Hindu Law',free:true,pyq:true,qs:100,mins:120},
+{id:'iti-p3-pyq23',lbl:'PYQ 2023',title:'2023 Previous Year Paper',topics:'Transfer of Property Act,Indian Registration Act,Civil Procedure Code,Right to Information Act,Old-syllabus topics: Succession Act, Trusts Act, Hindu Law',free:true,pyq:true,qs:100,mins:120},
+{id:'iti-p3-pyq22',lbl:'PYQ 2022',title:'2022 Previous Year Paper',topics:'Transfer of Property Act,Indian Registration Act,Civil Procedure Code,Right to Information Act,Old-syllabus topics: Succession Act, Trusts Act, Hindu Law',free:true,pyq:true,qs:100,mins:120},
+{id:'iti-p3-pyq21',lbl:'PYQ 2021',title:'2021 Previous Year Paper',topics:'Transfer of Property Act,Indian Registration Act,Civil Procedure Code,Right to Information Act,Old-syllabus topics: Succession Act, Trusts Act, Hindu Law',free:true,pyq:true,qs:100,mins:120},
 {id:'iti-p3-s06',lbl:'Series 06',title:'Allied Laws & Office Procedure — Series 06',free:false,pyq:false,qs:100,mins:120},
 {id:'iti-p3-s07',lbl:'Series 07',title:'Allied Laws & Office Procedure — Series 07',free:false,pyq:false,qs:100,mins:120},
 {id:'iti-p3-s08',lbl:'Series 08',title:'Allied Laws & Office Procedure — Series 08',free:false,pyq:false,qs:100,mins:120},
@@ -287,7 +287,7 @@ p.tests.forEach(t=>{
 const unlocked=isUnlocked(t,p.key);
 const score=getScore(t.id);
 const attempts=getAttempts(t.id);
-const maxed=unlocked&&score&&attempts>=3;
+const maxed=unlocked&&score&&attempts>=3&&!t.free;
 const wrap=document.createElement('div');
 wrap.style.position='relative';
 if(t.free){
@@ -297,7 +297,7 @@ let card;
 if(unlocked&&!maxed){
 card=document.createElement('a');
 card.href='online-mock-test.html?id='+t.id;
-card.addEventListener('click',()=>recordAttempt(t.id));
+card.addEventListener('click',()=>{if(!t.free)recordAttempt(t.id);});
 } else {
 card=document.createElement('div');
 }
@@ -718,7 +718,7 @@ setText('pd-mob',s.mobile?'+91 '+s.mobile:'Not provided');
 setText('pd-reg',s.region||'Not selected');
 const planLabel=user.paid
 ?(user.plan?user.plan.replace('bunch-','').replace('single-','').toUpperCase()+' Access':'Premium Access')
-:'Free (4 Tests)';
+:'Free (16 Tests)';
 setText('pd-plan-v',planLabel);
 setText('pd-plan-badge-txt',user.paid?'Premium':'Free Plan');
 }
