@@ -912,9 +912,9 @@ function buildCards(p,i){
   <div class="bundle-in" style="position:relative;z-index:2;"><div>
     <div class="bundle-badge">⭐ Best Value</div>
     <div class="bundle-title">ITO Paper ${p.num} — ${p.name}</div>
-    <div class="bundle-sub">${p.key==='p5'?`${p.tests.length} Tests · ${p.marks} Marks · Objective`:`25 Tests · 5 PYQs + 20 AI-Crafted Series · ${p.marks} Marks · Objective`}</div>
+    <div class="bundle-sub">${p.key==='p5'?`${p.tests.length} Tests · ${p.marks} Marks · Objective`:`25 Tests · 5 PYQs Free Test Series + 20 Sample Test Series · ${p.marks} Marks · Objective`}</div>
     <div class="bundle-papers">
-      ${p.key==='p5'?'':'<div class="bp"><svg viewBox="0 0 24 24" fill=none height=11 stroke=rgba(255,255,255,.65) stroke-width=2 width=11><path d="M5 13l4 4L19 7"/></svg>5 Previous Year Question (PYQ) Tests — 2021 to 2025 · <strong style="color:#3ef0bc">FREE, unlimited attempts</strong></div><div class="bp"><svg viewBox="0 0 24 24" fill=none height=11 stroke=rgba(255,255,255,.65) stroke-width=2 width=11><path d="M5 13l4 4L19 7"/></svg>20 AI-Leveled Practice Series (Series 06–25)</div>'}
+      ${p.key==='p5'?'':'<div class="bp"><svg viewBox="0 0 24 24" fill=none height=11 stroke=rgba(255,255,255,.65) stroke-width=2 width=11><path d="M5 13l4 4L19 7"/></svg>5 Previous Year Question (PYQ) Tests — 2021 to 2025 · <strong style="color:#3ef0bc">FREE, unlimited attempts</strong></div>'}
       <div class="bp"><svg viewBox="0 0 24 24" fill=none height=11 stroke=rgba(255,255,255,.65) stroke-width=2 width=11><path d="M5 13l4 4L19 7"/></svg>Topics: ${p.topics.substring(0,80)}…</div>
       <div class="bp"><svg viewBox="0 0 24 24" fill=none height=11 stroke=rgba(255,255,255,.65) stroke-width=2 width=11><path d="M5 13l4 4L19 7"/></svg>1/8 negative marking · Timed auto-submit</div>
     </div>
