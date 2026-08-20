@@ -176,8 +176,8 @@ body::before{
 .nav-tile-btn.quiz-tile{position:relative;}
 .nav-tile-btn.quiz-weekend{background:#0a1a3a;}
 .nav-tile-btn.quiz-weekend:hover{background:#12234a;}
-.nav-tile-btn.quiz-free{background:#10B981;}
-.nav-tile-btn.quiz-free:hover{background:#0ea371;}
+.nav-tile-btn.quiz-free{background:#0a6b4e;border:1.5px solid #34d399;}
+.nav-tile-btn.quiz-free:hover{background:#0c7d5a;}
 .quiz-free-badge{
   position:absolute;
   top:-8px;
@@ -527,25 +527,43 @@ body::before{
   .cards-grid{grid-template-columns:1fr;max-width:460px;}
 }
 @media(max-width:900px){
-  .top-nav-inner{height:auto;flex-wrap:nowrap;padding:.6rem 1rem;gap:.5rem;}
-  .nav-right{flex-wrap:nowrap;width:100%;min-width:0;}
-  /* Only the quiz/exam tiles scroll — My Account stays pinned and visible */
-  .nav-scroll{flex:1;min-width:0;overflow-x:auto;-webkit-overflow-scrolling:touch;padding-bottom:2px;}
-  .nav-scroll::-webkit-scrollbar{height:0;}
-  .nav-tile-btn{min-width:76px;padding:8px .6rem;}
-  .user-chip-wrap{flex-shrink:0;}
-
-  /* Dropdown becomes a fixed panel on mobile so it can never be clipped
-     by the scrolling nav strip's overflow box */
-  .profile-dropdown{
-    position:fixed;
-    top:74px;
-    right:16px;
-    left:16px;
-    width:auto;
-    max-width:340px;
-    margin-left:auto;
+  .top-nav-inner{
+    height:auto;
+    flex-direction:column;
+    align-items:stretch;
+    padding:.85rem 1rem 1rem;
+    gap:.7rem;
+    border-radius:16px;
   }
+  .logo-box{padding:2px 0 0;align-self:flex-start;}
+
+  /* All tiles laid out as a wrapped grid — nothing scrolls, nothing hides */
+  .nav-scroll{display:contents;}   /* dissolve the wrapper so its tiles join the grid below */
+  .nav-right{
+    width:100%;
+    display:grid;
+    grid-template-columns:repeat(3, 1fr);
+    gap:.5rem;
+    margin-top:6px;                 /* room for the FREE badge to poke above the tile */
+  }
+  .nav-tile-btn{
+    min-width:0;
+    width:100%;
+    padding:9px .4rem;
+  }
+  .user-chip-wrap{width:100%;}
+  .user-chip-wrap .nav-tile-btn{width:100%;}
+
+  /* No ancestor clips overflow anymore, so a normal anchored panel works —
+     just cap its width so it can't run off a narrow screen */
+  .profile-dropdown{
+    right:0;
+    left:auto;
+    width:min(292px, calc(100vw - 2rem));
+  }
+}
+@media(max-width:420px){
+  .nav-right{grid-template-columns:repeat(2, 1fr);}
 }
 @media(max-width:560px){
   .logo-wordmark{font-size:24px;}
