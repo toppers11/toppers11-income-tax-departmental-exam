@@ -215,6 +215,10 @@ body{background:var(--bg);color:var(--ink);font-family:'Open Sans',sans-serif;ov
 .card{background:#fff;border:1.5px solid var(--bdr);border-radius:10px;overflow:hidden;cursor:pointer;display:block;text-decoration:none;transition:all .17s}
 .card:hover{transform:translateY(-3px);border-color:var(--t3);box-shadow:0 8px 22px rgba(0,171,132,.14)}
 .card.locked{opacity:.65;cursor:not-allowed}
+.card.unavailable{border-color:#ffe4a3}
+.card.unavailable:hover{border-color:#f5c518;box-shadow:0 8px 24px rgba(245,197,24,.15)}
+.st-unavail{color:#c48a00}
+.btn-unavailable-test{display:inline-flex;align-items:center;gap:.3rem;background:#fff7e6;color:#c48a00;border:1px solid #ffe4a3;border-radius:6px;padding:.36rem .9rem;font-size:.7rem;font-weight:700;cursor:pointer;letter-spacing:.03em;font-family:'Open Sans',sans-serif;text-decoration:none}
 .card.locked:hover{transform:none;box-shadow:none;border-color:var(--bdr)}
 .card.completed{opacity:.78;cursor:not-allowed;border-color:#6ee7b7}
 .card.completed:hover{transform:none;box-shadow:none;border-color:#6ee7b7}
@@ -784,7 +788,7 @@ const PAPERS=[
     {id:'ito-p3-pyq25',lbl:'PYQ 2025',title:'ITO Paper 3 - Previous Years questions of 2025',free:true,pyq:true,qs:100,mins:120},
     {id:'ito-p3-pyq24',lbl:'PYQ 2024',title:'ITO Paper 3 - Previous Years questions of 2024',free:true,pyq:true,qs:100,mins:120},
     {id:'ito-p3-pyq23',lbl:'PYQ 2023',title:'ITO Paper 3 - Previous Years questions of 2023',free:true,pyq:true,qs:100,mins:120},
-    {id:'ito-p3-pyq22',lbl:'PYQ 2022',title:'ITO Paper 3 - Previous Years questions of 2022',free:true,pyq:true,qs:100,mins:120},
+    {id:'ito-p3-pyq22',lbl:'PYQ 2022',title:'ITO Paper 3 - Previous Years questions of 2022',free:true,pyq:true,available:false,qs:100,mins:120},
     {id:'ito-p3-pyq21',lbl:'PYQ 2021',title:'ITO Paper 3 - Previous Years questions of 2021',free:true,pyq:true,qs:100,mins:120},
     {id:'ito-p3-s21',lbl:'Series 01',title:'Allied Laws & Office Admin — Series 01',free:false,pyq:false,qs:100,mins:120},
     {id:'ito-p3-s22',lbl:'Series 02',title:'Allied Laws & Office Admin — Series 02',free:false,pyq:false,qs:100,mins:120},
@@ -949,6 +953,7 @@ function buildCards(p,i){
   const grid=document.getElementById('grid-'+p.key);
 
   p.tests.forEach(t=>{
+    const available=t.available!==false;
     const unlocked=isUnlocked(t,p.key);
     const score=getScore(t.id);
     const attempts=getAttempts(t.id);
@@ -957,25 +962,30 @@ function buildCards(p,i){
     if(t.free){wrap.className='free-wrap';wrap.innerHTML='<div class="free-ribbon">★ FREE PYQ</div>';}
 
     let card;
-    if(unlocked&&!maxed){
+    if(!available){
+      card=document.createElement('a');
+      card.href='paper-unavailable.html?paper='+encodeURIComponent(t.title)+'&back=income-tax-officer-test-series.html';
+    }else if(unlocked&&!maxed){
       card=document.createElement('a');
       card.href='online-mock-test.html?id='+t.id;
       card.addEventListener('click',()=>recordAttempt(t.id));
     }else{
       card=document.createElement('div');
     }
-    card.className='card'+(maxed?' completed':unlocked?'':' locked');
+    card.className='card'+(!available?' unavailable':maxed?' completed':unlocked?'':' locked');
 
     // Status badge text & class
-    const stTxt=t.free?'FREE':maxed?'DONE':unlocked?'OPEN':'LOCKED';
-    const stCls=maxed?'st-done':unlocked?'st-open':'st-lock';
+    const stTxt=!available?'N/A':t.free?'FREE':maxed?'DONE':unlocked?'OPEN':'LOCKED';
+    const stCls=!available?'st-unavail':maxed?'st-done':unlocked?'st-open':'st-lock';
 
     // Score chip
     const sc=score?`<span class="cscore">${score.correct||0}/${score.total||t.qs} correct</span>`:'';
 
     // Footer action button
     let footerBtn;
-    if(maxed){
+    if(!available){
+      footerBtn=`<span class="btn-unavailable-test"><svg width="11" height="11" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6"/></svg>View Notice</span>`;
+    }else if(maxed){
       footerBtn=`<span class="btn-completed-test"><svg width="11" height="11" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>Completed</span><span class="retest-badge">All 3 Used</span>`;
     }else if(unlocked&&t.free){
       footerBtn=`<span class="btn-free-test"><svg width="11" height="11" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24"><polygon points="5 3 19 12 5 21 5 3"/></svg>${score?'Re-take':'FREE TEST'}</span>${sc}`;
@@ -1001,7 +1011,7 @@ function buildCards(p,i){
       </div>
       <div class="cf">${footerBtn}</div>`;
 
-    if(!unlocked)card.onclick=()=>openModal(p.key);
+    if(available&&!unlocked)card.onclick=()=>openModal(p.key);
     wrap.appendChild(card);grid.appendChild(wrap);
   });
 }
