@@ -129,6 +129,7 @@ body::before{
 
 /* Nav right — tile buttons (dashboard style) */
 .nav-right{display:flex;align-items:center;gap:.5rem;}
+.nav-scroll{display:flex;align-items:center;gap:.5rem;}
 
 .nav-tile-btn{
   display:inline-flex;
@@ -526,10 +527,25 @@ body::before{
   .cards-grid{grid-template-columns:1fr;max-width:460px;}
 }
 @media(max-width:900px){
-  .top-nav-inner{height:auto;flex-wrap:wrap;padding:.6rem 1rem;gap:.5rem;}
-  .nav-right{flex-wrap:nowrap;overflow-x:auto;width:100%;-webkit-overflow-scrolling:touch;padding-bottom:2px;}
-  .nav-right::-webkit-scrollbar{height:0;}
+  .top-nav-inner{height:auto;flex-wrap:nowrap;padding:.6rem 1rem;gap:.5rem;}
+  .nav-right{flex-wrap:nowrap;width:100%;min-width:0;}
+  /* Only the quiz/exam tiles scroll — My Account stays pinned and visible */
+  .nav-scroll{flex:1;min-width:0;overflow-x:auto;-webkit-overflow-scrolling:touch;padding-bottom:2px;}
+  .nav-scroll::-webkit-scrollbar{height:0;}
   .nav-tile-btn{min-width:76px;padding:8px .6rem;}
+  .user-chip-wrap{flex-shrink:0;}
+
+  /* Dropdown becomes a fixed panel on mobile so it can never be clipped
+     by the scrolling nav strip's overflow box */
+  .profile-dropdown{
+    position:fixed;
+    top:74px;
+    right:16px;
+    left:16px;
+    width:auto;
+    max-width:340px;
+    margin-left:auto;
+  }
 }
 @media(max-width:560px){
   .logo-wordmark{font-size:24px;}
@@ -562,6 +578,7 @@ body::before{
 
   <div class="nav-right">
 
+  <div class="nav-scroll">
     <!-- ALL EXAMS tile -->
     <a href="https://toppers11.com/income-tax-departmental-exam.html" class="nav-tile-btn">
       <div class="nav-tile-icon">
@@ -614,8 +631,9 @@ body::before{
       <span class="nav-tile-label">Weekly Test</span>
       <span class="nav-tile-sub">Free Access</span>
     </a>
+  </div>
 
-    <!-- MY ACCOUNT tile -->
+    <!-- MY ACCOUNT tile — kept outside .nav-scroll so it's always visible and never clipped -->
     <div class="user-chip-wrap" id="pa">
       <div class="nav-tile-btn" id="pb" role="button" tabindex="0"
            aria-haspopup="true" aria-expanded="false" aria-label="User profile menu"
