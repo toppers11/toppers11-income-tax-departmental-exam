@@ -461,6 +461,7 @@ body{-webkit-user-select:none;-moz-user-select:none;user-select:none;}
     </div>
   </div>
   <div class="result-body">
+    <div id="review-mode-banner" style="display:none;background:#eef6ff;border:1.5px solid #bfdbfe;color:#1e40af;border-radius:10px;padding:.6rem .9rem;font-size:.75rem;font-weight:600;margin-bottom:.9rem;display:none;align-items:center;gap:.4rem;">📋 Viewing your saved attempt — this is a past result, not a live test.</div>
     <div class="result-hero" id="result-hero-box">
       <p id="res-series-title">ITI Test Series</p>
       <div class="score-circle"><div class="score-pct" id="res-score-pct">—</div></div>
@@ -488,7 +489,7 @@ body{-webkit-user-select:none;-moz-user-select:none;user-select:none;}
     </div>
     <div class="result-actions">
       <a id="res-back-btn" href="income-tax-departmental-exam.html" class="btn-back-dash">← Dashboard</a>
-      <button class="btn-retry" onclick="location.reload()">Retry Test</button>
+      <button class="btn-retry" id="res-retry-btn" onclick="retryTest()">Retry Test</button>
     </div>
   </div>
 </div>
@@ -531,6 +532,7 @@ body{-webkit-user-select:none;-moz-user-select:none;user-select:none;}
     </div>
   </div>
   <div class="subj-res-body">
+    <div id="subj-review-mode-banner" style="display:none;background:#eef6ff;border:1.5px solid #bfdbfe;color:#1e40af;border-radius:10px;padding:.6rem .9rem;font-size:.75rem;font-weight:600;margin-bottom:.9rem;align-items:center;gap:.4rem;">📋 Viewing your saved attempt — this is a past submission, not a live test.</div>
     <div class="subj-res-hero">
       <h2>Answers Submitted!</h2>
       <p id="subj-res-msg">Compare your answers with the model answers below.</p>
@@ -538,7 +540,7 @@ body{-webkit-user-select:none;-moz-user-select:none;user-select:none;}
     <div id="subj-review-body"></div>
     <div class="result-actions">
       <a id="subj-back-btn" href="income-tax-departmental-exam.html" class="btn-back-dash">← Dashboard</a>
-      <button class="btn-retry" onclick="location.reload()">Retry Test</button>
+      <button class="btn-retry" id="subj-retry-btn" onclick="retryTest()">Retry Test</button>
     </div>
   </div>
 </div>
@@ -978,10 +980,12 @@ let META,QUESTIONS,TOTAL,currentQ=0;
 let answers=[],visited=[],marked=[];
 let timerInterval;
 let currentSeriesId='';
+let reviewMode=false;
 
 window.addEventListener('DOMContentLoaded',async()=>{
   const params=new URLSearchParams(window.location.search);
   const id=params.get('id');currentSeriesId=id||'';
+  reviewMode=params.get('review')==='1';
   if(!id||!SERIES_META[id]){alert('Invalid test series. Please go back and select a test from the dashboard.');history.back();return;}
   META=SERIES_META[id];document.title=`${META.title} — Toppers11`;
   const dash=DASH_MAP[META.exam]||'income-tax-departmental-exam.html';
@@ -996,7 +1000,56 @@ window.addEventListener('DOMContentLoaded',async()=>{
   QUESTIONS=[];const startBtn=document.getElementById('btn-start-test');startBtn.disabled=true;startBtn.textContent='Loading questions…';
   try{const sbH={'apikey':SUPABASE_ANON,'Authorization':'Bearer '+SUPABASE_ANON,'Content-Type':'application/json'};const tbl=SUPABASE_TABLE[id]||'questions';const MCQ_COLS='id,question_en,question_hi,opt_a_en,opt_b_en,opt_c_en,opt_d_en,opt_a_hi,opt_b_hi,opt_c_hi,opt_d_hi,correct_answer';const SUBJ_COLS='id,question_en,question_hi,marks,hint,explanation_en,explanation_hi';const Q_COLS=(META.type==='subjective')?SUBJ_COLS:MCQ_COLS;const res=await fetch(`${SUPABASE_URL}/rest/v1/${tbl}?select=${Q_COLS}&order=id.asc&limit=2000`,{headers:sbH});const txt=await res.text();if(res.ok){const data=JSON.parse(txt);if(Array.isArray(data)&&data.length>0){data.sort((a,b)=>parseInt(a.id)-parseInt(b.id));const aMap={A:0,B:1,C:2,D:3};QUESTIONS=data.slice(0,META.qs).map(r=>({id:r.id,q:r.question_en,opts:[r.opt_a_en,r.opt_b_en,r.opt_c_en,r.opt_d_en],ans:aMap[(r.correct_answer||'').toString().trim().toUpperCase()]??0,q_hi:r.question_hi||'',opts_hi:(r.opt_a_hi||r.opt_b_hi||r.opt_c_hi||r.opt_d_hi)?[r.opt_a_hi||'',r.opt_b_hi||'',r.opt_c_hi||'',r.opt_d_hi||'']:null,topic:'',marks:r.marks||null,hint:r.hint||'',explanation_en:r.explanation_en||'',explanation_hi:r.explanation_hi||''}));}}}catch(e){console.error('Supabase fetch failed:',e.message);}
   finally{TOTAL=QUESTIONS.length;startBtn.disabled=false;startBtn.textContent='Begin Test →';if(TOTAL===0){const errDiv=document.getElementById('supabase-error-banner');if(errDiv){const tbl=SUPABASE_TABLE[id]||'your_table';errDiv.innerHTML=`<div style="background:#fff0f0;border:1.5px solid #fecaca;border-radius:12px;padding:1rem 1.25rem;margin-bottom:1rem;"><div style="font-weight:700;color:#DC2626;margin-bottom:.4rem;">⚠️ Could not load questions from Supabase</div><div style="font-size:.82rem;color:#7F1D1D;line-height:1.7;">Table <code style="background:#fff;padding:.1rem .35rem;border-radius:4px;border:1px solid #fecaca;">${tbl}</code> returned 0 rows. Check RLS policy.</div></div>`;errDiv.style.display='block';}startBtn.disabled=true;startBtn.textContent='Questions unavailable';return;}answers=new Array(TOTAL).fill(-1);visited=new Array(TOTAL).fill(false);marked=new Array(TOTAL).fill(false);document.getElementById('agree-box').dispatchEvent(new Event('change'));}
+  if(reviewMode)await loadStoredReview();
 });
+async function loadStoredReview(){
+  const remote=await fetchRemoteAttempt(currentSeriesId);
+  if(META.type==='subjective'){
+    let stored=null;
+    if(remote&&remote.answers)stored=remote.answers;
+    else{try{const l=JSON.parse(localStorage.getItem('t11_subj_answers_'+currentSeriesId)||'[]');if(l.length)stored=l;}catch(e){}}
+    if(!stored||!stored.length){showToast('No saved answers found for this test yet.');return;}
+    document.getElementById('subj-res-msg').textContent=`${META.title} — ${META.paper} · Saved attempt`;
+    renderSubjectiveReview(stored);
+    showPage('subj-result-page');
+    const b=document.getElementById('subj-review-mode-banner');if(b)b.style.display='flex';
+    setResultActionsForReviewMode();
+    return;
+  }
+  let scoreObj=null,stored=[];
+  if(remote&&remote.answers){
+    scoreObj={correct:remote.correct,wrong:remote.wrong,skip:remote.skip,marks:remote.marks,pct:remote.pct,total:remote.total};
+    stored=remote.answers;
+  }else{
+    const scoreRaw=localStorage.getItem('t11_score_'+currentSeriesId);
+    if(scoreRaw){try{scoreObj=JSON.parse(scoreRaw);}catch(e){scoreObj=null;}}
+    try{stored=JSON.parse(localStorage.getItem('t11_answers_'+currentSeriesId)||'[]');}catch(e){stored=[];}
+  }
+  if(!scoreObj||typeof scoreObj!=='object'){showToast('No saved attempt found for this test yet. Take the test first.');return;}
+  if(!stored.length)showToast('No saved answers found for this test yet — score only.');
+  showMcqResultSummary(scoreObj);
+  showPage('result-page');
+  const b=document.getElementById('review-mode-banner');if(b){b.style.display='flex';}
+  setResultActionsForReviewMode();
+  await renderMcqReview(stored.length?stored:new Array(TOTAL).fill(-1));
+}
+function setResultActionsForLiveSubmit(){
+  ['res-retry-btn','subj-retry-btn'].forEach(bid=>{const b=document.getElementById(bid);if(b){b.textContent='Retry Test';b.onclick=retryTest;}});
+}
+function setResultActionsForReviewMode(){
+  ['res-retry-btn','subj-retry-btn'].forEach(bid=>{const b=document.getElementById(bid);if(b){b.textContent='Attempt Again';b.onclick=retryTest;}});
+}
+function retryTest(){
+  const url=new URL(window.location.href);
+  url.searchParams.delete('review');
+  window.location.href=url.toString();
+}
+function showToast(msg){
+  let t=document.getElementById('t11-toast');
+  if(!t){t=document.createElement('div');t.id='t11-toast';t.style.cssText='position:fixed;bottom:1.2rem;left:50%;transform:translateX(-50%);background:#1a1a2e;color:#fff;padding:.65rem 1.1rem;border-radius:10px;font-size:.8rem;font-weight:600;z-index:9999;box-shadow:0 6px 20px rgba(0,0,0,.25);max-width:90vw;text-align:center;';document.body.appendChild(t);}
+  t.textContent=msg;t.style.display='block';
+  clearTimeout(window._t11ToastTimer);window._t11ToastTimer=setTimeout(()=>{t.style.display='none';},3500);
+}
 
 let currentLang='en';
 function setLang(lang){currentLang=lang;document.querySelectorAll('.lang-toggle-wrap .lang-btn').forEach(btn=>{const isEn=btn.textContent.trim()==='English'||btn.textContent.trim()==='EN';const isHi=btn.textContent.trim()==='हिंदी'||btn.textContent.trim()==='हि';btn.classList.toggle('active',(lang==='en'&&isEn)||(lang==='hi'&&isHi));});document.body.classList.toggle('lang-hi',lang==='hi');document.querySelectorAll('[data-en][data-hi]').forEach(el=>{el.innerHTML=lang==='hi'?el.getAttribute('data-hi'):el.getAttribute('data-en');});const tp=document.getElementById('test-page');if(tp&&tp.classList.contains('active'))renderQuestion();}
@@ -1083,6 +1136,30 @@ function formatQ(str){
   return str.split('\n').map(line=>{const t=line.trim();if(t.startsWith('To ')||t.startsWith('को ')||t.startsWith('के नामे '))return'<span class="journal-to">'+escHtml(t)+'</span>';return t===''?'<br>':escHtml(t)+'<br>';}).join('');
 }
 function getUser(){try{return JSON.parse(localStorage.getItem('t11_user')||'{}');}catch(e){return{};}}
+async function saveAttemptRemote(scoreObj,answersArr){
+  const user=getUser();const email=(user.email||'').toLowerCase();
+  if(!email)return; // not logged in — remote save skipped, localStorage copy still works on this device
+  const payload={email,series_id:currentSeriesId,exam_type:(META.exam||'iti').toUpperCase(),answers:answersArr,correct:scoreObj.correct??null,wrong:scoreObj.wrong??null,skip:scoreObj.skip??null,marks:scoreObj.marks??null,pct:scoreObj.pct??null,total:scoreObj.total??null,submitted_at:new Date().toISOString()};
+  try{
+    const res=await fetchWithTimeoutMock(`${SUPABASE_URL}/rest/v1/test_attempts`,{method:'POST',headers:{'apikey':SUPABASE_ANON,'Authorization':'Bearer '+SUPABASE_ANON,'Content-Type':'application/json','Prefer':'resolution=merge-duplicates,return=minimal'},body:JSON.stringify(payload)},8000);
+    if(!res.ok){const t=await res.text().catch(()=>'');console.warn('Attempt save failed:',res.status,t);}
+  }catch(e){console.warn('Attempt save error (kept locally only):',e.message);}
+}
+async function fetchRemoteAttempt(seriesId){
+  const user=getUser();const email=(user.email||'').toLowerCase();
+  if(!email)return null;
+  try{
+    const emailEnc=encodeURIComponent(email);
+    const res=await fetchWithTimeoutMock(`${SUPABASE_URL}/rest/v1/test_attempts?email=eq.${emailEnc}&series_id=eq.${encodeURIComponent(seriesId)}&select=answers,correct,wrong,skip,marks,pct,total`,{headers:{'apikey':SUPABASE_ANON,'Authorization':'Bearer '+SUPABASE_ANON,'Content-Type':'application/json'}},8000);
+    if(!res.ok)return null;
+    const rows=await res.json();
+    return (rows&&rows.length)?rows[0]:null;
+  }catch(e){console.warn('Attempt fetch error:',e.message);return null;}
+}
+function fetchWithTimeoutMock(url,opts,ms){
+  const ctrl=new AbortController();const id=setTimeout(()=>ctrl.abort(),ms);
+  return fetch(url,{...opts,signal:ctrl.signal}).finally(()=>clearTimeout(id));
+}
 
 function startTest(){if(META.type==='subjective'){showPage('subj-page');renderSubjective();startTimer(META.mins,'subj-timer-box',submitSubjective);document.getElementById('subj-tp-info').textContent=`${META.paper} — ${TOTAL} Questions`;}else{showPage('test-page');visited[0]=true;document.getElementById('tp-info').textContent=META.paper;document.getElementById('q-paper-tag').textContent=META.paper;renderPalette();renderQuestion();startTimer(META.mins,'timer-box',submitTest);}}
 function showPage(id){document.querySelectorAll('#inst-page,#test-page,#result-page,#subj-page,#subj-result-page').forEach(p=>p.classList.remove('active'));document.getElementById(id).classList.add('active');}
@@ -1098,15 +1175,21 @@ function jumpTo(i){currentQ=i;visited[i]=true;renderQuestion();}
 function showSubmitModal(){const ans=answers.filter(a=>a!==-1).length;document.getElementById('m-ans').textContent=ans;document.getElementById('m-no').textContent=TOTAL-ans;document.getElementById('m-rev').textContent=marked.filter(Boolean).length;document.getElementById('submit-modal').classList.add('show');}
 function closeModal(){document.getElementById('submit-modal').classList.remove('show');}
 
-async function submitTest(){clearInterval(timerInterval);closeModal();let correct=0,wrong=0,skip=0;QUESTIONS.forEach((q,i)=>{if(answers[i]===-1)skip++;else if(answers[i]===q.ans)correct++;else wrong++;});const marks=correct-(wrong/8),pct=Math.round((marks/TOTAL)*100);localStorage.setItem('t11_score_'+currentSeriesId,JSON.stringify({correct,wrong,skip,marks:marks.toFixed(2),pct,total:TOTAL}));
-  document.getElementById('res-series-title').textContent=`${META.title} — ${META.paper}`;document.getElementById('res-score-pct').textContent=pct+'%';document.getElementById('res-headline').textContent=pct>=60?'🎉 Well Done!':pct>=40?'📚 Keep Practising':'💪 More Effort Needed';document.getElementById('res-sub-msg').textContent=`You scored ${marks.toFixed(2)} out of ${TOTAL} marks.`;document.getElementById('res-correct').textContent=correct;document.getElementById('res-wrong').textContent=wrong;document.getElementById('res-skip').textContent=skip;document.getElementById('res-marks').textContent=marks.toFixed(2);showPage('result-page');
+async function submitTest(){clearInterval(timerInterval);closeModal();let correct=0,wrong=0,skip=0;QUESTIONS.forEach((q,i)=>{if(answers[i]===-1)skip++;else if(answers[i]===q.ans)correct++;else wrong++;});const marks=correct-(wrong/8),pct=Math.round((marks/TOTAL)*100);const scoreObj={correct,wrong,skip,marks:marks.toFixed(2),pct,total:TOTAL};localStorage.setItem('t11_score_'+currentSeriesId,JSON.stringify(scoreObj));
+  try{localStorage.setItem('t11_answers_'+currentSeriesId,JSON.stringify(answers));localStorage.setItem('t11_attempt_at_'+currentSeriesId,new Date().toISOString());}catch(e){console.warn('Could not save answer snapshot:',e.message);}
+  saveAttemptRemote(scoreObj,answers);
+  showMcqResultSummary(scoreObj);showPage('result-page');setResultActionsForLiveSubmit();
+  await renderMcqReview(answers);}
+function showMcqResultSummary(scoreObj){const{correct,wrong,skip,marks,pct,total}=scoreObj;document.getElementById('res-series-title').textContent=`${META.title} — ${META.paper}`;document.getElementById('res-score-pct').textContent=pct+'%';document.getElementById('res-headline').textContent=pct>=60?'🎉 Well Done!':pct>=40?'📚 Keep Practising':'💪 More Effort Needed';document.getElementById('res-sub-msg').textContent=`You scored ${marks} out of ${total} marks.`;document.getElementById('res-correct').textContent=correct;document.getElementById('res-wrong').textContent=wrong;document.getElementById('res-skip').textContent=skip;document.getElementById('res-marks').textContent=marks;}
+async function renderMcqReview(answersArr){
   document.getElementById('review-list').innerHTML=`<div style="text-align:center;padding:2.5rem 1rem;color:var(--muted);"><svg width="30" height="30" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24" style="display:block;margin:0 auto .65rem;animation:spin 1s linear infinite;"><circle cx="12" cy="12" r="10" stroke-opacity=".2"/><path d="M12 2a10 10 0 0 1 10 10" stroke-linecap="round"/></svg><style>@keyframes spin{to{transform:rotate(360deg)}}</style>Loading explanations…</div>`;
   let expMap={};try{const tbl=SUPABASE_TABLE[currentSeriesId]||'questions';const expRes=await fetch(`${SUPABASE_URL}/rest/v1/${tbl}?select=id,explanation_en,explanation_hi&order=id.asc&limit=2000`,{headers:{'apikey':SUPABASE_ANON,'Authorization':'Bearer '+SUPABASE_ANON,'Content-Type':'application/json'}});if(expRes.ok){const d=await expRes.json();d.forEach(r=>{expMap[String(r.id)]={en:r.explanation_en||'',hi:r.explanation_hi||''};});}}catch(e){console.warn('Explanation fetch error:',e.message);}
-  const letters2=['A','B','C','D'];document.getElementById('review-list').innerHTML=QUESTIONS.map((q,i)=>{const ua=answers[i],ca=q.ans,exp=expMap[String(q.id)]||{};const statusLabel=ua===-1?'Skipped':ua===ca?'✓ Correct':'✗ Wrong';const cls=ua===-1?'rc-skip':ua===ca?'rc-correct':'rc-wrong';const opts=q.opts.map((o,j)=>{let ocls='';if(j===ca)ocls='rc-correct-ans';else if(j===ua&&ua!==ca)ocls='rc-user-wrong';const hiOpt=q.opts_hi?q.opts_hi[j]:null;return`<div class="rc-opt ${ocls}"><span class="rc-opt-letter">${letters2[j]}</span><span><span class="opt-text-en">${formatQ(o)}</span>${hiOpt?`<span class="opt-text-hi"> / ${formatQ(hiOpt)}</span>`:''}</span></div>`;}).join('');const topicBadge=q.topic?`<span class="rc-topic-badge">${escHtml(q.topic)}</span><br/>`:'';const expEn=exp.en?`<div class="rc-explanation rc-explanation-en"><div class="rc-explanation-label">📖 Explanation (English)</div>${formatExp(exp.en)}</div>`:'';const expHi=exp.hi?`<div class="rc-explanation rc-explanation-hi"><div class="rc-explanation-label">📖 व्याख्या (हिंदी)</div>${formatExp(exp.hi)}</div>`:'';const feedback=buildFeedbackWidget(q.id,i,currentSeriesId);return`<div class="review-card ${cls}" data-status="${ua===-1?'skip':ua===ca?'correct':'wrong'}"><span class="rc-status-badge">${statusLabel}</span><div class="rc-q-num">Q${i+1} · Your: ${ua===-1?'—':letters2[ua]} · Correct: ${letters2[ca]}</div><div class="rc-question"><span class="opt-text-en">${formatQ(q.q)}</span>${q.q_hi?`<div class="q-hindi">${formatQ(q.q_hi)}</div>`:''}</div>${topicBadge}<div class="rc-opts">${opts}</div>${expEn}${expHi}${feedback}</div>`;}).join('');}
+  const letters2=['A','B','C','D'];document.getElementById('review-list').innerHTML=QUESTIONS.map((q,i)=>{const ua=answersArr[i]??-1,ca=q.ans,exp=expMap[String(q.id)]||{};const statusLabel=ua===-1?'Skipped':ua===ca?'✓ Correct':'✗ Wrong';const cls=ua===-1?'rc-skip':ua===ca?'rc-correct':'rc-wrong';const opts=q.opts.map((o,j)=>{let ocls='';if(j===ca)ocls='rc-correct-ans';else if(j===ua&&ua!==ca)ocls='rc-user-wrong';const hiOpt=q.opts_hi?q.opts_hi[j]:null;return`<div class="rc-opt ${ocls}"><span class="rc-opt-letter">${letters2[j]}</span><span><span class="opt-text-en">${formatQ(o)}</span>${hiOpt?`<span class="opt-text-hi"> / ${formatQ(hiOpt)}</span>`:''}</span></div>`;}).join('');const topicBadge=q.topic?`<span class="rc-topic-badge">${escHtml(q.topic)}</span><br/>`:'';const expEn=exp.en?`<div class="rc-explanation rc-explanation-en"><div class="rc-explanation-label">📖 Explanation (English)</div>${formatExp(exp.en)}</div>`:'';const expHi=exp.hi?`<div class="rc-explanation rc-explanation-hi"><div class="rc-explanation-label">📖 व्याख्या (हिंदी)</div>${formatExp(exp.hi)}</div>`:'';const feedback=buildFeedbackWidget(q.id,i,currentSeriesId);return`<div class="review-card ${cls}" data-status="${ua===-1?'skip':ua===ca?'correct':'wrong'}"><span class="rc-status-badge">${statusLabel}</span><div class="rc-q-num">Q${i+1} · Your: ${ua===-1?'—':letters2[ua]} · Correct: ${letters2[ca]}</div><div class="rc-question"><span class="opt-text-en">${formatQ(q.q)}</span>${q.q_hi?`<div class="q-hindi">${formatQ(q.q_hi)}</div>`:''}</div>${topicBadge}<div class="rc-opts">${opts}</div>${expEn}${expHi}${feedback}</div>`;}).join('');}
 
 function renderSubjective(){document.getElementById('subj-questions-body').innerHTML=QUESTIONS.map((q,i)=>`<div class="subj-q-card"><div class="subj-q-head"><span class="subj-q-num">Q${i+1}</span>${q.marks?`<span class="subj-q-marks">[${q.marks} Marks]</span>`:''}</div><div class="subj-q-text">${q.q}</div>${q.hint?`<div class="subj-q-hint">💡 Hint: ${q.hint}</div>`:''}<div class="subj-answer-area"><div class="subj-answer-label">Your Answer</div><textarea class="subj-textarea" id="subj-ans-${i}" placeholder="Type your answer here…" oninput="updateWordCount(this,${i})"></textarea><div class="word-count" id="wc-${i}">0 words</div></div></div>`).join('');}
 function updateWordCount(el,i){document.getElementById('wc-'+i).textContent=(el.value.trim().split(/\s+/).filter(Boolean).length)+' words';}
-function submitSubjective(){clearInterval(timerInterval);localStorage.setItem('t11_score_'+currentSeriesId,'submitted');document.getElementById('subj-res-msg').textContent=`${META.title} — ${META.paper} submitted.`;document.getElementById('subj-review-body').innerHTML=QUESTIONS.map((q,i)=>{const ua=(document.getElementById('subj-ans-'+i)||{}).value||'';return`<div class="subj-ans-review"><div class="sar-head"><span class="sar-q-num">Q${i+1}</span>${q.marks?`<span style="font-size:.7rem;color:var(--blue-dark);font-weight:600;">[${q.marks} Marks]</span>`:''}</div><div class="sar-body"><div class="sar-q">${q.q}</div><div class="sar-user-label">Your Answer</div><div class="sar-user-ans">${ua||'<em style="color:var(--muted)">No answer provided.</em>'}</div>${q.hint?`<div class="sar-model-label">Model Answer / Key Points</div><div class="sar-model-ans">${q.hint}</div>`:''}</div></div>`;}).join('');showPage('subj-result-page');}
+function submitSubjective(){clearInterval(timerInterval);localStorage.setItem('t11_score_'+currentSeriesId,'submitted');const subjAnswers=QUESTIONS.map((q,i)=>(document.getElementById('subj-ans-'+i)||{}).value||'');try{localStorage.setItem('t11_subj_answers_'+currentSeriesId,JSON.stringify(subjAnswers));localStorage.setItem('t11_attempt_at_'+currentSeriesId,new Date().toISOString());}catch(e){console.warn('Could not save answer snapshot:',e.message);}saveAttemptRemote({correct:null,wrong:null,skip:null,marks:null,pct:null,total:TOTAL},subjAnswers);document.getElementById('subj-res-msg').textContent=`${META.title} — ${META.paper} submitted.`;renderSubjectiveReview(subjAnswers);showPage('subj-result-page');setResultActionsForLiveSubmit();}
+function renderSubjectiveReview(subjAnswers){document.getElementById('subj-review-body').innerHTML=QUESTIONS.map((q,i)=>{const ua=subjAnswers[i]||'';return`<div class="subj-ans-review"><div class="sar-head"><span class="sar-q-num">Q${i+1}</span>${q.marks?`<span style="font-size:.7rem;color:var(--blue-dark);font-weight:600;">[${q.marks} Marks]</span>`:''}</div><div class="sar-body"><div class="sar-q">${q.q}</div><div class="sar-user-label">Your Answer</div><div class="sar-user-ans">${ua||'<em style="color:var(--muted)">No answer provided.</em>'}</div>${q.hint?`<div class="sar-model-label">Model Answer / Key Points</div><div class="sar-model-ans">${q.hint}</div>`:''}</div></div>`;}).join('');}
 </script>
 </body>
 </html>
