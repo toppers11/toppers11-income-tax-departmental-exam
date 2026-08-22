@@ -83,6 +83,15 @@ body{-webkit-user-select:none;-moz-user-select:none;user-select:none;}
 .detail-cell.blue{background:#e6faf5;border-color:#a7f3d0;}
 .detail-label{font-size:.62rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);margin-bottom:.2rem;}
 .detail-val{font-size:.95rem;font-weight:800;color:var(--ink);}
+.candidate-info{display:grid;grid-template-columns:1fr;gap:.7rem;margin-bottom:1.2rem;}
+@media(min-width:480px){.candidate-info{grid-template-columns:1fr 1fr;}}
+.candidate-field{display:flex;flex-direction:column;gap:.3rem;}
+.candidate-field label{font-size:.68rem;font-weight:700;letter-spacing:.05em;text-transform:uppercase;color:var(--t1);}
+.candidate-field input{padding:.6rem .75rem;border:1.5px solid var(--bdr);border-radius:8px;font-family:'Open Sans',sans-serif;font-size:.9rem;color:var(--ink);outline:none;}
+.candidate-field input:focus{border-color:var(--t3);}
+.candidate-field .cf-err{font-size:.7rem;color:var(--red);display:none;}
+.candidate-field.has-err input{border-color:var(--red);}
+.candidate-field.has-err .cf-err{display:block;}
 .sec-title{font-size:.7rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--t1);margin-bottom:.7rem;padding-bottom:.4rem;border-bottom:2px solid #a7f3d0;}
 .sec-title.blue{color:var(--t1);border-bottom-color:#a7f3d0;}
 .inst-list{list-style:none;display:flex;flex-direction:column;gap:.45rem;margin-bottom:1.1rem;}
@@ -344,6 +353,18 @@ body{-webkit-user-select:none;-moz-user-select:none;user-select:none;}
         </div>
       </div>
       <div class="inst-bdy">
+        <div class="candidate-info">
+          <div class="candidate-field" id="cf-name-wrap">
+            <label for="cand-name">Full Name</label>
+            <input type="text" id="cand-name" placeholder="Enter your full name" autocomplete="name"/>
+            <span class="cf-err">Please enter your name.</span>
+          </div>
+          <div class="candidate-field" id="cf-mobile-wrap">
+            <label for="cand-mobile">Mobile Number</label>
+            <input type="tel" id="cand-mobile" placeholder="10-digit mobile number" maxlength="10" inputmode="numeric" autocomplete="tel"/>
+            <span class="cf-err">Please enter a valid 10-digit mobile number.</span>
+          </div>
+        </div>
         <div class="details-grid" id="inst-details-grid"></div>
         <div id="inst-mcq-section">
           <div class="sec-title" data-en="Instructions" data-hi="निर्देश">Instructions</div>
@@ -993,6 +1014,7 @@ let answers=[],visited=[],marked=[];
 let timerInterval;
 let currentSeriesId='';
 let reviewMode=false;
+let candName='',candMobile='';
 
 window.addEventListener('DOMContentLoaded',async()=>{
   const params=new URLSearchParams(window.location.search);
@@ -1000,6 +1022,7 @@ window.addEventListener('DOMContentLoaded',async()=>{
   reviewMode=params.get('review')==='1';
   if(!id||!SERIES_META[id]){alert('Invalid test series. Please go back and select a test from the dashboard.');history.back();return;}
   META=SERIES_META[id];document.title=`${META.title} — Toppers11`;
+  (function prefillCandidate(){const u=getUser();const nameEl=document.getElementById('cand-name');const mobEl=document.getElementById('cand-mobile');if(u.name)nameEl.value=u.name;if(u.mobile||u.phone)mobEl.value=u.mobile||u.phone;})();
   const dash=DASH_MAP[META.exam]||'income-tax-departmental-exam.html';
   ['back-link','result-dash-link','res-back-btn','subj-dash-link','subj-back-btn'].forEach(eid=>{const el=document.getElementById(eid);if(el)el.href=dash;});
   const headBar=document.getElementById('inst-head-bar');headBar.className=`inst-head inst-head-${META.exam}`;
@@ -1152,7 +1175,8 @@ function getUser(){try{return JSON.parse(localStorage.getItem('t11_user')||'{}')
 async function saveAttemptRemote(scoreObj,answersArr){
   const user=getUser();const email=(user.email||'').toLowerCase();
   if(!email)return; // not logged in — remote save skipped, localStorage copy still works on this device
-  const payload={email,series_id:currentSeriesId,exam_type:(META.exam||'iti').toUpperCase(),answers:answersArr,correct:scoreObj.correct??null,wrong:scoreObj.wrong??null,skip:scoreObj.skip??null,marks:scoreObj.marks??null,pct:scoreObj.pct??null,total:scoreObj.total??null,submitted_at:new Date().toISOString()};
+  const name=candName||user.name||null;const mobile=candMobile||user.mobile||user.phone||null;
+  const payload={email,name,mobile,series_id:currentSeriesId,exam_type:(META.exam||'iti').toUpperCase(),answers:answersArr,correct:scoreObj.correct??null,wrong:scoreObj.wrong??null,skip:scoreObj.skip??null,marks:scoreObj.marks??null,pct:scoreObj.pct??null,total:scoreObj.total??null,submitted_at:new Date().toISOString()};
   try{
     const res=await fetchWithTimeoutMock(`${SUPABASE_URL}/rest/v1/test_attempts`,{method:'POST',headers:{'apikey':SUPABASE_ANON,'Authorization':'Bearer '+SUPABASE_ANON,'Content-Type':'application/json','Prefer':'resolution=merge-duplicates,return=minimal'},body:JSON.stringify(payload)},8000);
     if(!res.ok){const t=await res.text().catch(()=>'');console.warn('Attempt save failed:',res.status,t);}
@@ -1174,7 +1198,8 @@ function fetchWithTimeoutMock(url,opts,ms){
   return fetch(url,{...opts,signal:ctrl.signal}).finally(()=>clearTimeout(id));
 }
 
-function startTest(){if(META.type==='subjective'){showPage('subj-page');renderSubjective();startTimer(META.mins,'subj-timer-box',submitSubjective);document.getElementById('subj-tp-info').textContent=`${META.paper} — ${TOTAL} Questions`;}else{showPage('test-page');visited[0]=true;document.getElementById('tp-info').textContent=META.paper;document.getElementById('q-paper-tag').textContent=META.paper;renderPalette();renderQuestion();startTimer(META.mins,'timer-box',submitTest);}}
+function validateCandidateInfo(){const nameEl=document.getElementById('cand-name');const mobEl=document.getElementById('cand-mobile');const nameWrap=document.getElementById('cf-name-wrap');const mobWrap=document.getElementById('cf-mobile-wrap');const name=nameEl.value.trim();const mobile=mobEl.value.trim();let ok=true;if(!name){nameWrap.classList.add('has-err');ok=false;}else{nameWrap.classList.remove('has-err');}if(!/^[6-9]\d{9}$/.test(mobile)){mobWrap.classList.add('has-err');ok=false;}else{mobWrap.classList.remove('has-err');}if(ok){try{const u=getUser();u.name=name;u.mobile=mobile;localStorage.setItem('t11_user',JSON.stringify(u));}catch(e){console.warn('Could not save candidate info:',e.message);}candName=name;candMobile=mobile;}return ok;}
+function startTest(){if(!validateCandidateInfo())return;if(META.type==='subjective'){showPage('subj-page');renderSubjective();startTimer(META.mins,'subj-timer-box',submitSubjective);document.getElementById('subj-tp-info').textContent=`${META.paper} — ${TOTAL} Questions`;}else{showPage('test-page');visited[0]=true;document.getElementById('tp-info').textContent=META.paper;document.getElementById('q-paper-tag').textContent=META.paper;renderPalette();renderQuestion();startTimer(META.mins,'timer-box',submitTest);}}
 function showPage(id){document.querySelectorAll('#inst-page,#test-page,#result-page,#subj-page,#subj-result-page').forEach(p=>p.classList.remove('active'));document.getElementById(id).classList.add('active');}
 function startTimer(mins,boxId,onExpire){let secs=mins*60;const box=document.getElementById(boxId);timerInterval=setInterval(()=>{secs--;box.textContent=String(Math.floor(secs/60)).padStart(2,'0')+':'+String(secs%60).padStart(2,'0');if(secs<=300)box.classList.add('warning');if(secs<=0){clearInterval(timerInterval);onExpire();}},1000);}
 
