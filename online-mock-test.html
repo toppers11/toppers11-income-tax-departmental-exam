@@ -182,9 +182,9 @@ body{-webkit-user-select:none;-moz-user-select:none;user-select:none;}
 
 /* ══ RESULT PAGE ══ */
 .result-body{max-width:1200px;margin:1.5rem auto;padding:0 1rem 4rem;flex:1;}
-.result-hero{background:linear-gradient(135deg,var(--t-dark),var(--t1));border-radius:16px;padding:1.75rem 1.25rem;text-align:center;margin-bottom:1.25rem;color:#fff;position:relative;overflow:hidden;}
+.result-hero{background:var(--t3);border-radius:16px;padding:1.75rem 1.25rem;text-align:center;margin-bottom:1.25rem;color:#fff;position:relative;overflow:hidden;}
 .result-hero:before{content:'';position:absolute;inset:0;background:repeating-linear-gradient(90deg,transparent,transparent 80px,rgba(255,255,255,.03) 80px 160px);pointer-events:none;}
-.result-hero h2{font-family:'Nunito',sans-serif;font-size:1.6rem;font-weight:800;margin-bottom:.3rem;position:relative;}
+.result-hero h2{font-family:'Nunito',sans-serif;font-size:1.8rem;font-weight:100;letter-spacing:.01em;margin-bottom:.3rem;position:relative;}
 .result-hero p{font-size:.87rem;color:rgba(255,255,255,.75);position:relative;}
 .score-circle{width:90px;height:90px;border-radius:50%;border:4px solid rgba(255,255,255,.3);display:grid;place-items:center;margin:.75rem auto;background:rgba(255,255,255,.1);position:relative;}
 .score-pct{font-family:'Nunito',sans-serif;font-size:1.6rem;font-weight:900;color:#fff;}
@@ -993,7 +993,8 @@ window.addEventListener('DOMContentLoaded',async()=>{
   const headBar=document.getElementById('inst-head-bar');headBar.className=`inst-head inst-head-${META.exam}`;
   document.getElementById('inst-title').textContent=META.title;
   document.getElementById('inst-badge').textContent=META.paper;
-  const heroBox=document.getElementById('result-hero-box');if(heroBox){const heroMap={iti:'linear-gradient(135deg,var(--t-dark),var(--t1))',ito:'linear-gradient(135deg,var(--t2),var(--t3))',ms:'linear-gradient(135deg,var(--t1),var(--t3))'};heroBox.style.background=heroMap[META.exam]||heroMap['iti'];}
+  // Result hero always matches the site's homepage hero background (var(--t3)) —
+  // no per-exam color override, per request to mirror index.html's look.
   const isSub=META.type==='subjective';const hrs=META.mins/60;const durStr=Number.isInteger(hrs)?`${hrs} Hour${hrs>1?'s':''}`:` ${META.mins} mins`;
   document.getElementById('inst-details-grid').innerHTML=`<div class="detail-cell ${isSub?'blue':''}"><div class="detail-label">Questions</div><div class="detail-val">${META.qs}</div></div><div class="detail-cell ${isSub?'blue':''}"><div class="detail-label">Duration</div><div class="detail-val">${durStr}</div></div><div class="detail-cell ${isSub?'blue':''}"><div class="detail-label">Type</div><div class="detail-val">${isSub?'Descriptive':'MCQ'}</div></div><div class="detail-cell ${isSub?'blue':''}"><div class="detail-label">Negative Marking</div><div class="detail-val">${isSub?'None':'−1/8'}</div></div>`;
   if(isSub){document.getElementById('inst-mcq-section').style.display='none';document.getElementById('inst-subj-section').style.display='';document.getElementById('btn-start-test').className='btn-start blue';}
