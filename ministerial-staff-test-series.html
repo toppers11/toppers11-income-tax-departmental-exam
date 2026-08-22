@@ -190,6 +190,9 @@ body{background:var(--bg);color:var(--ink);font-family:'Open Sans',sans-serif;ov
 .btn-retake-test:hover{background:#d1fae5}
 .btn-locked-test{display:inline-flex;align-items:center;gap:.3rem;background:#f3f4f6;color:var(--muted);border:none;border-radius:6px;padding:.38rem .9rem;font-size:.7rem;font-weight:700;cursor:not-allowed;letter-spacing:.03em;font-family:'Open Sans',sans-serif}
 .btn-completed-test{display:inline-flex;align-items:center;gap:.3rem;background:#f0fdf8;color:var(--t1);border:1.5px solid #6ee7b7;border-radius:6px;padding:.36rem .9rem;font-size:.7rem;font-weight:700;cursor:not-allowed;letter-spacing:.03em;font-family:'Open Sans',sans-serif}
+.cf-btn-group{display:flex;align-items:center;gap:.35rem;flex-wrap:wrap}
+.btn-view-result{display:inline-flex;align-items:center;gap:.3rem;background:#eaf2ff;color:#1e40af;border:1px solid #bfdbfe;border-radius:6px;padding:.36rem .8rem;font-size:.68rem;font-weight:700;cursor:pointer;letter-spacing:.03em;font-family:'Open Sans',sans-serif;transition:all .15s;text-decoration:none}
+.btn-view-result:hover{background:#1e40af;color:#fff;border-color:#1e40af}
 
 /* ── PURCHASE MODAL ── */
 .overlay{position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:600;display:none;place-items:center;padding:1rem}
@@ -819,11 +822,13 @@ function buildCards(p,i){
     card.className='card'+(maxed?' completed':unlocked?'':' locked');
     const stTxt=t.free?'FREE':maxed?'DONE':unlocked?'OPEN':'LOCKED';
     const stCls=maxed?'st-done':unlocked?'st-open':'st-lock';
-    const sc=score?`<span class="cscore">${score.correct||0}/${score.total||t.qs} correct</span>`:'';
+    const hasScore=!!(score&&typeof score==='object'&&score.total);
+    const sc=hasScore?`<span class="cscore">${score.correct||0}/${score.total||t.qs} correct</span>`:'';
+    const viewResultBtn=hasScore?`<button type="button" class="btn-view-result" onclick="event.preventDefault();event.stopPropagation();window.location.href='online-mock-test.html?id=${t.id}&review=1';">📊 View Result</button>`:'';
     let footerBtn;
-    if(maxed){footerBtn=`<span class="btn-completed-test"><svg width="11" height="11" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>Completed</span><span class="retest-badge">All 3 Used</span>`;}
-    else if(unlocked&&t.free){footerBtn=`<span class="btn-free-test"><svg width="11" height="11" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24"><polygon points="5 3 19 12 5 21 5 3"/></svg>${score?'Re-take':'FREE TEST'}</span>${sc}`;}
-    else if(unlocked){footerBtn=`<span class="${score?'btn-retake-test':'btn-start-test'}"><svg width="11" height="11" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24"><polygon points="5 3 19 12 5 21 5 3"/></svg>${score?'Retake':'Start Test'}</span>${sc}`;}
+    if(maxed){footerBtn=`<div class="cf-btn-group"><span class="btn-completed-test"><svg width="11" height="11" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>Completed</span><span class="retest-badge">All 3 Used</span>${viewResultBtn}</div>`;}
+    else if(unlocked&&t.free){footerBtn=`<div class="cf-btn-group"><span class="btn-free-test"><svg width="11" height="11" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24"><polygon points="5 3 19 12 5 21 5 3"/></svg>${score?'Re-take':'FREE TEST'}</span>${viewResultBtn}</div>`;}
+    else if(unlocked){footerBtn=`<div class="cf-btn-group"><span class="${score?'btn-retake-test':'btn-start-test'}"><svg width="11" height="11" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24"><polygon points="5 3 19 12 5 21 5 3"/></svg>${score?'Retake':'Start Test'}</span>${viewResultBtn}</div>`;}
     else{footerBtn=`<span class="btn-locked-test"><svg width="11" height="11" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0110 0v4"/></svg>Locked</span>`;}
     card.innerHTML=`
       <div class="ct">
@@ -839,7 +844,7 @@ function buildCards(p,i){
           <span class="type-pill">${p.type}</span>
         </div>
       </div>
-      <div class="cf">${footerBtn}</div>`;
+      <div class="cf">${footerBtn}${sc}</div>`;
     if(!unlocked)card.onclick=()=>openModal(p.key);
     wrap.appendChild(card);grid.appendChild(wrap);
   });
@@ -1124,8 +1129,26 @@ window.addEventListener('DOMContentLoaded',async()=>{
     }
   }catch(e){console.warn('Profile sync failed — using cached data',e);}
 
-  populateProfile(getUser(),getUsers());render();fetchAndUpdateQuestionCounts();
+  populateProfile(getUser(),getUsers());await syncRemoteAttempts();render();fetchAndUpdateQuestionCounts();
 });
+
+// Pulls this student's saved test results from Supabase (test_attempts table)
+// and mirrors them into localStorage's t11_score_<id> keys, so the existing
+// getScore()/card-rendering logic picks them up automatically — this makes
+// scores and "View Result" work on any device the student logs in on.
+async function syncRemoteAttempts(){
+  const user=getUser();
+  const email=(user.email||'').toLowerCase();
+  if(!email)return;
+  try{
+    const emailEnc=encodeURIComponent(email);
+    const rows=await sbFetch('test_attempts?email=eq.'+emailEnc+'&exam_type=eq.MS&select=series_id,correct,wrong,skip,marks,pct,total');
+    (rows||[]).forEach(r=>{
+      if(!r.series_id)return;
+      localStorage.setItem('t11_score_'+r.series_id,JSON.stringify({correct:r.correct,wrong:r.wrong,skip:r.skip,marks:r.marks,pct:r.pct,total:r.total}));
+    });
+  }catch(e){console.warn('Could not sync saved results — showing cached results for this device only',e);}
+}
 
 function getUsers(){try{return JSON.parse(localStorage.getItem('t11_users')||'{}')}catch(e){return{}}}
 function saveUsers(u){localStorage.setItem('t11_users',JSON.stringify(u))}
