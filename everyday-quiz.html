@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-<title>Toppers11 — Everyday Quiz (Coming Soon)</title>
+<title>Everyday Quiz — Daily Mock Test | Toppers11</title>
 <meta name="robots" content="noindex, nofollow"/>
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&family=Playfair+Display:wght@700;800&family=Nunito:wght@100;300;400;600;700;800;900&family=Righteous&family=Great+Vibes&display=swap" rel="stylesheet"/>
 <style>
@@ -574,6 +574,209 @@ body::before{
   .cs-title{font-size:1.5rem;}
   .cs-icon{width:72px;height:72px;}
 }
+
+/* ══════════════════ MOCK TEST ENGINE (merged) ══════════════════ */
+:root{
+  --qz-t1:#006d5b;--qz-t2:#25a36f;--qz-t3:#00ab84;--qz-t-dark:#004d3f;--qz-t-mid:#008c6e;
+  --qz-dark:#1a1a2e;--qz-dark2:#2d2d44;
+  --qz-ink:#222;--qz-muted:#555;--qz-bg:#f7f7f7;--qz-wh:#fff;--qz-bdr:#ddd;
+  --qz-amber:#F59E0B;--qz-amber-pale:#FFFBEB;--qz-amber-dark:#D97706;
+  --qz-blue:#3B82F6;--qz-blue-pale:#EFF6FF;--qz-blue-dark:#2563EB;
+  --qz-purple:#8B5CF6;--qz-purple-pale:#F5F3FF;
+  --qz-red:#EF4444;--qz-red-pale:#FEF2F2;
+  --qz-gold:#B8860B;
+}
+*{box-sizing:border-box;margin:0;padding:0;}
+html,body{width:100%;overflow-x:hidden;}
+body{font-family:'Open Sans',sans-serif;background:var(--qz-bg);color:var(--qz-ink);font-size:14px;}
+
+/* ══ PAGES ══ */
+#dashboard-page,#inst-page,#test-page,#result-page,#leaderboard-page{display:none;width:100%;}
+#dashboard-page.active,#inst-page.active,#test-page.active,#result-page.active,#leaderboard-page.active{display:block;}
+
+/* ══ TOPBAR ══ */
+.topbar{background:#fff;border-bottom:2px solid var(--qz-t3);height:58px;display:flex;align-items:center;justify-content:center;flex-shrink:0;position:sticky;top:0;z-index:100;padding:0 1rem;}
+.topbar-inner{width:100%;max-width:1200px;display:flex;align-items:center;justify-content:space-between;gap:.5rem;}
+.topbar-logo{text-decoration:none;display:inline-flex;flex-shrink:0;cursor:pointer;-webkit-user-select:none;user-select:none;}
+.logo-block{display:flex;flex-direction:column;align-items:flex-start;gap:0;}
+.logo-eyebrow{font-family:'Dancing Script',cursive;font-size:.85rem;font-weight:600;color:var(--qz-t3);line-height:1.2;margin-bottom:-1px;}
+.logo-main{font-family:'Nunito',sans-serif;font-size:1.5rem;font-weight:100;color:var(--qz-dark);letter-spacing:.01em;text-transform:lowercase;line-height:1;}
+.logo-main .num{color:var(--qz-t3);font-family:'Righteous',cursive;font-size:1.5rem;}
+.logo-sub{font-size:.42rem;font-weight:700;letter-spacing:.18em;text-transform:uppercase;color:#555;margin-top:1px;}
+@media(max-width:380px){.logo-sub,.logo-eyebrow{display:none;}.logo-main{font-size:1.2rem;}}
+.topbar-right{display:flex;align-items:center;gap:.5rem;flex-shrink:0;}
+.timer-display{font-family:'DM Mono',monospace;font-size:.9rem;font-weight:700;color:var(--qz-ink);background:#e6faf5;border:1.5px solid #a7f3d0;border-radius:8px;padding:.28rem .6rem;letter-spacing:.05em;white-space:nowrap;flex-shrink:0;}
+.btn-submit-top{background:linear-gradient(135deg,var(--qz-t1),var(--qz-t3));color:#fff;font-size:.72rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase;padding:.42rem .75rem;border-radius:7px;border:none;cursor:pointer;white-space:nowrap;flex-shrink:0;}
+.back-link{font-size:.8rem;color:var(--qz-muted);text-decoration:none;display:flex;align-items:center;gap:.3rem;background:none;border:none;cursor:pointer;font-family:'Open Sans',sans-serif;}
+.back-link:hover{color:var(--qz-t1);}
+
+/* ══ DASHBOARD ══ */
+.tabbar{background:#fff;border-bottom:1px solid var(--qz-bdr);position:sticky;top:0;z-index:90;overflow-x:auto;border-radius:10px 10px 0 0;overflow:hidden;}
+.tabbar-inner{max-width:1200px;margin:0 auto;display:flex;}
+.tab-btn{flex:1;min-width:110px;text-align:center;padding:.85rem .5rem;font-size:.78rem;font-weight:800;letter-spacing:.03em;color:var(--qz-muted);background:none;border:none;border-bottom:3px solid transparent;cursor:pointer;font-family:'Open Sans',sans-serif;white-space:nowrap;}
+.tab-btn.active{color:var(--qz-t1);border-bottom-color:var(--qz-t3);}
+.dash-body{max-width:1200px;margin:0 auto;padding:1.1rem 1rem 3rem;width:100%;flex:1;}
+.dash-heading{font-size:.72rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--qz-muted);margin-bottom:.9rem;}
+.paper-grid{display:grid;grid-template-columns:1fr;gap:1rem;}
+@media(min-width:640px){.paper-grid{grid-template-columns:repeat(2,1fr);}}
+@media(min-width:980px){.paper-grid{grid-template-columns:repeat(3,1fr);}}
+
+.p-card{background:#fff;border:1px solid var(--qz-bdr);border-radius:14px;overflow:hidden;box-shadow:0 4px 18px rgba(0,109,91,.06);display:flex;flex-direction:column;}
+.p-card-top{padding:.55rem .9rem;display:flex;align-items:center;justify-content:space-between;color:#fff;font-size:.68rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;}
+.p-card-top.grad-ms,.p-card-top.grad-iti,.p-card-top.grad-ito{background:linear-gradient(135deg,var(--qz-t2),var(--qz-t3));}
+.p-card-top.locked-top{background:linear-gradient(135deg,#9CA3AF,#6B7280)!important;}
+.p-status{padding:.14rem .55rem;border-radius:999px;background:rgba(255,255,255,.22);border:1px solid rgba(255,255,255,.4);font-size:.62rem;}
+.p-status.closed{background:rgba(0,0,0,.25);}
+.p-body{padding:.95rem .9rem .3rem;flex:1;}
+.p-title{font-size:1rem;font-weight:800;color:var(--qz-ink);line-height:1.35;margin-bottom:.35rem;font-family:'Open Sans',sans-serif;}
+.p-topics{font-size:.78rem;color:var(--qz-muted);line-height:1.5;margin-bottom:.75rem;}
+.p-meta{display:flex;align-items:center;gap:.7rem;flex-wrap:wrap;font-size:.74rem;color:var(--qz-muted);margin-bottom:.8rem;}
+.p-meta span{display:flex;align-items:center;gap:.3rem;}
+.p-badge{font-size:.62rem;font-weight:700;letter-spacing:.05em;text-transform:uppercase;background:#e6faf5;color:var(--qz-t1);border:1px solid #a7f3d0;border-radius:999px;padding:.14rem .55rem;}
+.p-foot{padding:0 .9rem .95rem;}
+.btn-start-card{width:100%;background:var(--qz-dark);color:#fff;font-size:.8rem;font-weight:700;letter-spacing:.03em;padding:.65rem;border-radius:9px;border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:.4rem;}
+.btn-start-card:hover{background:#000;}
+.btn-start-card:disabled{background:#c9c9c9;cursor:not-allowed;}
+.btn-start-card.done{background:#fff;border:1.5px solid var(--qz-t3);color:var(--qz-t1);}
+.btn-start-card.done:hover{background:#e6faf5;}
+.p-live{font-size:.66rem;color:var(--qz-t1);font-weight:700;margin-top:.4rem;text-align:center;}
+
+/* ══ INSTRUCTIONS ══ */
+.inst-body{max-width:640px;margin:1.5rem auto;padding:0 1rem 3rem;width:100%;flex:1;}
+.inst-card{background:#fff;border-radius:16px;border:1px solid var(--qz-bdr);overflow:hidden;box-shadow:0 4px 24px rgba(0,109,91,.08);}
+.inst-head{padding:1rem 1.25rem;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:.5rem;background:linear-gradient(135deg,var(--qz-t1),var(--qz-t3));}
+.inst-head h2{font-family:'Open Sans',sans-serif;font-size:1.02rem;font-weight:800;color:#fff;}
+.exam-badge-sm{background:rgba(255,255,255,.2);border:1px solid rgba(255,255,255,.35);color:#fff;font-size:.65rem;font-weight:700;padding:.18rem .6rem;border-radius:999px;letter-spacing:.06em;text-transform:uppercase;}
+.inst-bdy{padding:1.2rem 1.25rem;}
+.details-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:.65rem;margin-bottom:1.2rem;}
+@media(min-width:480px){.details-grid{grid-template-columns:repeat(4,1fr);}}
+.detail-cell{background:#e6faf5;border:1px solid #a7f3d0;border-radius:10px;padding:.65rem .85rem;}
+.detail-label{font-size:.6rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--qz-muted);margin-bottom:.2rem;}
+.detail-val{font-size:.92rem;font-weight:800;color:var(--qz-ink);}
+.candidate-info{margin-bottom:1.2rem;}
+.logged-in-card{display:flex;align-items:center;gap:.7rem;background:#e6faf5;border:1.5px solid #a7f3d0;border-radius:12px;padding:.75rem .9rem;}
+.li-avatar{width:38px;height:38px;border-radius:50%;background:var(--qz-t3);color:#fff;display:grid;place-items:center;font-weight:800;font-size:1rem;flex-shrink:0;font-family:'Nunito',sans-serif;}
+.li-name{font-weight:800;color:var(--qz-ink);font-size:.92rem;}
+.li-region{font-size:.76rem;color:var(--qz-muted);}
+.login-gate-card{background:#fff;border:1px solid var(--qz-bdr);border-radius:14px;padding:1.5rem;text-align:center;max-width:420px;margin:2rem auto;}
+.login-gate-card p{color:var(--qz-muted);font-size:.85rem;margin:.5rem 0 1.1rem;line-height:1.6;}
+.btn-go-login{background:linear-gradient(135deg,var(--qz-t1),var(--qz-t3));color:#fff;font-size:.85rem;font-weight:700;padding:.65rem 1.4rem;border-radius:10px;border:none;cursor:pointer;text-decoration:none;display:inline-block;}
+.sec-title{font-size:.7rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--qz-t1);margin-bottom:.7rem;padding-bottom:.4rem;border-bottom:2px solid #a7f3d0;}
+.inst-list{list-style:none;display:flex;flex-direction:column;gap:.45rem;margin-bottom:1.1rem;}
+.inst-list li{display:flex;align-items:flex-start;gap:.6rem;font-size:.84rem;color:#374151;line-height:1.6;}
+.bullet{width:20px;height:20px;border-radius:50%;background:#e6faf5;border:1.5px solid #a7f3d0;display:grid;place-items:center;flex-shrink:0;margin-top:2px;font-size:.6rem;font-weight:700;color:var(--qz-t1);}
+.inst-foot{padding:1rem 1.25rem;background:var(--qz-bg);border-top:1px solid var(--qz-bdr);display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:.85rem;}
+.agree-check{display:flex;align-items:center;gap:.5rem;font-size:.84rem;color:#374151;cursor:pointer;}
+.agree-check input{width:16px;height:16px;accent-color:var(--qz-t3);}
+.btn-start{background:linear-gradient(135deg,var(--qz-t1),var(--qz-t3));color:#fff;font-size:.84rem;font-weight:700;letter-spacing:.04em;text-transform:uppercase;padding:.65rem 1.8rem;border-radius:10px;border:none;cursor:pointer;box-shadow:0 4px 16px rgba(0,171,132,.3);transition:all .2s;}
+.btn-start:hover{transform:translateY(-1px);}
+.btn-start:disabled{opacity:.45;cursor:not-allowed;transform:none;}
+
+/* ══ TEST PAGE ══ */
+.test-layout{display:flex;flex-direction:column;flex:1;}
+@media(min-width:769px){.test-layout{display:grid;grid-template-columns:1fr 240px;flex:none;}}
+.q-area{padding:1rem;overflow-y:auto;}
+@media(min-width:769px){.q-area{padding:1.25rem 1.5rem;}}
+.q-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:.9rem;flex-wrap:wrap;gap:.4rem;}
+.q-num-badge{font-size:.7rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--qz-t1);}
+.q-paper-tag{font-size:.68rem;font-weight:600;background:#e6faf5;color:var(--qz-t1);border-radius:999px;padding:.18rem .55rem;}
+.q-text{font-size:.95rem;font-weight:500;color:var(--qz-ink);line-height:1.7;margin-bottom:1.1rem;}
+.opts-list{display:flex;flex-direction:column;gap:.55rem;}
+.opt-btn{display:flex;align-items:flex-start;gap:.65rem;padding:.75rem .9rem;border-radius:10px;border:1.5px solid var(--qz-bdr);background:#fff;text-align:left;cursor:pointer;transition:all .15s;font-family:'Open Sans',sans-serif;font-size:.88rem;color:var(--qz-ink);width:100%;}
+.opt-btn:hover{border-color:#a7f3d0;background:#e6faf5;}
+.opt-btn.selected{border-color:var(--qz-t3);background:#e6faf5;}
+.opt-letter{width:26px;height:26px;border-radius:50%;border:1.5px solid var(--qz-bdr);background:var(--qz-bg);display:grid;place-items:center;font-size:.7rem;font-weight:700;flex-shrink:0;color:var(--qz-muted);}
+.opt-btn.selected .opt-letter{background:var(--qz-t3);border-color:var(--qz-t3);color:#fff;}
+.opt-text{line-height:1.55;font-size:.88rem;}
+.q-nav{display:flex;flex-wrap:wrap;gap:.5rem;margin-top:1.2rem;}
+.q-btn{padding:.55rem 1rem;border-radius:8px;border:1.5px solid var(--qz-bdr);background:#fff;font-family:'Open Sans',sans-serif;font-size:.78rem;font-weight:700;color:var(--qz-ink);cursor:pointer;transition:all .15s;flex:1;text-align:center;}
+.q-btn:hover{border-color:var(--qz-t3);color:var(--qz-t1);}
+.q-btn-primary{background:var(--qz-t3);border-color:var(--qz-t3);color:#fff;}
+.q-btn-submit{background:var(--qz-dark);border-color:var(--qz-dark);color:#fff;flex:0;margin-left:auto;}
+.palette-toggle-btn{display:flex;align-items:center;justify-content:center;gap:.4rem;width:100%;padding:.6rem;margin-top:1rem;background:#fff;border:1.5px solid var(--qz-bdr);border-radius:10px;font-size:.8rem;font-weight:600;color:var(--qz-muted);cursor:pointer;}
+@media(min-width:769px){.palette-toggle-btn{display:none;}}
+.sidebar{background:#fff;border-top:1px solid var(--qz-bdr);padding:1rem;overflow-y:auto;display:none;}
+.sidebar.open{display:block;}
+@media(min-width:769px){.sidebar{display:block!important;border-top:none;border-left:1px solid var(--qz-bdr);}}
+.sidebar-title{font-size:.66rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--qz-muted);margin-bottom:.65rem;}
+.q-palette{display:grid;grid-template-columns:repeat(6,1fr);gap:.35rem;margin-bottom:1rem;}
+@media(min-width:769px){.q-palette{grid-template-columns:repeat(5,1fr);}}
+.pal-btn{width:100%;aspect-ratio:1;border-radius:7px;border:1.5px solid var(--qz-bdr);background:#fff;font-size:.68rem;font-weight:700;color:var(--qz-muted);cursor:pointer;transition:all .15s;min-width:0;}
+.pal-btn.pal-current{border-color:var(--qz-blue);background:var(--qz-blue);color:#fff;}
+.pal-btn.pal-answered{border-color:var(--qz-t3);background:var(--qz-t3);color:#fff;}
+.pal-btn.pal-not-answered{border-color:var(--qz-red);background:var(--qz-red);color:#fff;}
+.sidebar-legend{font-size:.68rem;color:var(--qz-muted);display:flex;flex-direction:column;gap:.3rem;}
+.sleg{display:flex;align-items:center;gap:.45rem;}
+.sleg-dot{width:13px;height:13px;border-radius:3px;flex-shrink:0;}
+
+/* ══ RESULT PAGE ══ */
+.result-body{max-width:640px;margin:1.5rem auto;padding:0 1rem 4rem;flex:1;}
+.result-hero{background:var(--qz-t3);border-radius:16px;padding:1.75rem 1.25rem;text-align:center;margin-bottom:1.25rem;color:#fff;}
+.result-hero h2{font-family:'Nunito',sans-serif;font-size:1.7rem;font-weight:100;letter-spacing:.01em;margin-bottom:.3rem;}
+.result-hero p{font-size:.87rem;color:rgba(255,255,255,.8);}
+.score-circle{width:90px;height:90px;border-radius:50%;border:4px solid rgba(255,255,255,.3);display:grid;place-items:center;margin:.75rem auto;background:rgba(255,255,255,.1);}
+.score-pct{font-family:'Nunito',sans-serif;font-size:1.6rem;font-weight:900;color:#fff;}
+.result-stats{display:grid;grid-template-columns:repeat(2,1fr);gap:.75rem;margin-bottom:1.25rem;}
+@media(min-width:480px){.result-stats{grid-template-columns:repeat(5,1fr);}}
+.res-stat{background:#fff;border:1px solid var(--qz-bdr);border-radius:12px;padding:.85rem;text-align:center;}
+.res-stat-n{font-family:'Nunito',sans-serif;font-size:1.35rem;font-weight:800;}
+.res-stat-l{font-size:.62rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--qz-muted);margin-top:.15rem;}
+.n-correct{color:var(--qz-t1);}
+.n-wrong{color:var(--qz-red);}
+.n-skip{color:var(--qz-muted);}
+.n-total{color:var(--qz-ink);}
+.n-time{color:var(--qz-blue-dark);}
+.result-actions{display:flex;gap:.65rem;flex-wrap:wrap;justify-content:center;}
+.btn-back-dash{background:var(--qz-dark);color:#fff;font-size:.84rem;font-weight:700;padding:.65rem 1.2rem;border-radius:10px;border:none;cursor:pointer;}
+.btn-back-dash:hover{background:#000;}
+.btn-lb{background:linear-gradient(135deg,var(--qz-t1),var(--qz-t3));color:#fff;font-size:.84rem;font-weight:700;padding:.65rem 1.2rem;border-radius:10px;border:none;cursor:pointer;}
+
+/* ══ LEADERBOARD ══ */
+.lb-body{max-width:640px;margin:1.5rem auto;padding:0 1rem 4rem;flex:1;width:100%;}
+.lb-hero{background:linear-gradient(135deg,var(--qz-t-dark),var(--qz-t1));border-radius:16px;padding:1.25rem;color:#fff;margin-bottom:1rem;}
+.lb-hero h2{font-family:'Nunito',sans-serif;font-size:1.15rem;font-weight:800;margin-bottom:.2rem;}
+.lb-hero p{font-size:.78rem;color:rgba(255,255,255,.8);}
+.lb-count-row{display:flex;gap:.6rem;margin-bottom:1rem;flex-wrap:wrap;}
+.lb-count{flex:1;background:#fff;border:1px solid var(--qz-bdr);border-radius:10px;padding:.6rem .8rem;text-align:center;min-width:100px;}
+.lb-count-n{font-size:1.1rem;font-weight:800;font-family:'Nunito',sans-serif;color:var(--qz-t1);}
+.lb-count-l{font-size:.62rem;color:var(--qz-muted);font-weight:700;text-transform:uppercase;letter-spacing:.05em;}
+.lb-list{background:#fff;border:1px solid var(--qz-bdr);border-radius:14px;overflow:hidden;}
+.lb-row{display:flex;align-items:center;gap:.65rem;padding:.65rem .9rem;border-bottom:1px solid #eee;font-size:.85rem;}
+.lb-row:last-child{border-bottom:none;}
+.lb-row.self{background:#e6faf5;}
+.lb-rank{width:30px;flex-shrink:0;font-weight:800;font-family:'Nunito',sans-serif;color:var(--qz-muted);text-align:center;}
+.lb-rank.top1{color:var(--qz-gold);}
+.lb-rank.top2{color:#71717a;}
+.lb-rank.top3{color:#a16207;}
+.lb-name-wrap{flex:1;min-width:0;}
+.lb-name{font-weight:700;color:var(--qz-ink);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;display:flex;align-items:center;gap:.3rem;}
+.lb-zone{font-size:.7rem;color:var(--qz-muted);}
+.lb-score{font-weight:800;color:var(--qz-t1);font-family:'Nunito',sans-serif;font-size:.95rem;flex-shrink:0;}
+.lb-time{font-size:.68rem;color:var(--qz-muted);flex-shrink:0;width:48px;text-align:right;}
+.star-icon{color:var(--qz-gold);font-size:.8rem;}
+.admin-bar{display:none;background:var(--qz-dark);color:#fff;border-radius:10px;padding:.6rem .85rem;margin-bottom:1rem;font-size:.78rem;align-items:center;justify-content:space-between;gap:.5rem;}
+.admin-bar.show{display:flex;}
+.day-limit-banner{background:var(--qz-amber-pale);border:1.5px solid #FDE68A;color:var(--qz-amber-dark);border-radius:12px;padding:.75rem 1rem;font-size:.82rem;font-weight:600;margin-bottom:1.1rem;display:flex;align-items:center;gap:.5rem;}
+.day-limit-banner.locked{background:#e6faf5;border-color:#a7f3d0;color:var(--qz-t-dark);}
+.admin-bar button{background:rgba(255,255,255,.15);border:1px solid rgba(255,255,255,.3);color:#fff;border-radius:7px;padding:.3rem .6rem;font-size:.7rem;font-weight:700;cursor:pointer;}
+
+/* ══ MODAL ══ */
+.modal-over{position:fixed;inset:0;background:rgba(0,0,0,.45);z-index:500;display:none;place-items:center;padding:1rem;}
+.modal-over.show{display:grid;}
+.modal-box{background:#fff;border-radius:20px;padding:1.75rem 1.5rem;max-width:340px;width:100%;text-align:center;}
+.modal-box h3{font-family:'Nunito',sans-serif;font-size:1.1rem;font-weight:800;margin-bottom:.35rem;}
+.modal-box p{font-size:.83rem;color:var(--qz-muted);line-height:1.6;margin-bottom:1.2rem;}
+.modal-stats{display:flex;justify-content:center;gap:1.25rem;margin-bottom:1.1rem;}
+.ms-item{text-align:center;}
+.ms-n{font-size:1.25rem;font-weight:800;font-family:'Nunito',sans-serif;}
+.ms-l{font-size:.63rem;color:var(--qz-muted);font-weight:600;letter-spacing:.05em;text-transform:uppercase;}
+.modal-btns{display:flex;gap:.6rem;justify-content:center;}
+.btn-confirm{background:var(--qz-dark);color:#fff;font-size:.8rem;font-weight:700;padding:.62rem 1.3rem;border-radius:9px;border:none;cursor:pointer;}
+.btn-go-back{font-size:.8rem;font-weight:600;padding:.62rem .95rem;border-radius:9px;border:1.5px solid var(--qz-bdr);background:#fff;color:var(--qz-muted);cursor:pointer;}
+
+.qz-test-actionbar{position:sticky;top:0;z-index:95;background:#fff;border-bottom:2px solid var(--qz-t3);border-radius:10px 10px 0 0;padding:.6rem .9rem;display:flex;align-items:center;justify-content:space-between;gap:.6rem;}
+#q-paper-tag-mini{font-size:.72rem;font-weight:700;color:var(--qz-t1);}
+
 </style>
 </head>
 <body>
@@ -719,18 +922,142 @@ body::before{
   </div>
 </nav>
 
-<!-- PAGE CONTENT -->
-<div class="cs-wrap">
-  <span class="cs-badge">Coming Soon</span>
-  <div class="cs-icon">
-    <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><polyline points="12 7 12 12 15 14"/></svg>
+<!-- PAGE CONTENT (Everyday Quiz — daily MS / ITI / ITO mock test engine) -->
+<div class="page-wrap" id="quiz-app">
+<!-- ══════════ DASHBOARD ══════════ -->
+<div id="dashboard-page" class="active">
+  <div class="sec-head" style="margin-bottom:24px;" onclick="handleLogoTap()">
+    <span class="sec-over">Live Daily Test</span>
+    <h1 class="sec-title">Everyday Quiz</h1>
+    <p class="sec-sub">One free objective test a day across MS, ITI &amp; ITO papers. <span id="clock-badge" style="display:inline-block;margin-top:6px;">--:--</span></p>
   </div>
-  <h1 class="cs-title">Everyday Quiz — Coming Soon</h1>
-  <p class="cs-sub">We're building a fresh quiz every single day so you can practice a little and win a lot. Stay tuned — it launches soon!</p>
-  <div class="cs-actions">
-    <a class="cs-btn cs-btn-primary" href="income-tax-departmental-exam.html">Back to All Exams</a>
-    <a class="cs-btn cs-btn-outline" href="https://wa.me/918743865551" target="_blank">Notify Me</a>
+  <div class="tabbar"><div class="tabbar-inner" id="tab-row"></div></div>
+  <div class="dash-body">
+    <div id="day-limit-banner"></div>
+    <div class="dash-heading" id="dash-heading">ALL PAPERS</div>
+    <div class="paper-grid" id="paper-grid"></div>
   </div>
+</div>
+
+<!-- ══════════ INSTRUCTIONS ══════════ -->
+<div id="inst-page">
+  <div class="inst-body">
+    <button class="back-link" style="margin-bottom:.75rem;color:#fff;" onclick="showPage('dashboard-page')"><svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M19 12H5M12 5l-7 7 7 7"/></svg>Back to all papers</button>
+    <div class="inst-card">
+      <div class="inst-head"><h2 id="inst-title">Loading…</h2><span class="exam-badge-sm" id="inst-badge">—</span></div>
+      <div class="inst-bdy">
+        <div class="candidate-info" id="candidate-info-block"></div>
+        <div class="details-grid" id="inst-details-grid"></div>
+        <div class="sec-title">Instructions</div>
+        <ul class="inst-list">
+          <li><span class="bullet">1</span><span>This test has 11 objective (MCQ) questions with four options each. Select the best answer.</span></li>
+          <li><span class="bullet">2</span><span>Navigate between questions using the palette or the Previous / Save &amp; Next buttons.</span></li>
+          <li><span class="bullet">3</span><span>All questions carry equal marks. <strong>Negative marking: −1/4</strong> for each wrong answer. Unattempted questions carry 0 marks.</span></li>
+          <li><span class="bullet">4</span><span>Your time is tracked from the moment you begin, and shown on your scorecard.</span></li>
+          <li><span class="bullet">5</span><span><strong>You may attempt only ONE test per day, across all papers combined.</strong> Once you submit any paper, the rest lock until 12:00 AM. Tests stay open until <strong>11:59 PM</strong>.</span></li>
+          <li><span class="bullet">6</span><span>The test auto-submits after 15 minutes if not submitted earlier.</span></li>
+        </ul>
+      </div>
+      <div class="inst-foot">
+        <label class="agree-check"><input type="checkbox" id="agree-box" onchange="document.getElementById('btn-start').disabled=!this.checked"/>I have read the instructions carefully.</label>
+        <button class="btn-start" id="btn-start" disabled onclick="startTest()">Begin Test →</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════ TEST PAGE ══════════ -->
+<div id="test-page">
+  <div class="qz-test-actionbar">
+    <span id="q-paper-tag-mini"></span>
+    <span class="timer-display" id="timer-box">00:00</span>
+    <button class="btn-submit-top" onclick="showSubmitModal()">Submit</button>
+  </div>
+  <div class="test-layout">
+    <div class="q-area">
+      <div class="q-header">
+        <span class="q-num-badge" id="q-num-label">Question 1 of 11</span>
+        <span class="q-paper-tag" id="q-paper-tag"></span>
+      </div>
+      <div class="q-text" id="q-text"></div>
+      <div class="opts-list" id="opts-list"></div>
+      <div class="q-nav">
+        <button class="q-btn" onclick="goPrev()">← Previous</button>
+        <button class="q-btn q-btn-primary" onclick="saveNext()">Save &amp; Next →</button>
+        <button class="q-btn q-btn-submit" onclick="showSubmitModal()">Submit Test</button>
+      </div>
+      <button class="palette-toggle-btn" onclick="document.getElementById('sidebar').classList.toggle('open')">Question Palette ▾</button>
+    </div>
+    <div class="sidebar" id="sidebar">
+      <div class="sidebar-title">Question Palette</div>
+      <div class="q-palette" id="q-palette"></div>
+      <div class="sidebar-legend">
+        <div class="sleg"><span class="sleg-dot" style="background:var(--qz-blue)"></span>Current</div>
+        <div class="sleg"><span class="sleg-dot" style="background:var(--qz-t3)"></span>Answered</div>
+        <div class="sleg"><span class="sleg-dot" style="background:var(--qz-red)"></span>Not Answered</div>
+        <div class="sleg"><span class="sleg-dot" style="background:#fff;border:1.5px solid var(--qz-bdr)"></span>Not Visited</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════ RESULT PAGE ══════════ -->
+<div id="result-page">
+  <div class="result-body">
+    <div class="result-hero">
+      <h2 id="res-headline">Well Done!</h2>
+      <p id="res-series-title">—</p>
+      <div class="score-circle"><span class="score-pct" id="res-score-pct">0%</span></div>
+      <p id="res-sub-msg">—</p>
+    </div>
+    <div class="result-stats">
+      <div class="res-stat"><div class="res-stat-n n-correct" id="res-correct">0</div><div class="res-stat-l">Correct</div></div>
+      <div class="res-stat"><div class="res-stat-n n-wrong" id="res-wrong">0</div><div class="res-stat-l">Wrong</div></div>
+      <div class="res-stat"><div class="res-stat-n n-skip" id="res-skip">0</div><div class="res-stat-l">Skipped</div></div>
+      <div class="res-stat"><div class="res-stat-n n-total" id="res-marks">0</div><div class="res-stat-l">Marks</div></div>
+      <div class="res-stat"><div class="res-stat-n n-time" id="res-time">0:00</div><div class="res-stat-l">Time Taken</div></div>
+    </div>
+    <div class="result-actions">
+      <button class="btn-lb" onclick="renderLeaderboard()">🏆 View Leaderboard</button>
+      <button class="btn-back-dash" onclick="showPage('dashboard-page');renderDashboard();">Back to Dashboard</button>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════ LEADERBOARD ══════════ -->
+<div id="leaderboard-page">
+  <div class="lb-body">
+    <button class="back-link" style="margin-bottom:.75rem;color:#fff;" onclick="showPage('dashboard-page');renderDashboard();"><svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M19 12H5M12 5l-7 7 7 7"/></svg>Back to Dashboard</button>
+    <div class="lb-hero">
+      <h2 id="lb-title" onclick="handleLogoTap()" style="cursor:default;">Leaderboard</h2>
+      <p id="lb-sub">Today's ranking</p>
+    </div>
+    <div class="admin-bar" id="admin-bar">
+      <span id="admin-stats">Real: 0 · Fake: 0</span>
+      <button onclick="adminLogout()">Log out</button>
+    </div>
+    <div class="lb-count-row" id="lb-count-row"></div>
+    <div class="lb-list" id="lb-list"></div>
+  </div>
+</div>
+
+<!-- ══════════ SUBMIT MODAL ══════════ -->
+<div class="modal-over" id="submit-modal">
+  <div class="modal-box">
+    <h3>Submit Test?</h3>
+    <p>Once submitted, you cannot change your answers.</p>
+    <div class="modal-stats">
+      <div class="ms-item"><div class="ms-n" style="color:var(--qz-t1)" id="m-ans">0</div><div class="ms-l">Answered</div></div>
+      <div class="ms-item"><div class="ms-n" style="color:var(--qz-red)" id="m-no">0</div><div class="ms-l">Not Answered</div></div>
+    </div>
+    <div class="modal-btns">
+      <button class="btn-go-back" onclick="closeModal()">Go Back</button>
+      <button class="btn-confirm" onclick="submitTest()">Yes, Submit</button>
+    </div>
+  </div>
+</div>
+
+
 </div>
 <!-- WhatsApp button -->
 <a id="wa" href="https://wa.me/918743865551" target="_blank" aria-label="WhatsApp">
@@ -768,6 +1095,494 @@ function saveUser(u){ localStorage.setItem('t11_user', JSON.stringify(u)); }
 function getUsers(){ try{ return JSON.parse(localStorage.getItem('t11_users') || '{}'); } catch(e){ return {}; } }
 function saveUsers(u){ localStorage.setItem('t11_users', JSON.stringify(u)); }
 
+/* ══════════════════ MOCK TEST ENGINE (merged) ══════════════════ */
+
+/* ═══════════════════════════════════════════════════════════════
+   CONFIG — reuses the same Supabase project already wired up in
+   online-mock-test.html so real attempts are genuinely shared.
+   Leaderboard reads from / writes to the existing `test_attempts`
+   table (columns used: name, mobile/zone, series_id, correct,
+   wrong, skip, marks, pct, total, time_seconds, created_at).
+   If your `test_attempts` table doesn't yet have a numeric
+   `time_seconds` column, add one — everything else degrades
+   gracefully without it.
+   ═══════════════════════════════════════════════════════════════ */
+// SUPABASE_URL / SUPABASE_ANON_KEY_KEY are already declared above by this page's own auth script — reused as-is.
+const ADMIN_PASSWORD='T11admin@2026'; // ⚠️ change this before going live
+
+const REGIONS=['Delhi','North West Region (NWR) – Chandigarh, Punjab, Haryana, HP, J&K','UP West & Uttarakhand – HQ Kanpur','UP East – HQ Lucknow','Mumbai','Pune – Covers rest of Maharashtra','Gujarat – HQ Ahmedabad','Tamil Nadu & Puducherry – HQ Chennai','Karnataka & Goa – HQ Bengaluru','Kerala – HQ Kochi','Andhra Pradesh & Telangana – HQ Hyderabad','West Bengal & Sikkim – HQ Kolkata','North Eastern Region (NER) – Assam, Arunachal, Manipur, Meghalaya, Mizoram, Nagaland, Tripura','Odisha – HQ Bhubaneswar','Bihar & Jharkhand – HQ Patna','Madhya Pradesh & Chhattisgarh – HQ Bhopal','Rajasthan – HQ Jaipur'];
+
+/* ═══════════ QUESTION BANK — 11 Qs per paper (sample content; replace with official question bank before publishing) ═══════════ */
+const SECTIONS=[
+ {key:'ms',name:'MS',fullName:'Multi-Tasking Staff',grad:'grad-ms',papers:['ms-p2','ms-p4']},
+ {key:'iti',name:'ITI',fullName:'Income Tax Inspector',grad:'grad-iti',papers:['iti-p1','iti-p2','iti-p3','iti-p4']},
+ {key:'ito',name:'ITO',fullName:'Income Tax Officer',grad:'grad-ito',papers:['ito-p1','ito-p2','ito-p3','ito-p5']}
+];
+
+function mkQ(q,opts,ans){return{q,opts,ans};}
+
+const PAPERS={
+ 'ms-p2':{code:'PAPER 2',title:'MS Paper 2 - Income Tax Computation',topics:'Heads of Income, Deductions, TDS/TCS basics, PAN & TAN',mins:15,questions:[
+  mkQ('Income Tax in India is levied under which Act?',['Income-tax Act','Companies Act','GST Act','RTI Act'],0),
+  mkQ('How many heads of income are recognised under Indian tax law?',['3','4','5','6'],2),
+  mkQ('TDS stands for:',['Tax Deducted at Source','Total Deductible Sum','Tax Due Statement','Tax Deposit Slip'],0),
+  mkQ('PAN stands for:',['Permanent Account Number','Personal Account Number','Public Account Number','Payment Account Number'],0),
+  mkQ('A financial year in India runs from:',['Jan to Dec','Apr to Mar','Jul to Jun','Oct to Sep'],1),
+  mkQ('The "Assessment Year" is:',['Same as financial year','The year following the financial year','Two years after the financial year','A year chosen by the taxpayer'],1),
+  mkQ('TAN is required for:',['Filing GST returns','Deducting and remitting TDS','Opening a bank account','Applying for a passport'],1),
+  mkQ('Salary income is computed under which head?',['Income from Salary','Income from Other Sources','Capital Gains','Profits from Business'],0),
+  mkQ('Standard deduction is allowed against which head of income?',['House Property','Salary','Capital Gains','Other Sources'],1),
+  mkQ('Form 16 is issued by:',['The employee','The employer, as a TDS certificate on salary','The bank','The Income Tax Department directly'],1),
+  mkQ('Which of these is a "deduction" typically claimed under Chapter VI-A?',['HRA exemption','Section 80C investments','Standard deduction','LTA'],1)
+ ]},
+ 'ms-p4':{code:'PAPER 4',title:'MS Paper 4 - IT Applications & Operations',topics:'Computer Basics, MS Office, Internet & Email, File Handling',mins:15,questions:[
+  mkQ('Which of these is an operating system?',['MS Word','Windows','MS Excel','Google Chrome'],1),
+  mkQ('In MS Word, which shortcut is used to save a document?',['Ctrl+P','Ctrl+S','Ctrl+N','Ctrl+B'],1),
+  mkQ('A spreadsheet cell reference like B5 refers to:',['Row B, Column 5','Column B, Row 5','Sheet B, Cell 5','Font B, Size 5'],1),
+  mkQ('CPU stands for:',['Central Processing Unit','Computer Personal Unit','Central Program Utility','Central Peripheral Unit'],0),
+  mkQ('Which file extension is used for a PDF document?',['.doc','.xls','.pdf','.ppt'],2),
+  mkQ('In an email, "CC" stands for:',['Carbon Copy','Central Copy','Confirm Copy','Common Copy'],0),
+  mkQ('Which device is used to physically point and click on screen items?',['Keyboard','Mouse','Scanner','Printer'],1),
+  mkQ('RAM is best described as:',['Permanent storage','Temporary working memory','A type of printer','An input device'],1),
+  mkQ('Which of these is a valid email address format?',['name@domain.com','name#domain.com','name-domain','www.name.com'],0),
+  mkQ('A firewall is primarily used for:',['Formatting documents','Network security','Printing files','Sorting spreadsheet data'],1),
+  mkQ('Which shortcut is commonly used to copy selected text?',['Ctrl+V','Ctrl+C','Ctrl+X','Ctrl+Z'],1)
+ ]},
+ 'iti-p1':{code:'PAPER 1',title:'ITI Paper 1 - IT Law, Computation & Taxpayer Services',topics:'IT Law, TRACES, 26AS, e-PAN, Taxpayer Services',mins:15,questions:[
+  mkQ('26AS is best described as:',['A tax deduction certificate','An annual consolidated tax statement showing TDS/TCS credits','A refund cheque','A PAN application form'],1),
+  mkQ('TRACES is the online portal primarily used for:',['Filing GST returns','TDS reconciliation, analysis and correction','Company registration','Passport verification'],1),
+  mkQ('e-PAN is:',['A physical PAN card only','A digitally signed PAN card issued electronically','A duplicate PAN number','A temporary PAN'],1),
+  mkQ('Who administers direct tax law in India?',['Central Board of Direct Taxes (CBDT)','SEBI','RBI','Ministry of Corporate Affairs'],0),
+  mkQ('A "taxpayer service" typically includes:',['Assisting with return filing and grievance redressal','Auditing companies','Printing currency','Issuing passports'],0),
+  mkQ('An assessee who fails to file a return in time may be liable to:',['A refund','Late filing fee/penalty as prescribed by law','Automatic exemption','No consequence'],1),
+  mkQ('Form 26QB relates to TDS on:',['Salary','Sale of immovable property','Interest on savings','Dividend income'],1),
+  mkQ('The primary purpose of an Income Tax Return (ITR) is to:',['Declare income and taxes paid for an assessment year','Register a new business','Apply for a bank loan','Renew a driving license'],0),
+  mkQ('A grievance related to TDS mismatch is generally addressed through:',['TRACES / e-filing grievance module','A courier request','A newspaper notice','A bank branch visit'],0),
+  mkQ('Which of these best defines "taxpayer" under general usage?',['Any person liable to pay tax under the Income-tax law','Only a company','Only a salaried employee','Only a senior citizen'],0),
+  mkQ('An Assessing Officer\'s role includes:',['Assessing and processing income tax returns of assessees','Managing bank deposits','Printing PAN cards','Regulating stock markets'],0)
+ ]},
+ 'iti-p2':{code:'PAPER 2',title:'ITI Paper 2 - Accountancy & Book-Keeping',topics:'Journal, Ledger, Trial Balance, Final Accounts',mins:15,questions:[
+  mkQ('Book-keeping primarily involves:',['Systematic recording of financial transactions','Only tax filing','Only auditing','Only budgeting'],0),
+  mkQ('The first book of original entry is called the:',['Ledger','Journal','Trial Balance','Balance Sheet'],1),
+  mkQ('A Trial Balance is prepared to check:',['Profitability only','Arithmetical accuracy of ledger balances','Cash flow only','Tax liability'],1),
+  mkQ('Under the double-entry system, every debit has a corresponding:',['Discount','Credit of equal amount','Refund','Adjustment entry only'],1),
+  mkQ('The process of transferring journal entries to individual accounts is called:',['Posting','Casting','Balancing','Vouching'],0),
+  mkQ('An asset account normally carries which type of balance?',['Credit balance','Debit balance','No balance','Suspense balance'],1),
+  mkQ('The Balance Sheet shows:',['Income and expenses for a period','Assets, liabilities and capital as on a date','Only cash transactions','Only tax computation'],1),
+  mkQ('Depreciation is charged to account for:',['Increase in asset value','Wear and tear / reduction in value of a fixed asset','Cash shortage','Bad debts only'],1),
+  mkQ('A "Suspense Account" is opened when:',['Trial balance does not agree and the difference needs temporary parking','A new business starts','Profit is very high','Tax is refunded'],0),
+  mkQ('Which of the following is a liability?',['Cash in hand','Outstanding rent payable','Furniture','Debtors'],1),
+  mkQ('The accounting equation is generally expressed as:',['Assets = Liabilities + Capital','Assets = Income - Expenses','Capital = Assets + Liabilities','Income = Assets - Liabilities'],0)
+ ]},
+ 'iti-p3':{code:'PAPER 3',title:'ITI Paper 3 - Allied Laws & Office Procedure',topics:'General Office Procedure, File Management, Allied Acts',mins:15,questions:[
+  mkQ('A "file" in government office procedure typically refers to:',['A folder containing related correspondence and notings on a subject','A computer software only','A type of furniture','A staff designation'],0),
+  mkQ('Noting in a government file means:',['Recording remarks/comments/decisions on the subject matter','Deleting old records','Printing the file cover','Sending an SMS'],0),
+  mkQ('Dak generally refers to:',['Incoming and outgoing mail/correspondence of an office','A type of computer','A tax form','A bank statement'],0),
+  mkQ('A "diary number" is used to:',['Track and identify a document/dak received or issued','Record employee attendance only','Note bank transactions','Track vehicle numbers'],0),
+  mkQ('Right to Information (RTI) Act primarily enables citizens to:',['Seek information from public authorities','File income tax returns','Apply for a passport','Register a company'],0),
+  mkQ('The purpose of office manuals/procedure guidelines is to:',['Ensure uniform and standard handling of office work','Replace all record-keeping','Reduce staff strength','Increase paperwork unnecessarily'],0),
+  mkQ('A confidential report (CR) in government service generally relates to:',['An employee\'s annual performance appraisal','A tax audit report','A bank loan report','A public notice'],0),
+  mkQ('Which of the following best describes "correspondence"?',['Exchange of official letters/communication','A type of ledger','A tax deduction','A computer virus'],0),
+  mkQ('Weeding out of records in office procedure means:',['Removing/destroying records no longer required as per retention rules','Printing new files','Hiring new staff','Updating software'],0),
+  mkQ('An "Office Order" is typically issued to:',['Communicate administrative decisions within an office','Replace an Act of Parliament','Serve as a tax receipt','Register a trademark'],0),
+  mkQ('Allied laws relevant to office administration commonly include which of these?',['General Financial Rules and service conduct rules','Only criminal law','Only company law','Only banking law'],0)
+ ]},
+ 'iti-p4':{code:'PAPER 4',title:'ITI Paper 4 - IT Applications & Operations',topics:'Computer Basics, MS Office, e-Governance Applications',mins:15,questions:[
+  mkQ('e-Governance primarily aims to:',['Deliver government services electronically for efficiency and transparency','Replace all government employees','Eliminate the need for laws','Only manage private business'],0),
+  mkQ('In MS Excel, the SUM function is used to:',['Sort data','Add a range of numbers','Format cells','Insert a chart'],1),
+  mkQ('A database is best described as:',['An organised collection of structured data','A single document file','A type of printer','A network cable'],0),
+  mkQ('Which of these is a common web browser?',['MS Excel','Google Chrome','MS Access','Adobe Reader'],1),
+  mkQ('Digital Signature Certificates (DSC) are primarily used to:',['Authenticate the identity of the signer electronically','Print documents faster','Compress image files','Format spreadsheets'],0),
+  mkQ('In MS Word, "Mail Merge" is used to:',['Merge multiple bank accounts','Send bulk personalised letters/documents from a data source','Delete duplicate files','Format a table only'],1),
+  mkQ('A computer network connecting devices within a single building is called:',['WAN','LAN','URL','ISP'],1),
+  mkQ('Which of these is an example of cloud storage?',['A USB pen drive','Google Drive','A CD-ROM','A printer'],1),
+  mkQ('Antivirus software is used to:',['Detect and remove malicious software','Speed up printing','Create spreadsheets','Manage email only'],0),
+  mkQ('URL stands for:',['Uniform Resource Locator','Universal Record Link','User Response Log','Unified Resource List'],0),
+  mkQ('A PDF file is typically used because it:',['Preserves formatting consistently across devices','Can only be opened on one computer','Cannot be shared by email','Is always editable by anyone'],0)
+ ]},
+ 'ito-p1':{code:'PAPER 1',title:'ITO Paper 1 - IT Law & Taxpayer Services',topics:'IT Act, Taxpayer Services, TRACES, 26AS, e-PAN',mins:15,questions:[
+  mkQ('An "Assessee" under the Income-tax law refers to:',['A person by whom tax or any other sum is payable under the Act','Only a company','Only a government employee','Only a foreign national'],0),
+  mkQ('The apex direct tax administrative body in India is the:',['CBDT','SEBI','RBI','IRDAI'],0),
+  mkQ('Form 26AS helps a taxpayer to:',['View tax credits (TDS/TCS) deposited against their PAN','Apply for a driving license','File a police complaint','Open a demat account'],0),
+  mkQ('An appeal against an order of the Assessing Officer generally first lies with:',['Commissioner (Appeals)','Supreme Court directly','District Magistrate','Municipal Corporation'],0),
+  mkQ('The concept of "Previous Year" under Income-tax law generally refers to:',['The financial year in which income is earned','The year in which tax is assessed','A calendar year chosen freely','The year of retirement'],0),
+  mkQ('e-Filing of income tax returns is done through:',['The Income Tax Department\'s e-filing portal','A physical visit only','A bank counter only','A courier service'],0),
+  mkQ('TDS on salary is governed under which broad provision?',['Section related to TDS on salary income','GST provisions','Companies Act provisions','RTI provisions'],0),
+  mkQ('A "Notice" issued by the tax department to a taxpayer is typically meant to:',['Seek clarification, information, or intimate a proceeding','Cancel their PAN automatically','Close their bank account','Register a new business'],0),
+  mkQ('Taxpayer grievance redressal in the Income Tax Department can be pursued through:',['The e-Nivaran / grievance mechanism on the e-filing portal','A newspaper advertisement','A private lawyer only, with no departmental option','Social media only'],0),
+  mkQ('PAN is mandatorily quoted for which type of transaction, among others?',['High-value financial transactions as prescribed by law','Buying groceries','Watching a movie','Sending a text message'],0),
+  mkQ('The scope of "Taxpayer Services" typically includes:',['Facilitation of return filing, refunds, and query resolution','Only tax raids','Only penalty imposition','Only prosecution'],0)
+ ]},
+ 'ito-p2':{code:'PAPER 2',title:'ITO Paper 2 - Advance Accountancy',topics:'Company Accounts, Depreciation, Partnership, Financial Statements',mins:15,questions:[
+  mkQ('Under the Straight Line Method, depreciation is calculated on:',['The reducing book value each year','The original cost of the asset, generally uniform each year','Market value fluctuations','Sale proceeds only'],1),
+  mkQ('Goodwill is generally classified as:',['A current asset','An intangible asset','A liability','An expense only'],1),
+  mkQ('In partnership accounting, profits are shared:',['Equally in all cases regardless of agreement','As per the partnership agreement, or equally if silent','Only by the senior-most partner','As decided by an outside auditor'],1),
+  mkQ('A Cash Flow Statement primarily shows:',['Movement of cash under operating, investing and financing activities','Only credit sales','Only fixed assets','Only share capital'],0),
+  mkQ('Provision for doubtful debts is created to account for:',['Anticipated losses from debtors who may not pay','Extra profit','Cash shortages only','Tax refunds'],0),
+  mkQ('Which of these best describes "Capital Expenditure"?',['Expenditure incurred for acquiring a long-term asset or benefit','Day-to-day running expenses','Salary payments','Rent expense'],0),
+  mkQ('A Bank Reconciliation Statement is prepared to reconcile:',['Cash book balance with the pass book/bank statement balance','Two ledgers of the same head','Sales and purchase registers','Tax returns'],0),
+  mkQ('Reserves and Surplus generally appear under which side of the Balance Sheet?',['Assets side','Liabilities/Equity side','Neither side','Only in the Profit & Loss Account'],1),
+  mkQ('A Bill of Exchange that is dishonoured means:',['It has been duly paid on the due date','The drawee has failed to accept or pay it as agreed','It has been cancelled voluntarily by the drawer only','It automatically converts to cash'],1),
+  mkQ('Amortisation is a term generally associated with:',['Writing off intangible assets over their useful life','Writing off tangible assets only','Cash discounts','Bad debts'],0),
+  mkQ('The main financial statements typically include:',['Balance Sheet, Profit & Loss Account and Cash Flow Statement','Only the Trial Balance','Only bank statements','Only tax challans'],0)
+ ]},
+ 'ito-p3':{code:'PAPER 3',title:'Paper 3 - Allied Laws & Office Administration',topics:'General Financial Rules, Service Rules, Office Administration',mins:15,questions:[
+  mkQ('General Financial Rules (GFR) primarily govern:',['Financial management and procurement in government offices','Company mergers','Criminal proceedings','Foreign trade policy only'],0),
+  mkQ('Conduct Rules for government servants primarily deal with:',['Expected standards of conduct and discipline of employees','Only leave sanctioning','Only pay fixation','Only pension calculation'],0),
+  mkQ('A "Show Cause Notice" in office administration is issued to:',['Seek an explanation before initiating disciplinary/other action','Grant a promotion automatically','Sanction leave','Approve a tour programme'],0),
+  mkQ('Delegation of financial/administrative powers means:',['Assigning specific powers to lower authorities within limits','Removing all powers from an authority','Transferring an employee','Cancelling a rule permanently'],0),
+  mkQ('Vigilance administration in a government office primarily deals with:',['Prevention and detection of corruption/malpractice','Only recruitment','Only training programmes','Only welfare activities'],0),
+  mkQ('An "Office Memorandum" (O.M.) is used to:',['Communicate decisions or instructions on administrative matters','Serve as a legal contract with a private party','Replace a court judgment','Act as a currency note'],0),
+  mkQ('Right to Information (RTI) applications are generally to be disposed of within:',['A prescribed statutory time limit','No time limit at all','Only during court vacations','Only once a year'],0),
+  mkQ('Grievance redressal mechanisms in offices are meant to:',['Address complaints of the public/staff in a structured manner','Increase pendency deliberately','Avoid accountability','Replace audits'],0),
+  mkQ('Which of the following typically falls under "office administration"?',['Records management, correspondence and establishment matters','Only foreign policy','Only monetary policy','Only judicial review'],0),
+  mkQ('An "Annual Confidential Report" (ACR/APAR) is used for:',['Assessing an employee\'s performance for the year','Recording daily attendance only','Tax assessment','Bank reconciliation'],0),
+  mkQ('Service rules generally cover which of these aspects?',['Recruitment, promotion, discipline and retirement conditions of employees','Only building maintenance','Only vehicle allotment','Only stationery procurement'],0)
+ ]},
+ 'ito-p5':{code:'PAPER 5',title:'ITO Paper 5 - IT Applications & Operations',topics:'Computer Applications, e-Governance, Data & Cyber Security Basics',mins:15,questions:[
+  mkQ('Cyber security fundamentally aims to protect:',['Only printed documents','Computer systems, networks and data from unauthorised access/attack','Only office furniture','Only paper files'],1),
+  mkQ('A "password policy" typically requires:',['Sharing passwords openly with colleagues','Strong, regularly updated, confidential passwords','Using the same password everywhere forever','No password at all'],1),
+  mkQ('In MS Excel, a "Pivot Table" is primarily used to:',['Summarise and analyse large datasets interactively','Delete rows permanently','Format fonts only','Print documents'],0),
+  mkQ('Which of these best describes "phishing"?',['A legitimate government email','A fraudulent attempt to obtain sensitive information by disguising as a trustworthy source','A type of antivirus software','A backup procedure'],1),
+  mkQ('Data backup is important primarily because it:',['Increases computer speed','Helps recover data in case of loss or system failure','Deletes unnecessary files','Improves printer quality'],1),
+  mkQ('An e-Governance application used for filing returns online is an example of:',['G2C (Government to Citizen) service delivery','A private social media platform','An offline paper process','A banking-only application'],0),
+  mkQ('Which of these is considered good practice for data protection in office systems?',['Leaving systems unlocked when away from desk','Regularly updating software and using access controls','Sharing login credentials via unsecured chat','Disabling all security updates'],1),
+  mkQ('A "digital signature" primarily provides:',['Authenticity and integrity verification of an electronic document','Faster internet speed','Free cloud storage','Automatic printing'],0),
+  mkQ('MS PowerPoint is primarily used for:',['Creating presentations/slides','Managing databases','Sending emails only','Editing images exclusively'],0),
+  mkQ('A firewall in a network primarily functions to:',['Monitor and control incoming/outgoing network traffic based on security rules','Print network diagrams','Store employee records','Generate payslips'],0),
+  mkQ('Which of these is an example of two-factor authentication?',['Using only a username','Password plus an OTP sent to a registered mobile','Writing the password on paper','Sharing the password with a friend'],1)
+ ]}
+};
+
+/* ═══════════ STATE ═══════════ */
+let currentPaperId=null,currentQ=0,answers=[],visited=[],TOTAL=11;
+let timerInterval=null,startTime=null,elapsedSeconds=0;
+let logoTapCount=0,logoTapTimer=null;
+
+function todayKey(){const d=new Date();return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0');}
+function isOpenNow(){const d=new Date();return d.getHours()<24;} // open every day until 23:59:59, resets at midnight
+function msUntilMidnight(){const n=new Date();const mid=new Date(n.getFullYear(),n.getMonth(),n.getDate()+1,0,0,0);return mid-n;}
+function fmtCountdown(ms){const h=Math.floor(ms/3600000),m=Math.floor((ms%3600000)/60000);return h+'h '+m+'m';}
+function fmtMMSS(sec){return String(Math.floor(sec/60)).padStart(2,'0')+':'+String(sec%60).padStart(2,'0');}
+
+/* ═══════════ REAL LOGGED-IN USER — reuses this page's own getUser()/getUsers()
+   (already kept in sync with Supabase by this page's auth-guard script above) ═══════════ */
+function getLoggedInUser(){
+  try{
+    const u=getUser(); // this page's function — reads localStorage 't11_user'
+    if(!u||!u.token)return null;
+    const users=getUsers(); // this page's function — reads localStorage 't11_users'
+    const key=(u.email||'').toLowerCase();
+    const extra=users[key]||{};
+    return{email:u.email,name:u.name||extra.name||'Candidate',region:extra.region||'',mobile:extra.mobile||'',paid:u.paid,plan:u.plan};
+  }catch(e){return null;}
+}
+function attemptKey(paperId){return 't11_attempt_'+paperId+'_'+todayKey();}
+function hasAttemptedToday(paperId){return !!localStorage.getItem(attemptKey(paperId));}
+function getTodayScore(paperId){try{return JSON.parse(localStorage.getItem(attemptKey(paperId)));}catch(e){return null;}}
+/* A candidate may attempt only ONE paper (any single paper) per day, across MS/ITI/ITO combined. */
+function getTodaysAttemptedPaperId(){
+  for(const key in PAPERS){if(hasAttemptedToday(key))return key;}
+  return null;
+}
+
+/* ═══════════ CLOCK ═══════════ */
+setInterval(()=>{const el=document.getElementById('clock-badge');if(el)el.textContent='Today\'s tests close in '+fmtCountdown(msUntilMidnight());},1000);
+
+/* ═══════════ DASHBOARD ═══════════ */
+let activeTab='ms';
+function renderTabs(){
+  document.getElementById('tab-row').innerHTML=SECTIONS.map(s=>`<button class="tab-btn${s.key===activeTab?' active':''}" onclick="setTab('${s.key}')">${s.name} <span style="font-weight:600;opacity:.7;">— ${s.fullName}</span></button>`).join('');
+}
+function setTab(key){activeTab=key;renderTabs();renderDashboard();}
+function renderDashboard(){
+  const loggedIn=getLoggedInUser();
+  const tabbarEl=document.querySelector('.tabbar');
+  if(!loggedIn){
+    tabbarEl.style.display='none';
+    document.getElementById('day-limit-banner').innerHTML='';
+    document.getElementById('dash-heading').textContent='';
+    document.getElementById('paper-grid').innerHTML=`
+      <div class="login-gate-card">
+        <div style="font-size:2rem;">🔒</div>
+        <h3 style="font-family:'Nunito',sans-serif;font-size:1.1rem;font-weight:800;margin-top:.5rem;">Log in to take today's test</h3>
+        <p>You need a free toppers11 account to attempt the daily MS / ITI / ITO mock tests and appear on the leaderboard.</p>
+        <a class="btn-go-login" href="login.html">Log In / Register →</a>
+      </div>`;
+    return;
+  }
+  tabbarEl.style.display='';
+  renderTabs();
+  const sec=SECTIONS.find(s=>s.key===activeTab);
+  const attemptedToday=getTodaysAttemptedPaperId();
+
+  const bannerEl=document.getElementById('day-limit-banner');
+  if(attemptedToday){
+    const doneTitle=PAPERS[attemptedToday].title;
+    bannerEl.innerHTML=`<div class="day-limit-banner locked">✅ You've used today's attempt on <strong>&nbsp;${doneTitle}</strong>. All other papers unlock tomorrow at 12:00 AM.</div>`;
+  }else{
+    bannerEl.innerHTML=`<div class="day-limit-banner">⚠️ You may attempt <strong>&nbsp;only ONE test per day</strong>, across all papers (MS / ITI / ITO combined). Choose carefully before you begin.</div>`;
+  }
+
+  document.getElementById('dash-heading').textContent=`ALL ${sec.papers.length} PAPERS — ${sec.fullName.toUpperCase()}`;
+  document.getElementById('paper-grid').innerHTML=sec.papers.map(pid=>{
+    const p=PAPERS[pid];
+    const done=hasAttemptedToday(pid);
+    const open=isOpenNow();
+    const lockedByOther=attemptedToday&&!done;
+    let btnHtml,topGradClass=sec.grad,statusHtml;
+    if(!open){
+      btnHtml=`<button class="btn-start-card" disabled>Closed for today</button>`;
+      statusHtml=`<span class="p-status closed">CLOSED</span>`;
+    }else if(done){
+      btnHtml=`<button class="btn-start-card done" onclick="openResultFromStorage('${pid}')">✓ Completed — View Result</button>`;
+      statusHtml=`<span class="p-status">OPEN</span>`;
+    }else if(lockedByOther){
+      btnHtml=`<button class="btn-start-card" disabled>🔒 1 Test/Day Used</button>`;
+      statusHtml=`<span class="p-status closed">LOCKED</span>`;
+      topGradClass='locked-top';
+    }else{
+      btnHtml=`<button class="btn-start-card" onclick="goInstructions('${pid}')">▷ Start Test</button>`;
+      statusHtml=`<span class="p-status">OPEN</span>`;
+    }
+    return `<div class="p-card">
+      <div class="p-card-top ${topGradClass}"><span>${p.code}</span>${statusHtml}</div>
+      <div class="p-body">
+        <div class="p-title">${p.title}</div>
+        <div class="p-topics">${p.topics}</div>
+        <div class="p-meta">
+          <span>🕐 ${p.mins} min</span>
+          <span>✓ ${p.questions.length} Qs</span>
+          <span class="p-badge">OBJECTIVE</span>
+        </div>
+      </div>
+      <div class="p-foot">${btnHtml}<div class="p-live">Live daily · closes 11:59 PM · 1 test/day</div></div>
+    </div>`;
+  }).join('');
+}
+
+function goInstructions(paperId){
+  const loggedIn=getLoggedInUser();
+  if(!loggedIn){alert('Please log in to your account first.');window.location.href='login.html';return;}
+  const attemptedToday=getTodaysAttemptedPaperId();
+  if(attemptedToday&&attemptedToday!==paperId){
+    alert('You have already used today\'s one test attempt on "'+PAPERS[attemptedToday].title+'". Please come back tomorrow to try another paper.');
+    renderDashboard();return;
+  }
+  currentPaperId=paperId;const p=PAPERS[paperId];const sec=SECTIONS.find(s=>s.papers.includes(paperId));
+  document.getElementById('inst-title').textContent=p.title;
+  document.getElementById('inst-badge').textContent=sec.name;
+  document.getElementById('inst-details-grid').innerHTML=`
+    <div class="detail-cell"><div class="detail-label">Duration</div><div class="detail-val">${p.mins} min</div></div>
+    <div class="detail-cell"><div class="detail-label">Questions</div><div class="detail-val">${p.questions.length}</div></div>
+    <div class="detail-cell"><div class="detail-label">Type</div><div class="detail-val">Objective</div></div>
+    <div class="detail-cell"><div class="detail-label">Negative Mark</div><div class="detail-val">−1/4</div></div>`;
+  const initial=(loggedIn.name||'C').trim().charAt(0).toUpperCase();
+  document.getElementById('candidate-info-block').innerHTML=`
+    <div class="logged-in-card">
+      <div class="li-avatar">${initial}</div>
+      <div><div class="li-name">${loggedIn.name}</div><div class="li-region">${loggedIn.region||'Region not set on your account'}</div></div>
+    </div>`;
+  document.getElementById('agree-box').checked=false;document.getElementById('btn-start').disabled=true;
+  showPage('inst-page');
+}
+
+function startTest(){
+  const loggedIn=getLoggedInUser();
+  if(!loggedIn){alert('Please log in to your account first.');window.location.href='login.html';return;}
+  const attemptedToday=getTodaysAttemptedPaperId();
+  if(attemptedToday&&attemptedToday!==currentPaperId){
+    alert('You have already used today\'s one test attempt. Please come back tomorrow.');
+    showPage('dashboard-page');renderDashboard();return;
+  }
+  const p=PAPERS[currentPaperId];TOTAL=p.questions.length;
+  answers=new Array(TOTAL).fill(-1);visited=new Array(TOTAL).fill(false);currentQ=0;
+  startTime=Date.now();elapsedSeconds=0;
+  showPage('test-page');visited[0]=true;
+  document.getElementById('q-paper-tag').textContent=p.code;
+  document.getElementById('q-paper-tag-mini').textContent=p.title;
+  renderQuestion();
+  timerInterval=setInterval(()=>{
+    elapsedSeconds=Math.floor((Date.now()-startTime)/1000);
+    document.getElementById('timer-box').textContent=fmtMMSS(elapsedSeconds);
+    if(elapsedSeconds>=p.mins*60){clearInterval(timerInterval);submitTest();}
+  },1000);
+}
+
+function showPage(id){document.querySelectorAll('#dashboard-page,#inst-page,#test-page,#result-page,#leaderboard-page').forEach(p=>p.classList.remove('active'));document.getElementById(id).classList.add('active');}
+
+function renderQuestion(){
+  const p=PAPERS[currentPaperId];const q=p.questions[currentQ];visited[currentQ]=true;
+  document.getElementById('q-num-label').textContent=`Question ${currentQ+1} of ${TOTAL}`;
+  document.getElementById('q-text').textContent=q.q;
+  const letters=['A','B','C','D'];
+  document.getElementById('opts-list').innerHTML=q.opts.map((o,i)=>`<button class="opt-btn${answers[currentQ]===i?' selected':''}" onclick="selectOpt(${i})"><span class="opt-letter">${letters[i]}</span><span class="opt-text">${o}</span></button>`).join('');
+  renderPalette();
+}
+function selectOpt(i){answers[currentQ]=answers[currentQ]===i?-1:i;renderQuestion();}
+function saveNext(){visited[currentQ]=true;if(currentQ<TOTAL-1){currentQ++;visited[currentQ]=true;renderQuestion();}}
+function goPrev(){if(currentQ>0){currentQ--;renderQuestion();}}
+function renderPalette(){
+  const palette=document.getElementById('q-palette');
+  palette.innerHTML=PAPERS[currentPaperId].questions.map((_,i)=>{
+    let cls='pal-btn';
+    if(i===currentQ)cls+=' pal-current';
+    else if(visited[i]&&answers[i]!==-1)cls+=' pal-answered';
+    else if(visited[i])cls+=' pal-not-answered';
+    return `<button class="${cls}" onclick="jumpTo(${i})">${i+1}</button>`;
+  }).join('');
+}
+function jumpTo(i){currentQ=i;visited[i]=true;renderQuestion();}
+function showSubmitModal(){const ans=answers.filter(a=>a!==-1).length;document.getElementById('m-ans').textContent=ans;document.getElementById('m-no').textContent=TOTAL-ans;document.getElementById('submit-modal').classList.add('show');}
+function closeModal(){document.getElementById('submit-modal').classList.remove('show');}
+
+async function submitTest(){
+  clearInterval(timerInterval);closeModal();
+  elapsedSeconds=Math.floor((Date.now()-startTime)/1000);
+  const p=PAPERS[currentPaperId];let correct=0,wrong=0,skip=0;
+  p.questions.forEach((q,i)=>{if(answers[i]===-1)skip++;else if(answers[i]===q.ans)correct++;else wrong++;});
+  const marks=(correct-(wrong/4)).toFixed(2);const pct=Math.max(0,Math.round((marks/TOTAL)*100));
+  const scoreObj={correct,wrong,skip,marks,pct,total:TOTAL,timeSeconds:elapsedSeconds,at:new Date().toISOString()};
+  localStorage.setItem(attemptKey(currentPaperId),JSON.stringify(scoreObj));
+  showResult(scoreObj);
+  saveAttemptRemote(scoreObj);
+}
+
+function showResult(scoreObj){
+  const p=PAPERS[currentPaperId];const{correct,wrong,skip,marks,pct,total,timeSeconds}=scoreObj;
+  document.getElementById('res-series-title').textContent=p.title;
+  document.getElementById('res-score-pct').textContent=pct+'%';
+  document.getElementById('res-headline').textContent=pct>=60?'🎉 Well Done!':pct>=40?'📚 Keep Practising':'💪 More Effort Needed';
+  document.getElementById('res-sub-msg').textContent=`You scored ${marks} out of ${total} marks.`;
+  document.getElementById('res-correct').textContent=correct;
+  document.getElementById('res-wrong').textContent=wrong;
+  document.getElementById('res-skip').textContent=skip;
+  document.getElementById('res-marks').textContent=marks;
+  document.getElementById('res-time').textContent=fmtMMSS(timeSeconds);
+  showPage('result-page');
+}
+function openResultFromStorage(paperId){currentPaperId=paperId;const s=getTodayScore(paperId);if(s)showResult(s);}
+
+/* ═══════════ REMOTE SAVE (Supabase test_attempts) ═══════════ */
+async function saveAttemptRemote(scoreObj){
+  const u=getLoggedInUser();if(!u)return;
+  const payload={
+    name:u.name||'Candidate',
+    email:(u.email||'').toLowerCase(),
+    region:u.region||'',
+    series_id:currentPaperId+'_'+todayKey(),
+    correct:scoreObj.correct,wrong:scoreObj.wrong,skip:scoreObj.skip,
+    marks:scoreObj.marks,pct:scoreObj.pct,total:scoreObj.total,
+    time_seconds:scoreObj.timeSeconds
+  };
+  try{
+    await fetch(`${SUPABASE_URL}/rest/v1/test_attempts`,{method:'POST',headers:{'apikey':SUPABASE_ANON_KEY,'Authorization':'Bearer '+SUPABASE_ANON_KEY,'Content-Type':'application/json','Prefer':'resolution=merge-duplicates,return=minimal'},body:JSON.stringify(payload)});
+  }catch(e){console.warn('Attempt save error (kept locally only):',e.message);}
+}
+async function fetchRemoteAttempts(seriesId){
+  try{
+    const res=await fetch(`${SUPABASE_URL}/rest/v1/test_attempts?series_id=eq.${encodeURIComponent(seriesId)}&select=name,region,marks,pct,time_seconds`,{headers:{'apikey':SUPABASE_ANON_KEY,'Authorization':'Bearer '+SUPABASE_ANON_KEY,'Content-Type':'application/json'}});
+    if(!res.ok)return[];
+    return await res.json();
+  }catch(e){console.warn('Leaderboard fetch error:',e.message);return[];}
+}
+
+/* ═══════════ FAKE LEADERBOARD (deterministic, no backend needed) ═══════════ */
+const FIRST_NAMES=['Amit','Priya','Rahul','Sneha','Vikram','Anjali','Rohan','Kavita','Suresh','Neha','Arjun','Pooja','Manoj','Divya','Sanjay','Ritu','Ajay','Swati','Deepak','Meena','Karan','Nisha','Vivek','Shweta','Rajesh','Anita','Gaurav','Preeti','Naveen','Simran','Ashok','Komal','Rakesh','Bhavna','Sunil','Kiran','Manish','Rekha','Vinay','Payal','Harish','Jyoti','Ramesh','Seema','Yogesh','Alka','Deepika','Mohit','Shalini','Pankaj'];
+const LAST_NAMES=['Sharma','Verma','Gupta','Singh','Kumar','Patel','Reddy','Nair','Iyer','Chauhan','Mishra','Yadav','Joshi','Malhotra','Kapoor','Bose','Das','Rao','Menon','Pillai','Agarwal','Bhatt','Trivedi','Saxena','Shukla'];
+function mulberry32(a){return function(){a|=0;a=a+0x6D2B79F5|0;let t=Math.imul(a^a>>>15,1|a);t=t+Math.imul(t^t>>>7,61|t)^t;return((t^t>>>14)>>>0)/4294967296;};}
+function seedFromString(s){let h=0;for(let i=0;i<s.length;i++){h=Math.imul(31,h)+s.charCodeAt(i)|0;}return h;}
+function generateFakeCandidates(seed,count,total){
+  const rand=mulberry32(seedFromString(seed));
+  const used=new Set();const out=[];
+  for(let i=0;i<count;i++){
+    let fn,ln,full;
+    do{fn=FIRST_NAMES[Math.floor(rand()*FIRST_NAMES.length)];ln=LAST_NAMES[Math.floor(rand()*LAST_NAMES.length)];full=fn+' '+ln;}while(used.has(full));
+    used.add(full);
+    const region=REGIONS[Math.floor(rand()*REGIONS.length)];
+    // realistic-ish bell-curve-leaning marks distribution
+    const raw=(rand()+rand()+rand())/3; // roughly triangular
+    const marks=(raw*total).toFixed(2);
+    const pct=Math.round((marks/total)*100);
+    const timeSeconds=60+Math.floor(rand()*780);
+    out.push({name:full,region,marks:parseFloat(marks),pct,timeSeconds,isReal:false});
+  }
+  return out;
+}
+
+let adminMode=false;
+async function renderLeaderboard(){
+  const p=PAPERS[currentPaperId];const seed=currentPaperId+'_'+todayKey();
+  document.getElementById('lb-title').textContent='🏆 Leaderboard';
+  document.getElementById('lb-sub').textContent=`${p.title} — Today's Ranking`;
+  document.getElementById('lb-list').innerHTML=`<div style="padding:2rem;text-align:center;color:var(--qz-muted);">Loading leaderboard…</div>`;
+  showPage('leaderboard-page');
+
+  const fake=generateFakeCandidates(seed,140,TOTAL);
+  let real=[];
+  try{
+    const rows=await fetchRemoteAttempts(seed);
+    real=rows.map(r=>({name:r.name||'Candidate',region:r.region||'—',marks:parseFloat(r.marks)||0,pct:r.pct||0,timeSeconds:r.time_seconds||0,isReal:true}));
+  }catch(e){}
+  // ensure current candidate's own local result is represented even if remote fetch failed/blocked by RLS
+  const myScore=getTodayScore(currentPaperId);const u=getLoggedInUser();
+  if(myScore&&u&&u.name&&!real.some(r=>r.name===u.name)){
+    real.push({name:u.name,region:u.region||'—',marks:parseFloat(myScore.marks),pct:myScore.pct,timeSeconds:myScore.timeSeconds,isReal:true,isSelf:true});
+  }
+  const all=[...fake,...real].sort((a,b)=>b.marks-a.marks||a.timeSeconds-b.timeSeconds);
+  all.forEach((r,i)=>r.rank=i+1);
+
+  document.getElementById('lb-count-row').innerHTML=`
+    <div class="lb-count"><div class="lb-count-n">${all.length}</div><div class="lb-count-l">Candidates</div></div>
+    <div class="lb-count-n" style="display:none"></div>`;
+
+  renderLbRows(all,u?u.name:null);
+  updateAdminBar(real.length,fake.length);
+}
+function shortRegion(region){if(!region)return'—';return region.split(' – ')[0].split(',')[0].trim();}
+function renderLbRows(all,myName){
+  document.getElementById('lb-list').innerHTML=all.map(r=>{
+    const isSelf=myName&&r.name===myName&&r.isReal;
+    const star=(adminMode&&r.isReal)?'<span class="star-icon">★</span>':'';
+    const rankCls=r.rank===1?'top1':r.rank===2?'top2':r.rank===3?'top3':'';
+    return `<div class="lb-row${isSelf?' self':''}">
+      <div class="lb-rank ${rankCls}">${r.rank}</div>
+      <div class="lb-name-wrap"><div class="lb-name">${star}${r.name}${isSelf?' (You)':''}</div><div class="lb-zone">${shortRegion(r.region)}</div></div>
+      <div class="lb-score">${r.marks.toFixed(2)}</div>
+      <div class="lb-time">${fmtMMSS(r.timeSeconds)}</div>
+    </div>`;
+  }).join('');
+}
+function updateAdminBar(realCount,fakeCount){
+  const bar=document.getElementById('admin-bar');
+  if(adminMode){bar.classList.add('show');document.getElementById('admin-stats').textContent=`Real: ${realCount} · Fake: ${fakeCount}`;}
+  else{bar.classList.remove('show');}
+}
+
+/* ═══════════ ADMIN UNLOCK (5 taps on logo + password) ═══════════ */
+function handleLogoTap(){
+  logoTapCount++;
+  clearTimeout(logoTapTimer);
+  logoTapTimer=setTimeout(()=>{logoTapCount=0;},1500);
+  if(logoTapCount>=5){
+    logoTapCount=0;
+    const pw=prompt('Admin access — enter password:');
+    if(pw===ADMIN_PASSWORD){
+      adminMode=true;sessionStorage.setItem('t11_admin','1');
+      if(document.getElementById('leaderboard-page').classList.contains('active'))renderLeaderboard();
+      else alert('Admin unlocked. Open a leaderboard to view starred (real) candidates.');
+    }else if(pw!==null){alert('Incorrect password.');}
+  }
+}
+function adminLogout(){adminMode=false;sessionStorage.removeItem('t11_admin');renderLeaderboard();}
+
+/* ═══════════ INIT ═══════════ */
+(function init(){
+  if(sessionStorage.getItem('t11_admin')==='1')adminMode=true;
+  // renderDashboard() is triggered by this page's own auth-guard script above
+  // (once with cached profile data, again after the Supabase profile sync completes)
+})();
+
 // Auth guard
 (async function(){
   var user;
@@ -783,6 +1598,7 @@ function saveUsers(u){ localStorage.setItem('t11_users', JSON.stringify(u)); }
 
   // Show cached data immediately, then refresh mobile/region/name from the backend
   populateProfile(user, getUsers());
+  if (typeof renderDashboard === 'function') renderDashboard(); // draw quiz dashboard with cached name/region first
 
   try {
     var emailEnc2 = encodeURIComponent((user.email || '').toLowerCase());
@@ -803,6 +1619,7 @@ function saveUsers(u){ localStorage.setItem('t11_users', JSON.stringify(u)); }
         document.getElementById('nav-name').textContent = parts2[0] + (parts2[1] ? ' ' + parts2[1][0] + '.' : '');
       }
       populateProfile(getUser(), getUsers());
+      if (typeof renderDashboard === 'function' && document.getElementById('dashboard-page').classList.contains('active')) renderDashboard(); // refresh with synced region
     }
   } catch(e) { console.warn('Profile sync failed — using cached data', e); }
 })();
