@@ -352,6 +352,8 @@ body{font-family:'Open Sans',sans-serif;font-size:14px;}
 .topbar-right{display:flex;align-items:center;gap:.5rem;flex-shrink:0;}
 .timer-display{font-family:'DM Mono',monospace;font-size:.9rem;font-weight:700;color:var(--qz-ink);background:#e6faf5;border:1.5px solid #a7f3d0;border-radius:8px;padding:.28rem .6rem;letter-spacing:.05em;white-space:nowrap;flex-shrink:0;}
 .btn-submit-top{background:linear-gradient(135deg,var(--qz-t1),var(--qz-t3));color:#fff;font-size:.72rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase;padding:.42rem .75rem;border-radius:7px;border:none;cursor:pointer;white-space:nowrap;flex-shrink:0;}
+.btn-lang-toggle{background:#fff;color:var(--qz-t1);border:1.5px solid var(--qz-t3);font-size:.72rem;font-weight:700;letter-spacing:.02em;padding:.4rem .65rem;border-radius:7px;cursor:pointer;white-space:nowrap;flex-shrink:0;}
+.btn-lang-toggle:hover{background:var(--qz-t3);color:#fff;}
 .back-link{font-size:.8rem;color:var(--qz-muted);text-decoration:none;display:flex;align-items:center;gap:.3rem;background:none;border:none;cursor:pointer;font-family:'Open Sans',sans-serif;}
 .back-link:hover{color:var(--qz-t1);}
 
@@ -590,6 +592,7 @@ body{font-family:'Open Sans',sans-serif;font-size:14px;}
 <div id="test-page">
   <div class="qz-test-actionbar">
     <span id="q-paper-tag-mini"></span>
+    <button class="btn-lang-toggle" id="lang-toggle-btn" onclick="toggleLang()" title="Switch language">हिं</button>
     <span class="timer-display" id="timer-box">00:00</span>
     <button class="btn-submit-top" onclick="showSubmitModal()">Submit</button>
   </div>
@@ -728,7 +731,7 @@ function saveUsers(u){ localStorage.setItem('t11_users', JSON.stringify(u)); }
    gracefully without it.
    ═══════════════════════════════════════════════════════════════ */
 // SUPABASE_URL / SUPABASE_ANON_KEY_KEY are already declared above by this page's own auth script — reused as-is.
-const ADMIN_PASSWORD='T11admin@2026'; // ⚠️ change this before going live
+const ADMIN_PASSWORD='Maintand#2026'; // ⚠️ change this before going live
 
 const REGIONS=['Delhi','North West Region (NWR) – Chandigarh, Punjab, Haryana, HP, J&K','UP West & Uttarakhand – HQ Kanpur','UP East – HQ Lucknow','Mumbai','Pune – Covers rest of Maharashtra','Gujarat – HQ Ahmedabad','Tamil Nadu & Puducherry – HQ Chennai','Karnataka & Goa – HQ Bengaluru','Kerala – HQ Kochi','Andhra Pradesh & Telangana – HQ Hyderabad','West Bengal & Sikkim – HQ Kolkata','North Eastern Region (NER) – Assam, Arunachal, Manipur, Meghalaya, Mizoram, Nagaland, Tripura','Odisha – HQ Bhubaneswar','Bihar & Jharkhand – HQ Patna','Madhya Pradesh & Chhattisgarh – HQ Bhopal','Rajasthan – HQ Jaipur'];
 
@@ -739,7 +742,33 @@ const SECTIONS=[
  {key:'ms',name:'MS',fullName:'Multi-Tasking Staff',grad:'grad-ms',papers:['ms-p2','ms-p4']}
 ];
 
-function mkQ(q,opts,ans){return{q,opts,ans};}
+function mkQ(q,opts,ans){return{text:{en:q,hi:q},opts:{en:opts,hi:opts},ans,exp:{en:'',hi:''}};}
+function letterToIndex(v){
+  if(v===null||v===undefined)return 0;
+  const s=String(v).trim().toLowerCase();
+  const map={a:0,b:1,c:2,d:3,'1':0,'2':1,'3':2,'4':3};
+  return map[s]!==undefined?map[s]:0;
+}
+/* Normalizes one quiz_questions row (see DB schema) into the shape renderQuestion() expects. */
+function normalizeDbQuestion(row){
+  const enOpts=[row.opt_a_en,row.opt_b_en,row.opt_c_en,row.opt_d_en];
+  const hiOpts=[row.opt_a_hi,row.opt_b_hi,row.opt_c_hi,row.opt_d_hi].map((v,i)=>v||enOpts[i]||'');
+  return{
+    text:{en:row.question_en||'',hi:row.question_hi||row.question_en||''},
+    opts:{en:enOpts,hi:hiOpts},
+    ans:letterToIndex(row.correct_answer),
+    exp:{en:row.explanation_en||'',hi:row.explanation_hi||row.explanation_en||''}
+  };
+}
+/* Fetches this paper's questions from Supabase. Returns null (→ caller keeps the
+   built-in fallback bank below) if the table is empty, missing, or unreachable. */
+async function fetchQuestionsForPaper(paperId){
+  try{
+    const rows=await sbFetch('quiz_questions?paper_id=eq.'+encodeURIComponent(paperId)+'&select=*&order=created_at.asc');
+    if(Array.isArray(rows)&&rows.length)return rows.map(normalizeDbQuestion);
+  }catch(e){console.warn('quiz_questions fetch failed, using built-in fallback bank:',e.message);}
+  return null;
+}
 
 const PAPERS={
  'ms-p2':{code:'PAPER 2',title:'MS Paper 2 - Income Tax Computation',topics:'Heads of Income, Deductions, TDS/TCS basics, PAN & TAN',mins:15,questions:[
@@ -875,7 +904,7 @@ const PAPERS={
 };
 
 /* ═══════════ STATE ═══════════ */
-let currentPaperId=null,currentQ=0,answers=[],visited=[],TOTAL=11;
+let currentPaperId=null,currentQ=0,answers=[],visited=[],TOTAL=11,currentLang='en';
 let timerInterval=null,startTime=null,elapsedSeconds=0;
 let logoTapCount=0,logoTapTimer=null;
 
@@ -980,7 +1009,7 @@ function renderDashboard(){
   }).join('');
 }
 
-function goInstructions(paperId){
+async function goInstructions(paperId){
   const loggedIn=getLoggedInUser();
   if(!loggedIn){alert('Please log in to your account first.');window.location.href='login.html';return;}
   const attemptedToday=getTodaysAttemptedPaperId();
@@ -993,7 +1022,7 @@ function goInstructions(paperId){
   document.getElementById('inst-badge').textContent=sec.name;
   document.getElementById('inst-details-grid').innerHTML=`
     <div class="detail-cell"><div class="detail-label">Duration</div><div class="detail-val">${p.mins} min</div></div>
-    <div class="detail-cell"><div class="detail-label">Questions</div><div class="detail-val">${p.questions.length}</div></div>
+    <div class="detail-cell"><div class="detail-label">Questions</div><div class="detail-val">Loading…</div></div>
     <div class="detail-cell"><div class="detail-label">Type</div><div class="detail-val">Objective</div></div>
     <div class="detail-cell"><div class="detail-label">Negative Mark</div><div class="detail-val">−1/4</div></div>`;
   const initial=(loggedIn.name||'C').trim().charAt(0).toUpperCase();
@@ -1004,6 +1033,15 @@ function goInstructions(paperId){
     </div>`;
   document.getElementById('agree-box').checked=false;document.getElementById('btn-start').disabled=true;
   showPage('inst-page');
+
+  // Pull this paper's questions from Supabase; keep the built-in bank if the table has nothing yet.
+  const dbQuestions=await fetchQuestionsForPaper(paperId);
+  if(dbQuestions)p.questions=dbQuestions;
+  document.getElementById('inst-details-grid').innerHTML=`
+    <div class="detail-cell"><div class="detail-label">Duration</div><div class="detail-val">${p.mins} min</div></div>
+    <div class="detail-cell"><div class="detail-label">Questions</div><div class="detail-val">${p.questions.length}</div></div>
+    <div class="detail-cell"><div class="detail-label">Type</div><div class="detail-val">Objective</div></div>
+    <div class="detail-cell"><div class="detail-label">Negative Mark</div><div class="detail-val">−1/4</div></div>`;
 }
 
 function startTest(){
@@ -1016,6 +1054,7 @@ function startTest(){
   }
   const p=PAPERS[currentPaperId];TOTAL=p.questions.length;
   answers=new Array(TOTAL).fill(-1);visited=new Array(TOTAL).fill(false);currentQ=0;
+  currentLang='en';const langBtn=document.getElementById('lang-toggle-btn');if(langBtn)langBtn.textContent='हिं';
   startTime=Date.now();elapsedSeconds=0;
   showPage('test-page');visited[0]=true;
   document.getElementById('q-paper-tag').textContent=p.code;
@@ -1033,10 +1072,16 @@ function showPage(id){document.querySelectorAll('#dashboard-page,#inst-page,#tes
 function renderQuestion(){
   const p=PAPERS[currentPaperId];const q=p.questions[currentQ];visited[currentQ]=true;
   document.getElementById('q-num-label').textContent=`Question ${currentQ+1} of ${TOTAL}`;
-  document.getElementById('q-text').textContent=q.q;
+  document.getElementById('q-text').textContent=q.text[currentLang]||q.text.en;
   const letters=['A','B','C','D'];
-  document.getElementById('opts-list').innerHTML=q.opts.map((o,i)=>`<button class="opt-btn${answers[currentQ]===i?' selected':''}" onclick="selectOpt(${i})"><span class="opt-letter">${letters[i]}</span><span class="opt-text">${o}</span></button>`).join('');
+  const opts=q.opts[currentLang]||q.opts.en;
+  document.getElementById('opts-list').innerHTML=opts.map((o,i)=>`<button class="opt-btn${answers[currentQ]===i?' selected':''}" onclick="selectOpt(${i})"><span class="opt-letter">${letters[i]}</span><span class="opt-text">${o}</span></button>`).join('');
   renderPalette();
+}
+function toggleLang(){
+  currentLang=currentLang==='en'?'hi':'en';
+  const btn=document.getElementById('lang-toggle-btn');if(btn)btn.textContent=currentLang==='en'?'हिं':'EN';
+  renderQuestion();
 }
 function selectOpt(i){answers[currentQ]=answers[currentQ]===i?-1:i;renderQuestion();}
 function saveNext(){visited[currentQ]=true;if(currentQ<TOTAL-1){currentQ++;visited[currentQ]=true;renderQuestion();}}
