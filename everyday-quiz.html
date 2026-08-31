@@ -43,28 +43,6 @@ body::before{
 }
 
 /* ── FLOATING 3D TRIANGLES ── */
-.tri{position:fixed;pointer-events:none;z-index:1;}
-@keyframes floatT-tl{0%,to{transform:rotate(-22deg)translateY(0)}50%{transform:rotate(-22deg)translateY(-14px)}}
-@keyframes floatT-tl2{0%,to{transform:rotate(55deg)translateY(0)}50%{transform:rotate(55deg)translateY(-12px)}}
-@keyframes floatT-tr{0%,to{transform:rotate(18deg)translateY(0)}50%{transform:rotate(18deg)translateY(-16px)}}
-@keyframes floatT-tr2{0%,to{transform:rotate(-40deg)translateY(0)}50%{transform:rotate(-40deg)translateY(-10px)}}
-@keyframes floatT-tr3{0%,to{transform:rotate(72deg)translateY(0)}50%{transform:rotate(72deg)translateY(-8px)}}
-@keyframes floatT-bl{0%,to{transform:rotate(135deg)translateY(0)}50%{transform:rotate(135deg)translateY(-13px)}}
-@keyframes floatT-bl2{0%,to{transform:rotate(-60deg)translateY(0)}50%{transform:rotate(-60deg)translateY(-9px)}}
-@keyframes floatT-bc{0%,to{transform:translate(-50%)rotate(30deg)translateY(0)}50%{transform:translate(-50%)rotate(30deg)translateY(-14px)}}
-@keyframes floatT-br{0%,to{transform:rotate(-15deg)translateY(0)}50%{transform:rotate(-15deg)translateY(-11px)}}
-@keyframes floatT-mr{0%,to{transform:rotate(80deg)translateY(0)}50%{transform:rotate(80deg)translateY(-15px)}}
-.tri-tl{width:90px;height:90px;animation:6s ease-in-out infinite floatT-tl;top:55px;left:6%}
-.tri-tl2{opacity:.7;filter:blur(2.5px);width:55px;height:55px;animation:8s ease-in-out 1s infinite floatT-tl2;top:25px;left:15%}
-.tri-tr{width:110px;height:110px;animation:7s ease-in-out .5s infinite floatT-tr;top:30px;right:7%}
-.tri-tr2{opacity:.75;filter:blur(1.5px);width:70px;height:70px;animation:9s ease-in-out 2s infinite floatT-tr2;top:18px;right:19%}
-.tri-tr3{opacity:.6;filter:blur(3px);width:45px;height:45px;animation:7s ease-in-out 3s infinite floatT-tr3;top:85px;right:13%}
-.tri-bl{width:80px;height:80px;animation:8s ease-in-out 1.5s infinite floatT-bl;bottom:45px;left:9%}
-.tri-bl2{opacity:.55;filter:blur(2px);width:40px;height:40px;animation:6s ease-in-out 3.5s infinite floatT-bl2;bottom:28px;left:21%}
-.tri-bc{width:100px;height:100px;animation:7s ease-in-out .8s infinite floatT-bc;bottom:15px;left:50%}
-.tri-br{opacity:.7;width:65px;height:65px;animation:9s ease-in-out 2.5s infinite floatT-br;bottom:55px;right:9%}
-.tri-mr{opacity:.65;filter:blur(1.8px);width:75px;height:75px;animation:10s ease-in-out 1s infinite floatT-mr;top:42%;right:3%}
-
 /* ── MAIN CONTENT WRAP ── */
 .page-wrap{
   flex:1;
@@ -393,50 +371,35 @@ body{font-family:'Open Sans',sans-serif;background:var(--qz-bg);color:var(--qz-i
 .timer-display{font-family:'DM Mono',monospace;font-size:.9rem;font-weight:700;color:var(--qz-ink);background:#e6faf5;border:1.5px solid #a7f3d0;border-radius:8px;padding:.28rem .6rem;letter-spacing:.05em;white-space:nowrap;flex-shrink:0;}
 .btn-submit-top{background:linear-gradient(135deg,var(--qz-t1),var(--qz-t3));color:#fff;font-size:.72rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase;padding:.42rem .75rem;border-radius:7px;border:none;cursor:pointer;white-space:nowrap;flex-shrink:0;}
 .back-link{font-size:.8rem;color:var(--qz-muted);text-decoration:none;display:flex;align-items:center;gap:.3rem;background:none;border:none;cursor:pointer;font-family:'Open Sans',sans-serif;}
-.btn-back{display:inline-flex;align-items:center;gap:.35rem;font-size:.75rem;font-weight:700;color:var(--qz-muted);text-decoration:none;background:#fff;border:1.5px solid #dde8e4;border-radius:999px;cursor:pointer;padding:.38rem .95rem;transition:all .18s;white-space:nowrap;}
-.btn-back:hover{color:var(--qz-t3);border-color:#a7f3d0;}
-.chip{display:flex;align-items:center;gap:.5rem;cursor:pointer;background:#fff;border:1.5px solid #dde8e4;border-radius:999px;padding:.3rem .9rem .3rem .3rem;transition:all .18s;}
-.chip:hover{border-color:#a7f3d0;box-shadow:0 2px 10px rgba(0,171,132,.15);}
-.av{width:30px;height:30px;border-radius:50%;background:linear-gradient(135deg,var(--qz-t-dark),var(--qz-t3));display:grid;place-items:center;font-size:.72rem;font-weight:800;color:#fff;flex-shrink:0;}
-.uname{font-size:.8rem;font-weight:600;color:var(--qz-dark);}
 .back-link:hover{color:var(--qz-t1);}
 
-/* ══ DASHBOARD (card styling adapted from income-tax-inspector-test-series.html) ══ */
+/* ══ DASHBOARD ══ */
 .dash-body{max-width:1200px;margin:0 auto;padding:0 1rem 3rem;width:100%;flex:1;}
-.papers-lbl{letter-spacing:.1em;text-transform:uppercase;color:#999;margin:1.7rem 0 .75rem;font-size:.63rem;font-weight:700;}
-.papers-lbl:first-child{margin-top:0;}
-.tests-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:.85rem;}
-@media(max-width:900px){.tests-grid{grid-template-columns:repeat(2,1fr);}}
-@media(max-width:520px){.tests-grid{grid-template-columns:1fr;}}
+.dash-heading{font-size:.78rem;font-weight:800;letter-spacing:.06em;text-transform:uppercase;color:var(--qz-t1);margin:1.6rem 0 .8rem;padding-bottom:.4rem;border-bottom:2px solid #a7f3d0;}
+.dash-heading:first-child{margin-top:0;}
+.paper-subgrid{display:grid;grid-template-columns:1fr;gap:1rem;}
+@media(min-width:640px){.paper-subgrid{grid-template-columns:repeat(2,1fr);}}
+@media(min-width:980px){.paper-subgrid{grid-template-columns:repeat(3,1fr);}}
 
-.free-wrap{position:relative;}
-.free-ribbon{background:linear-gradient(135deg,var(--qz-t1),var(--qz-t3));color:#fff;font-size:.54rem;font-weight:800;letter-spacing:.1em;text-transform:uppercase;text-align:center;padding:.3rem;border-radius:8px 8px 0 0;display:flex;align-items:center;justify-content:center;gap:.25rem;}
-.free-wrap .card{border-radius:0 0 8px 8px;border-color:var(--qz-t3);box-shadow:0 3px 14px rgba(0,171,132,.15);}
-.card{background:#fff;border:1.5px solid var(--qz-bdr);border-radius:8px;overflow:hidden;cursor:pointer;display:block;transition:all .2s;}
-.card:hover{border-color:var(--qz-t3);transform:translateY(-3px);box-shadow:0 8px 24px rgba(0,109,91,.12);}
-.card.locked{opacity:.6;cursor:not-allowed;}
-.card.locked:hover{transform:none;box-shadow:none;border-color:var(--qz-bdr);}
-.card.completed{cursor:pointer;border-color:#6ee7b7;}
-.ct{padding:.75rem .9rem .5rem;display:flex;align-items:flex-start;justify-content:space-between;gap:.35rem;}
-.lbl{font-size:.56rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;padding:.13rem .4rem;border-radius:999px;white-space:nowrap;background:#f0fdf8;color:var(--qz-t1);}
-.st{font-size:.56rem;font-weight:800;letter-spacing:.06em;text-transform:uppercase;}
-.st-open{color:var(--qz-t3);}
-.st-lock{color:var(--qz-muted);}
-.st-done{color:var(--qz-t1);}
-.cb{padding:0 .9rem .55rem;}
-.ctitle{font-size:.86rem;font-weight:800;color:var(--qz-ink);line-height:1.3;margin-bottom:.35rem;}
-.ctopics-list{list-style:none;margin:0 0 .5rem;padding:0;display:flex;flex-direction:column;gap:.16rem;}
-.ctopics-list li{font-size:.65rem;color:var(--qz-muted);line-height:1.35;padding-left:.95rem;position:relative;}
-.ctopics-list li:before{content:'';position:absolute;left:0;top:.42em;width:5px;height:5px;border-radius:50%;background:var(--qz-t3);opacity:.75;}
-.cmeta{display:flex;gap:.55rem;flex-wrap:wrap;}
-.mi{font-size:.61rem;color:var(--qz-muted);display:flex;align-items:center;gap:.18rem;}
-.pc-type{letter-spacing:.06em;text-transform:uppercase;border-radius:999px;padding:.13rem .42rem;font-size:.54rem;font-weight:700;color:#055aaa;background:#e5f3ff;}
-.cf{padding:.5rem .9rem;border-top:1px solid #f0f0f0;display:flex;align-items:center;justify-content:space-between;}
-.pb{letter-spacing:.04em;text-transform:uppercase;cursor:pointer;text-align:center;border:none;border-radius:4px;padding:.32rem .68rem;font-family:'Open Sans',sans-serif;font-size:.58rem;font-weight:700;transition:all .16s;display:block;width:100%;}
-.pb-free{color:var(--qz-t1);background:#00ab841a;border:1px solid rgba(0,171,132,.3);}
-.pb-free:hover{background:var(--qz-t3);color:#fff;}
-.pb-done{background:#f0fdf8;color:var(--qz-t1);border:1px solid #6ee7b7;cursor:pointer;}
-.pb-lock{background:#eee;color:var(--qz-muted);cursor:not-allowed;}
+.p-card{background:#fff;border:1px solid var(--qz-bdr);border-radius:14px;overflow:hidden;box-shadow:0 4px 18px rgba(0,109,91,.06);display:flex;flex-direction:column;}
+.p-card-top{padding:.55rem .9rem;display:flex;align-items:center;justify-content:space-between;color:#fff;font-size:.68rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;}
+.p-card-top.grad-ms,.p-card-top.grad-iti,.p-card-top.grad-ito{background:linear-gradient(135deg,var(--qz-t2),var(--qz-t3));}
+.p-card-top.locked-top{background:linear-gradient(135deg,#9CA3AF,#6B7280)!important;}
+.p-status{padding:.14rem .55rem;border-radius:999px;background:rgba(255,255,255,.22);border:1px solid rgba(255,255,255,.4);font-size:.62rem;}
+.p-status.closed{background:rgba(0,0,0,.25);}
+.p-body{padding:.95rem .9rem .3rem;flex:1;}
+.p-title{font-size:1rem;font-weight:800;color:var(--qz-ink);line-height:1.35;margin-bottom:.35rem;font-family:'Open Sans',sans-serif;}
+.p-topics{font-size:.78rem;color:var(--qz-muted);line-height:1.5;margin-bottom:.75rem;}
+.p-meta{display:flex;align-items:center;gap:.7rem;flex-wrap:wrap;font-size:.74rem;color:var(--qz-muted);margin-bottom:.8rem;}
+.p-meta span{display:flex;align-items:center;gap:.3rem;}
+.p-badge{font-size:.62rem;font-weight:700;letter-spacing:.05em;text-transform:uppercase;background:#e6faf5;color:var(--qz-t1);border:1px solid #a7f3d0;border-radius:999px;padding:.14rem .55rem;}
+.p-foot{padding:0 .9rem .95rem;}
+.btn-start-card{width:100%;background:var(--qz-dark);color:#fff;font-size:.8rem;font-weight:700;letter-spacing:.03em;padding:.65rem;border-radius:9px;border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:.4rem;}
+.btn-start-card:hover{background:#000;}
+.btn-start-card:disabled{background:#c9c9c9;cursor:not-allowed;}
+.btn-start-card.done{background:#fff;border:1.5px solid var(--qz-t3);color:var(--qz-t1);}
+.btn-start-card.done:hover{background:#e6faf5;}
+.p-live{font-size:.66rem;color:var(--qz-t1);font-weight:700;margin-top:.4rem;text-align:center;}
 
 /* ══ INSTRUCTIONS ══ */
 .inst-body{max-width:640px;margin:1.5rem auto;padding:0 1rem 3rem;width:100%;flex:1;}
@@ -578,18 +541,6 @@ body{font-family:'Open Sans',sans-serif;background:var(--qz-bg);color:var(--qz-i
 </head>
 <body>
 
-<!-- 3D Floating triangle decorations — exact from login.html -->
-  <div class="tri tri-tl"><svg style="filter:drop-shadow(4px 8px 16px #00000059)" viewBox="0 0 120 120"><defs><linearGradient id="a1" x1="0%" x2="100%" y1="0%" y2="100%"><stop offset="0%" stop-color="#3ddbb0"/><stop offset="100%" stop-color="#00AB84"/></linearGradient><linearGradient id="a2" x1="100%" x2="0%" y1="0%" y2="100%"><stop offset="0%" stop-color="#006D5B"/><stop offset="100%" stop-color="#003d30"/></linearGradient></defs><polygon points="60,10 15,95 60,78" fill="url(#a1)"/><polygon points="60,10 105,95 60,78" fill="url(#a2)"/><polygon points="15,95 60,78 105,95" fill="#00AB84" opacity="0.75"/><line stroke="rgba(255,255,255,0.35)" stroke-width="1.2" x1="60" x2="60" y1="10" y2="78"/></svg></div>
-  <div class="tri tri-tl2"><svg style="filter:drop-shadow(2px 4px 8px #0003)" viewBox="0 0 120 120"><polygon points="60,10 15,95 60,78" fill="rgba(255,255,255,0.18)" stroke="rgba(255,255,255,0.5)" stroke-width="1.5"/><polygon points="60,10 105,95 60,78" fill="rgba(255,255,255,0.08)" stroke="rgba(255,255,255,0.3)" stroke-width="1.5"/><line stroke="rgba(255,255,255,0.4)" stroke-width="1" x1="60" x2="60" y1="10" y2="78"/></svg></div>
-  <div class="tri tri-tr"><svg style="filter:drop-shadow(4px 8px 18px #0006)" viewBox="0 0 120 120"><defs><linearGradient id="b1" x1="0%" x2="100%" y1="0%" y2="100%"><stop offset="0%" stop-color="#FFE97A"/><stop offset="100%" stop-color="#F5C518"/></linearGradient><linearGradient id="b2" x1="100%" x2="0%" y1="0%" y2="100%"><stop offset="0%" stop-color="#c9920a"/><stop offset="100%" stop-color="#8a5e00"/></linearGradient></defs><polygon points="60,10 15,95 60,78" fill="url(#b1)"/><polygon points="60,10 105,95 60,78" fill="url(#b2)"/><polygon points="15,95 60,78 105,95" fill="#E8A900" opacity="0.7"/><line stroke="rgba(255,255,255,0.45)" stroke-width="1.2" x1="60" x2="60" y1="10" y2="78"/></svg></div>
-  <div class="tri tri-tr2"><svg style="filter:drop-shadow(3px 6px 12px #0000004d)" viewBox="0 0 120 120"><defs><linearGradient id="b3" x1="0%" x2="100%" y1="0%" y2="100%"><stop offset="0%" stop-color="#2ecfa3"/><stop offset="100%" stop-color="#006D5B"/></linearGradient></defs><polygon points="60,10 15,95 60,78" fill="url(#b3)"/><polygon points="60,10 105,95 60,78" fill="#004D3F"/><polygon points="15,95 60,78 105,95" fill="#003d30" opacity="0.8"/><line stroke="rgba(255,255,255,0.3)" stroke-width="1" x1="60" x2="60" y1="10" y2="78"/></svg></div>
-  <div class="tri tri-tr3"><svg viewBox="0 0 120 120"><polygon points="60,10 15,95 60,78" fill="rgba(255,255,255,0.15)" stroke="rgba(255,255,255,0.45)" stroke-width="1.5"/><polygon points="60,10 105,95 60,78" fill="rgba(255,255,255,0.07)" stroke="rgba(255,255,255,0.25)" stroke-width="1.5"/></svg></div>
-  <div class="tri tri-bl"><svg style="filter:drop-shadow(4px 8px 16px #00000059)" viewBox="0 0 120 120"><defs><linearGradient id="c1" x1="0%" x2="100%" y1="0%" y2="100%"><stop offset="0%" stop-color="#FFE97A"/><stop offset="100%" stop-color="#F5C518"/></linearGradient><linearGradient id="c2" x1="100%" x2="0%" y1="0%" y2="100%"><stop offset="0%" stop-color="#c9920a"/><stop offset="100%" stop-color="#8a5e00"/></linearGradient></defs><polygon points="60,10 15,95 60,78" fill="url(#c1)"/><polygon points="60,10 105,95 60,78" fill="url(#c2)"/><polygon points="15,95 60,78 105,95" fill="#b87800" opacity="0.7"/><line stroke="rgba(255,255,255,0.4)" stroke-width="1.2" x1="60" x2="60" y1="10" y2="78"/></svg></div>
-  <div class="tri tri-bl2"><svg viewBox="0 0 120 120"><polygon points="60,10 15,95 60,78" fill="rgba(255,255,255,0.14)" stroke="rgba(255,255,255,0.4)" stroke-width="1.5"/><polygon points="60,10 105,95 60,78" fill="rgba(255,255,255,0.06)" stroke="rgba(255,255,255,0.2)" stroke-width="1.5"/></svg></div>
-  <div class="tri tri-bc"><svg style="filter:drop-shadow(4px 10px 20px #0006)" viewBox="0 0 120 120"><defs><linearGradient id="d1" x1="0%" x2="100%" y1="0%" y2="100%"><stop offset="0%" stop-color="#3ddbb0"/><stop offset="100%" stop-color="#00AB84"/></linearGradient></defs><polygon points="60,10 15,95 60,78" fill="url(#d1)"/><polygon points="60,10 105,95 60,78" fill="#005a48"/><polygon points="15,95 60,78 105,95" fill="#003d30" opacity="0.8"/><line stroke="rgba(255,255,255,0.35)" stroke-width="1.2" x1="60" x2="60" y1="10" y2="78"/></svg></div>
-  <div class="tri tri-br"><svg style="filter:drop-shadow(3px 6px 14px #0000004d)" viewBox="0 0 120 120"><defs><linearGradient id="e1" x1="0%" x2="100%" y1="0%" y2="100%"><stop offset="0%" stop-color="#2ecfa3"/><stop offset="100%" stop-color="#007a60"/></linearGradient></defs><polygon points="60,10 15,95 60,78" fill="url(#e1)"/><polygon points="60,10 105,95 60,78" fill="#004D3F"/><polygon points="15,95 60,78 105,95" fill="#003830" opacity="0.75"/><line stroke="rgba(255,255,255,0.3)" stroke-width="1" x1="60" x2="60" y1="10" y2="78"/></svg></div>
-  <div class="tri tri-mr"><svg style="filter:drop-shadow(4px 8px 16px #00000059)" viewBox="0 0 120 120"><defs><linearGradient id="f1" x1="0%" x2="100%" y1="0%" y2="100%"><stop offset="0%" stop-color="#FFE97A"/><stop offset="100%" stop-color="#F5C518"/></linearGradient><linearGradient id="f2" x1="100%" x2="0%" y1="0%" y2="100%"><stop offset="0%" stop-color="#c9920a"/><stop offset="100%" stop-color="#7a5000"/></linearGradient></defs><polygon points="60,10 15,95 60,78" fill="url(#f1)"/><polygon points="60,10 105,95 60,78" fill="url(#f2)"/><polygon points="15,95 60,78 105,95" fill="#a07000" opacity="0.7"/><line stroke="rgba(255,255,255,0.4)" stroke-width="1.2" x1="60" x2="60" y1="10" y2="78"/></svg></div>
-
 <!-- NAV -->
 <div class="topbar">
   <div class="topbar-inner">
@@ -600,16 +551,6 @@ body{font-family:'Open Sans',sans-serif;background:var(--qz-bg);color:var(--qz-i
         <span class="logo-sub">Departmental Exam Test Series</span>
       </div>
     </a>
-    <div style="display:flex;align-items:center;gap:.6rem;">
-      <a href="income-tax-departmental-exam.html" class="btn-back">
-        <svg width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24"><path d="M19 12H5M12 5l-7 7 7 7"/></svg>
-        All Exams
-      </a>
-      <div class="chip" onclick="if(confirm('Sign out of toppers11?'))logout()" title="Sign out">
-        <div class="av" id="chip-av">U</div>
-        <span class="uname" id="chip-name">Candidate</span>
-      </div>
-    </div>
   </div>
 </div>
 
@@ -979,17 +920,8 @@ function getTodaysAttemptedPaperId(){
 setInterval(()=>{const el=document.getElementById('clock-badge');if(el)el.textContent='Today\'s tests close in '+fmtCountdown(msUntilMidnight());},1000);
 
 /* ═══════════ DASHBOARD ═══════════ */
-function updateUserChip(loggedIn){
-  const avEl=document.getElementById('chip-av'),nameEl=document.getElementById('chip-name');
-  if(!avEl)return;
-  if(!loggedIn){avEl.textContent='?';nameEl.textContent='Guest';return;}
-  avEl.textContent=(loggedIn.name||'U').trim().charAt(0).toUpperCase();
-  nameEl.textContent=(loggedIn.name||'Candidate').split(' ')[0];
-}
-
 function renderDashboard(){
   const loggedIn=getLoggedInUser();
-  updateUserChip(loggedIn);
   const gridEl=document.getElementById('paper-grid');
   if(!loggedIn){
     document.getElementById('day-limit-banner').innerHTML='';
@@ -1019,44 +951,37 @@ function renderDashboard(){
       const done=hasAttemptedToday(pid);
       const open=isOpenNow();
       const lockedByOther=attemptedToday&&!done;
-      const topicItems=p.topics.split(',').slice(0,3).map(t=>`<li>${t.trim()}</li>`).join('');
-      let cardCls='card',stHtml,cfHtml,clickAttr='';
+      let btnHtml,topGradClass=sec.grad,statusHtml;
       if(!open){
-        cardCls+=' locked';
-        stHtml=`<span class="st st-lock">CLOSED</span>`;
-        cfHtml=`<button class="pb pb-lock" disabled>Closed for today</button>`;
+        btnHtml=`<button class="btn-start-card" disabled>Closed for today</button>`;
+        statusHtml=`<span class="p-status closed">CLOSED</span>`;
       }else if(done){
-        stHtml=`<span class="st st-done">✓ DONE</span>`;
-        cfHtml=`<button class="pb pb-done">View Result</button>`;
-        clickAttr=` onclick="openResultFromStorage('${pid}')"`;
+        btnHtml=`<button class="btn-start-card done" onclick="openResultFromStorage('${pid}')">✓ Completed — View Result</button>`;
+        statusHtml=`<span class="p-status">OPEN</span>`;
       }else if(lockedByOther){
-        cardCls+=' locked';
-        stHtml=`<span class="st st-lock">LOCKED</span>`;
-        cfHtml=`<button class="pb pb-lock" disabled>🔒 1 Test/Day Used</button>`;
+        btnHtml=`<button class="btn-start-card" disabled>🔒 1 Test/Day Used</button>`;
+        statusHtml=`<span class="p-status closed">LOCKED</span>`;
+        topGradClass='locked-top';
       }else{
-        stHtml=`<span class="st st-open">OPEN</span>`;
-        cfHtml=`<button class="pb pb-free">Start Test →</button>`;
-        clickAttr=` onclick="goInstructions('${pid}')"`;
+        btnHtml=`<button class="btn-start-card" onclick="goInstructions('${pid}')">▷ Start Test</button>`;
+        statusHtml=`<span class="p-status">OPEN</span>`;
       }
-      return `<div class="free-wrap">
-        <div class="free-ribbon">★ FREE DAILY TEST</div>
-        <div class="${cardCls}"${clickAttr}>
-          <div class="ct"><span class="lbl">${p.code}</span>${stHtml}</div>
-          <div class="cb">
-            <div class="ctitle">${p.title}</div>
-            <ul class="ctopics-list">${topicItems}</ul>
-            <div class="cmeta">
-              <span class="mi">🕐 ${p.mins} min</span>
-              <span class="mi">✓ ${p.questions.length} Qs</span>
-              <span class="pc-type">OBJECTIVE</span>
-            </div>
+      return `<div class="p-card">
+        <div class="p-card-top ${topGradClass}"><span>${p.code}</span>${statusHtml}</div>
+        <div class="p-body">
+          <div class="p-title">${p.title}</div>
+          <div class="p-topics">${p.topics}</div>
+          <div class="p-meta">
+            <span>🕐 ${p.mins} min</span>
+            <span>✓ ${p.questions.length} Qs</span>
+            <span class="p-badge">OBJECTIVE</span>
           </div>
-          <div class="cf">${cfHtml}</div>
         </div>
+        <div class="p-foot">${btnHtml}<div class="p-live">Live daily · closes 11:59 PM · 1 test/day</div></div>
       </div>`;
     }).join('');
-    return `<div class="papers-lbl">${sec.name} — ${sec.fullName.toUpperCase()} · ${sec.papers.length} PAPERS</div>
-      <div class="tests-grid">${cards}</div>`;
+    return `<div class="dash-heading">${sec.name} — ${sec.fullName.toUpperCase()} · ${sec.papers.length} PAPERS</div>
+      <div class="paper-subgrid">${cards}</div>`;
   }).join('');
 }
 
