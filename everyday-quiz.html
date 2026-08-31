@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 <title>Everyday Quiz — Daily Mock Test | Toppers11</title>
 <meta name="robots" content="noindex, nofollow"/>
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&family=Playfair+Display:wght@700;800&family=Nunito:wght@100;300;400;600;700;800;900&family=Righteous&family=Great+Vibes&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&family=Playfair+Display:wght@700;800&family=Nunito:wght@100;300;400;600;700;800;900&family=Righteous&family=Great+Vibes&family=Noto+Sans+Devanagari:wght@400;500;600;700&display=swap" rel="stylesheet"/>
 <style>
 :root{
   --green:#10B981;--green-dark:#059669;--green-deeper:#065F46;
@@ -353,6 +353,12 @@ body{font-family:'Open Sans',sans-serif;font-size:14px;}
 .timer-display{font-family:'DM Mono',monospace;font-size:.9rem;font-weight:700;color:var(--qz-ink);background:#e6faf5;border:1.5px solid #a7f3d0;border-radius:8px;padding:.28rem .6rem;letter-spacing:.05em;white-space:nowrap;flex-shrink:0;}
 .btn-submit-top{background:linear-gradient(135deg,var(--qz-t1),var(--qz-t3));color:#fff;font-size:.72rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase;padding:.42rem .75rem;border-radius:7px;border:none;cursor:pointer;white-space:nowrap;flex-shrink:0;}
 .btn-lang-toggle{background:#fff;color:var(--qz-t1);border:1.5px solid var(--qz-t3);font-size:.72rem;font-weight:700;letter-spacing:.02em;padding:.4rem .65rem;border-radius:7px;cursor:pointer;white-space:nowrap;flex-shrink:0;}
+/* ══ LANGUAGE TOGGLE (matches online-mock-test.html) ══ */
+.lang-toggle-wrap{display:flex;align-items:center;background:#e6faf5;border:1.5px solid #a7f3d0;border-radius:999px;overflow:hidden;padding:2px;flex-shrink:0;}
+.lang-btn{padding:.32rem .65rem;font-size:.72rem;font-weight:700;border:none;background:transparent;cursor:pointer;color:var(--qz-muted);transition:all .18s;letter-spacing:.04em;font-family:'Open Sans',sans-serif;border-radius:999px;}
+.lang-btn[data-hi]{font-family:'Noto Sans Devanagari',sans-serif;}
+.lang-btn.active{background:var(--qz-t3);color:#fff;box-shadow:0 2px 6px rgba(0,171,132,.3);}
+.lang-btn:hover:not(.active){background:#a7f3d0;color:var(--qz-t1);}
 .btn-lang-toggle:hover{background:var(--qz-t3);color:#fff;}
 .back-link{font-size:.8rem;color:var(--qz-muted);text-decoration:none;display:flex;align-items:center;gap:.3rem;background:none;border:none;cursor:pointer;font-family:'Open Sans',sans-serif;}
 .back-link:hover{color:var(--qz-t1);}
@@ -536,6 +542,8 @@ body{font-family:'Open Sans',sans-serif;font-size:14px;}
 .admin-bar.show{display:flex;}
 .day-limit-banner{background:var(--qz-amber-pale);border:1.5px solid #FDE68A;color:var(--qz-amber-dark);border-radius:12px;padding:.75rem 1rem;font-size:.82rem;font-weight:600;margin-bottom:1.1rem;display:flex;align-items:center;gap:.5rem;}
 .day-limit-banner.locked{background:linear-gradient(135deg,var(--qz-t-dark) 0%,var(--qz-t1) 55%,var(--qz-t3) 100%);border:none;color:#fff;border-radius:16px;padding:1.1rem 1.25rem;align-items:flex-start;gap:.9rem;box-shadow:0 10px 30px rgba(0,77,63,.28);position:relative;overflow:hidden;}
+.btn-admin-reset{position:relative;z-index:1;margin-left:auto;flex-shrink:0;background:rgba(255,255,255,.15);border:1px solid rgba(255,255,255,.35);color:#fff;font-size:.7rem;font-weight:700;padding:.4rem .7rem;border-radius:7px;cursor:pointer;white-space:nowrap;align-self:center;}
+.btn-admin-reset:hover{background:rgba(255,255,255,.28);}
 .day-limit-banner.locked::before{content:'';position:absolute;inset:0;background:repeating-linear-gradient(0deg,rgba(255,255,255,.04) 0px,rgba(255,255,255,.04) 1px,transparent 1px,transparent 22px);pointer-events:none;}
 .day-limit-icon{width:44px;height:44px;border-radius:50%;background:rgba(255,255,255,.18);border:1.5px solid rgba(255,255,255,.35);display:flex;align-items:center;justify-content:center;font-size:1.3rem;flex-shrink:0;position:relative;z-index:1;}
 .day-limit-text{display:flex;flex-direction:column;gap:.25rem;position:relative;z-index:1;}
@@ -606,7 +614,7 @@ body{font-family:'Open Sans',sans-serif;font-size:14px;}
         <ul class="inst-list">
           <li><span class="bullet">1</span><span>This test has 11 objective (MCQ) questions with four options each. Select the best answer.</span></li>
           <li><span class="bullet">2</span><span>Navigate between questions using the palette or the Previous / Save &amp; Next buttons.</span></li>
-          <li><span class="bullet">3</span><span>All questions carry equal marks. <strong>Negative marking: −1/4</strong> for each wrong answer. Unattempted questions carry 0 marks.</span></li>
+          <li><span class="bullet">3</span><span>All questions carry equal marks. <strong>Negative marking: −1/8</strong> for each wrong answer. Unattempted questions carry 0 marks.</span></li>
           <li><span class="bullet">4</span><span>Your time is tracked from the moment you begin, and shown on your scorecard.</span></li>
           <li><span class="bullet">5</span><span><strong>You may attempt only ONE test per day, across all papers combined.</strong> Once you submit any paper, the rest lock until 12:00 AM. Tests stay open until <strong>11:59 PM</strong>.</span></li>
           <li><span class="bullet">6</span><span>The test auto-submits after 15 minutes if not submitted earlier.</span></li>
@@ -624,7 +632,10 @@ body{font-family:'Open Sans',sans-serif;font-size:14px;}
 <div id="test-page">
   <div class="qz-test-actionbar">
     <span id="q-paper-tag-mini"></span>
-    <button class="btn-lang-toggle" id="lang-toggle-btn" onclick="toggleLang();renderQuestion();" title="Switch language">हिं</button>
+    <div class="lang-toggle-wrap" id="test-lang-toggle">
+      <button class="lang-btn active" id="tl-btn-en" onclick="setLang('en')">EN</button>
+      <button class="lang-btn" id="tl-btn-hi" data-hi="1" onclick="setLang('hi')">हि</button>
+    </div>
     <span class="timer-display" id="timer-box">00:00</span>
     <button class="btn-submit-top" onclick="showSubmitModal()">Submit</button>
   </div>
@@ -679,7 +690,10 @@ body{font-family:'Open Sans',sans-serif;font-size:14px;}
     <div class="review-section">
       <div class="review-toggle-row">
         <button class="btn-review-toggle" id="review-toggle-btn" onclick="toggleReview()">📋 Review Answers &amp; Explanations</button>
-        <button class="btn-lang-toggle" id="review-lang-btn" onclick="toggleLang();renderReview();" title="Switch language">हिं</button>
+        <div class="lang-toggle-wrap" id="result-lang-toggle">
+          <button class="lang-btn active" id="rl-btn-en" onclick="setLang('en')">EN</button>
+          <button class="lang-btn" id="rl-btn-hi" data-hi="1" onclick="setLang('hi')">हि</button>
+        </div>
       </div>
       <div id="review-list" class="review-list"></div>
     </div>
@@ -968,6 +982,16 @@ function getLoggedInUser(){
 function attemptKey(paperId){return 't11_attempt_'+paperId+'_'+todayKey();}
 function hasAttemptedToday(paperId){return !!localStorage.getItem(attemptKey(paperId));}
 function getTodayScore(paperId){try{return JSON.parse(localStorage.getItem(attemptKey(paperId)));}catch(e){return null;}}
+/* Admin-only: clears today's one-test-per-day lock for THIS browser, so an admin
+   can re-test the flow without waiting for the midnight reset. Only reachable
+   when adminMode is on (5-tap logo + password) — never exposed to regular users. */
+function resetTodaysAttempt(){
+  if(!adminMode)return;
+  if(!confirm('Reset today\'s attempt lock on this device? This only clears local test data, not leaderboard scores.'))return;
+  const today=todayKey();
+  Object.keys(localStorage).filter(k=>k.startsWith('t11_attempt_')&&k.endsWith('_'+today)).forEach(k=>localStorage.removeItem(k));
+  renderDashboard();
+}
 /* A candidate may attempt only ONE paper (any single paper) per day, across MS/ITI/ITO combined. */
 function getTodaysAttemptedPaperId(){
   for(const key in PAPERS){if(hasAttemptedToday(key))return key;}
@@ -1003,6 +1027,7 @@ function renderDashboard(){
         <span class="day-limit-title">Today's attempt used</span>
         <span class="day-limit-sub">You attempted <strong>${doneTitle}</strong>. All other papers unlock tomorrow at 12:00 AM.</span>
       </div>
+      ${adminMode?'<button class="btn-admin-reset" onclick="resetTodaysAttempt()">↺ Reset (admin)</button>':''}
     </div>`;
   }else{
     bannerEl.innerHTML=`<div class="day-limit-banner">⚠️ You may attempt <strong>&nbsp;only ONE test per day</strong>, across all papers (MS / ITI / ITO combined). Choose carefully before you begin.</div>`;
@@ -1063,7 +1088,7 @@ async function goInstructions(paperId){
     <div class="detail-cell"><div class="detail-label">Duration</div><div class="detail-val">${p.mins} min</div></div>
     <div class="detail-cell"><div class="detail-label">Questions</div><div class="detail-val">Loading…</div></div>
     <div class="detail-cell"><div class="detail-label">Type</div><div class="detail-val">Objective</div></div>
-    <div class="detail-cell"><div class="detail-label">Negative Mark</div><div class="detail-val">−1/4</div></div>`;
+    <div class="detail-cell"><div class="detail-label">Negative Mark</div><div class="detail-val">−1/8</div></div>`;
   const initial=(loggedIn.name||'C').trim().charAt(0).toUpperCase();
   document.getElementById('candidate-info-block').innerHTML=`
     <div class="logged-in-card">
@@ -1080,7 +1105,7 @@ async function goInstructions(paperId){
     <div class="detail-cell"><div class="detail-label">Duration</div><div class="detail-val">${p.mins} min</div></div>
     <div class="detail-cell"><div class="detail-label">Questions</div><div class="detail-val">${p.questions.length}</div></div>
     <div class="detail-cell"><div class="detail-label">Type</div><div class="detail-val">Objective</div></div>
-    <div class="detail-cell"><div class="detail-label">Negative Mark</div><div class="detail-val">−1/4</div></div>`;
+    <div class="detail-cell"><div class="detail-label">Negative Mark</div><div class="detail-val">−1/8</div></div>`;
 }
 
 function startTest(){
@@ -1093,7 +1118,7 @@ function startTest(){
   }
   const p=PAPERS[currentPaperId];TOTAL=p.questions.length;
   answers=new Array(TOTAL).fill(-1);visited=new Array(TOTAL).fill(false);currentQ=0;
-  currentLang='en';const langBtn=document.getElementById('lang-toggle-btn');if(langBtn)langBtn.textContent='हिं';
+  setLang('en');
   startTime=Date.now();elapsedSeconds=0;
   showPage('test-page');visited[0]=true;
   document.getElementById('q-paper-tag').textContent=p.code;
@@ -1117,11 +1142,16 @@ function renderQuestion(){
   document.getElementById('opts-list').innerHTML=opts.map((o,i)=>`<button class="opt-btn${answers[currentQ]===i?' selected':''}" onclick="selectOpt(${i})"><span class="opt-letter">${letters[i]}</span><span class="opt-text">${o}</span></button>`).join('');
   renderPalette();
 }
-function toggleLang(){
-  currentLang=currentLang==='en'?'hi':'en';
-  const label=currentLang==='en'?'हिं':'EN';
-  const btn1=document.getElementById('lang-toggle-btn');if(btn1)btn1.textContent=label;
-  const btn2=document.getElementById('review-lang-btn');if(btn2)btn2.textContent=label;
+function setLang(lang){
+  currentLang=lang;
+  document.querySelectorAll('.lang-toggle-wrap .lang-btn').forEach(btn=>{
+    const isHi=btn.hasAttribute('data-hi');
+    btn.classList.toggle('active',(lang==='hi'&&isHi)||(lang==='en'&&!isHi));
+  });
+  const testPage=document.getElementById('test-page');
+  if(testPage&&testPage.classList.contains('active'))renderQuestion();
+  const resultPage=document.getElementById('result-page');
+  if(resultPage&&resultPage.classList.contains('active'))renderReview();
 }
 function selectOpt(i){answers[currentQ]=answers[currentQ]===i?-1:i;renderQuestion();}
 function saveNext(){visited[currentQ]=true;if(currentQ<TOTAL-1){currentQ++;visited[currentQ]=true;renderQuestion();}}
@@ -1145,7 +1175,7 @@ async function submitTest(){
   elapsedSeconds=Math.floor((Date.now()-startTime)/1000);
   const p=PAPERS[currentPaperId];let correct=0,wrong=0,skip=0;
   p.questions.forEach((q,i)=>{if(answers[i]===-1)skip++;else if(answers[i]===q.ans)correct++;else wrong++;});
-  const marks=(correct-(wrong/4)).toFixed(2);const pct=Math.max(0,Math.round((marks/TOTAL)*100));
+  const marks=(correct-(wrong/8)).toFixed(2);const pct=Math.max(0,Math.round((marks/TOTAL)*100));
   // Snapshot the exact questions/options/explanations shown, so "Review Answers" stays accurate
   // later even if the DB question bank is edited or a fresh page load only has the fallback bank.
   const review=p.questions.map((q,i)=>({text:q.text,opts:q.opts,ans:q.ans,exp:q.exp,selected:answers[i]}));
@@ -1167,8 +1197,7 @@ function showResult(scoreObj){
   document.getElementById('res-marks').textContent=marks;
   document.getElementById('res-time').textContent=fmtMMSS(timeSeconds);
   currentReview=scoreObj.review||null;
-  currentLang='en';
-  const langBtn=document.getElementById('review-lang-btn');if(langBtn)langBtn.textContent='हिं';
+  setLang('en');
   document.getElementById('review-list').innerHTML='';
   document.getElementById('review-list').classList.remove('open');
   const toggleBtn=document.getElementById('review-toggle-btn');
