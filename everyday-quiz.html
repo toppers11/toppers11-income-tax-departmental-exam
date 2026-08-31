@@ -65,176 +65,6 @@ body::before{
 .tri-br{opacity:.7;width:65px;height:65px;animation:9s ease-in-out 2.5s infinite floatT-br;bottom:55px;right:9%}
 .tri-mr{opacity:.65;filter:blur(1.8px);width:75px;height:75px;animation:10s ease-in-out 1s infinite floatT-mr;top:42%;right:3%}
 
-/* ── NAV ── */
-.top-nav{
-  background:transparent;
-  border-bottom:none;
-  padding:10px 1.5rem;
-  width:100%;
-  position:relative;
-  z-index:200;
-}
-.top-nav-inner{
-  max-width:1200px;
-  margin:0 auto;
-  height:58px;
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-  background:#0a6b4e;
-  border-radius:14px;
-  padding:0 1.5rem;
-}
-
-/* Logo */
-.logo-box{
-  display:inline-flex;
-  flex-direction:column;
-  gap:0;
-  line-height:1;
-  text-decoration:none;
-  padding:4px 0 10px;
-  flex-shrink:0;
-}
-.logo-wordmark{
-  font-family:'Nunito',sans-serif;
-  font-size:30px;
-  font-weight:100;
-  color:rgba(255,255,255,0.92);
-  letter-spacing:0.01em;
-  text-transform:lowercase;
-  line-height:1;
-  display:block;
-  margin-bottom:1px;
-}
-.logo-wordmark .logo-num{
-  font-family:'Righteous',cursive;
-  color:#5decbb;
-  font-size:inherit;
-}
-.logo-tag{
-  font-size:0.42rem;
-  font-weight:700;
-  letter-spacing:0.18em;
-  text-transform:uppercase;
-  color:rgba(255,255,255,0.45);
-  display:flex;
-  align-items:center;
-  gap:5px;
-}
-.logo-tag::before,.logo-tag::after{
-  display:none;
-}
-.logo-box:hover .logo-wordmark{color:#fff;}
-
-/* Nav right — tile buttons (dashboard style) */
-.nav-right{display:flex;align-items:center;gap:.5rem;}
-
-.nav-tile-btn{
-  display:inline-flex;
-  flex-direction:column;
-  align-items:center;
-  justify-content:center;
-  gap:3px;
-  min-width:88px;
-  padding:10px .8rem;
-  border-radius:10px;
-  text-decoration:none;
-  border:none;
-  background:rgba(255,255,255,0.13);
-  color:#fff;
-  transition:background .15s;
-  flex-shrink:0;
-  cursor:pointer;
-}
-.nav-tile-btn:hover{background:rgba(255,255,255,0.22);}
-.nav-tile-icon{
-  display:flex;align-items:center;justify-content:center;
-  width:22px;height:22px;
-  margin-bottom:2px;flex-shrink:0;
-}
-.nav-tile-label{
-  font-family:'Poppins',sans-serif;
-  font-size:.55rem;
-  font-weight:700;
-  letter-spacing:.07em;
-  text-transform:uppercase;
-  line-height:1;
-  color:rgba(255,255,255,0.95);
-}
-.nav-tile-sub{
-  font-size:.46rem;
-  font-weight:500;
-  letter-spacing:.05em;
-  text-transform:uppercase;
-  line-height:1;
-  color:rgba(255,255,255,0.6);
-}
-
-/* Quiz tiles (Everyday / Weekend / Weekly Test) */
-.nav-tile-btn.quiz-tile{position:relative;}
-.nav-tile-btn.quiz-weekend{background:#0a1a3a;}
-.nav-tile-btn.quiz-weekend:hover{background:#12234a;}
-.nav-tile-btn.quiz-free{background:#10B981;}
-.nav-tile-btn.quiz-free:hover{background:#0ea371;}
-.quiz-free-badge{
-  position:absolute;
-  top:-8px;
-  right:-6px;
-  background:#F5C518;
-  color:#111827;
-  font-family:'Poppins',sans-serif;
-  font-size:.42rem;
-  font-weight:800;
-  letter-spacing:.03em;
-  padding:2px 6px 2px 5px;
-  border-radius:999px;
-  display:flex;
-  align-items:center;
-  gap:2px;
-  box-shadow:0 2px 6px rgba(0,0,0,0.25);
-}
-
-/* Profile dropdown */
-.user-chip-wrap{position:relative;display:flex;align-items:center;}
-.profile-dropdown{
-  display:none;
-  position:absolute;
-  top:calc(100% + 10px);
-  right:0;
-  background:#fff;
-  border:1px solid var(--border);
-  border-radius:14px;
-  min-width:220px;
-  box-shadow:0 16px 48px rgba(0,0,0,0.15);
-  overflow:hidden;
-  z-index:300;
-}
-.profile-dropdown.open{display:block;animation:dropIn 0.2s ease;}
-@keyframes dropIn{from{opacity:0;transform:translateY(-8px);}to{opacity:1;transform:translateY(0);}}
-.profile-dropdown{width:292px;min-width:0;}
-.pd-hdr{background:#fff;padding:.95rem 1.1rem .8rem;border-bottom:1.5px solid #edf4f1;display:flex;flex-direction:column;gap:.5rem;}
-.pd-hdr-top{display:flex;align-items:center;gap:.75rem;}
-.pd-av-lg{width:38px;height:38px;border-radius:50%;background:var(--green-deeper);display:grid;place-items:center;font-size:.95rem;font-weight:800;color:#fff;flex-shrink:0;letter-spacing:0;}
-.pd-hdr-info{flex:1;min-width:0;}
-.pd-hdr-info h3{font-size:.88rem;font-weight:700;color:var(--ink);margin-bottom:.08rem;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;font-family:'Poppins',sans-serif;}
-.pd-hdr-info p{font-size:.68rem;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
-.pd-plan-badge{display:inline-flex;align-items:center;gap:.25rem;align-self:flex-start;background:var(--green-pale);border:1.5px solid #6ee7b7;border-radius:6px;padding:.18rem .6rem;font-size:.58rem;font-weight:700;color:var(--green-deeper);letter-spacing:.06em;text-transform:uppercase;}
-.pd-plan-badge svg{color:var(--green-dark);flex-shrink:0;}
-.pd-body{padding:.5rem .75rem .4rem;}
-.pd-row{display:flex;align-items:center;gap:.6rem;padding:.42rem .45rem;border-radius:8px;transition:background .12s;margin-bottom:.05rem;}
-.pd-row:hover{background:var(--green-pale);}
-.pd-ico{width:26px;height:26px;border-radius:7px;background:var(--green-pale);border:1px solid var(--green-light);display:grid;place-items:center;flex-shrink:0;}
-.pd-text{flex:1;min-width:0;}
-.pd-lbl{font-size:.55rem;font-weight:700;color:#9ca3af;letter-spacing:.08em;text-transform:uppercase;margin-bottom:.05rem;}
-.pd-val{font-size:.78rem;font-weight:400;color:var(--ink);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;font-family:'Poppins',sans-serif;}
-.pd-divider{height:1.5px;background:#edf4f1;margin:0 .75rem;}
-.pd-ftr{padding:.6rem .75rem .7rem;display:flex;gap:.5rem;}
-.pd-btn-ed{flex:1;display:inline-flex;align-items:center;justify-content:center;gap:.35rem;padding:.48rem .4rem;font-size:.72rem;font-weight:600;font-family:'Poppins',sans-serif;background:#fff;color:var(--green-deeper);border:1.5px solid #6ee7b7;border-radius:8px;cursor:pointer;transition:all .16s;letter-spacing:.01em;}
-.pd-btn-ed:hover{background:var(--green-pale);border-color:var(--green-dark);}
-.pd-btn-lo{flex:1;display:inline-flex;align-items:center;justify-content:center;gap:.35rem;padding:.48rem .4rem;font-size:.72rem;font-weight:600;font-family:'Poppins',sans-serif;background:var(--green-deeper);color:#fff;border:1.5px solid var(--green-deeper);border-radius:8px;cursor:pointer;transition:all .16s;letter-spacing:.01em;}
-.pd-btn-lo:hover{background:#054433;border-color:#054433;}
-
 /* ── MAIN CONTENT WRAP ── */
 .page-wrap{
   flex:1;
@@ -525,54 +355,9 @@ body::before{
 @media(max-width:960px){
   .cards-grid{grid-template-columns:1fr;max-width:460px;}
 }
-@media(max-width:900px){
-  .top-nav-inner{height:auto;flex-wrap:wrap;padding:.6rem 1rem;gap:.5rem;}
-  .nav-right{flex-wrap:nowrap;overflow-x:auto;width:100%;-webkit-overflow-scrolling:touch;padding-bottom:2px;}
-  .nav-right::-webkit-scrollbar{height:0;}
-  .nav-tile-btn{min-width:76px;padding:8px .6rem;}
-}
 @media(max-width:560px){
-  .logo-wordmark{font-size:24px;}
   .page-wrap{padding:36px 16px 60px;}
   .card-body{padding:20px 20px 18px;}
-}
-
-/* ── COMING SOON ── */
-.cs-wrap{
-  flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;
-  text-align:center;padding:70px 1.5rem 90px;position:relative;z-index:10;max-width:560px;margin:0 auto;
-}
-.cs-icon{
-  width:88px;height:88px;border-radius:50%;
-  background:linear-gradient(135deg,var(--green) 0%,var(--green-deeper) 100%);
-  display:flex;align-items:center;justify-content:center;
-  margin-bottom:26px;box-shadow:0 10px 30px rgba(6,95,70,0.35);
-}
-.cs-badge{
-  display:inline-block;background:var(--green-pale);color:var(--green-deeper);
-  font-size:.72rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;
-  padding:.35rem .9rem;border-radius:999px;margin-bottom:18px;border:1px solid var(--green-light);
-}
-.cs-title{
-  font-family:'Poppins',sans-serif;font-weight:800;font-size:2rem;color:#fff;margin-bottom:14px;
-  text-shadow:0 2px 10px rgba(0,0,0,0.25);
-}
-.cs-sub{
-  font-size:1rem;color:rgba(255,255,255,0.85);line-height:1.6;margin-bottom:34px;max-width:440px;
-}
-.cs-actions{display:flex;gap:.75rem;flex-wrap:wrap;justify-content:center;}
-.cs-btn{
-  display:inline-flex;align-items:center;gap:.4rem;
-  padding:.85rem 1.6rem;border-radius:12px;font-weight:700;font-size:.9rem;
-  text-decoration:none;transition:all .15s;
-}
-.cs-btn-primary{background:#fff;color:var(--green-deeper);}
-.cs-btn-primary:hover{background:var(--green-pale);}
-.cs-btn-outline{background:rgba(255,255,255,0.12);color:#fff;border:1.5px solid rgba(255,255,255,0.35);}
-.cs-btn-outline:hover{background:rgba(255,255,255,0.22);}
-@media(max-width:560px){
-  .cs-title{font-size:1.5rem;}
-  .cs-icon{width:72px;height:72px;}
 }
 
 /* ══════════════════ MOCK TEST ENGINE (merged) ══════════════════ */
@@ -611,15 +396,12 @@ body{font-family:'Open Sans',sans-serif;background:var(--qz-bg);color:var(--qz-i
 .back-link:hover{color:var(--qz-t1);}
 
 /* ══ DASHBOARD ══ */
-.tabbar{background:#fff;border-bottom:1px solid var(--qz-bdr);position:sticky;top:0;z-index:90;overflow-x:auto;border-radius:10px 10px 0 0;overflow:hidden;}
-.tabbar-inner{max-width:1200px;margin:0 auto;display:flex;}
-.tab-btn{flex:1;min-width:110px;text-align:center;padding:.85rem .5rem;font-size:.78rem;font-weight:800;letter-spacing:.03em;color:var(--qz-muted);background:none;border:none;border-bottom:3px solid transparent;cursor:pointer;font-family:'Open Sans',sans-serif;white-space:nowrap;}
-.tab-btn.active{color:var(--qz-t1);border-bottom-color:var(--qz-t3);}
-.dash-body{max-width:1200px;margin:0 auto;padding:1.1rem 1rem 3rem;width:100%;flex:1;}
-.dash-heading{font-size:.72rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--qz-muted);margin-bottom:.9rem;}
-.paper-grid{display:grid;grid-template-columns:1fr;gap:1rem;}
-@media(min-width:640px){.paper-grid{grid-template-columns:repeat(2,1fr);}}
-@media(min-width:980px){.paper-grid{grid-template-columns:repeat(3,1fr);}}
+.dash-body{max-width:1200px;margin:0 auto;padding:0 1rem 3rem;width:100%;flex:1;}
+.dash-heading{font-size:.78rem;font-weight:800;letter-spacing:.06em;text-transform:uppercase;color:var(--qz-t1);margin:1.6rem 0 .8rem;padding-bottom:.4rem;border-bottom:2px solid #a7f3d0;}
+.dash-heading:first-child{margin-top:0;}
+.paper-subgrid{display:grid;grid-template-columns:1fr;gap:1rem;}
+@media(min-width:640px){.paper-subgrid{grid-template-columns:repeat(2,1fr);}}
+@media(min-width:980px){.paper-subgrid{grid-template-columns:repeat(3,1fr);}}
 
 .p-card{background:#fff;border:1px solid var(--qz-bdr);border-radius:14px;overflow:hidden;box-shadow:0 4px 18px rgba(0,109,91,.06);display:flex;flex-direction:column;}
 .p-card-top{padding:.55rem .9rem;display:flex;align-items:center;justify-content:space-between;color:#fff;font-size:.68rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;}
@@ -794,133 +576,17 @@ body{font-family:'Open Sans',sans-serif;background:var(--qz-bg);color:var(--qz-i
   <div class="tri tri-mr"><svg style="filter:drop-shadow(4px 8px 16px #00000059)" viewBox="0 0 120 120"><defs><linearGradient id="f1" x1="0%" x2="100%" y1="0%" y2="100%"><stop offset="0%" stop-color="#FFE97A"/><stop offset="100%" stop-color="#F5C518"/></linearGradient><linearGradient id="f2" x1="100%" x2="0%" y1="0%" y2="100%"><stop offset="0%" stop-color="#c9920a"/><stop offset="100%" stop-color="#7a5000"/></linearGradient></defs><polygon points="60,10 15,95 60,78" fill="url(#f1)"/><polygon points="60,10 105,95 60,78" fill="url(#f2)"/><polygon points="15,95 60,78 105,95" fill="#a07000" opacity="0.7"/><line stroke="rgba(255,255,255,0.4)" stroke-width="1.2" x1="60" x2="60" y1="10" y2="78"/></svg></div>
 
 <!-- NAV -->
-<nav class="top-nav">
-  <div class="top-nav-inner">
-  <a class="logo-box" href="index.html">
-    <span class="logo-wordmark">toppers<span class="logo-num">11</span></span>
-    <span class="logo-tag">Departmental Exam Test Series</span>
-  </a>
-
-  <div class="nav-right">
-
-    <!-- ALL EXAMS tile -->
-    <a href="https://toppers11.com/income-tax-departmental-exam.html" class="nav-tile-btn">
-      <div class="nav-tile-icon">
-        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.85)" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
-          <path d="M22 10v6M2 10l10-5 10 5-10 5z"/>
-          <path d="M6 12v5c0 1.657 2.686 3 6 3s6-1.343 6-3v-5"/>
-        </svg>
+<div class="topbar">
+  <div class="topbar-inner">
+    <a href="income-tax-departmental-exam.html" class="topbar-logo">
+      <div class="logo-block">
+        <span class="logo-eyebrow">daily</span>
+        <span class="logo-main">toppers<span class="num">11</span></span>
+        <span class="logo-sub">Departmental Exam Test Series</span>
       </div>
-      <span class="nav-tile-label">All Exams</span>
-      <span class="nav-tile-sub">Switch Exam</span>
     </a>
-
-    <!-- EVERYDAY QUIZ tile -->
-    <a href="everyday-quiz.html" class="nav-tile-btn quiz-tile">
-      <div class="nav-tile-icon">
-        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.85)" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
-          <circle cx="12" cy="12" r="9"/>
-          <polyline points="12 7 12 12 15 14"/>
-        </svg>
-      </div>
-      <span class="nav-tile-label">Everyday Quiz</span>
-      <span class="nav-tile-sub">Win Everyday</span>
-    </a>
-
-    <!-- WEEKEND QUIZ tile -->
-    <a href="weekend-quiz.html" class="nav-tile-btn quiz-tile quiz-weekend">
-      <div class="nav-tile-icon">
-        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.85)" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
-          <rect x="3" y="4" width="18" height="18" rx="2"/>
-          <line x1="16" y1="2" x2="16" y2="6"/>
-          <line x1="8" y1="2" x2="8" y2="6"/>
-          <line x1="3" y1="10" x2="21" y2="10"/>
-        </svg>
-      </div>
-      <span class="nav-tile-label">Weekend Quiz</span>
-      <span class="nav-tile-sub">Win ₹500 / Week</span>
-    </a>
-
-    <!-- WEEKLY TEST tile -->
-    <a href="weekly-test.html" class="nav-tile-btn quiz-tile quiz-free">
-      <span class="quiz-free-badge">
-        <svg width="8" height="8" viewBox="0 0 24 24" fill="#111827"><polygon points="12 2 15 9 22 9 16.5 13.5 18.5 21 12 16.8 5.5 21 7.5 13.5 2 9 9 9"/></svg>
-        FREE
-      </span>
-      <div class="nav-tile-icon">
-        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.9)" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
-          <path d="M12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2z"/>
-        </svg>
-      </div>
-      <span class="nav-tile-label">Weekly Test</span>
-      <span class="nav-tile-sub">Free Access</span>
-    </a>
-
-    <!-- MY ACCOUNT tile -->
-    <div class="user-chip-wrap" id="pa">
-      <div class="nav-tile-btn" id="pb" role="button" tabindex="0"
-           aria-haspopup="true" aria-expanded="false" aria-label="User profile menu"
-           onclick="toggleDD()"
-           onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();toggleDD()}">
-        <div class="nav-tile-icon">
-          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.85)" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
-            <circle cx="12" cy="7" r="4"/>
-            <path d="M5.5 21c0-3.5 3-6 6.5-6s6.5 2.5 6.5 6"/>
-          </svg>
-        </div>
-        <span class="nav-tile-label">My Account</span>
-        <span class="nav-tile-sub" id="nav-name">User</span>
-      </div>
-
-      <div class="profile-dropdown" id="dd">
-        <div class="pd-hdr">
-          <div class="pd-hdr-top">
-            <div class="pd-av-lg" id="pd-av-lg">U</div>
-            <div class="pd-hdr-info">
-              <h3 id="dd-name">—</h3>
-              <p id="dd-email">—</p>
-            </div>
-          </div>
-          <div class="pd-plan-badge">
-            <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
-            <span id="pd-plan-badge-txt">Free Plan</span>
-          </div>
-        </div>
-        <div class="pd-body">
-          <div class="pd-row">
-            <div class="pd-ico"><svg width="16" height="16" fill="none" stroke="var(--green-dark)" stroke-width="2" viewBox="0 0 24 24"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg></div>
-            <div class="pd-text"><div class="pd-lbl">Email</div><div class="pd-val" id="pd-em">—</div></div>
-          </div>
-          <div class="pd-row">
-            <div class="pd-ico"><svg width="16" height="16" fill="none" stroke="var(--green-dark)" stroke-width="2" viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 9.81 19.79 19.79 0 01.4 3.18 2 2 0 012 1h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L6.09 8.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"/></svg></div>
-            <div class="pd-text"><div class="pd-lbl">Mobile</div><div class="pd-val" id="pd-mob">—</div></div>
-          </div>
-          <div class="pd-row">
-            <div class="pd-ico"><svg width="16" height="16" fill="none" stroke="var(--green-dark)" stroke-width="2" viewBox="0 0 24 24"><path d="M21 10c0 7-9 13-9 13S3 17 3 10a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg></div>
-            <div class="pd-text"><div class="pd-lbl">Region</div><div class="pd-val" id="pd-reg">—</div></div>
-          </div>
-          <div class="pd-row">
-            <div class="pd-ico"><svg width="13" height="13" fill="none" stroke="var(--green-dark)" stroke-width="2.5" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg></div>
-            <div class="pd-text"><div class="pd-lbl">Plan</div><div class="pd-val" id="pd-plan-v">Free (4 Tests)</div></div>
-          </div>
-        </div>
-        <div class="pd-divider"></div>
-        <div class="pd-ftr">
-          <a class="pd-btn-ed" href="profile.html">
-            <svg width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24"><path d="M11 4H4a2 2 0 00-2 2v14a2 2 0 002 2h14a2 2 0 002-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 013 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
-            Edit Profile
-          </a>
-          <button class="pd-btn-lo" onclick="logout()">
-            <svg width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24"><path d="M9 21H5a2 2 0 01-2-2V5a2 2 0 012-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
-            Sign Out
-          </button>
-        </div>
-      </div>
-    </div>
-
   </div>
-  </div>
-</nav>
+</div>
 
 <!-- PAGE CONTENT (Everyday Quiz — daily MS / ITI / ITO mock test engine) -->
 <div class="page-wrap" id="quiz-app">
@@ -931,10 +597,8 @@ body{font-family:'Open Sans',sans-serif;background:var(--qz-bg);color:var(--qz-i
     <h1 class="sec-title">Everyday Quiz</h1>
     <p class="sec-sub">One free objective test a day across MS, ITI &amp; ITO papers. <span id="clock-badge" style="display:inline-block;margin-top:6px;">--:--</span></p>
   </div>
-  <div class="tabbar"><div class="tabbar-inner" id="tab-row"></div></div>
   <div class="dash-body">
     <div id="day-limit-banner"></div>
-    <div class="dash-heading" id="dash-heading">ALL PAPERS</div>
     <div class="paper-grid" id="paper-grid"></div>
   </div>
 </div>
@@ -1290,19 +954,12 @@ function getTodaysAttemptedPaperId(){
 setInterval(()=>{const el=document.getElementById('clock-badge');if(el)el.textContent='Today\'s tests close in '+fmtCountdown(msUntilMidnight());},1000);
 
 /* ═══════════ DASHBOARD ═══════════ */
-let activeTab='ms';
-function renderTabs(){
-  document.getElementById('tab-row').innerHTML=SECTIONS.map(s=>`<button class="tab-btn${s.key===activeTab?' active':''}" onclick="setTab('${s.key}')">${s.name} <span style="font-weight:600;opacity:.7;">— ${s.fullName}</span></button>`).join('');
-}
-function setTab(key){activeTab=key;renderTabs();renderDashboard();}
 function renderDashboard(){
   const loggedIn=getLoggedInUser();
-  const tabbarEl=document.querySelector('.tabbar');
+  const gridEl=document.getElementById('paper-grid');
   if(!loggedIn){
-    tabbarEl.style.display='none';
     document.getElementById('day-limit-banner').innerHTML='';
-    document.getElementById('dash-heading').textContent='';
-    document.getElementById('paper-grid').innerHTML=`
+    gridEl.innerHTML=`
       <div class="login-gate-card">
         <div style="font-size:2rem;">🔒</div>
         <h3 style="font-family:'Nunito',sans-serif;font-size:1.1rem;font-weight:800;margin-top:.5rem;">Log in to take today's test</h3>
@@ -1311,9 +968,6 @@ function renderDashboard(){
       </div>`;
     return;
   }
-  tabbarEl.style.display='';
-  renderTabs();
-  const sec=SECTIONS.find(s=>s.key===activeTab);
   const attemptedToday=getTodaysAttemptedPaperId();
 
   const bannerEl=document.getElementById('day-limit-banner');
@@ -1324,40 +978,44 @@ function renderDashboard(){
     bannerEl.innerHTML=`<div class="day-limit-banner">⚠️ You may attempt <strong>&nbsp;only ONE test per day</strong>, across all papers (MS / ITI / ITO combined). Choose carefully before you begin.</div>`;
   }
 
-  document.getElementById('dash-heading').textContent=`ALL ${sec.papers.length} PAPERS — ${sec.fullName.toUpperCase()}`;
-  document.getElementById('paper-grid').innerHTML=sec.papers.map(pid=>{
-    const p=PAPERS[pid];
-    const done=hasAttemptedToday(pid);
-    const open=isOpenNow();
-    const lockedByOther=attemptedToday&&!done;
-    let btnHtml,topGradClass=sec.grad,statusHtml;
-    if(!open){
-      btnHtml=`<button class="btn-start-card" disabled>Closed for today</button>`;
-      statusHtml=`<span class="p-status closed">CLOSED</span>`;
-    }else if(done){
-      btnHtml=`<button class="btn-start-card done" onclick="openResultFromStorage('${pid}')">✓ Completed — View Result</button>`;
-      statusHtml=`<span class="p-status">OPEN</span>`;
-    }else if(lockedByOther){
-      btnHtml=`<button class="btn-start-card" disabled>🔒 1 Test/Day Used</button>`;
-      statusHtml=`<span class="p-status closed">LOCKED</span>`;
-      topGradClass='locked-top';
-    }else{
-      btnHtml=`<button class="btn-start-card" onclick="goInstructions('${pid}')">▷ Start Test</button>`;
-      statusHtml=`<span class="p-status">OPEN</span>`;
-    }
-    return `<div class="p-card">
-      <div class="p-card-top ${topGradClass}"><span>${p.code}</span>${statusHtml}</div>
-      <div class="p-body">
-        <div class="p-title">${p.title}</div>
-        <div class="p-topics">${p.topics}</div>
-        <div class="p-meta">
-          <span>🕐 ${p.mins} min</span>
-          <span>✓ ${p.questions.length} Qs</span>
-          <span class="p-badge">OBJECTIVE</span>
+  // All sections/papers rendered at once — no tab-switching JS needed.
+  gridEl.innerHTML=SECTIONS.map(sec=>{
+    const cards=sec.papers.map(pid=>{
+      const p=PAPERS[pid];
+      const done=hasAttemptedToday(pid);
+      const open=isOpenNow();
+      const lockedByOther=attemptedToday&&!done;
+      let btnHtml,topGradClass=sec.grad,statusHtml;
+      if(!open){
+        btnHtml=`<button class="btn-start-card" disabled>Closed for today</button>`;
+        statusHtml=`<span class="p-status closed">CLOSED</span>`;
+      }else if(done){
+        btnHtml=`<button class="btn-start-card done" onclick="openResultFromStorage('${pid}')">✓ Completed — View Result</button>`;
+        statusHtml=`<span class="p-status">OPEN</span>`;
+      }else if(lockedByOther){
+        btnHtml=`<button class="btn-start-card" disabled>🔒 1 Test/Day Used</button>`;
+        statusHtml=`<span class="p-status closed">LOCKED</span>`;
+        topGradClass='locked-top';
+      }else{
+        btnHtml=`<button class="btn-start-card" onclick="goInstructions('${pid}')">▷ Start Test</button>`;
+        statusHtml=`<span class="p-status">OPEN</span>`;
+      }
+      return `<div class="p-card">
+        <div class="p-card-top ${topGradClass}"><span>${p.code}</span>${statusHtml}</div>
+        <div class="p-body">
+          <div class="p-title">${p.title}</div>
+          <div class="p-topics">${p.topics}</div>
+          <div class="p-meta">
+            <span>🕐 ${p.mins} min</span>
+            <span>✓ ${p.questions.length} Qs</span>
+            <span class="p-badge">OBJECTIVE</span>
+          </div>
         </div>
-      </div>
-      <div class="p-foot">${btnHtml}<div class="p-live">Live daily · closes 11:59 PM · 1 test/day</div></div>
-    </div>`;
+        <div class="p-foot">${btnHtml}<div class="p-live">Live daily · closes 11:59 PM · 1 test/day</div></div>
+      </div>`;
+    }).join('');
+    return `<div class="dash-heading">${sec.name} — ${sec.fullName.toUpperCase()} · ${sec.papers.length} PAPERS</div>
+      <div class="paper-subgrid">${cards}</div>`;
   }).join('');
 }
 
@@ -1591,13 +1249,7 @@ function adminLogout(){adminMode=false;sessionStorage.removeItem('t11_admin');re
     if (!user || !user.token) { window.location.href = 'login.html'; return; }
   } catch(e) { window.location.href = 'login.html'; return; }
 
-  if (user.name) {
-    var parts = user.name.trim().split(' ');
-    document.getElementById('nav-name').textContent = parts[0] + (parts[1] ? ' ' + parts[1][0] + '.' : '');
-  }
-
   // Show cached data immediately, then refresh mobile/region/name from the backend
-  populateProfile(user, getUsers());
   if (typeof renderDashboard === 'function') renderDashboard(); // draw quiz dashboard with cached name/region first
 
   try {
@@ -1615,10 +1267,7 @@ function adminLogout(){adminMode=false;sessionStorage.removeItem('t11_admin');re
       if (dbProf.full_name && dbProf.full_name !== user.name) {
         user = Object.assign({}, getUser(), { name: dbProf.full_name });
         saveUser(user);
-        var parts2 = user.name.trim().split(' ');
-        document.getElementById('nav-name').textContent = parts2[0] + (parts2[1] ? ' ' + parts2[1][0] + '.' : '');
       }
-      populateProfile(getUser(), getUsers());
       if (typeof renderDashboard === 'function' && document.getElementById('dashboard-page').classList.contains('active')) renderDashboard(); // refresh with synced region
     }
   } catch(e) { console.warn('Profile sync failed — using cached data', e); }
@@ -1626,34 +1275,6 @@ function adminLogout(){adminMode=false;sessionStorage.removeItem('t11_admin');re
 
 function setText(id, val){ var el = document.getElementById(id); if (el) el.textContent = val; }
 
-function populateProfile(user, users){
-  user = user || {};
-  var key = (user.email || '').toLowerCase();
-  var s = (users && users[key]) || {};
-  var init = (user.name || 'U').charAt(0).toUpperCase();
-  setText('pd-av-lg', init);
-  setText('dd-name', user.name || '—');
-  setText('dd-email', user.email || '—');
-  setText('pd-em', user.email || '—');
-  setText('pd-mob', s.mobile ? '+91 ' + s.mobile : 'Not provided');
-  setText('pd-reg', s.region || 'Not selected');
-  var planLabel = user.paid
-    ? (user.plan ? user.plan.replace('bunch-', '').replace('single-', '').toUpperCase() + ' Access' : 'Premium Access')
-    : 'Free (4 Tests)';
-  setText('pd-plan-v', planLabel);
-  setText('pd-plan-badge-txt', user.paid ? 'Premium' : 'Free Plan');
-}
-
-function toggleDD() {
-  var open = document.getElementById('dd').classList.toggle('open');
-  document.getElementById('pb').setAttribute('aria-expanded', String(open));
-}
-document.addEventListener('click', function(e) {
-  if (!document.getElementById('pa').contains(e.target)) {
-    document.getElementById('dd').classList.remove('open');
-    document.getElementById('pb').setAttribute('aria-expanded','false');
-  }
-});
 window.addEventListener('scroll', function() {
   document.getElementById('btt').classList.toggle('vis', scrollY > 300);
 }, { passive: true });
