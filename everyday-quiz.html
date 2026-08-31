@@ -358,15 +358,14 @@ body{font-family:'Open Sans',sans-serif;background:var(--qz-bg);color:var(--qz-i
 #dashboard-page.active,#inst-page.active,#test-page.active,#result-page.active,#leaderboard-page.active{display:block;}
 
 /* ══ TOPBAR ══ */
-.topbar{background:#fff;border-bottom:2px solid var(--qz-t3);height:58px;display:flex;align-items:center;justify-content:center;flex-shrink:0;position:sticky;top:0;z-index:100;padding:0 1rem;}
+.topbar{background:#fff;border-bottom:2px solid var(--qz-t3);min-height:76px;display:flex;align-items:center;justify-content:center;flex-shrink:0;position:sticky;top:0;z-index:100;padding:.6rem 1rem;}
 .topbar-inner{width:100%;max-width:1200px;display:flex;align-items:center;justify-content:space-between;gap:.5rem;}
 .topbar-logo{text-decoration:none;display:inline-flex;flex-shrink:0;cursor:pointer;-webkit-user-select:none;user-select:none;}
 .logo-block{display:flex;flex-direction:column;align-items:flex-start;gap:0;}
-.logo-eyebrow{font-family:'Dancing Script',cursive;font-size:.85rem;font-weight:600;color:var(--qz-t3);line-height:1.2;margin-bottom:-1px;}
-.logo-main{font-family:'Nunito',sans-serif;font-size:1.5rem;font-weight:100;color:var(--qz-dark);letter-spacing:.01em;text-transform:lowercase;line-height:1;}
-.logo-main .num{color:var(--qz-t3);font-family:'Righteous',cursive;font-size:1.5rem;}
-.logo-sub{font-size:.42rem;font-weight:700;letter-spacing:.18em;text-transform:uppercase;color:#555;margin-top:1px;}
-@media(max-width:380px){.logo-sub,.logo-eyebrow{display:none;}.logo-main{font-size:1.2rem;}}
+.logo-main{font-family:'Nunito',sans-serif;font-size:2.1rem;font-weight:100;color:var(--qz-dark);letter-spacing:.01em;text-transform:lowercase;line-height:1;}
+.logo-main .num{color:var(--qz-t3);font-family:'Righteous',cursive;font-size:2.1rem;}
+.logo-sub{font-size:.5rem;font-weight:700;letter-spacing:.18em;text-transform:uppercase;color:#555;margin-top:2px;}
+@media(max-width:380px){.logo-sub{display:none;}.logo-main{font-size:1.5rem;}.logo-main .num{font-size:1.5rem;}}
 .topbar-right{display:flex;align-items:center;gap:.5rem;flex-shrink:0;}
 .timer-display{font-family:'DM Mono',monospace;font-size:.9rem;font-weight:700;color:var(--qz-ink);background:#e6faf5;border:1.5px solid #a7f3d0;border-radius:8px;padding:.28rem .6rem;letter-spacing:.05em;white-space:nowrap;flex-shrink:0;}
 .btn-submit-top{background:linear-gradient(135deg,var(--qz-t1),var(--qz-t3));color:#fff;font-size:.72rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase;padding:.42rem .75rem;border-radius:7px;border:none;cursor:pointer;white-space:nowrap;flex-shrink:0;}
@@ -379,7 +378,7 @@ body{font-family:'Open Sans',sans-serif;background:var(--qz-bg);color:var(--qz-i
 .dash-heading:first-child{margin-top:0;}
 .paper-subgrid{display:grid;grid-template-columns:1fr;gap:1rem;}
 @media(min-width:640px){.paper-subgrid{grid-template-columns:repeat(2,1fr);}}
-@media(min-width:980px){.paper-subgrid{grid-template-columns:repeat(3,1fr);}}
+@media(min-width:980px){.paper-subgrid{grid-template-columns:repeat(4,1fr);}}
 
 .p-card{background:#fff;border:1.5px solid var(--qz-bdr);border-radius:8px;overflow:hidden;display:flex;flex-direction:column;transition:all .2s;}
 .p-card:hover{border-color:var(--qz-t3);transform:translateY(-3px);box-shadow:0 8px 24px rgba(0,109,91,.12);}
@@ -546,7 +545,6 @@ body{font-family:'Open Sans',sans-serif;background:var(--qz-bg);color:var(--qz-i
   <div class="topbar-inner">
     <a href="income-tax-departmental-exam.html" class="topbar-logo">
       <div class="logo-block">
-        <span class="logo-eyebrow">daily</span>
         <span class="logo-main">toppers<span class="num">11</span></span>
         <span class="logo-sub">Departmental Exam Test Series</span>
       </div>
