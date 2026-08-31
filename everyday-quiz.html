@@ -374,8 +374,9 @@ body{font-family:'Open Sans',sans-serif;background:var(--qz-bg);color:var(--qz-i
 
 /* ══ DASHBOARD ══ */
 .dash-body{max-width:1200px;margin:0 auto;padding:0 1rem 3rem;width:100%;flex:1;}
-.dash-heading{font-size:.78rem;font-weight:800;letter-spacing:.06em;text-transform:uppercase;color:var(--qz-t1);margin:1.6rem 0 .8rem;padding-bottom:.4rem;border-bottom:2px solid #a7f3d0;}
+.dash-heading{font-size:.95rem;font-weight:800;letter-spacing:.06em;text-transform:uppercase;color:#6b7280;margin:1.6rem 0 .8rem;padding-bottom:.4rem;border-bottom:2px solid #d1d5db;}
 .dash-heading:first-child{margin-top:0;}
+.top3-banner{display:block;width:100%;max-width:1200px;margin:0 auto 1.25rem;border-radius:14px;box-shadow:none;}
 .paper-subgrid{display:grid;grid-template-columns:1fr;gap:1rem;}
 @media(min-width:640px){.paper-subgrid{grid-template-columns:repeat(2,1fr);}}
 @media(min-width:980px){.paper-subgrid{grid-template-columns:repeat(4,1fr);}}
@@ -556,6 +557,7 @@ body{font-family:'Open Sans',sans-serif;background:var(--qz-bg);color:var(--qz-i
 <div class="page-wrap" id="quiz-app">
 <!-- ══════════ DASHBOARD ══════════ -->
 <div id="dashboard-page" class="active">
+  <img src="score-top3-banner.png" alt="Score in Top 3 and win big — free MS, ITI &amp; ITO test series" class="top3-banner">
   <div class="sec-head" style="margin-bottom:24px;" onclick="handleLogoTap()">
     <span class="sec-over">Live Daily Test</span>
     <h1 class="sec-title">Everyday Quiz</h1>
