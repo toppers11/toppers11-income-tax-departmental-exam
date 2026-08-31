@@ -1309,7 +1309,8 @@ async function renderLeaderboard(){
   document.getElementById('lb-list').innerHTML=`<div style="padding:2rem;text-align:center;color:var(--qz-muted);">Loading leaderboard…</div>`;
   showPage('leaderboard-page');
 
-  const fake=generateFakeCandidates(seed,140,TOTAL);
+  // Fetch REAL attempts first — the fake candidate count scales off this,
+  // so it must be known before we decide how many fake rows to generate.
   let real=[];
   try{
     const rows=await fetchRemoteAttempts(seed);
@@ -1320,6 +1321,15 @@ async function renderLeaderboard(){
   if(myScore&&u&&u.name&&!real.some(r=>r.name===u.name)){
     real.push({name:u.name,region:u.region||'—',marks:parseFloat(myScore.marks),pct:myScore.pct,timeSeconds:myScore.timeSeconds,isReal:true,isSelf:true});
   }
+
+  // Fake candidates scale 2:1 with real attempts — 1 real attempt today shows
+  // 2 fake candidates alongside it (3 total); 50 real attempts shows 100 fake
+  // (150 total). Change FAKE_MULTIPLIER below to adjust the ratio, or add a
+  // MIN_FAKE floor if you want a populated-looking board even at 0 attempts.
+  const FAKE_MULTIPLIER=2;
+  const fakeCount=real.length*FAKE_MULTIPLIER;
+  const fake=generateFakeCandidates(seed,fakeCount,TOTAL);
+
   const all=[...fake,...real].sort((a,b)=>b.marks-a.marks||a.timeSeconds-b.timeSeconds);
   all.forEach((r,i)=>r.rank=i+1);
 
