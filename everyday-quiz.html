@@ -381,25 +381,25 @@ body{font-family:'Open Sans',sans-serif;background:var(--qz-bg);color:var(--qz-i
 @media(min-width:640px){.paper-subgrid{grid-template-columns:repeat(2,1fr);}}
 @media(min-width:980px){.paper-subgrid{grid-template-columns:repeat(3,1fr);}}
 
-.p-card{background:#fff;border:1px solid var(--qz-bdr);border-radius:14px;overflow:hidden;box-shadow:0 4px 18px rgba(0,109,91,.06);display:flex;flex-direction:column;}
-.p-card-top{padding:.55rem .9rem;display:flex;align-items:center;justify-content:space-between;color:#fff;font-size:.68rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;}
-.p-card-top.grad-ms,.p-card-top.grad-iti,.p-card-top.grad-ito{background:linear-gradient(135deg,var(--qz-t2),var(--qz-t3));}
-.p-card-top.locked-top{background:linear-gradient(135deg,#9CA3AF,#6B7280)!important;}
-.p-status{padding:.14rem .55rem;border-radius:999px;background:rgba(255,255,255,.22);border:1px solid rgba(255,255,255,.4);font-size:.62rem;}
-.p-status.closed{background:rgba(0,0,0,.25);}
-.p-body{padding:.95rem .9rem .3rem;flex:1;}
-.p-title{font-size:1rem;font-weight:800;color:var(--qz-ink);line-height:1.35;margin-bottom:.35rem;font-family:'Open Sans',sans-serif;}
-.p-topics{font-size:.78rem;color:var(--qz-muted);line-height:1.5;margin-bottom:.75rem;}
-.p-meta{display:flex;align-items:center;gap:.7rem;flex-wrap:wrap;font-size:.74rem;color:var(--qz-muted);margin-bottom:.8rem;}
+.p-card{background:#fff;border:1.5px solid var(--qz-bdr);border-radius:8px;overflow:hidden;display:flex;flex-direction:column;transition:all .2s;}
+.p-card:hover{border-color:var(--qz-t3);transform:translateY(-3px);box-shadow:0 8px 24px rgba(0,109,91,.12);}
+.p-card-top{padding:.8rem .9rem .3rem;display:flex;align-items:flex-start;justify-content:space-between;gap:.35rem;}
+.p-code{font-size:.6rem;font-weight:800;letter-spacing:.08em;text-transform:uppercase;color:var(--qz-t1);}
+.p-status{font-size:.58rem;font-weight:800;letter-spacing:.06em;text-transform:uppercase;color:var(--qz-t3);}
+.p-status.closed{color:var(--qz-muted);}
+.p-body{padding:.35rem .9rem .3rem;flex:1;}
+.p-title{font-size:.9rem;font-weight:800;color:var(--qz-ink);line-height:1.35;margin-bottom:.3rem;font-family:'Open Sans',sans-serif;}
+.p-topics{font-size:.72rem;color:var(--qz-muted);line-height:1.5;margin-bottom:.6rem;}
+.p-meta{display:flex;align-items:center;gap:.65rem;flex-wrap:wrap;font-size:.66rem;color:var(--qz-muted);margin-bottom:.7rem;}
 .p-meta span{display:flex;align-items:center;gap:.3rem;}
-.p-badge{font-size:.62rem;font-weight:700;letter-spacing:.05em;text-transform:uppercase;background:#e6faf5;color:var(--qz-t1);border:1px solid #a7f3d0;border-radius:999px;padding:.14rem .55rem;}
-.p-foot{padding:0 .9rem .95rem;}
-.btn-start-card{width:100%;background:var(--qz-dark);color:#fff;font-size:.8rem;font-weight:700;letter-spacing:.03em;padding:.65rem;border-radius:9px;border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:.4rem;}
-.btn-start-card:hover{background:#000;}
-.btn-start-card:disabled{background:#c9c9c9;cursor:not-allowed;}
-.btn-start-card.done{background:#fff;border:1.5px solid var(--qz-t3);color:var(--qz-t1);}
-.btn-start-card.done:hover{background:#e6faf5;}
-.p-live{font-size:.66rem;color:var(--qz-t1);font-weight:700;margin-top:.4rem;text-align:center;}
+.p-badge{font-size:.58rem;font-weight:700;letter-spacing:.05em;text-transform:uppercase;background:#e5f3ff;color:#055aaa;border:none;border-radius:999px;padding:.13rem .45rem;}
+.p-foot{padding:0 .9rem .85rem;}
+.btn-start-card{width:auto;display:inline-flex;background:#00ab841a;color:var(--qz-t1);border:1px solid rgba(0,171,132,.3);font-size:.62rem;font-weight:700;letter-spacing:.03em;text-transform:uppercase;padding:.4rem .85rem;border-radius:5px;cursor:pointer;align-items:center;gap:.3rem;}
+.btn-start-card:hover{background:var(--qz-t3);color:#fff;}
+.btn-start-card:disabled{background:#eee;color:var(--qz-muted);border-color:var(--qz-bdr);cursor:not-allowed;}
+.btn-start-card.done{background:#f0fdf8;border:1px solid #6ee7b7;color:var(--qz-t1);}
+.btn-start-card.done:hover{background:var(--qz-t3);color:#fff;}
+.p-live{font-size:.6rem;color:var(--qz-muted);font-weight:600;margin-top:.4rem;}
 
 /* ══ INSTRUCTIONS ══ */
 .inst-body{max-width:640px;margin:1.5rem auto;padding:0 1rem 3rem;width:100%;flex:1;}
@@ -951,7 +951,7 @@ function renderDashboard(){
       const done=hasAttemptedToday(pid);
       const open=isOpenNow();
       const lockedByOther=attemptedToday&&!done;
-      let btnHtml,topGradClass=sec.grad,statusHtml;
+      let btnHtml,statusHtml;
       if(!open){
         btnHtml=`<button class="btn-start-card" disabled>Closed for today</button>`;
         statusHtml=`<span class="p-status closed">CLOSED</span>`;
@@ -961,13 +961,12 @@ function renderDashboard(){
       }else if(lockedByOther){
         btnHtml=`<button class="btn-start-card" disabled>🔒 1 Test/Day Used</button>`;
         statusHtml=`<span class="p-status closed">LOCKED</span>`;
-        topGradClass='locked-top';
       }else{
         btnHtml=`<button class="btn-start-card" onclick="goInstructions('${pid}')">▷ Start Test</button>`;
         statusHtml=`<span class="p-status">OPEN</span>`;
       }
       return `<div class="p-card">
-        <div class="p-card-top ${topGradClass}"><span>${p.code}</span>${statusHtml}</div>
+        <div class="p-card-top"><span class="p-code">${p.code}</span>${statusHtml}</div>
         <div class="p-body">
           <div class="p-title">${p.title}</div>
           <div class="p-topics">${p.topics}</div>
