@@ -477,6 +477,38 @@ body{font-family:'Open Sans',sans-serif;font-size:14px;}
 .btn-back-dash:hover{background:#000;}
 .btn-lb{background:linear-gradient(135deg,var(--qz-t1),var(--qz-t3));color:#fff;font-size:.84rem;font-weight:700;padding:.65rem 1.2rem;border-radius:10px;border:none;cursor:pointer;}
 
+/* ══ REVIEW ANSWERS ══ */
+.review-section{margin-top:1.5rem;}
+.review-toggle-row{display:flex;align-items:center;justify-content:center;gap:.6rem;flex-wrap:wrap;}
+.btn-review-toggle{background:#fff;color:var(--qz-t1);border:1.5px solid var(--qz-t3);font-size:.84rem;font-weight:700;padding:.65rem 1.2rem;border-radius:10px;cursor:pointer;}
+.btn-review-toggle:hover{background:var(--qz-t3);color:#fff;}
+.review-list{display:none;flex-direction:column;gap:.9rem;margin-top:1.1rem;}
+.review-list.open{display:flex;}
+.review-item{background:#fff;border:1.5px solid var(--qz-bdr);border-radius:14px;padding:1rem 1.1rem;}
+.review-item.review-correct{border-color:#a7f3d0;}
+.review-item.review-wrong{border-color:#fecaca;}
+.review-item.review-skipped{border-color:var(--qz-bdr);}
+.review-item-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:.5rem;}
+.review-q-num{font-family:'Nunito',sans-serif;font-size:.8rem;font-weight:800;color:var(--qz-muted);}
+.review-status{font-size:.62rem;font-weight:800;letter-spacing:.06em;text-transform:uppercase;padding:.2rem .55rem;border-radius:999px;}
+.review-status-correct{background:#e6faf5;color:var(--qz-t1);}
+.review-status-wrong{background:var(--qz-red-pale);color:var(--qz-red);}
+.review-status-skipped{background:#f3f4f6;color:var(--qz-muted);}
+.review-q-text{font-size:.9rem;font-weight:600;color:var(--qz-ink);line-height:1.5;margin-bottom:.7rem;}
+.review-opts{display:flex;flex-direction:column;gap:.4rem;margin-bottom:.6rem;}
+.review-opt{display:flex;align-items:center;gap:.55rem;padding:.5rem .65rem;border-radius:9px;border:1.5px solid var(--qz-bdr);font-size:.82rem;color:var(--qz-ink);}
+.review-opt-letter{width:20px;height:20px;border-radius:50%;background:#f3f4f6;color:var(--qz-muted);font-size:.68rem;font-weight:800;display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+.review-opt-text{flex:1;}
+.review-opt-mark{font-weight:800;flex-shrink:0;}
+.review-opt.is-correct{background:#e6faf5;border-color:#a7f3d0;}
+.review-opt.is-correct .review-opt-letter{background:var(--qz-t3);color:#fff;}
+.review-opt.is-correct .review-opt-mark{color:var(--qz-t1);}
+.review-opt.is-selected-wrong{background:var(--qz-red-pale);border-color:#fecaca;}
+.review-opt.is-selected-wrong .review-opt-letter{background:var(--qz-red);color:#fff;}
+.review-opt.is-selected-wrong .review-opt-mark{color:var(--qz-red);}
+.review-explanation{background:var(--qz-amber-pale);border:1px solid #FDE68A;border-radius:9px;padding:.6rem .75rem;font-size:.8rem;color:var(--qz-amber-dark);line-height:1.55;}
+.review-explanation strong{color:#92400E;}
+
 /* ══ LEADERBOARD ══ */
 .lb-body{max-width:640px;margin:1.5rem auto;padding:0 1rem 4rem;flex:1;width:100%;}
 .lb-hero{background:linear-gradient(135deg,var(--qz-t-dark),var(--qz-t1));border-radius:16px;padding:1.25rem;color:#fff;margin-bottom:1rem;}
@@ -592,7 +624,7 @@ body{font-family:'Open Sans',sans-serif;font-size:14px;}
 <div id="test-page">
   <div class="qz-test-actionbar">
     <span id="q-paper-tag-mini"></span>
-    <button class="btn-lang-toggle" id="lang-toggle-btn" onclick="toggleLang()" title="Switch language">हिं</button>
+    <button class="btn-lang-toggle" id="lang-toggle-btn" onclick="toggleLang();renderQuestion();" title="Switch language">हिं</button>
     <span class="timer-display" id="timer-box">00:00</span>
     <button class="btn-submit-top" onclick="showSubmitModal()">Submit</button>
   </div>
@@ -643,6 +675,13 @@ body{font-family:'Open Sans',sans-serif;font-size:14px;}
     <div class="result-actions">
       <button class="btn-lb" onclick="renderLeaderboard()">🏆 View Leaderboard</button>
       <button class="btn-back-dash" onclick="showPage('dashboard-page');renderDashboard();">Back to Dashboard</button>
+    </div>
+    <div class="review-section">
+      <div class="review-toggle-row">
+        <button class="btn-review-toggle" id="review-toggle-btn" onclick="toggleReview()">📋 Review Answers &amp; Explanations</button>
+        <button class="btn-lang-toggle" id="review-lang-btn" onclick="toggleLang();renderReview();" title="Switch language">हिं</button>
+      </div>
+      <div id="review-list" class="review-list"></div>
     </div>
   </div>
 </div>
@@ -1080,8 +1119,9 @@ function renderQuestion(){
 }
 function toggleLang(){
   currentLang=currentLang==='en'?'hi':'en';
-  const btn=document.getElementById('lang-toggle-btn');if(btn)btn.textContent=currentLang==='en'?'हिं':'EN';
-  renderQuestion();
+  const label=currentLang==='en'?'हिं':'EN';
+  const btn1=document.getElementById('lang-toggle-btn');if(btn1)btn1.textContent=label;
+  const btn2=document.getElementById('review-lang-btn');if(btn2)btn2.textContent=label;
 }
 function selectOpt(i){answers[currentQ]=answers[currentQ]===i?-1:i;renderQuestion();}
 function saveNext(){visited[currentQ]=true;if(currentQ<TOTAL-1){currentQ++;visited[currentQ]=true;renderQuestion();}}
@@ -1106,7 +1146,10 @@ async function submitTest(){
   const p=PAPERS[currentPaperId];let correct=0,wrong=0,skip=0;
   p.questions.forEach((q,i)=>{if(answers[i]===-1)skip++;else if(answers[i]===q.ans)correct++;else wrong++;});
   const marks=(correct-(wrong/4)).toFixed(2);const pct=Math.max(0,Math.round((marks/TOTAL)*100));
-  const scoreObj={correct,wrong,skip,marks,pct,total:TOTAL,timeSeconds:elapsedSeconds,at:new Date().toISOString()};
+  // Snapshot the exact questions/options/explanations shown, so "Review Answers" stays accurate
+  // later even if the DB question bank is edited or a fresh page load only has the fallback bank.
+  const review=p.questions.map((q,i)=>({text:q.text,opts:q.opts,ans:q.ans,exp:q.exp,selected:answers[i]}));
+  const scoreObj={correct,wrong,skip,marks,pct,total:TOTAL,timeSeconds:elapsedSeconds,at:new Date().toISOString(),review};
   localStorage.setItem(attemptKey(currentPaperId),JSON.stringify(scoreObj));
   showResult(scoreObj);
   saveAttemptRemote(scoreObj);
@@ -1123,9 +1166,64 @@ function showResult(scoreObj){
   document.getElementById('res-skip').textContent=skip;
   document.getElementById('res-marks').textContent=marks;
   document.getElementById('res-time').textContent=fmtMMSS(timeSeconds);
+  currentReview=scoreObj.review||null;
+  currentLang='en';
+  const langBtn=document.getElementById('review-lang-btn');if(langBtn)langBtn.textContent='हिं';
+  document.getElementById('review-list').innerHTML='';
+  document.getElementById('review-list').classList.remove('open');
+  const toggleBtn=document.getElementById('review-toggle-btn');
+  if(toggleBtn){
+    if(currentReview){toggleBtn.style.display='';toggleBtn.textContent='📋 Review Answers & Explanations';}
+    else{toggleBtn.style.display='none';} // older attempts saved before this feature existed have no snapshot
+  }
   showPage('result-page');
 }
 function openResultFromStorage(paperId){currentPaperId=paperId;const s=getTodayScore(paperId);if(s)showResult(s);}
+
+let currentReview=null,reviewOpen=false;
+function toggleReview(){
+  reviewOpen=!reviewOpen;
+  const btn=document.getElementById('review-toggle-btn');
+  const list=document.getElementById('review-list');
+  if(reviewOpen){
+    btn.textContent='▲ Hide Review';
+    list.classList.add('open');
+    renderReview();
+  }else{
+    btn.textContent='📋 Review Answers & Explanations';
+    list.classList.remove('open');
+  }
+}
+function renderReview(){
+  if(!currentReview)return;
+  const list=document.getElementById('review-list');
+  const letters=['A','B','C','D'];
+  list.innerHTML=currentReview.map((q,i)=>{
+    const opts=q.opts[currentLang]||q.opts.en;
+    const text=q.text[currentLang]||q.text.en;
+    const exp=(q.exp&&(q.exp[currentLang]||q.exp.en))||'';
+    const skipped=q.selected===-1||q.selected===undefined;
+    const correct=!skipped&&q.selected===q.ans;
+    const statusCls=skipped?'skipped':correct?'correct':'wrong';
+    const statusLabel=skipped?'Skipped':correct?'Correct':'Wrong';
+    const optsHtml=opts.map((o,oi)=>{
+      let cls='review-opt';
+      if(oi===q.ans)cls+=' is-correct';
+      else if(oi===q.selected)cls+=' is-selected-wrong';
+      const mark=oi===q.ans?'✓':(oi===q.selected?'✕':'');
+      return `<div class="${cls}"><span class="review-opt-letter">${letters[oi]}</span><span class="review-opt-text">${o}</span><span class="review-opt-mark">${mark}</span></div>`;
+    }).join('');
+    return `<div class="review-item review-${statusCls}">
+      <div class="review-item-head">
+        <span class="review-q-num">Q${i+1}</span>
+        <span class="review-status review-status-${statusCls}">${statusLabel}</span>
+      </div>
+      <div class="review-q-text">${text}</div>
+      <div class="review-opts">${optsHtml}</div>
+      ${exp?`<div class="review-explanation"><strong>Why?</strong> ${exp}</div>`:''}
+    </div>`;
+  }).join('');
+}
 
 /* ═══════════ REMOTE SAVE (Supabase test_attempts) ═══════════ */
 async function saveAttemptRemote(scoreObj){
