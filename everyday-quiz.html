@@ -20,26 +20,9 @@ body{
   min-height:100vh;
   display:flex;
   flex-direction:column;
-  background:#0e9e75;
+  background:var(--bg);
   position:relative;
   overflow-x:hidden;
-}
-
-/* Subtle horizontal line texture */
-body::before{
-  content:'';
-  position:fixed;
-  inset:0;
-  background:
-    repeating-linear-gradient(
-      0deg,
-      rgba(255,255,255,0.035) 0px,
-      rgba(255,255,255,0.035) 1px,
-      transparent 1px,
-      transparent 28px
-    );
-  pointer-events:none;
-  z-index:0;
 }
 
 /* ── FLOATING 3D TRIANGLES ── */
@@ -75,19 +58,19 @@ body::before{
 .sec-title{
   font-size:clamp(26px,4vw,36px);
   font-weight:800;
-  color:#fff;
+  color:var(--ink);
   line-height:1.15;
   margin-bottom:10px;
   letter-spacing:-0.01em;
 }
 .sec-sub{
   font-size:14px;
-  color:rgba(255,255,255,0.65);
+  color:var(--muted);
   max-width:500px;
   margin:0 auto;
   line-height:1.7;
 }
-.sec-sub strong{color:rgba(255,255,255,0.9);}
+.sec-sub strong{color:var(--ink);}
 
 /* ── CARDS GRID ── */
 .cards-grid{
