@@ -65,10 +65,10 @@ body::before{
   font-weight:700;
   letter-spacing:0.2em;
   text-transform:uppercase;
-  color:rgba(255,255,255,0.6);
+  color:#1a1a2e;
   margin-bottom:10px;
-  background:rgba(255,255,255,0.1);
-  border:1px solid rgba(255,255,255,0.2);
+  background:var(--qz-amber);
+  border:1px solid var(--qz-amber);
   border-radius:999px;
   padding:4px 14px;
 }
@@ -374,9 +374,9 @@ body{font-family:'Open Sans',sans-serif;background:var(--qz-bg);color:var(--qz-i
 
 /* ══ DASHBOARD ══ */
 .dash-body{max-width:1200px;margin:0 auto;padding:0 1rem 3rem;width:100%;flex:1;}
-.dash-heading{font-size:.95rem;font-weight:800;letter-spacing:.06em;text-transform:uppercase;color:#6b7280;margin:1.6rem 0 .8rem;padding-bottom:.4rem;border-bottom:2px solid #d1d5db;}
+.dash-heading{font-size:1.15rem;font-weight:400;letter-spacing:.06em;text-transform:uppercase;color:var(--qz-ink);margin:1.6rem 0 .8rem;padding-bottom:.4rem;border-bottom:2px solid #d1d5db;}
 .dash-heading:first-child{margin-top:0;}
-.top3-banner{display:block;width:100vw;max-width:100vw;margin:-52px calc(50% - 50vw) 0;box-shadow:none;}
+.top3-banner{display:block;width:100vw;max-width:100vw;height:12.2vw;min-height:60px;max-height:220px;object-fit:cover;object-position:center;margin:-52px calc(50% - 50vw) 0;box-shadow:none;}
 .paper-subgrid{display:grid;grid-template-columns:1fr;gap:1rem;}
 @media(min-width:640px){.paper-subgrid{grid-template-columns:repeat(2,1fr);}}
 @media(min-width:980px){.paper-subgrid{grid-template-columns:repeat(4,1fr);}}
@@ -421,7 +421,7 @@ body{font-family:'Open Sans',sans-serif;background:var(--qz-bg);color:var(--qz-i
 .login-gate-card{background:#fff;border:1px solid var(--qz-bdr);border-radius:14px;padding:1.5rem;text-align:center;max-width:420px;margin:2rem auto;}
 .login-gate-card p{color:var(--qz-muted);font-size:.85rem;margin:.5rem 0 1.1rem;line-height:1.6;}
 .btn-go-login{background:linear-gradient(135deg,var(--qz-t1),var(--qz-t3));color:#fff;font-size:.85rem;font-weight:700;padding:.65rem 1.4rem;border-radius:10px;border:none;cursor:pointer;text-decoration:none;display:inline-block;}
-.sec-title{font-size:.7rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--qz-t1);margin-bottom:.7rem;padding-bottom:.4rem;border-bottom:2px solid #a7f3d0;}
+.inst-sec-title{font-size:.7rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--qz-t1);margin-bottom:.7rem;padding-bottom:.4rem;border-bottom:2px solid #a7f3d0;}
 .inst-list{list-style:none;display:flex;flex-direction:column;gap:.45rem;margin-bottom:1.1rem;}
 .inst-list li{display:flex;align-items:flex-start;gap:.6rem;font-size:.84rem;color:#374151;line-height:1.6;}
 .bullet{width:20px;height:20px;border-radius:50%;background:#e6faf5;border:1.5px solid #a7f3d0;display:grid;place-items:center;flex-shrink:0;margin-top:2px;font-size:.6rem;font-weight:700;color:var(--qz-t1);}
@@ -578,7 +578,7 @@ body{font-family:'Open Sans',sans-serif;background:var(--qz-bg);color:var(--qz-i
       <div class="inst-bdy">
         <div class="candidate-info" id="candidate-info-block"></div>
         <div class="details-grid" id="inst-details-grid"></div>
-        <div class="sec-title">Instructions</div>
+        <div class="inst-sec-title">Instructions</div>
         <ul class="inst-list">
           <li><span class="bullet">1</span><span>This test has 11 objective (MCQ) questions with four options each. Select the best answer.</span></li>
           <li><span class="bullet">2</span><span>Navigate between questions using the palette or the Previous / Save &amp; Next buttons.</span></li>
