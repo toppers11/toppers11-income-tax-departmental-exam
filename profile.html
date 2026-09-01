@@ -225,7 +225,7 @@ function showToast(msg){
 
   try {
     var emailEnc = encodeURIComponent((user.email || '').toLowerCase());
-    var profRows = await sbFetch('users?email=eq.' + emailEnc + '&select=full_name,mobile,region');
+    var profRows = await sbFetch('rpc/get_my_profile?p_email=' + emailEnc);
     if (profRows && profRows.length) {
       var dbProf = profRows[0];
       var key = (user.email || '').toLowerCase();
