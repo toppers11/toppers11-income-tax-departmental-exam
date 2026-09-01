@@ -1287,9 +1287,9 @@ async function saveAttemptRemote(scoreObj,answersArr){
   const user=getUser();const email=(user.email||'').toLowerCase();
   if(!email)return; // not logged in — remote save skipped, localStorage copy still works on this device
   const name=candName||user.name||null;const mobile=candMobile||user.mobile||user.phone||null;
-  const payload={email,name,mobile,series_id:currentSeriesId,exam_type:(META.exam||'iti').toUpperCase(),answers:answersArr,correct:scoreObj.correct??null,wrong:scoreObj.wrong??null,skip:scoreObj.skip??null,marks:scoreObj.marks??null,pct:scoreObj.pct??null,total:scoreObj.total??null,submitted_at:new Date().toISOString()};
+  const payload={p_email:email,p_name:name,p_mobile:mobile,p_series_id:currentSeriesId,p_exam_type:(META.exam||'iti').toUpperCase(),p_answers:answersArr,p_correct:scoreObj.correct??null,p_wrong:scoreObj.wrong??null,p_skip:scoreObj.skip??null,p_marks:scoreObj.marks??null,p_pct:scoreObj.pct??null,p_total:scoreObj.total??null};
   try{
-    const res=await fetchWithTimeoutMock(`${SUPABASE_URL}/rest/v1/test_attempts`,{method:'POST',headers:{'apikey':SUPABASE_ANON,'Authorization':'Bearer '+SUPABASE_ANON,'Content-Type':'application/json','Prefer':'resolution=merge-duplicates,return=minimal'},body:JSON.stringify(payload)},8000);
+    const res=await fetchWithTimeoutMock(`${SUPABASE_URL}/rest/v1/rpc/save_attempt`,{method:'POST',headers:{'apikey':SUPABASE_ANON,'Authorization':'Bearer '+SUPABASE_ANON,'Content-Type':'application/json'},body:JSON.stringify(payload)},8000);
     if(!res.ok){const t=await res.text().catch(()=>'');console.warn('Attempt save failed:',res.status,t);}
   }catch(e){console.warn('Attempt save error (kept locally only):',e.message);}
 }

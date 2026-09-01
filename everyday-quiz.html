@@ -1182,7 +1182,7 @@ async function submitTest(){
   const scoreObj={correct,wrong,skip,marks,pct,total:TOTAL,timeSeconds:elapsedSeconds,at:new Date().toISOString(),review};
   localStorage.setItem(attemptKey(currentPaperId),JSON.stringify(scoreObj));
   showResult(scoreObj);
-  saveAttemptRemote(scoreObj);
+  saveAttemptRemote(scoreObj,answers);
 }
 
 function showResult(scoreObj){
@@ -1255,17 +1255,21 @@ function renderReview(){
 }
 
 /* ═══════════ REMOTE SAVE (Supabase test_attempts) ═══════════ */
-async function saveAttemptRemote(scoreObj){
+async function saveAttemptRemote(scoreObj,answersArr){
   const u=getLoggedInUser();if(!u)return;
   const payload={
-    name:u.name||'Candidate',
-    email:(u.email||'').toLowerCase(),
-    series_id:currentPaperId+'_'+todayKey(),
-    correct:scoreObj.correct,wrong:scoreObj.wrong,skip:scoreObj.skip,
-    marks:scoreObj.marks,pct:scoreObj.pct,total:scoreObj.total
+    p_name:u.name||'Candidate',
+    p_email:(u.email||'').toLowerCase(),
+    p_mobile:u.mobile||u.phone||null,
+    p_series_id:currentPaperId+'_'+todayKey(),
+    p_exam_type:'DAILY',
+    p_answers:answersArr||null,
+    p_correct:scoreObj.correct??null,p_wrong:scoreObj.wrong??null,p_skip:scoreObj.skip??null,
+    p_marks:scoreObj.marks??null,p_pct:scoreObj.pct??null,p_total:scoreObj.total??null
   };
   try{
-    await fetch(`${SUPABASE_URL}/rest/v1/test_attempts`,{method:'POST',headers:{'apikey':SUPABASE_ANON_KEY,'Authorization':'Bearer '+SUPABASE_ANON_KEY,'Content-Type':'application/json','Prefer':'resolution=merge-duplicates,return=minimal'},body:JSON.stringify(payload)});
+    const res=await fetch(`${SUPABASE_URL}/rest/v1/rpc/save_attempt`,{method:'POST',headers:{'apikey':SUPABASE_ANON_KEY,'Authorization':'Bearer '+SUPABASE_ANON_KEY,'Content-Type':'application/json'},body:JSON.stringify(payload)});
+    if(!res.ok){const t=await res.text().catch(()=>'');console.warn('Attempt save failed:',res.status,t);}
   }catch(e){console.warn('Attempt save error (kept locally only):',e.message);}
 }
 async function fetchRemoteAttempts(seriesId){
