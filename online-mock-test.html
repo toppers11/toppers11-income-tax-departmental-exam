@@ -1297,11 +1297,10 @@ async function fetchRemoteAttempt(seriesId){
   const user=getUser();const email=(user.email||'').toLowerCase();
   if(!email)return null;
   try{
-    const emailEnc=encodeURIComponent(email);
-    const res=await fetchWithTimeoutMock(`${SUPABASE_URL}/rest/v1/test_attempts?email=eq.${emailEnc}&series_id=eq.${encodeURIComponent(seriesId)}&select=answers,correct,wrong,skip,marks,pct,total`,{headers:{'apikey':SUPABASE_ANON,'Authorization':'Bearer '+SUPABASE_ANON,'Content-Type':'application/json'}},8000);
+    const res=await fetchWithTimeoutMock(`${SUPABASE_URL}/rest/v1/rpc/get_my_attempt`,{method:'POST',headers:{'apikey':SUPABASE_ANON,'Authorization':'Bearer '+SUPABASE_ANON,'Content-Type':'application/json'},body:JSON.stringify({p_email:email,p_series_id:seriesId})},8000);
     if(!res.ok)return null;
-    const rows=await res.json();
-    return (rows&&rows.length)?rows[0]:null;
+    const row=await res.json();
+    return row&&Object.keys(row).length?row:null;
   }catch(e){console.warn('Attempt fetch error:',e.message);return null;}
 }
 function fetchWithTimeoutMock(url,opts,ms){

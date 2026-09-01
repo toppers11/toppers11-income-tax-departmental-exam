@@ -1026,7 +1026,7 @@ async function syncPaymentStatus(){
 
   try{
     const emailEnc=encodeURIComponent((user.email||'').toLowerCase());
-    const rows=await sbFetch('payments?email=eq.'+emailEnc+'&status=in.(verified,pending_verification)&exam_type=eq.MS&select=subject_name,status&limit=20');
+    const rows=await sbFetch('rpc/get_my_payments?p_email='+emailEnc+'&p_exam_type=MS');
     const verifiedNames=(rows||[]).filter(r=>r.status==='verified').map(r=>r.subject_name);
     const knownNames=new Set([BUNCH_LABEL,...PAPERS.map(p=>p.name)]);
     // Only surface pending rows whose subject_name matches a real paper/bunch —

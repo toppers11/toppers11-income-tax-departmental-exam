@@ -42,26 +42,23 @@ function openForgotModal(){document.getElementById('forgot-identifier').value=''
 function closeForgotModal(){document.getElementById('forgot-modal').classList.remove('open');}
 function closeForgotIfOutside(e){if(e.target===document.getElementById('forgot-modal'))closeForgotModal();}
 async function verifyForgotIdentity(){const errEl=document.getElementById('forgot-error');errEl.classList.remove('show');errEl.textContent='';const identifier=document.getElementById('forgot-identifier').value.trim();if(!identifier){errEl.textContent='Please enter your email or mobile number.';errEl.classList.add('show');return;}
-const btn=document.getElementById('forgot-verify-btn');btn.disabled=true;btn.innerHTML='<span class="spinner"></span> Checking…';try{const isMobile=/^\d{10}$/.test(identifier);const filterParam=isMobile
-?'mobile=eq.' + encodeURIComponent(identifier)+ '&select=id,full_name,email&limit=1'
-: 'email=eq.' + encodeURIComponent(identifier.toLowerCase())+ '&select=id,full_name,email&limit=1';const rows=await sbSelect('users',filterParam);if(!rows||rows.length===0){throw new Error(isMobile
-?'No account found with this mobile number.'
-: 'No account found with this email address.');}
-const rec=rows[0];document.getElementById('forgot-user-id').value=rec.id;document.getElementById('forgot-found-name').textContent=rec.full_name||rec.email;document.getElementById('forgot-step1').style.display='none';document.getElementById('forgot-step2').style.display='';}catch(e){errEl.textContent=e.message||'Something went wrong. Please try again.';errEl.classList.add('show');}
+const btn=document.getElementById('forgot-verify-btn');btn.disabled=true;btn.innerHTML='<span class="spinner"></span> Sending…';try{
+/* Self-service instant reset was removed: it let anyone overwrite any
+   account's password just by knowing an email or mobile number. A real
+   fix needs an emailed/SMS one-time link, which needs a mail/SMS provider
+   wired up first. Until then, requests are logged for manual follow-up. */
+const res=await fetch(SUPABASE_URL+'/rest/v1/rpc/request_password_reset',{method:'POST',headers:{'Content-Type':'application/json','apikey':SUPABASE_ANON_KEY,'Authorization':'Bearer '+SUPABASE_ANON_KEY},body:JSON.stringify({p_identifier:identifier})});
+if(!res.ok)throw new Error('Something went wrong. Please try again.');
+document.getElementById('forgot-step1').style.display='none';document.getElementById('forgot-step3').style.display='';document.querySelector('#forgot-step3 h3').textContent='Request received!';document.querySelector('#forgot-step3 p').textContent='If an account matches, our support team will verify your identity and help you reset your password shortly — reach out on WhatsApp for the fastest response.';
+}catch(e){errEl.textContent='Something went wrong. Please try again.';errEl.classList.add('show');}
 btn.disabled=false;btn.innerHTML='Verify Account →';}
-async function resetForgotPassword(){const errEl=document.getElementById('forgot-error2');errEl.classList.remove('show');errEl.textContent='';const pass=document.getElementById('forgot-newpass').value;const pass2=document.getElementById('forgot-newpass2').value;const userId=document.getElementById('forgot-user-id').value;if(pass.length<8){errEl.textContent='Password must be at least 8 characters.';errEl.classList.add('show');return;}
-if(pass!==pass2){errEl.textContent='Passwords do not match.';errEl.classList.add('show');return;}
-const btn=document.getElementById('forgot-reset-btn');btn.disabled=true;btn.innerHTML='<span class="spinner"></span> Updating…';try{const passHash=await hashPass(pass);await sbUpdate('users',{pass_hash: passHash},'id=eq.' + encodeURIComponent(userId));document.getElementById('forgot-step2').style.display='none';document.getElementById('forgot-step3').style.display='';}catch(e){errEl.textContent=e.message||'Could not update password. Please try again.';errEl.classList.add('show');}
-btn.disabled=false;btn.innerHTML='Set New Password';}
 async function doLogin(){clearErrors();if(document.getElementById('hp-website')&&document.getElementById('hp-website').value!==''){const btn=document.getElementById('login-btn');btn.disabled=true;btn.innerHTML='<span class="spinner"></span> Logging in…';setTimeout(()=>{btn.disabled=false;btn.innerHTML='Log In&amp;Go to Dashboard →';showError('login-error','Login failed. Please try again.');},2000);return;}
 const identifier=document.getElementById('login-email').value.trim();const pass=document.getElementById('login-pass').value;if(!identifier){showError('login-error','Please enter your mobile number or email address.');return;}
 if(!pass){showError('login-error','Please enter your password.');return;}
-const btn=document.getElementById('login-btn');btn.disabled=true;btn.innerHTML='<span class="spinner"></span> Logging in…';try{const isMobile=/^\d{10}$/.test(identifier);const filterParam=isMobile
-?'mobile=eq.' + encodeURIComponent(identifier)+ '&select=*&limit=1'
-: 'email=eq.' + encodeURIComponent(identifier.toLowerCase())+ '&select=*&limit=1';const rows=await sbSelect('users',filterParam);if(!rows||rows.length===0){throw new Error(isMobile
-?'No account found with this mobile number. Please register first.'
-: 'No account found with this email. Please register first.');}
-const rec=rows[0];const hashInput=await hashPass(pass);const legacyHash=btoa(pass);if(rec.pass_hash!==hashInput&&rec.pass_hash!==legacyHash){throw new Error('Incorrect password. Please try again.');}
+const btn=document.getElementById('login-btn');btn.disabled=true;btn.innerHTML='<span class="spinner"></span> Logging in…';try{
+const res=await fetch(SUPABASE_URL+'/rest/v1/rpc/login_user',{method:'POST',headers:{'Content-Type':'application/json','apikey':SUPABASE_ANON_KEY,'Authorization':'Bearer '+SUPABASE_ANON_KEY},body:JSON.stringify({p_identifier:identifier,p_password:pass})});
+if(!res.ok){const errBody=await res.json().catch(()=>({}));throw new Error(errBody.message||'Login failed. Please try again.');}
+const rec=await res.json();
 const users=getUsers();const key=(rec.email||'').toLowerCase();users[key]={name: rec.full_name,mobile: rec.mobile,region: rec.region,paid: rec.paid,plan: rec.plan,registeredAt: rec.created_at};saveUsers(users);saveUser({email: rec.email,name: rec.full_name,token: 'sb_' + Date.now(),paid: rec.paid||false,plan: rec.plan||null});showSuccess(rec.full_name.split(' ')[0],false);}catch(e){showError('login-error',e.message||'Login failed.');btn.disabled=false;btn.innerHTML='Log In&amp;Go to Dashboard →';}
 }
 async function doRegister(){clearErrors();const name=document.getElementById('reg-name').value.trim();const email=document.getElementById('reg-email').value.trim();const mobile=document.getElementById('reg-mobile').value.trim();const region=document.getElementById('reg-region').value;const pass=document.getElementById('reg-pass').value;const pass2=document.getElementById('reg-pass2').value;if(!name){showError('reg-error','Please enter your full name.');return;}
@@ -71,7 +68,11 @@ if(!/^\d{10}$/.test(mobile)){showError('reg-error','Mobile must be exactly 10 di
 if(!region){showError('reg-error','Please select your region.');return;}
 if(pass.length<8){showError('reg-error','Password must be at least 8 characters.');return;}
 if(pass!==pass2){showError('reg-error','Passwords do not match.');return;}
-const btn=document.getElementById('reg-btn');btn.disabled=true;btn.innerHTML='<span class="spinner"></span> Creating account…';try{const existing=await sbSelect('users','email=eq.' + encodeURIComponent(email.toLowerCase())+ '&select=id&limit=1');if(existing&&existing.length > 0)throw new Error('An account with this email already exists. Please log in.');const createdAt=new Date().toISOString();const passHash=await hashPass(pass);await sbInsert('users',{email : email.toLowerCase(),full_name : name,mobile : mobile,region : region,pass_hash : passHash,created_at: createdAt,});const users=getUsers();users[email.toLowerCase()]={name,mobile,region,paid: false,plan: null,registeredAt: createdAt};saveUsers(users);saveUser({email: email.toLowerCase(),name,token: 'sb_' + Date.now(),paid: false,plan: null});showSuccess(name.split(' ')[0],true);}catch(e){showError('reg-error',e.message||'Registration failed.');btn.disabled=false;btn.innerHTML='Create Account&amp;Start Free →';}
+const btn=document.getElementById('reg-btn');btn.disabled=true;btn.innerHTML='<span class="spinner"></span> Creating account…';try{
+const res=await fetch(SUPABASE_URL+'/rest/v1/rpc/register_user',{method:'POST',headers:{'Content-Type':'application/json','apikey':SUPABASE_ANON_KEY,'Authorization':'Bearer '+SUPABASE_ANON_KEY},body:JSON.stringify({p_email:email.toLowerCase(),p_full_name:name,p_mobile:mobile,p_region:region,p_password:pass})});
+if(!res.ok){const errBody=await res.json().catch(()=>({}));throw new Error(errBody.message||'Registration failed. Please try again.');}
+const rec=await res.json();
+const users=getUsers();users[rec.email]={name: rec.full_name,mobile: rec.mobile,region: rec.region,paid: false,plan: null,registeredAt: rec.created_at};saveUsers(users);saveUser({email: rec.email,name: rec.full_name,token: 'sb_' + Date.now(),paid: false,plan: null});showSuccess(name.split(' ')[0],true);}catch(e){showError('reg-error',e.message||'Registration failed.');btn.disabled=false;btn.innerHTML='Create Account&amp;Start Free →';}
 }
 window.addEventListener('DOMContentLoaded',()=>{const user=loadUser();if(user&&user.token){window.location.replace('income-tax-departmental-exam.html');return;}
 document.getElementById('user-chip-wrap').style.display='none';const p=new URLSearchParams(window.location.search);if(p.get('tab')==='register')switchTab('register');});</script>

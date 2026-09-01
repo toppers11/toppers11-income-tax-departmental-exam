@@ -616,7 +616,7 @@ const user=getUser();
 if(!sbRateOk())return{ok:false,newlyActivated:[],stillPending:[],bunchActivated:false};
 try{
 const emailEnc=encodeURIComponent((user.email||'').toLowerCase());
-const rows=await sbFetch('payments?email=eq.'+emailEnc+'&status=in.(verified,pending_verification)&exam_type=eq.ITI&select=plan_key,subject_key,subject_name,status&limit=20');
+const rows=await sbFetch('rpc/get_my_payments?p_email='+emailEnc+'&p_exam_type=ITI');
 const verifiedRows=(rows||[]).filter(r=>r.status==='verified');
 const pendingRows=(rows||[]).filter(r=>r.status==='pending_verification');
 const bunchVerified=verifiedRows.some(r=>r.plan_key==='bunch-iti');
@@ -689,7 +689,7 @@ showSkeleton();
 try{
 if(sbRateOk()){
 const emailEnc=encodeURIComponent((user.email||'').toLowerCase());
-const rows=await sbFetch('payments?email=eq.'+emailEnc+'&status=in.(verified,pending_verification)&exam_type=eq.ITI&select=plan_key,subject_key,subject_name,status');
+const rows=await sbFetch('rpc/get_my_payments?p_email='+emailEnc+'&p_exam_type=ITI');
 // IMPORTANT: only 'verified' rows may grant access. A pending_verification
 // row is just a claim the user made — a human must check the bank/UPI
 // statement and flip the row to 'verified' in Supabase before it unlocks
