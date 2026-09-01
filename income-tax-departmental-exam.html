@@ -934,7 +934,7 @@ function saveUsers(u){ localStorage.setItem('t11_users', JSON.stringify(u)); }
 
   try {
     var emailEnc2 = encodeURIComponent((user.email || '').toLowerCase());
-    var profRows = await sbFetch('users?email=eq.' + emailEnc2 + '&select=full_name,mobile,region');
+    var profRows = await sbFetch('rpc/get_my_profile?p_email=' + emailEnc2);
     if (profRows && profRows.length) {
       var dbProf = profRows[0];
       var key = (user.email || '').toLowerCase();
