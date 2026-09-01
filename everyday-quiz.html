@@ -1268,13 +1268,13 @@ async function saveAttemptRemote(scoreObj,answersArr){
     p_marks:scoreObj.marks??null,p_pct:scoreObj.pct??null,p_total:scoreObj.total??null
   };
   try{
-    const res=await fetch(`${SUPABASE_URL}/rest/v1/rpc/save_attempt`,{method:'POST',headers:{'apikey':SUPABASE_ANON_KEY,'Authorization':'Bearer '+SUPABASE_ANON_KEY,'Content-Type':'application/json'},body:JSON.stringify(payload)});
+    const res=await fetch(`${SUPABASE_URL}/rest/v1/rpc/save_daily_attempt`,{method:'POST',headers:{'apikey':SUPABASE_ANON_KEY,'Authorization':'Bearer '+SUPABASE_ANON_KEY,'Content-Type':'application/json'},body:JSON.stringify(payload)});
     if(!res.ok){const t=await res.text().catch(()=>'');console.warn('Attempt save failed:',res.status,t);}
   }catch(e){console.warn('Attempt save error (kept locally only):',e.message);}
 }
 async function fetchRemoteAttempts(seriesId){
   try{
-    const res=await fetch(`${SUPABASE_URL}/rest/v1/leaderboard_public?series_id=eq.${encodeURIComponent(seriesId)}&select=name,marks,pct`,{headers:{'apikey':SUPABASE_ANON_KEY,'Authorization':'Bearer '+SUPABASE_ANON_KEY,'Content-Type':'application/json'}});
+    const res=await fetch(`${SUPABASE_URL}/rest/v1/daily_leaderboard_public?series_id=eq.${encodeURIComponent(seriesId)}&select=name,marks,pct`,{headers:{'apikey':SUPABASE_ANON_KEY,'Authorization':'Bearer '+SUPABASE_ANON_KEY,'Content-Type':'application/json'}});
     if(!res.ok)return[];
     return await res.json();
   }catch(e){console.warn('Leaderboard fetch error:',e.message);return[];}
@@ -1324,11 +1324,12 @@ async function renderLeaderboard(){
     real.push({name:u.name,region:u.region||'—',marks:parseFloat(myScore.marks),pct:myScore.pct,timeSeconds:myScore.timeSeconds,isReal:true,isSelf:true});
   }
 
-  // Fake candidates scale 2:1 with real attempts — 1 real attempt today shows
-  // 2 fake candidates alongside it (3 total); 50 real attempts shows 100 fake
-  // (150 total). Change FAKE_MULTIPLIER below to adjust the ratio, or add a
-  // MIN_FAKE floor if you want a populated-looking board even at 0 attempts.
-  const FAKE_MULTIPLIER=2;
+  // Fake candidates scale with real attempts, at a randomized ratio (1x-5x)
+  // seeded per paper+day so it stays consistent on refresh but isn't a
+  // suspiciously constant 2x every time. Change the 1+Math.floor(rand()*5)
+  // expression below to widen/narrow the range.
+  const multRand=mulberry32(seedFromString(seed+'_mult'));
+  const FAKE_MULTIPLIER=1+Math.floor(multRand()*5);
   const fakeCount=real.length*FAKE_MULTIPLIER;
   const fake=generateFakeCandidates(seed,fakeCount,TOTAL);
 
