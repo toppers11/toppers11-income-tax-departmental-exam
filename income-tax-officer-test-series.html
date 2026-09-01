@@ -1404,7 +1404,7 @@ window.addEventListener('DOMContentLoaded',async()=>{
 
   try{
     const emailEnc2=encodeURIComponent((user.email||'').toLowerCase());
-    const profRows=await sbFetch('users?email=eq.'+emailEnc2+'&select=full_name,mobile,region');
+    const profRows=await sbFetch('rpc/get_my_profile?p_email='+emailEnc2);
     if(profRows&&profRows.length){
       const dbProf=profRows[0];
       const key=(user.email||'').toLowerCase();
@@ -1431,7 +1431,7 @@ async function syncRemoteAttempts(){
   if(!email)return;
   try{
     const emailEnc=encodeURIComponent(email);
-    const rows=await sbFetch('test_attempts?email=eq.'+emailEnc+'&exam_type=eq.ITO&select=series_id,correct,wrong,skip,marks,pct,total');
+    const rows=await sbFetch('rpc/get_my_attempts_list?p_email='+emailEnc+'&p_exam_type=ITO');
     (rows||[]).forEach(r=>{
       if(!r.series_id)return;
       localStorage.setItem('t11_score_'+r.series_id,JSON.stringify({correct:r.correct,wrong:r.wrong,skip:r.skip,marks:r.marks,pct:r.pct,total:r.total}));
