@@ -958,6 +958,7 @@ const PAPERS={
 
 /* ═══════════ STATE ═══════════ */
 let currentPaperId=null,currentQ=0,answers=[],visited=[],TOTAL=11,currentLang='en';
+const QUESTIONS_PER_PAPER=11; // every paper in PAPERS currently has 11 questions; used by the combined leaderboard
 let timerInterval=null,startTime=null,elapsedSeconds=0;
 let logoTapCount=0,logoTapTimer=null;
 
@@ -1317,6 +1318,16 @@ async function fetchRemoteAttempts(seriesId){
     return await res.json();
   }catch(e){console.warn('Leaderboard fetch error:',e.message);return[];}
 }
+// Fetches every attempt row for TODAY across ALL papers (series_id = "<paperId>_<dateKey>").
+// Each candidate only ever takes ONE of the 10 papers, so this is a straight merge —
+// no summing needed, just everyone's single score pooled into one list.
+async function fetchRemoteAttemptsAllPapers(dateKey){
+  try{
+    const res=await fetch(`${SUPABASE_URL}/rest/v1/daily_leaderboard_public?series_id=like.*_${encodeURIComponent(dateKey)}&select=name,marks,pct,time_seconds,series_id`,{headers:{'apikey':SUPABASE_ANON_KEY,'Authorization':'Bearer '+SUPABASE_ANON_KEY,'Content-Type':'application/json'}});
+    if(!res.ok)return[];
+    return await res.json();
+  }catch(e){console.warn('Leaderboard fetch error:',e.message);return[];}
+}
 
 /* ═══════════ FAKE LEADERBOARD (deterministic, no backend needed) ═══════════ */
 const FIRST_NAMES=['Amit','Priya','Rahul','Sneha','Vikram','Anjali','Rohan','Kavita','Suresh','Neha','Arjun','Pooja','Manoj','Divya','Sanjay','Ritu','Ajay','Swati','Deepak','Meena','Karan','Nisha','Vivek','Shweta','Rajesh','Anita','Gaurav','Preeti','Naveen','Simran','Ashok','Komal','Rakesh','Bhavna','Sunil','Kiran','Manish','Rekha','Vinay','Payal','Harish','Jyoti','Ramesh','Seema','Yogesh','Alka','Deepika','Mohit','Shalini','Pankaj'];
@@ -1341,35 +1352,63 @@ function generateFakeCandidates(seed,count,total){
   return out;
 }
 
+// Fake candidates for the COMBINED leaderboard: each represents a single test attempt
+// (same as real candidates), just picked from a random paper's worth of marks (out of 11).
+function generateFakeCandidatesOverall(seed,count){
+  const rand=mulberry32(seedFromString(seed));
+  const used=new Set();const out=[];
+  for(let i=0;i<count;i++){
+    let fn,ln,full;
+    do{fn=FIRST_NAMES[Math.floor(rand()*FIRST_NAMES.length)];ln=LAST_NAMES[Math.floor(rand()*LAST_NAMES.length)];full=fn+' '+ln;}while(used.has(full));
+    used.add(full);
+    const region=REGIONS[Math.floor(rand()*REGIONS.length)];
+    const raw=(rand()+rand()+rand())/3; // roughly triangular distribution
+    const marks=parseFloat((raw*QUESTIONS_PER_PAPER).toFixed(2));
+    const pct=Math.round((marks/QUESTIONS_PER_PAPER)*100);
+    const timeSeconds=60+Math.floor(rand()*780);
+    out.push({name:full,region,marks,pct,timeSeconds,isReal:false});
+  }
+  return out;
+}
+
 let adminMode=false;
 async function renderLeaderboard(){
-  const p=PAPERS[currentPaperId];const seed=currentPaperId+'_'+todayKey();
-  document.getElementById('lb-title').textContent='🏆 Leaderboard';
-  document.getElementById('lb-sub').textContent=`${p.title} — Today's Ranking`;
+  const dateKey=todayKey();
+  document.getElementById('lb-title').textContent='🏆 Overall Leaderboard';
+  document.getElementById('lb-sub').textContent=`All Papers Combined — Today's Ranking`;
   document.getElementById('lb-list').innerHTML=`<div style="padding:2rem;text-align:center;color:var(--qz-muted);">Loading leaderboard…</div>`;
   showPage('leaderboard-page');
 
-  // Fetch REAL attempts first — the fake candidate count scales off this,
-  // so it must be known before we decide how many fake rows to generate.
+  // Fetch every REAL attempt made today across ALL 10 papers. Each candidate only ever
+  // takes ONE paper, so this is a straight merge — every row is already one candidate's
+  // single score, just pooled from every paper instead of filtered to one series_id.
   let real=[];
   try{
-    const rows=await fetchRemoteAttempts(seed);
+    const rows=await fetchRemoteAttemptsAllPapers(dateKey);
     real=rows.map(r=>({name:r.name||'Candidate',region:r.region||'—',marks:parseFloat(r.marks)||0,pct:r.pct||0,timeSeconds:r.time_seconds||0,isReal:true}));
   }catch(e){}
-  // ensure current candidate's own local result is represented even if remote fetch failed/blocked by RLS
-  const myScore=getTodayScore(currentPaperId);const u=getLoggedInUser();
-  if(myScore&&u&&u.name&&!real.some(r=>r.name===u.name)){
-    real.push({name:u.name,region:u.region||'—',marks:parseFloat(myScore.marks),pct:myScore.pct,timeSeconds:myScore.timeSeconds,isReal:true,isSelf:true});
+
+  // Ensure the current candidate's own result is represented even if the remote fetch
+  // failed or was blocked by RLS — pull it from whichever paper they attempted today.
+  const u=getLoggedInUser();
+  if(u&&u.name){
+    const myScore=getTodayScore(currentPaperId);
+    if(myScore){
+      const key=u.name.trim().toLowerCase();
+      const existing=real.find(r=>r.name.trim().toLowerCase()===key);
+      if(existing)existing.isSelf=true;
+      else real.push({name:u.name,region:u.region||'—',marks:parseFloat(myScore.marks)||0,pct:myScore.pct||0,timeSeconds:myScore.timeSeconds||0,isReal:true,isSelf:true});
+    }
   }
 
-  // Fake candidates scale with real attempts, at a randomized ratio (1x-5x)
-  // seeded per paper+day so it stays consistent on refresh but isn't a
-  // suspiciously constant 2x every time. Change the 1+Math.floor(rand()*5)
-  // expression below to widen/narrow the range.
+  // Fake candidates scale with real candidates, at a randomized ratio (1x-5x) seeded
+  // per day so it stays consistent on refresh but isn't a suspiciously constant
+  // multiple every time. Change the 1+Math.floor(rand()*5) expression to widen/narrow it.
+  const seed='overall_'+dateKey;
   const multRand=mulberry32(seedFromString(seed+'_mult'));
   const FAKE_MULTIPLIER=1+Math.floor(multRand()*5);
   const fakeCount=real.length*FAKE_MULTIPLIER;
-  const fake=generateFakeCandidates(seed,fakeCount,TOTAL);
+  const fake=generateFakeCandidatesOverall(seed,fakeCount);
 
   const all=[...fake,...real].sort((a,b)=>b.marks-a.marks||a.timeSeconds-b.timeSeconds);
   all.forEach((r,i)=>r.rank=i+1);
