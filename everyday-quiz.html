@@ -616,7 +616,7 @@ body{font-family:'Open Sans',sans-serif;font-size:14px;}
           <li><span class="bullet">2</span><span>Navigate between questions using the palette or the Previous / Save &amp; Next buttons.</span></li>
           <li><span class="bullet">3</span><span>All questions carry equal marks. <strong>Negative marking: −1/8</strong> for each wrong answer. Unattempted questions carry 0 marks.</span></li>
           <li><span class="bullet">4</span><span>Your time is tracked from the moment you begin, and shown on your scorecard.</span></li>
-          <li><span class="bullet">5</span><span><strong>You may attempt only ONE test per day, across all papers combined.</strong> Once you submit any paper, the rest lock until 12:00 AM. Tests stay open until <strong>11:59 PM</strong>.</span></li>
+          <li><span class="bullet">5</span><span><strong>You may attempt only ONE test per day, across all papers combined.</strong> Once you submit any paper, the rest lock until <strong>5:00 AM</strong> the next day.</span></li>
           <li><span class="bullet">6</span><span>The test auto-submits after 15 minutes if not submitted earlier.</span></li>
         </ul>
       </div>
@@ -961,9 +961,18 @@ let currentPaperId=null,currentQ=0,answers=[],visited=[],TOTAL=11,currentLang='e
 let timerInterval=null,startTime=null,elapsedSeconds=0;
 let logoTapCount=0,logoTapTimer=null;
 
-function todayKey(){const d=new Date();return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0');}
-function isOpenNow(){const d=new Date();return d.getHours()<24;} // open every day until 23:59:59, resets at midnight
-function msUntilMidnight(){const n=new Date();const mid=new Date(n.getFullYear(),n.getMonth(),n.getDate()+1,0,0,0);return mid-n;}
+/* Daily "test day" now runs 5:00 AM → 4:59:59 AM the next day (not midnight-to-midnight).
+   We do this by shifting the clock back 5 hours before reading the calendar date:
+   anything before 5 AM still counts as "yesterday's" date key. */
+const RESET_HOUR=5;
+function todayKey(){const d=new Date(Date.now()-RESET_HOUR*3600000);return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0');}
+function isOpenNow(){return true;} // open every day, resets at 5:00 AM
+function msUntilMidnight(){
+  const n=new Date();
+  let next=new Date(n.getFullYear(),n.getMonth(),n.getDate(),RESET_HOUR,0,0,0);
+  if(n>=next)next.setDate(next.getDate()+1);
+  return next-n;
+}
 function fmtCountdown(ms){const h=Math.floor(ms/3600000),m=Math.floor((ms%3600000)/60000);return h+'h '+m+'m';}
 function fmtMMSS(sec){return String(Math.floor(sec/60)).padStart(2,'0')+':'+String(sec%60).padStart(2,'0');}
 
@@ -983,7 +992,7 @@ function attemptKey(paperId){return 't11_attempt_'+paperId+'_'+todayKey();}
 function hasAttemptedToday(paperId){return !!localStorage.getItem(attemptKey(paperId));}
 function getTodayScore(paperId){try{return JSON.parse(localStorage.getItem(attemptKey(paperId)));}catch(e){return null;}}
 /* Admin-only: clears today's one-test-per-day lock for THIS browser, so an admin
-   can re-test the flow without waiting for the midnight reset. Only reachable
+   can re-test the flow without waiting for the 5:00 AM reset. Only reachable
    when adminMode is on (5-tap logo + password) — never exposed to regular users. */
 function resetTodaysAttempt(){
   if(!adminMode)return;
@@ -998,8 +1007,36 @@ function getTodaysAttemptedPaperId(){
   return null;
 }
 
-/* ═══════════ CLOCK ═══════════ */
-setInterval(()=>{const el=document.getElementById('clock-badge');if(el)el.textContent='Today\'s tests close in '+fmtCountdown(msUntilMidnight());},1000);
+/* ═══════════ CLOCK ═══════════
+   Also watches for the 5:00 AM day-boundary passing while the tab is left open.
+   Without this, the dashboard was only ever drawn once on page load, so a tab
+   left open across the reset kept showing "attempt used" / locked cards until
+   the user manually refreshed the page. */
+let lastSeenDayKey=todayKey();
+setInterval(()=>{
+  const el=document.getElementById('clock-badge');
+  if(el)el.textContent='Today\'s tests close in '+fmtCountdown(msUntilMidnight());
+  const nowKey=todayKey();
+  if(nowKey!==lastSeenDayKey){
+    lastSeenDayKey=nowKey;
+    if(document.getElementById('dashboard-page')&&document.getElementById('dashboard-page').classList.contains('active')){
+      renderDashboard();
+    }
+  }
+},1000);
+/* Also catch the rollover immediately when the user returns to the tab
+   (e.g. left it open overnight, backgrounded on mobile, laptop was asleep). */
+document.addEventListener('visibilitychange',()=>{
+  if(document.visibilityState==='visible'){
+    const nowKey=todayKey();
+    if(nowKey!==lastSeenDayKey){
+      lastSeenDayKey=nowKey;
+      if(document.getElementById('dashboard-page')&&document.getElementById('dashboard-page').classList.contains('active')){
+        renderDashboard();
+      }
+    }
+  }
+});
 
 /* ═══════════ DASHBOARD ═══════════ */
 function renderDashboard(){
@@ -1025,7 +1062,7 @@ function renderDashboard(){
       <div class="day-limit-icon">✅</div>
       <div class="day-limit-text">
         <span class="day-limit-title">Today's attempt used</span>
-        <span class="day-limit-sub">You attempted <strong>${doneTitle}</strong>. All other papers unlock tomorrow at 12:00 AM.</span>
+        <span class="day-limit-sub">You attempted <strong>${doneTitle}</strong>. All other papers unlock tomorrow at 5:00 AM.</span>
       </div>
       ${adminMode?'<button class="btn-admin-reset" onclick="resetTodaysAttempt()">↺ Reset (admin)</button>':''}
     </div>`;
@@ -1065,7 +1102,7 @@ function renderDashboard(){
             <span class="p-badge">OBJECTIVE</span>
           </div>
         </div>
-        <div class="p-foot">${btnHtml}<div class="p-live">Live daily · closes 11:59 PM · 1 test/day</div></div>
+        <div class="p-foot">${btnHtml}<div class="p-live">Live daily · resets 5:00 AM · 1 test/day</div></div>
       </div>`;
     }).join('');
     return `<div class="dash-heading">${sec.name} — ${sec.fullName.toUpperCase()} · ${sec.papers.length} PAPERS</div>
