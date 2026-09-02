@@ -1353,8 +1353,12 @@ function generateFakeCandidates(seed,count,total){
 }
 
 // Fake candidates for the COMBINED leaderboard: each represents a single test attempt
-// (same as real candidates), just picked from a random paper's worth of marks (out of 11).
-function generateFakeCandidatesOverall(seed,count){
+// (same as real candidates). `capMarks`, when given, is the highest mark ANY fake
+// candidate is allowed to score — used to keep fakes from ever outscoring the genuine
+// top 3, so the leaderboard's own sort naturally keeps real names on top (no patched-in
+// ranks, no rank-order seams a candidate could notice).
+function generateFakeCandidatesOverall(seed,count,capMarks){
+  const cap=Math.max(0,typeof capMarks==='number'?capMarks:QUESTIONS_PER_PAPER);
   const rand=mulberry32(seedFromString(seed));
   const used=new Set();const out=[];
   for(let i=0;i<count;i++){
@@ -1363,8 +1367,8 @@ function generateFakeCandidatesOverall(seed,count){
     used.add(full);
     const region=REGIONS[Math.floor(rand()*REGIONS.length)];
     const raw=(rand()+rand()+rand())/3; // roughly triangular distribution
-    const marks=parseFloat((raw*QUESTIONS_PER_PAPER).toFixed(2));
-    const pct=Math.round((marks/QUESTIONS_PER_PAPER)*100);
+    const marks=parseFloat((raw*cap).toFixed(2)); // spread across [0, cap) — never reaches cap
+    const pct=Math.round((marks/QUESTIONS_PER_PAPER)*100); // pct stays relative to the full paper, not the cap
     const timeSeconds=60+Math.floor(rand()*780);
     out.push({name:full,region,marks,pct,timeSeconds,isReal:false});
   }
@@ -1408,9 +1412,17 @@ async function renderLeaderboard(){
   const multRand=mulberry32(seedFromString(seed+'_mult'));
   const FAKE_MULTIPLIER=1+Math.floor(multRand()*5);
   const fakeCount=real.length*FAKE_MULTIPLIER;
-  const fake=generateFakeCandidatesOverall(seed,fakeCount);
 
-  const all=[...fake,...real].sort((a,b)=>b.marks-a.marks||a.timeSeconds-b.timeSeconds);
+  // Cap fake marks below the top 3 genuine candidates' scores so fakes can never
+  // outrank them — the leaderboard's normal sort then keeps real names on top with
+  // no special-casing or visible rank-order seams. If fewer than 3 real candidates
+  // exist today, cap below the lowest real score instead, so ALL of them stay on top.
+  const realSorted=[...real].sort((a,b)=>b.marks-a.marks||a.timeSeconds-b.timeSeconds);
+  const protectN=Math.min(3,realSorted.length);
+  const fakeCap=protectN>0?Math.max(0,realSorted[protectN-1].marks-0.01):QUESTIONS_PER_PAPER;
+  const fake=generateFakeCandidatesOverall(seed,fakeCount,fakeCap);
+
+  const all=[...real,...fake].sort((a,b)=>b.marks-a.marks||a.timeSeconds-b.timeSeconds);
   all.forEach((r,i)=>r.rank=i+1);
 
   document.getElementById('lb-count-row').innerHTML=`
