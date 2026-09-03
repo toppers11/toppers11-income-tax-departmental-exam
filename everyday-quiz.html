@@ -1321,9 +1321,18 @@ async function fetchRemoteAttempts(seriesId){
 // Fetches every attempt row for TODAY across ALL papers (series_id = "<paperId>_<dateKey>").
 // Each candidate only ever takes ONE of the 10 papers, so this is a straight merge —
 // no summing needed, just everyone's single score pooled into one list.
+// Tries to include `region` so real candidates show a state like fake ones do; if the
+// view doesn't expose that column, Supabase returns an error and we retry without it
+// rather than breaking the whole leaderboard.
 async function fetchRemoteAttemptsAllPapers(dateKey){
+  const base=`${SUPABASE_URL}/rest/v1/daily_leaderboard_public?series_id=like.*_${encodeURIComponent(dateKey)}`;
+  const headers={'apikey':SUPABASE_ANON_KEY,'Authorization':'Bearer '+SUPABASE_ANON_KEY,'Content-Type':'application/json'};
   try{
-    const res=await fetch(`${SUPABASE_URL}/rest/v1/daily_leaderboard_public?series_id=like.*_${encodeURIComponent(dateKey)}&select=name,marks,pct,time_seconds,series_id`,{headers:{'apikey':SUPABASE_ANON_KEY,'Authorization':'Bearer '+SUPABASE_ANON_KEY,'Content-Type':'application/json'}});
+    let res=await fetch(`${base}&select=name,region,marks,pct,time_seconds,series_id`,{headers});
+    if(!res.ok){
+      // `region` likely isn't a column on this view — retry without it instead of failing outright.
+      res=await fetch(`${base}&select=name,marks,pct,time_seconds,series_id`,{headers});
+    }
     if(!res.ok)return[];
     return await res.json();
   }catch(e){console.warn('Leaderboard fetch error:',e.message);return[];}
