@@ -433,6 +433,12 @@ body{font-family:'Open Sans',sans-serif;font-size:14px;}
 .q-num-badge{font-size:.7rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--qz-t1);}
 .q-paper-tag{font-size:.68rem;font-weight:600;background:#e6faf5;color:var(--qz-t1);border-radius:999px;padding:.18rem .55rem;}
 .q-text{font-size:.95rem;font-weight:500;color:var(--qz-ink);line-height:1.7;margin-bottom:1.1rem;}
+.q-stmt-intro{margin-bottom:.55rem;}
+.q-stmt-closing{margin-top:.55rem;}
+.q-statements{list-style:none;display:flex;flex-direction:column;gap:.45rem;margin:0 0 .3rem;padding:0;}
+.q-statements li{display:flex;align-items:flex-start;gap:.5rem;}
+.q-stmt-num{flex-shrink:0;font-weight:700;color:var(--qz-t1);min-width:1.4em;}
+.review-q-text .q-statements{margin-top:.4rem;}
 .opts-list{display:flex;flex-direction:column;gap:.55rem;}
 .opt-btn{display:flex;align-items:flex-start;gap:.65rem;padding:.75rem .9rem;border-radius:10px;border:1.5px solid var(--qz-bdr);background:#fff;text-align:left;cursor:pointer;transition:all .15s;font-family:'Open Sans',sans-serif;font-size:.88rem;color:var(--qz-ink);width:100%;}
 .opt-btn:hover{border-color:#a7f3d0;background:#e6faf5;}
@@ -1171,10 +1177,48 @@ function startTest(){
 
 function showPage(id){document.querySelectorAll('#dashboard-page,#inst-page,#test-page,#result-page,#leaderboard-page').forEach(p=>p.classList.remove('active'));document.getElementById(id).classList.add('active');}
 
+/* Escapes text for safe HTML insertion. */
+function escapeHtml(s){return String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));}
+
+/* Detects an inline "1. ... 2. ... 3. ..." numbered-statement list inside a question's
+   text (common in "Consider the following statements" questions) and formats it as
+   an intro line + a proper list + trailing question, instead of one flat paragraph. */
+function formatQText(raw){
+  const text=String(raw||'').trim();
+  if(!text)return'';
+  let closing='',mainText=text;
+  const qm=text.match(/([A-Z][^.?!]*\?)\s*$/);
+  if(qm){closing=qm[1].trim();mainText=text.slice(0,qm.index).trim();}
+  const re=/(\d{1,2})\.\s+/g;let m;const matches=[];
+  while((m=re.exec(mainText))){matches.push({num:parseInt(m[1],10),index:m.index,end:re.lastIndex});}
+  let best=null;
+  for(let i=0;i<matches.length;i++){
+    if(matches[i].num!==1)continue;
+    const seq=[matches[i]];let expect=2;
+    for(let j=i+1;j<matches.length;j++){
+      if(matches[j].num===expect){seq.push(matches[j]);expect++;}else break;
+    }
+    if(seq.length>=2){best=seq;break;}
+  }
+  if(!best)return escapeHtml(text);
+  const introRaw=mainText.slice(0,best[0].index).trim();
+  let html=introRaw?`<p class="q-stmt-intro">${escapeHtml(introRaw)}</p>`:'';
+  html+='<ol class="q-statements">';
+  for(let i=0;i<best.length;i++){
+    const start=best[i].end;
+    const end=i+1<best.length?best[i+1].index:mainText.length;
+    const content=mainText.slice(start,end).trim();
+    html+=`<li><span class="q-stmt-num">${best[i].num}.</span><span>${escapeHtml(content)}</span></li>`;
+  }
+  html+='</ol>';
+  if(closing)html+=`<p class="q-stmt-closing">${escapeHtml(closing)}</p>`;
+  return html;
+}
+
 function renderQuestion(){
   const p=PAPERS[currentPaperId];const q=p.questions[currentQ];visited[currentQ]=true;
   document.getElementById('q-num-label').textContent=`Question ${currentQ+1} of ${TOTAL}`;
-  document.getElementById('q-text').textContent=q.text[currentLang]||q.text.en;
+  document.getElementById('q-text').innerHTML=formatQText(q.text[currentLang]||q.text.en);
   const letters=['A','B','C','D'];
   const opts=q.opts[currentLang]||q.opts.en;
   document.getElementById('opts-list').innerHTML=opts.map((o,i)=>`<button class="opt-btn${answers[currentQ]===i?' selected':''}" onclick="selectOpt(${i})"><span class="opt-letter">${letters[i]}</span><span class="opt-text">${o}</span></button>`).join('');
@@ -1285,7 +1329,7 @@ function renderReview(){
         <span class="review-q-num">Q${i+1}</span>
         <span class="review-status review-status-${statusCls}">${statusLabel}</span>
       </div>
-      <div class="review-q-text">${text}</div>
+      <div class="review-q-text">${formatQText(text)}</div>
       <div class="review-opts">${optsHtml}</div>
       ${exp?`<div class="review-explanation"><strong>Why?</strong> ${exp}</div>`:''}
     </div>`;
