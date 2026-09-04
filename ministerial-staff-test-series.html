@@ -603,9 +603,11 @@ const UPI_NAME='Toppers11';
 
 const PLANS={
   'single-ms':{label:'MS Single Paper',amount:355,desc:'All 20 tests for 1 subject · ₹355 / yr',requiresPaperSelect:false},
-  'bunch-ms':{label:'MS Complete — All 4 Papers',amount:955,desc:'All 80 tests · ₹955 / Calendar Year · All 4 Papers — save ₹465',best:true,requiresPaperSelect:false,disabled:true}
+  'combo-ms-p2p4':{label:'MS Paper II + IV Combo',amount:600,desc:'40 tests · Paper II & Paper IV together · ₹600 / yr — save ₹110',best:true,requiresPaperSelect:false},
+  'bunch-ms':{label:'MS Complete — All 4 Papers',amount:955,desc:'All 80 tests · ₹955 / Calendar Year · All 4 Papers — save ₹465',requiresPaperSelect:false,disabled:true}
 };
 const BUNCH_LABEL='All 4 Papers (Complete Bunch)';
+const COMBO_P2P4_LABEL='MS Paper II + IV Combo';
 
 let selPlan=null;
 let modalPaperKey=null; // which paper (p1..p4) the open modal is unlocking; null for bunch
@@ -633,7 +635,7 @@ const PAPERS=[
     {id:'ms-p1-s19',lbl:'Series 19',title:'IT Law & Taxpayer Services — Series 19',free:false,pyq:false,qs:100,mins:120},
     {id:'ms-p1-s20',lbl:'Series 20',title:'IT Law & Taxpayer Services — Series 20',free:false,pyq:false,qs:100,mins:120},
   ]},
-  {key:'p2',name:'Income Tax Computation',hasFree:true,comingSoon:true,topics:'Computation under all heads of income, Set-off & carry forward, Exemptions & deductions, Advance tax, TDS, Self-assessment tax, Tax for individual/firm/company, Interests, Depreciation (SLM & WDV), Demand/Refund on OGE/rectification orders.',type:'Objective MCQ',marks:100,tests:[
+  {key:'p2',name:'Income Tax Computation',hasFree:true,comingSoon:false,topics:'Computation under all heads of income, Set-off & carry forward, Exemptions & deductions, Advance tax, TDS, Self-assessment tax, Tax for individual/firm/company, Interests, Depreciation (SLM & WDV), Demand/Refund on OGE/rectification orders.',type:'Objective MCQ',marks:100,tests:[
     {id:'ms-p2-s01',lbl:'Series 01',title:'IT Computation — Series 01',free:true,pyq:false,qs:100,mins:120},
     {id:'ms-p2-s02',lbl:'Series 02',title:'IT Computation — Series 02',free:false,pyq:false,qs:100,mins:120},
     {id:'ms-p2-s03',lbl:'Series 03',title:'IT Computation — Series 03',free:false,pyq:false,qs:100,mins:120},
@@ -793,6 +795,7 @@ function buildCards(p,i){
       </div>
     </div>
     <button class="btn-bunch" onclick="openModal('${p.key}')">Unlock This Paper →</button>
+    ${(p.key==='p2'||p.key==='p4')?`<button class="btn-bunch" style="background:rgba(255,255,255,.15);color:#fff;border:1px solid rgba(255,255,255,.4)" onclick="openComboModal()">🔥 Or get P2+P4 Combo — ₹600</button>`:''}
   </div></div></div>`;
 
   div.innerHTML=`
@@ -871,7 +874,7 @@ function buildPlans(){
   });
   const note=document.createElement('p');
   note.className='plan-note';
-  note.textContent='Only for Paper 4 Ministerial Staff Exam';
+  note.textContent='For Ministerial Staff Exam — DE Rules 2026';
   pc.appendChild(note);
   const cb=document.getElementById('cont-btn');
   if(cb)cb.textContent=selPlan?`Pay ₹${PLANS[selPlan].amount} via UPI →`:'Select a plan to continue';
@@ -887,6 +890,7 @@ function openModal(paperKey){
   if(titleEl)titleEl.textContent=paperObj?`Unlock Paper — ${paperObj.name}`:'Unlock MS Tests — DE Rules 2026';
   buildPlans();
 }
+function openComboModal(){openModal(null);selPlan='combo-ms-p2p4';buildPlans();}
 function closeModal(){document.getElementById('overlay').classList.remove('show');}
 function overlayClick(e){if(e.target===document.getElementById('overlay'))closeModal();}
 
@@ -909,7 +913,7 @@ function showConfirmScreen(){
   document.getElementById('pay-screen').style.display='none';document.getElementById('confirm-screen').style.display='';document.getElementById('pending-screen').style.display='none';
   const p=PLANS[selPlan]||{};
   const paperObj=PAPERS.find(x=>x.key===modalPaperKey);
-  const subjectPhrase=selPlan==='bunch-ms'?BUNCH_LABEL:(paperObj?paperObj.name:p.label);
+  const subjectPhrase=selPlan==='bunch-ms'?BUNCH_LABEL:(selPlan==='combo-ms-p2p4'?COMBO_P2P4_LABEL:(paperObj?paperObj.name:p.label));
   const lbl=document.getElementById('confirm-sublabel');
   if(lbl)lbl.innerHTML=`You selected <strong style="color:var(--t1)">${subjectPhrase}</strong> for <strong style="color:var(--t1)">₹${p.amount}</strong>. If your payment app showed a success screen, submit it below — we'll verify and unlock your tests.`;
   const utrInput=document.getElementById('utr-input');
@@ -973,7 +977,7 @@ async function submitPayment(){
 
   const user=getUser();const plan=PLANS[selPlan]||{};
   const paperObj=PAPERS.find(x=>x.key===modalPaperKey);
-  const subjectName=selPlan==='bunch-ms'?BUNCH_LABEL:(paperObj?paperObj.name:plan.label||'MS Exam');
+  const subjectName=selPlan==='bunch-ms'?BUNCH_LABEL:(selPlan==='combo-ms-p2p4'?COMBO_P2P4_LABEL:(paperObj?paperObj.name:plan.label||'MS Exam'));
 
   btn.disabled=true;btn.innerHTML='<span class="spin"></span> Submitting…';
 
@@ -1028,16 +1032,17 @@ async function syncPaymentStatus(){
     const emailEnc=encodeURIComponent((user.email||'').toLowerCase());
     const rows=await sbFetch('rpc/get_my_payments?p_email='+emailEnc+'&p_exam_type=MS');
     const verifiedNames=(rows||[]).filter(r=>r.status==='verified').map(r=>r.subject_name);
-    const knownNames=new Set([BUNCH_LABEL,...PAPERS.map(p=>p.name)]);
-    // Only surface pending rows whose subject_name matches a real paper/bunch —
+    const knownNames=new Set([BUNCH_LABEL,COMBO_P2P4_LABEL,...PAPERS.map(p=>p.name)]);
+    // Only surface pending rows whose subject_name matches a real paper/bunch/combo —
     // stale or malformed rows (e.g. old test data with an unrecognized name)
     // can never resolve into an unlock, so don't confuse the user with them.
     const pendingNames=(rows||[]).filter(r=>r.status==='pending_verification'&&knownNames.has(r.subject_name)).map(r=>r.subject_name);
 
     const bunchUnlocked=verifiedNames.includes(BUNCH_LABEL);
-    const unlockedPapers=PAPERS.filter(p=>verifiedNames.includes(p.name)).map(p=>p.key);
+    const comboP2P4Unlocked=verifiedNames.includes(COMBO_P2P4_LABEL);
+    const unlockedPapers=PAPERS.filter(p=>verifiedNames.includes(p.name)||(comboP2P4Unlocked&&(p.key==='p2'||p.key==='p4'))).map(p=>p.key);
 
-    const newlyActivated=verifiedNames.filter(n=>!before.has(n)&&(n===BUNCH_LABEL||PAPERS.some(p=>p.name===n)));
+    const newlyActivated=verifiedNames.filter(n=>!before.has(n)&&(n===BUNCH_LABEL||n===COMBO_P2P4_LABEL||PAPERS.some(p=>p.name===n)));
 
     // Always persist the freshly computed state — including downgrades —
     // so a revoked/deleted payment in Supabase correctly locks the paper
