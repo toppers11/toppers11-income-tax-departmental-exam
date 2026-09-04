@@ -640,6 +640,27 @@ function selectFType(btn,uid,val){const row=btn.closest('.feedback-type-row');ro
 function sendFeedback(uid,qId,qIndex,seriesId){const card=document.getElementById(uid+'_form').closest('.review-card');const reaction=card?(card.dataset.reaction||null):null;const form=document.getElementById(uid+'_form');const category=form.dataset.category||null;const message=(document.getElementById(uid+'_msg').value||'').trim();const name=(document.getElementById(uid+'_name').value||'').trim();if(!reaction&&!message){alert('Please select a reaction or write a message before sending.');return;}submitFeedback(seriesId,qId,qIndex,reaction,category,message||null,name||null,card);}
 
 const SUPABASE_TABLE={
+  /* ── MS Paper II — Series 01-20 (dashboard-linked) ── */
+  'ms_paper2_test01':'ms_paper2_test01',
+  'ms_paper2_test02':'ms_paper2_test02',
+  'ms_paper2_test03':'ms_paper2_test03',
+  'ms_paper2_test04':'ms_paper2_test04',
+  'ms_paper2_test05':'ms_paper2_test05',
+  'ms_paper2_test06':'ms_paper2_test06',
+  'ms_paper2_test07':'ms_paper2_test07',
+  'ms_paper2_test08':'ms_paper2_test08',
+  'ms_paper2_test09':'ms_paper2_test09',
+  'ms_paper2_test10':'ms_paper2_test10',
+  'ms_paper2_test11':'ms_paper2_test11',
+  'ms_paper2_test12':'ms_paper2_test12',
+  'ms_paper2_test13':'ms_paper2_test13',
+  'ms_paper2_test14':'ms_paper2_test14',
+  'ms_paper2_test15':'ms_paper2_test15',
+  'ms_paper2_test16':'ms_paper2_test16',
+  'ms_paper2_test17':'ms_paper2_test17',
+  'ms_paper2_test18':'ms_paper2_test18',
+  'ms_paper2_test19':'ms_paper2_test19',
+  'ms_paper2_test20':'ms_paper2_test20',
   /* ── MS Paper IV ── */
   'ms-p4-2026-t1':'ms_paper4_test01',
   /* ── MS Paper IV — Series 01-20 (dashboard-linked) ── */
@@ -1074,6 +1095,27 @@ const SERIES_META={
   'ito-p5-s20':{exam:'ito',paper:'Paper 5 — IT Applications & Operations',title:'ITO Mock Test Series 20',bank:'ito-p5',qs:100,mins:120,type:'mcq',seed:520},
   /* ══════════════ MS — Subjective ══════════════ */
   'ms-p1-pyq25':{exam:'ms',paper:'Paper I — Précis Writing & Composition',title:'MS 2025 PYQ Test',bank:'ms-p1',qs:5,mins:120,type:'subjective',seed:2025},
+  /* ══════════════ MS — Paper II — Series 01-20 ══════════════ */
+  'ms_paper2_test01':{exam:'ms',paper:'Paper II — Income Tax Computation',title:'IT Computation — Series 01',bank:'ms-p2',qs:100,mins:120,type:'mcq',seed:1},
+  'ms_paper2_test02':{exam:'ms',paper:'Paper II — Income Tax Computation',title:'IT Computation — Series 02',bank:'ms-p2',qs:100,mins:120,type:'mcq',seed:2},
+  'ms_paper2_test03':{exam:'ms',paper:'Paper II — Income Tax Computation',title:'IT Computation — Series 03',bank:'ms-p2',qs:100,mins:120,type:'mcq',seed:3},
+  'ms_paper2_test04':{exam:'ms',paper:'Paper II — Income Tax Computation',title:'IT Computation — Series 04',bank:'ms-p2',qs:100,mins:120,type:'mcq',seed:4},
+  'ms_paper2_test05':{exam:'ms',paper:'Paper II — Income Tax Computation',title:'IT Computation — Series 05',bank:'ms-p2',qs:100,mins:120,type:'mcq',seed:5},
+  'ms_paper2_test06':{exam:'ms',paper:'Paper II — Income Tax Computation',title:'IT Computation — Series 06',bank:'ms-p2',qs:100,mins:120,type:'mcq',seed:6},
+  'ms_paper2_test07':{exam:'ms',paper:'Paper II — Income Tax Computation',title:'IT Computation — Series 07',bank:'ms-p2',qs:100,mins:120,type:'mcq',seed:7},
+  'ms_paper2_test08':{exam:'ms',paper:'Paper II — Income Tax Computation',title:'IT Computation — Series 08',bank:'ms-p2',qs:100,mins:120,type:'mcq',seed:8},
+  'ms_paper2_test09':{exam:'ms',paper:'Paper II — Income Tax Computation',title:'IT Computation — Series 09',bank:'ms-p2',qs:100,mins:120,type:'mcq',seed:9},
+  'ms_paper2_test10':{exam:'ms',paper:'Paper II — Income Tax Computation',title:'IT Computation — Series 10',bank:'ms-p2',qs:100,mins:120,type:'mcq',seed:10},
+  'ms_paper2_test11':{exam:'ms',paper:'Paper II — Income Tax Computation',title:'IT Computation — Series 11',bank:'ms-p2',qs:100,mins:120,type:'mcq',seed:11},
+  'ms_paper2_test12':{exam:'ms',paper:'Paper II — Income Tax Computation',title:'IT Computation — Series 12',bank:'ms-p2',qs:100,mins:120,type:'mcq',seed:12},
+  'ms_paper2_test13':{exam:'ms',paper:'Paper II — Income Tax Computation',title:'IT Computation — Series 13',bank:'ms-p2',qs:100,mins:120,type:'mcq',seed:13},
+  'ms_paper2_test14':{exam:'ms',paper:'Paper II — Income Tax Computation',title:'IT Computation — Series 14',bank:'ms-p2',qs:100,mins:120,type:'mcq',seed:14},
+  'ms_paper2_test15':{exam:'ms',paper:'Paper II — Income Tax Computation',title:'IT Computation — Series 15',bank:'ms-p2',qs:100,mins:120,type:'mcq',seed:15},
+  'ms_paper2_test16':{exam:'ms',paper:'Paper II — Income Tax Computation',title:'IT Computation — Series 16',bank:'ms-p2',qs:100,mins:120,type:'mcq',seed:16},
+  'ms_paper2_test17':{exam:'ms',paper:'Paper II — Income Tax Computation',title:'IT Computation — Series 17',bank:'ms-p2',qs:100,mins:120,type:'mcq',seed:17},
+  'ms_paper2_test18':{exam:'ms',paper:'Paper II — Income Tax Computation',title:'IT Computation — Series 18',bank:'ms-p2',qs:100,mins:120,type:'mcq',seed:18},
+  'ms_paper2_test19':{exam:'ms',paper:'Paper II — Income Tax Computation',title:'IT Computation — Series 19',bank:'ms-p2',qs:100,mins:120,type:'mcq',seed:19},
+  'ms_paper2_test20':{exam:'ms',paper:'Paper II — Income Tax Computation',title:'IT Computation — Series 20',bank:'ms-p2',qs:100,mins:120,type:'mcq',seed:20},
   'ms-p4-2026-t1':{exam:'ms',paper:'Paper IV — IT Applications & Operations',title:'MS Paper IV — Practice Test 01',bank:'ms-p4',qs:100,mins:120,type:'mcq',seed:1},
   /* ── MS Paper IV — Series 01-20 (dashboard-linked) ── */
   'ms_paper4_test01':{exam:'ms',paper:'Paper IV — IT Applications & Operations',title:'IT Applications & Operations — Series 01',bank:'ms-p4',qs:100,mins:120,type:'mcq',seed:1},
