@@ -602,7 +602,7 @@ const UPI_ID='toppers11@axisbank';
 const UPI_NAME='Toppers11';
 
 const PLANS={
-  'single-ms':{label:'MS Single Paper',amount:355,desc:'All 20 tests for 1 subject · ₹355 / yr',requiresPaperSelect:false},
+  'single-ms':{label:'MS Single Paper',amount:355,desc:'All 20 tests for 1 subject · ₹355 / yr',requiresPaperSelect:true},
   'combo-ms-p2p4':{label:'MS Paper II + IV Combo',amount:600,desc:'40 tests · Paper II & Paper IV together · ₹600 / yr — save ₹110',best:true,requiresPaperSelect:false},
   'bunch-ms':{label:'MS Complete — All 4 Papers',amount:955,desc:'All 80 tests · ₹955 / Calendar Year · All 4 Papers — save ₹465',requiresPaperSelect:false,disabled:true}
 };
@@ -610,7 +610,8 @@ const BUNCH_LABEL='All 4 Papers (Complete Bunch)';
 const COMBO_P2P4_LABEL='MS Paper II + IV Combo';
 
 let selPlan=null;
-let modalPaperKey=null; // which paper (p1..p4) the open modal is unlocking; null for bunch
+let modalPaperKey=null; // which paper (p1..p4) the open modal is unlocking; null for bunch/combo
+let selSubjectKey=null; // which paper (p1..p4) is picked inside the "single-ms" plan's subject-picker
 
 const PAPERS=[
   {key:'p1',name:'IT Law & Taxpayer Services',hasFree:true,comingSoon:true,topics:'IT Act 1961 & 2025, Basis of Charge, Deductions, Set-off of losses, Return of income, Appeals, Taxpayer Charter, TRACES, 26AS, e-PAN, Prefilled ITR, ASK, SEVOTTAM, CPGRAM, e-Nivaran.',type:'Objective MCQ',marks:100,tests:[
@@ -876,12 +877,57 @@ function buildPlans(){
   note.className='plan-note';
   note.textContent='For Ministerial Staff Exam — DE Rules 2026';
   pc.appendChild(note);
+
+  // Subject-picker: only shown for the "single-ms" plan, only lists papers
+  // that are actually live (not comingSoon) — mirrors the ITI dashboard's
+  // subject-picker for its "single subject" plan.
+  let picker=document.getElementById('subject-picker');
+  if(!picker){
+    picker=document.createElement('div');
+    picker.id='subject-picker';
+    picker.style.cssText='margin-top:.75rem;display:none;';
+    pc.parentNode.insertBefore(picker,document.getElementById('cont-btn'));
+  }
+  const livePapers=PAPERS.filter(p=>!p.comingSoon);
+  if(selPlan==='single-ms'){
+    picker.style.display='';
+    picker.innerHTML=`
+<p style="font-size:.72rem;color:var(--muted);margin-bottom:.5rem;font-weight:600;">📚 Select the subject you want to unlock:</p><div style="display:grid;grid-template-columns:1fr 1fr;gap:.45rem;">
+${livePapers.map(p=>`
+<div onclick="selectSubject('${p.key}')" style="cursor:pointer;padding:.55rem .7rem;border-radius:9px;border:1.5px solid ${selSubjectKey===p.key?'var(--t3)':'#e0e0e0'};background:${selSubjectKey===p.key?'#f0fdf8':'#fff'};transition:all .15s;"><div style="font-size:.72rem;font-weight:700;color:${selSubjectKey===p.key?'var(--t1)':'var(--ink)'}">Paper ${PAPERS.indexOf(p)+1} — ${p.name}</div><div style="font-size:.62rem;color:var(--muted);margin-top:.15rem;">${p.tests.length} Tests · ${p.marks} Marks</div></div>`).join('')}
+</div>`;
+  } else {
+    picker.style.display='none';
+    selSubjectKey=null;
+  }
+
   const cb=document.getElementById('cont-btn');
-  if(cb)cb.textContent=selPlan?`Pay ₹${PLANS[selPlan].amount} via UPI →`:'Select a plan to continue';
+  if(!cb)return;
+  if(selPlan==='single-ms'){
+    const subjectPaper=PAPERS.find(p=>p.key===selSubjectKey);
+    cb.textContent=subjectPaper?`Pay ₹355 for ${subjectPaper.name} →`:'Select a subject to continue';
+    cb.disabled=!selSubjectKey;
+  } else if(selPlan){
+    cb.textContent=`Pay ₹${PLANS[selPlan].amount} via UPI →`;
+    cb.disabled=false;
+  } else {
+    cb.textContent='Select a plan to continue';
+    cb.disabled=true;
+  }
 }
-function selectModalPlan(k){if(PLANS[k]&&PLANS[k].disabled)return;selPlan=k;buildPlans();}
+function selectModalPlan(k){
+  if(PLANS[k]&&PLANS[k].disabled)return;
+  selPlan=k;
+  if(k!=='single-ms')selSubjectKey=null;
+  buildPlans();
+}
+function selectSubject(key){selSubjectKey=key;buildPlans();}
 function openModal(paperKey){
   modalPaperKey=paperKey||null;
+  // Opening from a specific locked paper card pre-selects "single-ms" plan
+  // and that paper as the subject, same UX as the ITI dashboard.
+  selPlan=paperKey?'single-ms':null;
+  selSubjectKey=paperKey||null;
   document.getElementById('overlay').classList.add('show');
   document.getElementById('step1').style.display='';
   document.getElementById('step2').style.display='none';
@@ -890,17 +936,29 @@ function openModal(paperKey){
   if(titleEl)titleEl.textContent=paperObj?`Unlock Paper — ${paperObj.name}`:'Unlock MS Tests — DE Rules 2026';
   buildPlans();
 }
-function openComboModal(){openModal(null);selPlan='combo-ms-p2p4';buildPlans();}
+function openComboModal(){
+  modalPaperKey=null;selSubjectKey=null;
+  document.getElementById('overlay').classList.add('show');
+  document.getElementById('step1').style.display='';
+  document.getElementById('step2').style.display='none';
+  const titleEl=document.getElementById('modal-title');
+  if(titleEl)titleEl.textContent='Unlock MS Paper II + IV Combo';
+  selPlan='combo-ms-p2p4';
+  buildPlans();
+}
 function closeModal(){document.getElementById('overlay').classList.remove('show');}
 function overlayClick(e){if(e.target===document.getElementById('overlay'))closeModal();}
 
 async function doContinue(){
   if(!selPlan)return;
+  if(selPlan==='single-ms'&&!selSubjectKey){alert('Please select a subject first.');return;}
   const p=PLANS[selPlan];
+  const subjectPaper=PAPERS.find(pp=>pp.key===selSubjectKey);
   document.getElementById('step1').style.display='none';
   document.getElementById('step2').style.display='';
   const labelEl=document.getElementById('qr-lbl');
-  labelEl.textContent=p.label+' · ₹'+p.amount;
+  const forLabel=selPlan==='single-ms'&&subjectPaper?subjectPaper.name:(selPlan==='combo-ms-p2p4'?COMBO_P2P4_LABEL:(selPlan==='bunch-ms'?BUNCH_LABEL:p.label));
+  labelEl.textContent=forLabel+' · ₹'+p.amount;
   document.getElementById('amt-lbl').textContent='₹'+p.amount;
   await loadQrLib();
   renderUpiStep();
@@ -912,7 +970,7 @@ function showPayScreen(){_upiAppOpened=false;document.getElementById('pay-screen
 function showConfirmScreen(){
   document.getElementById('pay-screen').style.display='none';document.getElementById('confirm-screen').style.display='';document.getElementById('pending-screen').style.display='none';
   const p=PLANS[selPlan]||{};
-  const paperObj=PAPERS.find(x=>x.key===modalPaperKey);
+  const paperObj=PAPERS.find(x=>x.key===selSubjectKey);
   const subjectPhrase=selPlan==='bunch-ms'?BUNCH_LABEL:(selPlan==='combo-ms-p2p4'?COMBO_P2P4_LABEL:(paperObj?paperObj.name:p.label));
   const lbl=document.getElementById('confirm-sublabel');
   if(lbl)lbl.innerHTML=`You selected <strong style="color:var(--t1)">${subjectPhrase}</strong> for <strong style="color:var(--t1)">₹${p.amount}</strong>. If your payment app showed a success screen, submit it below — we'll verify and unlock your tests.`;
@@ -938,9 +996,11 @@ function renderUpiStep(){
   if(!selPlan)return;
   showPayScreen();
   const p=PLANS[selPlan];
-  const payNote=p.label+' (MS Exam)';
+  const subjectPaper=PAPERS.find(pp=>pp.key===selSubjectKey);
+  const forLabel=selPlan==='single-ms'&&subjectPaper?subjectPaper.name:(selPlan==='combo-ms-p2p4'?COMBO_P2P4_LABEL:(selPlan==='bunch-ms'?BUNCH_LABEL:p.label));
+  const payNote=(forLabel+' (MS Exam)').replace(/&/g,'and');
   const qrLbl=document.getElementById('qr-lbl');
-  if(qrLbl)qrLbl.textContent=p.label+' · ₹'+p.amount;
+  if(qrLbl)qrLbl.textContent=forLabel+' · ₹'+p.amount;
   const upiStr=`upi://pay?pa=${UPI_ID}&pn=${encodeURIComponent(UPI_NAME)}&am=${p.amount}&cu=INR&tn=${encodeURIComponent(payNote)}`;
   const tapLink=document.getElementById('qr-tap-link');
   if(tapLink)tapLink.href=upiStr;
@@ -976,20 +1036,34 @@ async function submitPayment(){
   }
 
   const user=getUser();const plan=PLANS[selPlan]||{};
-  const paperObj=PAPERS.find(x=>x.key===modalPaperKey);
-  const subjectName=selPlan==='bunch-ms'?BUNCH_LABEL:(selPlan==='combo-ms-p2p4'?COMBO_P2P4_LABEL:(paperObj?paperObj.name:plan.label||'MS Exam'));
+  const paperObj=PAPERS.find(x=>x.key===selSubjectKey);
+  const subjectName=selPlan==='bunch-ms'?BUNCH_LABEL:(selPlan==='combo-ms-p2p4'?COMBO_P2P4_LABEL:(paperObj?paperObj.name:null));
 
   btn.disabled=true;btn.innerHTML='<span class="spin"></span> Submitting…';
 
   // NOTE: status is always sent as 'pending_verification' — this app never grants
   // access on its own. A human must check the payment (bank/UPI statement) and
   // flip this row's status to 'verified' in Supabase for the specific paper to unlock.
-  // subject_name identifies exactly WHICH paper/series this payment is for —
-  // access is only granted for that paper, not every paper.
+  // Record shape matches the working ITI/ITO dashboards exactly (plan_key +
+  // subject_key are what syncPaymentStatus() actually matches on; subject_name
+  // is kept too for the human-readable label shown in Supabase/on the banner).
   const userKey=(user.email||'').toLowerCase();
   const cachedUser=(getUsers()[userKey]||{});
   const mobileNumber=String(cachedUser.mobile||user.mobile||'').trim();
-  const record={email:userKey,mobile_number:mobileNumber||null,name:user.name||'',subject_name:subjectName,amount:plan.amount||0,exam_type:'MS',upi_ref:utr,activated_at:new Date().toISOString(),status:'pending_verification'};
+  const record={
+    email:userKey,
+    mobile_number:mobileNumber||null,
+    name:user.name||'',
+    plan_key:selPlan,
+    plan_label:plan.label||'',
+    subject_key:selPlan==='single-ms'?(selSubjectKey||''):null,
+    subject_name:subjectName,
+    amount:plan.amount||0,
+    exam_type:'MS',
+    upi_ref:utr,
+    activated_at:new Date().toISOString(),
+    status:'pending_verification'
+  };
 
   const result=await sbInsert('payments',record);
   if(!result.ok){
@@ -1021,40 +1095,54 @@ function showPendingBanner(subjectNameOrList){
 
 // Pulls the latest payment status from Supabase, unlocks any newly-verified
 // papers, and reports back what changed so callers can show feedback.
+// Matches on plan_key/subject_key (what the shared get_my_payments RPC
+// returns and what the working ITI/ITO dashboards match on) rather than
+// comparing subject_name strings — more robust against label edits.
 // Returns {ok, newlyActivated:[names], stillPending:[names], bunchActivated:bool}
 async function syncPaymentStatus(){
   const user=getUser();
-  const before=new Set([...(user.unlockedPapers||[]).map(k=>{const p=PAPERS.find(x=>x.key===k);return p?p.name:k;}),...(user.bunchUnlocked?[BUNCH_LABEL]:[])]);
+  const beforeKeys=new Set([...(user.unlockedPapers||[]),...(user.bunchUnlocked?['p1','p2','p3','p4']:[])]);
 
   if(!sbRateOk())return{ok:false,newlyActivated:[],stillPending:[],bunchActivated:false};
 
   try{
     const emailEnc=encodeURIComponent((user.email||'').toLowerCase());
     const rows=await sbFetch('rpc/get_my_payments?p_email='+emailEnc+'&p_exam_type=MS');
-    const verifiedNames=(rows||[]).filter(r=>r.status==='verified').map(r=>r.subject_name);
-    const knownNames=new Set([BUNCH_LABEL,COMBO_P2P4_LABEL,...PAPERS.map(p=>p.name)]);
-    // Only surface pending rows whose subject_name matches a real paper/bunch/combo —
-    // stale or malformed rows (e.g. old test data with an unrecognized name)
-    // can never resolve into an unlock, so don't confuse the user with them.
-    const pendingNames=(rows||[]).filter(r=>r.status==='pending_verification'&&knownNames.has(r.subject_name)).map(r=>r.subject_name);
+    const verifiedRows=(rows||[]).filter(r=>r.status==='verified');
+    const pendingRows=(rows||[]).filter(r=>r.status==='pending_verification');
 
-    const bunchUnlocked=verifiedNames.includes(BUNCH_LABEL);
-    const comboP2P4Unlocked=verifiedNames.includes(COMBO_P2P4_LABEL);
-    const unlockedPapers=PAPERS.filter(p=>verifiedNames.includes(p.name)||(comboP2P4Unlocked&&(p.key==='p2'||p.key==='p4'))).map(p=>p.key);
+    const bunchUnlocked=verifiedRows.some(r=>r.plan_key==='bunch-ms');
+    const comboP2P4Unlocked=verifiedRows.some(r=>r.plan_key==='combo-ms-p2p4');
+    const verifiedSubjects=verifiedRows.filter(r=>r.plan_key==='single-ms'&&r.subject_key).map(r=>r.subject_key);
 
-    const newlyActivated=verifiedNames.filter(n=>!before.has(n)&&(n===BUNCH_LABEL||n===COMBO_P2P4_LABEL||PAPERS.some(p=>p.name===n)));
+    const unlockedPapers=bunchUnlocked
+      ?PAPERS.map(p=>p.key)
+      :Array.from(new Set([...(user.unlockedPapers||[]),...verifiedSubjects,...(comboP2P4Unlocked?['p2','p4']:[])]));
+
+    const afterKeys=new Set(bunchUnlocked?PAPERS.map(p=>p.key):unlockedPapers);
+    const newlyActivatedKeys=[...afterKeys].filter(k=>!beforeKeys.has(k));
+    const newlyActivated=(bunchUnlocked&&!user.bunchUnlocked)
+      ?[BUNCH_LABEL]
+      :newlyActivatedKeys.map(k=>{const p=PAPERS.find(x=>x.key===k);return p?p.name:k;});
+
+    // Only surface pending rows with a recognized plan_key — stale/malformed
+    // rows (e.g. old test data) can never resolve into an unlock, so don't
+    // confuse the user with them.
+    const pendingNames=pendingRows
+      .filter(r=>['single-ms','combo-ms-p2p4','bunch-ms'].includes(r.plan_key))
+      .map(r=>r.plan_key==='bunch-ms'?BUNCH_LABEL:(r.plan_key==='combo-ms-p2p4'?COMBO_P2P4_LABEL:(r.subject_name||(PAPERS.find(x=>x.key===r.subject_key)||{}).name||r.plan_key)));
 
     // Always persist the freshly computed state — including downgrades —
     // so a revoked/deleted payment in Supabase correctly locks the paper
     // again instead of leaving stale "unlocked" data cached forever.
     const u=getUser();
-    saveUser({...u,bunchUnlocked,unlockedPapers,pendingPapers:(u.pendingPapers||[]).filter(n=>!verifiedNames.includes(n))});
+    saveUser({...u,bunchUnlocked,unlockedPapers,pendingPapers:bunchUnlocked?[]:(u.pendingPapers||[]).filter(n=>!newlyActivated.includes(n))});
 
     const banner=document.getElementById('pending-banner');
     if(!bunchUnlocked&&pendingNames.length){showPendingBanner(pendingNames);}
     else if(banner){banner.style.display='none';}
 
-    return{ok:true,newlyActivated,stillPending:pendingNames,bunchActivated:bunchUnlocked&&!before.has(BUNCH_LABEL)};
+    return{ok:true,newlyActivated,stillPending:pendingNames,bunchActivated:bunchUnlocked&&!user.bunchUnlocked};
   }catch(e){
     console.warn('Plan sync failed — using cached status',e);
     return{ok:false,newlyActivated:[],stillPending:[],bunchActivated:false};
@@ -1195,7 +1283,8 @@ Object.assign(window,{
   toggleProfile,logout,
   closeModal,overlayClick,doContinue,submitPayment,backToPlan,
   buildTabs,switchTab,render,checkPaymentStatus,
-  onUpiAppClick,onPaidClick,showPayScreen,showConfirmScreen,showPendingScreen
+  onUpiAppClick,onPaidClick,showPayScreen,showConfirmScreen,showPendingScreen,
+  openModal,openComboModal,selectSubject,selectModalPlan
 });
 
 })();
