@@ -1083,27 +1083,49 @@ function showPage(id){document.querySelectorAll('#dashboard-page,#inst-page,#tes
 /* Escapes text for safe HTML insertion. */
 function escapeHtml(s){return String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));}
 
-/* Detects an inline "1. ... 2. ... 3. ..." numbered-statement list inside a question's
-   text (common in "Consider the following statements" questions) and formats it as
-   an intro line + a proper list + trailing question, instead of one flat paragraph. */
+/* Detects an inline "1. ... 2. ... 3. ..." OR "i. ... ii. ... iii. ..." OR "a. ... b. ... c. ..."
+   numbered-statement list inside a question's text (common in "Consider the following
+   statements" questions) and formats it as an intro line + a proper list + trailing
+   question, instead of one flat paragraph. Tries arabic, then roman, then alphabetic. */
+const ROMAN_SEQ=['i','ii','iii','iv','v','vi','vii','viii','ix','x','xi','xii','xiii','xiv','xv'];
+const ALPHA_SEQ='abcdefghijklmnopqrstuvwxyz'.split('');
+function findSequence(mainText,re,toRank){
+  let m;const matches=[];
+  while((m=re.exec(mainText))){
+    const rank=toRank(m[1]);
+    if(rank!=null)matches.push({label:m[1],rank,index:m.index,end:re.lastIndex});
+  }
+  for(let i=0;i<matches.length;i++){
+    if(matches[i].rank!==1)continue;
+    const seq=[matches[i]];let expect=2;
+    for(let j=i+1;j<matches.length;j++){
+      if(matches[j].rank===expect){seq.push(matches[j]);expect++;}else break;
+    }
+    if(seq.length>=2)return seq;
+  }
+  return null;
+}
 function formatQText(raw){
   const text=String(raw||'').trim();
   if(!text)return'';
   let closing='',mainText=text;
   const qm=text.match(/([A-Z][^.?!]*\?)\s*$/);
   if(qm){closing=qm[1].trim();mainText=text.slice(0,qm.index).trim();}
-  const re=/(\d{1,2})\.\s+/g;let m;const matches=[];
-  while((m=re.exec(mainText))){matches.push({num:parseInt(m[1],10),index:m.index,end:re.lastIndex});}
-  let best=null;
-  for(let i=0;i<matches.length;i++){
-    if(matches[i].num!==1)continue;
-    const seq=[matches[i]];let expect=2;
-    for(let j=i+1;j<matches.length;j++){
-      if(matches[j].num===expect){seq.push(matches[j]);expect++;}else break;
-    }
-    if(seq.length>=2){best=seq;break;}
+
+  // Try arabic numerals (1. 2. 3.), then roman numerals (i. ii. iii.), then
+  // alphabetic markers (a. b. c. d.) — first one that finds a valid 2+ item
+  // consecutive sequence wins.
+  let best=findSequence(mainText,/(\d{1,2})\.\s+/g,s=>parseInt(s,10));
+  if(!best){
+    const romanRe=new RegExp('\\b('+ROMAN_SEQ.slice().sort((a,b)=>b.length-a.length).join('|')+')\\.\\s+','gi');
+    best=findSequence(mainText,romanRe,s=>{const r=ROMAN_SEQ.indexOf(s.toLowerCase());return r===-1?null:r+1;});
+  }
+  if(!best){
+    const alphaRe=/\b([a-z])\.\s+/gi;
+    best=findSequence(mainText,alphaRe,s=>{const r=ALPHA_SEQ.indexOf(s.toLowerCase());return r===-1?null:r+1;});
   }
   if(!best)return escapeHtml(text);
+
   const introRaw=mainText.slice(0,best[0].index).trim();
   let html=introRaw?`<p class="q-stmt-intro">${escapeHtml(introRaw)}</p>`:'';
   html+='<ol class="q-statements">';
@@ -1111,7 +1133,7 @@ function formatQText(raw){
     const start=best[i].end;
     const end=i+1<best.length?best[i+1].index:mainText.length;
     const content=mainText.slice(start,end).trim();
-    html+=`<li><span class="q-stmt-num">${best[i].num}.</span><span>${escapeHtml(content)}</span></li>`;
+    html+=`<li><span class="q-stmt-num">${best[i].label}.</span><span>${escapeHtml(content)}</span></li>`;
   }
   html+='</ol>';
   if(closing)html+=`<p class="q-stmt-closing">${escapeHtml(closing)}</p>`;
