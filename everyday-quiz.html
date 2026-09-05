@@ -1089,11 +1089,11 @@ function escapeHtml(s){return String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':
    question, instead of one flat paragraph. Tries arabic, then roman, then alphabetic. */
 const ROMAN_SEQ=['i','ii','iii','iv','v','vi','vii','viii','ix','x','xi','xii','xiii','xiv','xv'];
 const ALPHA_SEQ='abcdefghijklmnopqrstuvwxyz'.split('');
-function findSequence(mainText,re,toRank){
+function findSequence(mainText,re,toRank,toMarker){
   let m;const matches=[];
   while((m=re.exec(mainText))){
     const rank=toRank(m[1]);
-    if(rank!=null)matches.push({label:m[1],rank,index:m.index,end:re.lastIndex});
+    if(rank!=null)matches.push({marker:toMarker(m[1]),rank,index:m.index,end:re.lastIndex});
   }
   for(let i=0;i<matches.length;i++){
     if(matches[i].rank!==1)continue;
@@ -1112,17 +1112,27 @@ function formatQText(raw){
   const qm=text.match(/([A-Z][^.?!]*\?)\s*$/);
   if(qm){closing=qm[1].trim();mainText=text.slice(0,qm.index).trim();}
 
-  // Try arabic numerals (1. 2. 3.), then roman numerals (i. ii. iii.), then
-  // alphabetic markers (a. b. c. d.) — first one that finds a valid 2+ item
-  // consecutive sequence wins.
-  let best=findSequence(mainText,/(\d{1,2})\.\s+/g,s=>parseInt(s,10));
-  if(!best){
-    const romanRe=new RegExp('\\b('+ROMAN_SEQ.slice().sort((a,b)=>b.length-a.length).join('|')+')\\.\\s+','gi');
-    best=findSequence(mainText,romanRe,s=>{const r=ROMAN_SEQ.indexOf(s.toLowerCase());return r===-1?null:r+1;});
-  }
-  if(!best){
-    const alphaRe=/\b([a-z])\.\s+/gi;
-    best=findSequence(mainText,alphaRe,s=>{const r=ALPHA_SEQ.indexOf(s.toLowerCase());return r===-1?null:r+1;});
+  // Try, in order: arabic "1." / "(1)", roman "i." / "(i)", alphabetic "a." / "(a)".
+  // First style that finds a valid 2+ item consecutive sequence wins. Each detector's
+  // toMarker rebuilds the exact marker style (dot vs parens) for display.
+  const romanAlt=ROMAN_SEQ.slice().sort((a,b)=>b.length-a.length).join('|');
+  const dotMarker=s=>s+'.';
+  const parenMarker=s=>'('+s+')';
+  const romanRank=s=>{const r=ROMAN_SEQ.indexOf(s.toLowerCase());return r===-1?null:r+1;};
+  const alphaRank=s=>{const r=ALPHA_SEQ.indexOf(s.toLowerCase());return r===-1?null:r+1;};
+  const detectors=[
+    {re:/(\d{1,2})\.\s+/g,      toRank:s=>parseInt(s,10), toMarker:dotMarker},
+    {re:/\((\d{1,2})\)\s*/g,    toRank:s=>parseInt(s,10), toMarker:parenMarker},
+    {re:new RegExp('\\b('+romanAlt+')\\.\\s+','gi'), toRank:romanRank, toMarker:dotMarker},
+    {re:new RegExp('\\(('+romanAlt+')\\)\\s*','gi'), toRank:romanRank, toMarker:parenMarker},
+    {re:/\b([a-z])\.\s+/gi,     toRank:alphaRank, toMarker:dotMarker},
+    {re:/\(([a-z])\)\s*/gi,     toRank:alphaRank, toMarker:parenMarker}
+  ];
+  let best=null;
+  for(const d of detectors){
+    d.re.lastIndex=0;
+    best=findSequence(mainText,d.re,d.toRank,d.toMarker);
+    if(best)break;
   }
   if(!best)return escapeHtml(text);
 
@@ -1133,7 +1143,7 @@ function formatQText(raw){
     const start=best[i].end;
     const end=i+1<best.length?best[i+1].index:mainText.length;
     const content=mainText.slice(start,end).trim();
-    html+=`<li><span class="q-stmt-num">${best[i].label}.</span><span>${escapeHtml(content)}</span></li>`;
+    html+=`<li><span class="q-stmt-num">${best[i].marker}</span><span>${escapeHtml(content)}</span></li>`;
   }
   html+='</ol>';
   if(closing)html+=`<p class="q-stmt-closing">${escapeHtml(closing)}</p>`;
