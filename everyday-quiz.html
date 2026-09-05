@@ -818,22 +818,22 @@ function normalizeDbQuestion(row){
     exp:{en:row.explanation_en||'',hi:row.explanation_hi||row.explanation_en||''}
   };
 }
-/* Fetches this paper's questions from Supabase. Returns null (→ caller keeps the
-   built-in fallback bank below) if the table is empty, missing, or unreachable. */
 /* Converts this app's local paper key (e.g. 'ito-p1') to the paper_id format actually
    stored in the Supabase quiz_questions table (e.g. 'ito_paper1'). Without this
-   conversion, every query returns 0 rows and the app silently falls back to the
-   hardcoded sample question bank. */
+   conversion, every query returns 0 rows. */
 function toDbPaperId(paperId){
   return String(paperId).replace(/-p(\d+)$/,'_paper$1');
 }
+/* Fetches this paper's questions from Supabase. Returns null if the table has no rows
+   for this paper_id or the request fails — there is no local fallback bank; the caller
+   (goInstructions) blocks starting the test and shows an error when this returns null. */
 async function fetchQuestionsForPaper(paperId){
   try{
     const dbPaperId=toDbPaperId(paperId);
     const rows=await sbFetch('quiz_questions?paper_id=eq.'+encodeURIComponent(dbPaperId)+'&select=*&order=created_at.asc');
     if(Array.isArray(rows)&&rows.length)return rows.map(normalizeDbQuestion);
-    console.warn('No Supabase rows found for paper_id='+dbPaperId+' — using built-in fallback bank.');
-  }catch(e){console.warn('quiz_questions fetch failed, using built-in fallback bank:',e.message);}
+    console.warn('No Supabase rows found for paper_id='+dbPaperId);
+  }catch(e){console.warn('quiz_questions fetch failed:',e.message);}
   return null;
 }
 
@@ -1162,7 +1162,7 @@ async function submitTest(){
   p.questions.forEach((q,i)=>{if(answers[i]===-1)skip++;else if(answers[i]===q.ans)correct++;else wrong++;});
   const marks=(correct-(wrong/8)).toFixed(2);const pct=Math.max(0,Math.round((marks/TOTAL)*100));
   // Snapshot the exact questions/options/explanations shown, so "Review Answers" stays accurate
-  // later even if the DB question bank is edited or a fresh page load only has the fallback bank.
+  // later even if the DB question bank is edited afterward.
   const review=p.questions.map((q,i)=>({text:q.text,opts:q.opts,ans:q.ans,exp:q.exp,selected:answers[i]}));
   const scoreObj={correct,wrong,skip,marks,pct,total:TOTAL,timeSeconds:elapsedSeconds,at:new Date().toISOString(),review};
   localStorage.setItem(attemptKey(currentPaperId),JSON.stringify(scoreObj));
