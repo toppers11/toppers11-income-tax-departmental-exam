@@ -801,7 +801,6 @@ const SECTIONS=[
  {key:'ms',name:'MS',fullName:'Multi-Tasking Staff',grad:'grad-ms',papers:['ms-p2','ms-p4']}
 ];
 
-function mkQ(q,opts,ans){return{text:{en:q,hi:q},opts:{en:opts,hi:opts},ans,exp:{en:'',hi:''}};}
 function letterToIndex(v){
   if(v===null||v===undefined)return 0;
   const s=String(v).trim().toLowerCase();
@@ -821,145 +820,39 @@ function normalizeDbQuestion(row){
 }
 /* Fetches this paper's questions from Supabase. Returns null (→ caller keeps the
    built-in fallback bank below) if the table is empty, missing, or unreachable. */
+/* Converts this app's local paper key (e.g. 'ito-p1') to the paper_id format actually
+   stored in the Supabase quiz_questions table (e.g. 'ito_paper1'). Without this
+   conversion, every query returns 0 rows and the app silently falls back to the
+   hardcoded sample question bank. */
+function toDbPaperId(paperId){
+  return String(paperId).replace(/-p(\d+)$/,'_paper$1');
+}
 async function fetchQuestionsForPaper(paperId){
   try{
-    const rows=await sbFetch('quiz_questions?paper_id=eq.'+encodeURIComponent(paperId)+'&select=*&order=created_at.asc');
+    const dbPaperId=toDbPaperId(paperId);
+    const rows=await sbFetch('quiz_questions?paper_id=eq.'+encodeURIComponent(dbPaperId)+'&select=*&order=created_at.asc');
     if(Array.isArray(rows)&&rows.length)return rows.map(normalizeDbQuestion);
+    console.warn('No Supabase rows found for paper_id='+dbPaperId+' — using built-in fallback bank.');
   }catch(e){console.warn('quiz_questions fetch failed, using built-in fallback bank:',e.message);}
   return null;
 }
 
+/* Paper metadata only (title/topics/duration for the dashboard cards and instructions page).
+   No hardcoded questions here — every paper's questions[] starts empty and is populated
+   exclusively by fetchQuestionsForPaper() from the Supabase quiz_questions table
+   (see goInstructions()). If Supabase has no rows for a paper_id, that paper simply
+   cannot be started — there is no local fallback bank anymore. */
 const PAPERS={
- 'ms-p2':{code:'PAPER 2',title:'MS Paper 2 - Income Tax Computation',topics:'Heads of Income, Deductions, TDS/TCS basics, PAN & TAN',mins:15,questions:[
-  mkQ('Income Tax in India is levied under which Act?',['Income-tax Act','Companies Act','GST Act','RTI Act'],0),
-  mkQ('How many heads of income are recognised under Indian tax law?',['3','4','5','6'],2),
-  mkQ('TDS stands for:',['Tax Deducted at Source','Total Deductible Sum','Tax Due Statement','Tax Deposit Slip'],0),
-  mkQ('PAN stands for:',['Permanent Account Number','Personal Account Number','Public Account Number','Payment Account Number'],0),
-  mkQ('A financial year in India runs from:',['Jan to Dec','Apr to Mar','Jul to Jun','Oct to Sep'],1),
-  mkQ('The "Assessment Year" is:',['Same as financial year','The year following the financial year','Two years after the financial year','A year chosen by the taxpayer'],1),
-  mkQ('TAN is required for:',['Filing GST returns','Deducting and remitting TDS','Opening a bank account','Applying for a passport'],1),
-  mkQ('Salary income is computed under which head?',['Income from Salary','Income from Other Sources','Capital Gains','Profits from Business'],0),
-  mkQ('Standard deduction is allowed against which head of income?',['House Property','Salary','Capital Gains','Other Sources'],1),
-  mkQ('Form 16 is issued by:',['The employee','The employer, as a TDS certificate on salary','The bank','The Income Tax Department directly'],1),
-  mkQ('Which of these is a "deduction" typically claimed under Chapter VI-A?',['HRA exemption','Section 80C investments','Standard deduction','LTA'],1)
- ]},
- 'ms-p4':{code:'PAPER 4',title:'MS Paper 4 - IT Applications & Operations',topics:'Computer Basics, MS Office, Internet & Email, File Handling',mins:15,questions:[
-  mkQ('Which of these is an operating system?',['MS Word','Windows','MS Excel','Google Chrome'],1),
-  mkQ('In MS Word, which shortcut is used to save a document?',['Ctrl+P','Ctrl+S','Ctrl+N','Ctrl+B'],1),
-  mkQ('A spreadsheet cell reference like B5 refers to:',['Row B, Column 5','Column B, Row 5','Sheet B, Cell 5','Font B, Size 5'],1),
-  mkQ('CPU stands for:',['Central Processing Unit','Computer Personal Unit','Central Program Utility','Central Peripheral Unit'],0),
-  mkQ('Which file extension is used for a PDF document?',['.doc','.xls','.pdf','.ppt'],2),
-  mkQ('In an email, "CC" stands for:',['Carbon Copy','Central Copy','Confirm Copy','Common Copy'],0),
-  mkQ('Which device is used to physically point and click on screen items?',['Keyboard','Mouse','Scanner','Printer'],1),
-  mkQ('RAM is best described as:',['Permanent storage','Temporary working memory','A type of printer','An input device'],1),
-  mkQ('Which of these is a valid email address format?',['name@domain.com','name#domain.com','name-domain','www.name.com'],0),
-  mkQ('A firewall is primarily used for:',['Formatting documents','Network security','Printing files','Sorting spreadsheet data'],1),
-  mkQ('Which shortcut is commonly used to copy selected text?',['Ctrl+V','Ctrl+C','Ctrl+X','Ctrl+Z'],1)
- ]},
- 'iti-p1':{code:'PAPER 1',title:'ITI Paper 1 - IT Law, Computation & Taxpayer Services',topics:'IT Law, TRACES, 26AS, e-PAN, Taxpayer Services',mins:15,questions:[
-  mkQ('26AS is best described as:',['A tax deduction certificate','An annual consolidated tax statement showing TDS/TCS credits','A refund cheque','A PAN application form'],1),
-  mkQ('TRACES is the online portal primarily used for:',['Filing GST returns','TDS reconciliation, analysis and correction','Company registration','Passport verification'],1),
-  mkQ('e-PAN is:',['A physical PAN card only','A digitally signed PAN card issued electronically','A duplicate PAN number','A temporary PAN'],1),
-  mkQ('Who administers direct tax law in India?',['Central Board of Direct Taxes (CBDT)','SEBI','RBI','Ministry of Corporate Affairs'],0),
-  mkQ('A "taxpayer service" typically includes:',['Assisting with return filing and grievance redressal','Auditing companies','Printing currency','Issuing passports'],0),
-  mkQ('An assessee who fails to file a return in time may be liable to:',['A refund','Late filing fee/penalty as prescribed by law','Automatic exemption','No consequence'],1),
-  mkQ('Form 26QB relates to TDS on:',['Salary','Sale of immovable property','Interest on savings','Dividend income'],1),
-  mkQ('The primary purpose of an Income Tax Return (ITR) is to:',['Declare income and taxes paid for an assessment year','Register a new business','Apply for a bank loan','Renew a driving license'],0),
-  mkQ('A grievance related to TDS mismatch is generally addressed through:',['TRACES / e-filing grievance module','A courier request','A newspaper notice','A bank branch visit'],0),
-  mkQ('Which of these best defines "taxpayer" under general usage?',['Any person liable to pay tax under the Income-tax law','Only a company','Only a salaried employee','Only a senior citizen'],0),
-  mkQ('An Assessing Officer\'s role includes:',['Assessing and processing income tax returns of assessees','Managing bank deposits','Printing PAN cards','Regulating stock markets'],0)
- ]},
- 'iti-p2':{code:'PAPER 2',title:'ITI Paper 2 - Accountancy & Book-Keeping',topics:'Journal, Ledger, Trial Balance, Final Accounts',mins:15,questions:[
-  mkQ('Book-keeping primarily involves:',['Systematic recording of financial transactions','Only tax filing','Only auditing','Only budgeting'],0),
-  mkQ('The first book of original entry is called the:',['Ledger','Journal','Trial Balance','Balance Sheet'],1),
-  mkQ('A Trial Balance is prepared to check:',['Profitability only','Arithmetical accuracy of ledger balances','Cash flow only','Tax liability'],1),
-  mkQ('Under the double-entry system, every debit has a corresponding:',['Discount','Credit of equal amount','Refund','Adjustment entry only'],1),
-  mkQ('The process of transferring journal entries to individual accounts is called:',['Posting','Casting','Balancing','Vouching'],0),
-  mkQ('An asset account normally carries which type of balance?',['Credit balance','Debit balance','No balance','Suspense balance'],1),
-  mkQ('The Balance Sheet shows:',['Income and expenses for a period','Assets, liabilities and capital as on a date','Only cash transactions','Only tax computation'],1),
-  mkQ('Depreciation is charged to account for:',['Increase in asset value','Wear and tear / reduction in value of a fixed asset','Cash shortage','Bad debts only'],1),
-  mkQ('A "Suspense Account" is opened when:',['Trial balance does not agree and the difference needs temporary parking','A new business starts','Profit is very high','Tax is refunded'],0),
-  mkQ('Which of the following is a liability?',['Cash in hand','Outstanding rent payable','Furniture','Debtors'],1),
-  mkQ('The accounting equation is generally expressed as:',['Assets = Liabilities + Capital','Assets = Income - Expenses','Capital = Assets + Liabilities','Income = Assets - Liabilities'],0)
- ]},
- 'iti-p3':{code:'PAPER 3',title:'ITI Paper 3 - Allied Laws & Office Procedure',topics:'General Office Procedure, File Management, Allied Acts',mins:15,questions:[
-  mkQ('A "file" in government office procedure typically refers to:',['A folder containing related correspondence and notings on a subject','A computer software only','A type of furniture','A staff designation'],0),
-  mkQ('Noting in a government file means:',['Recording remarks/comments/decisions on the subject matter','Deleting old records','Printing the file cover','Sending an SMS'],0),
-  mkQ('Dak generally refers to:',['Incoming and outgoing mail/correspondence of an office','A type of computer','A tax form','A bank statement'],0),
-  mkQ('A "diary number" is used to:',['Track and identify a document/dak received or issued','Record employee attendance only','Note bank transactions','Track vehicle numbers'],0),
-  mkQ('Right to Information (RTI) Act primarily enables citizens to:',['Seek information from public authorities','File income tax returns','Apply for a passport','Register a company'],0),
-  mkQ('The purpose of office manuals/procedure guidelines is to:',['Ensure uniform and standard handling of office work','Replace all record-keeping','Reduce staff strength','Increase paperwork unnecessarily'],0),
-  mkQ('A confidential report (CR) in government service generally relates to:',['An employee\'s annual performance appraisal','A tax audit report','A bank loan report','A public notice'],0),
-  mkQ('Which of the following best describes "correspondence"?',['Exchange of official letters/communication','A type of ledger','A tax deduction','A computer virus'],0),
-  mkQ('Weeding out of records in office procedure means:',['Removing/destroying records no longer required as per retention rules','Printing new files','Hiring new staff','Updating software'],0),
-  mkQ('An "Office Order" is typically issued to:',['Communicate administrative decisions within an office','Replace an Act of Parliament','Serve as a tax receipt','Register a trademark'],0),
-  mkQ('Allied laws relevant to office administration commonly include which of these?',['General Financial Rules and service conduct rules','Only criminal law','Only company law','Only banking law'],0)
- ]},
- 'iti-p4':{code:'PAPER 4',title:'ITI Paper 4 - IT Applications & Operations',topics:'Computer Basics, MS Office, e-Governance Applications',mins:15,questions:[
-  mkQ('e-Governance primarily aims to:',['Deliver government services electronically for efficiency and transparency','Replace all government employees','Eliminate the need for laws','Only manage private business'],0),
-  mkQ('In MS Excel, the SUM function is used to:',['Sort data','Add a range of numbers','Format cells','Insert a chart'],1),
-  mkQ('A database is best described as:',['An organised collection of structured data','A single document file','A type of printer','A network cable'],0),
-  mkQ('Which of these is a common web browser?',['MS Excel','Google Chrome','MS Access','Adobe Reader'],1),
-  mkQ('Digital Signature Certificates (DSC) are primarily used to:',['Authenticate the identity of the signer electronically','Print documents faster','Compress image files','Format spreadsheets'],0),
-  mkQ('In MS Word, "Mail Merge" is used to:',['Merge multiple bank accounts','Send bulk personalised letters/documents from a data source','Delete duplicate files','Format a table only'],1),
-  mkQ('A computer network connecting devices within a single building is called:',['WAN','LAN','URL','ISP'],1),
-  mkQ('Which of these is an example of cloud storage?',['A USB pen drive','Google Drive','A CD-ROM','A printer'],1),
-  mkQ('Antivirus software is used to:',['Detect and remove malicious software','Speed up printing','Create spreadsheets','Manage email only'],0),
-  mkQ('URL stands for:',['Uniform Resource Locator','Universal Record Link','User Response Log','Unified Resource List'],0),
-  mkQ('A PDF file is typically used because it:',['Preserves formatting consistently across devices','Can only be opened on one computer','Cannot be shared by email','Is always editable by anyone'],0)
- ]},
- 'ito-p1':{code:'PAPER 1',title:'ITO Paper 1 - IT Law & Taxpayer Services',topics:'IT Act, Taxpayer Services, TRACES, 26AS, e-PAN',mins:15,questions:[
-  mkQ('An "Assessee" under the Income-tax law refers to:',['A person by whom tax or any other sum is payable under the Act','Only a company','Only a government employee','Only a foreign national'],0),
-  mkQ('The apex direct tax administrative body in India is the:',['CBDT','SEBI','RBI','IRDAI'],0),
-  mkQ('Form 26AS helps a taxpayer to:',['View tax credits (TDS/TCS) deposited against their PAN','Apply for a driving license','File a police complaint','Open a demat account'],0),
-  mkQ('An appeal against an order of the Assessing Officer generally first lies with:',['Commissioner (Appeals)','Supreme Court directly','District Magistrate','Municipal Corporation'],0),
-  mkQ('The concept of "Previous Year" under Income-tax law generally refers to:',['The financial year in which income is earned','The year in which tax is assessed','A calendar year chosen freely','The year of retirement'],0),
-  mkQ('e-Filing of income tax returns is done through:',['The Income Tax Department\'s e-filing portal','A physical visit only','A bank counter only','A courier service'],0),
-  mkQ('TDS on salary is governed under which broad provision?',['Section related to TDS on salary income','GST provisions','Companies Act provisions','RTI provisions'],0),
-  mkQ('A "Notice" issued by the tax department to a taxpayer is typically meant to:',['Seek clarification, information, or intimate a proceeding','Cancel their PAN automatically','Close their bank account','Register a new business'],0),
-  mkQ('Taxpayer grievance redressal in the Income Tax Department can be pursued through:',['The e-Nivaran / grievance mechanism on the e-filing portal','A newspaper advertisement','A private lawyer only, with no departmental option','Social media only'],0),
-  mkQ('PAN is mandatorily quoted for which type of transaction, among others?',['High-value financial transactions as prescribed by law','Buying groceries','Watching a movie','Sending a text message'],0),
-  mkQ('The scope of "Taxpayer Services" typically includes:',['Facilitation of return filing, refunds, and query resolution','Only tax raids','Only penalty imposition','Only prosecution'],0)
- ]},
- 'ito-p2':{code:'PAPER 2',title:'ITO Paper 2 - Advance Accountancy',topics:'Company Accounts, Depreciation, Partnership, Financial Statements',mins:15,questions:[
-  mkQ('Under the Straight Line Method, depreciation is calculated on:',['The reducing book value each year','The original cost of the asset, generally uniform each year','Market value fluctuations','Sale proceeds only'],1),
-  mkQ('Goodwill is generally classified as:',['A current asset','An intangible asset','A liability','An expense only'],1),
-  mkQ('In partnership accounting, profits are shared:',['Equally in all cases regardless of agreement','As per the partnership agreement, or equally if silent','Only by the senior-most partner','As decided by an outside auditor'],1),
-  mkQ('A Cash Flow Statement primarily shows:',['Movement of cash under operating, investing and financing activities','Only credit sales','Only fixed assets','Only share capital'],0),
-  mkQ('Provision for doubtful debts is created to account for:',['Anticipated losses from debtors who may not pay','Extra profit','Cash shortages only','Tax refunds'],0),
-  mkQ('Which of these best describes "Capital Expenditure"?',['Expenditure incurred for acquiring a long-term asset or benefit','Day-to-day running expenses','Salary payments','Rent expense'],0),
-  mkQ('A Bank Reconciliation Statement is prepared to reconcile:',['Cash book balance with the pass book/bank statement balance','Two ledgers of the same head','Sales and purchase registers','Tax returns'],0),
-  mkQ('Reserves and Surplus generally appear under which side of the Balance Sheet?',['Assets side','Liabilities/Equity side','Neither side','Only in the Profit & Loss Account'],1),
-  mkQ('A Bill of Exchange that is dishonoured means:',['It has been duly paid on the due date','The drawee has failed to accept or pay it as agreed','It has been cancelled voluntarily by the drawer only','It automatically converts to cash'],1),
-  mkQ('Amortisation is a term generally associated with:',['Writing off intangible assets over their useful life','Writing off tangible assets only','Cash discounts','Bad debts'],0),
-  mkQ('The main financial statements typically include:',['Balance Sheet, Profit & Loss Account and Cash Flow Statement','Only the Trial Balance','Only bank statements','Only tax challans'],0)
- ]},
- 'ito-p3':{code:'PAPER 3',title:'Paper 3 - Allied Laws & Office Administration',topics:'General Financial Rules, Service Rules, Office Administration',mins:15,questions:[
-  mkQ('General Financial Rules (GFR) primarily govern:',['Financial management and procurement in government offices','Company mergers','Criminal proceedings','Foreign trade policy only'],0),
-  mkQ('Conduct Rules for government servants primarily deal with:',['Expected standards of conduct and discipline of employees','Only leave sanctioning','Only pay fixation','Only pension calculation'],0),
-  mkQ('A "Show Cause Notice" in office administration is issued to:',['Seek an explanation before initiating disciplinary/other action','Grant a promotion automatically','Sanction leave','Approve a tour programme'],0),
-  mkQ('Delegation of financial/administrative powers means:',['Assigning specific powers to lower authorities within limits','Removing all powers from an authority','Transferring an employee','Cancelling a rule permanently'],0),
-  mkQ('Vigilance administration in a government office primarily deals with:',['Prevention and detection of corruption/malpractice','Only recruitment','Only training programmes','Only welfare activities'],0),
-  mkQ('An "Office Memorandum" (O.M.) is used to:',['Communicate decisions or instructions on administrative matters','Serve as a legal contract with a private party','Replace a court judgment','Act as a currency note'],0),
-  mkQ('Right to Information (RTI) applications are generally to be disposed of within:',['A prescribed statutory time limit','No time limit at all','Only during court vacations','Only once a year'],0),
-  mkQ('Grievance redressal mechanisms in offices are meant to:',['Address complaints of the public/staff in a structured manner','Increase pendency deliberately','Avoid accountability','Replace audits'],0),
-  mkQ('Which of the following typically falls under "office administration"?',['Records management, correspondence and establishment matters','Only foreign policy','Only monetary policy','Only judicial review'],0),
-  mkQ('An "Annual Confidential Report" (ACR/APAR) is used for:',['Assessing an employee\'s performance for the year','Recording daily attendance only','Tax assessment','Bank reconciliation'],0),
-  mkQ('Service rules generally cover which of these aspects?',['Recruitment, promotion, discipline and retirement conditions of employees','Only building maintenance','Only vehicle allotment','Only stationery procurement'],0)
- ]},
- 'ito-p5':{code:'PAPER 5',title:'ITO Paper 5 - IT Applications & Operations',topics:'Computer Applications, e-Governance, Data & Cyber Security Basics',mins:15,questions:[
-  mkQ('Cyber security fundamentally aims to protect:',['Only printed documents','Computer systems, networks and data from unauthorised access/attack','Only office furniture','Only paper files'],1),
-  mkQ('A "password policy" typically requires:',['Sharing passwords openly with colleagues','Strong, regularly updated, confidential passwords','Using the same password everywhere forever','No password at all'],1),
-  mkQ('In MS Excel, a "Pivot Table" is primarily used to:',['Summarise and analyse large datasets interactively','Delete rows permanently','Format fonts only','Print documents'],0),
-  mkQ('Which of these best describes "phishing"?',['A legitimate government email','A fraudulent attempt to obtain sensitive information by disguising as a trustworthy source','A type of antivirus software','A backup procedure'],1),
-  mkQ('Data backup is important primarily because it:',['Increases computer speed','Helps recover data in case of loss or system failure','Deletes unnecessary files','Improves printer quality'],1),
-  mkQ('An e-Governance application used for filing returns online is an example of:',['G2C (Government to Citizen) service delivery','A private social media platform','An offline paper process','A banking-only application'],0),
-  mkQ('Which of these is considered good practice for data protection in office systems?',['Leaving systems unlocked when away from desk','Regularly updating software and using access controls','Sharing login credentials via unsecured chat','Disabling all security updates'],1),
-  mkQ('A "digital signature" primarily provides:',['Authenticity and integrity verification of an electronic document','Faster internet speed','Free cloud storage','Automatic printing'],0),
-  mkQ('MS PowerPoint is primarily used for:',['Creating presentations/slides','Managing databases','Sending emails only','Editing images exclusively'],0),
-  mkQ('A firewall in a network primarily functions to:',['Monitor and control incoming/outgoing network traffic based on security rules','Print network diagrams','Store employee records','Generate payslips'],0),
-  mkQ('Which of these is an example of two-factor authentication?',['Using only a username','Password plus an OTP sent to a registered mobile','Writing the password on paper','Sharing the password with a friend'],1)
- ]}
+ 'ms-p2':{code:'PAPER 2',title:'MS Paper 2 - Income Tax Computation',topics:'Heads of Income, Deductions, TDS/TCS basics, PAN & TAN',mins:15,questions:[]},
+ 'ms-p4':{code:'PAPER 4',title:'MS Paper 4 - IT Applications & Operations',topics:'Computer Basics, MS Office, Internet & Email, File Handling',mins:15,questions:[]},
+ 'iti-p1':{code:'PAPER 1',title:'ITI Paper 1 - IT Law, Computation & Taxpayer Services',topics:'IT Law, TRACES, 26AS, e-PAN, Taxpayer Services',mins:15,questions:[]},
+ 'iti-p2':{code:'PAPER 2',title:'ITI Paper 2 - Accountancy & Book-Keeping',topics:'Journal, Ledger, Trial Balance, Final Accounts',mins:15,questions:[]},
+ 'iti-p3':{code:'PAPER 3',title:'ITI Paper 3 - Allied Laws & Office Procedure',topics:'General Office Procedure, File Management, Allied Acts',mins:15,questions:[]},
+ 'iti-p4':{code:'PAPER 4',title:'ITI Paper 4 - IT Applications & Operations',topics:'Computer Basics, MS Office, e-Governance Applications',mins:15,questions:[]},
+ 'ito-p1':{code:'PAPER 1',title:'ITO Paper 1 - IT Law & Taxpayer Services',topics:'IT Act, Taxpayer Services, TRACES, 26AS, e-PAN',mins:15,questions:[]},
+ 'ito-p2':{code:'PAPER 2',title:'ITO Paper 2 - Advance Accountancy',topics:'Company Accounts, Depreciation, Partnership, Financial Statements',mins:15,questions:[]},
+ 'ito-p3':{code:'PAPER 3',title:'Paper 3 - Allied Laws & Office Administration',topics:'General Financial Rules, Service Rules, Office Administration',mins:15,questions:[]},
+ 'ito-p5':{code:'PAPER 5',title:'ITO Paper 5 - IT Applications & Operations',topics:'Computer Applications, e-Governance, Data & Cyber Security Basics',mins:15,questions:[]}
 };
 
 /* ═══════════ STATE ═══════════ */
@@ -1142,14 +1035,23 @@ async function goInstructions(paperId){
   document.getElementById('agree-box').checked=false;document.getElementById('btn-start').disabled=true;
   showPage('inst-page');
 
-  // Pull this paper's questions from Supabase; keep the built-in bank if the table has nothing yet.
+  // Pull this paper's questions from Supabase. There is no local fallback bank any more —
+  // if the table has nothing for this paper_id, block starting the test and say so clearly.
   const dbQuestions=await fetchQuestionsForPaper(paperId);
-  if(dbQuestions)p.questions=dbQuestions;
+  p.questions=dbQuestions||[];
   document.getElementById('inst-details-grid').innerHTML=`
     <div class="detail-cell"><div class="detail-label">Duration</div><div class="detail-val">${p.mins} min</div></div>
-    <div class="detail-cell"><div class="detail-label">Questions</div><div class="detail-val">${p.questions.length}</div></div>
+    <div class="detail-cell"><div class="detail-label">Questions</div><div class="detail-val">${p.questions.length||'—'}</div></div>
     <div class="detail-cell"><div class="detail-label">Type</div><div class="detail-val">Objective</div></div>
     <div class="detail-cell"><div class="detail-label">Negative Mark</div><div class="detail-val">−1/8</div></div>`;
+  if(!p.questions.length){
+    document.getElementById('agree-box').disabled=true;
+    document.getElementById('btn-start').disabled=true;
+    document.getElementById('candidate-info-block').innerHTML+=`
+      <div style="margin-top:.9rem;background:var(--qz-red-pale);border:1.5px solid #fecaca;border-radius:12px;padding:.85rem 1rem;color:var(--qz-red);font-size:.85rem;font-weight:600;">
+        ⚠️ No questions found for this paper yet. Please try again later or contact the admin.
+      </div>`;
+  }
 }
 
 function startTest(){
@@ -1161,6 +1063,7 @@ function startTest(){
     showPage('dashboard-page');renderDashboard();return;
   }
   const p=PAPERS[currentPaperId];TOTAL=p.questions.length;
+  if(!TOTAL){alert('No questions available for this paper right now. Please try again later.');return;}
   answers=new Array(TOTAL).fill(-1);visited=new Array(TOTAL).fill(false);currentQ=0;
   setLang('en');
   startTime=Date.now();elapsedSeconds=0;
