@@ -413,6 +413,11 @@ body{font-family:'Open Sans',sans-serif;font-size:14px;}
 .login-gate-card{background:#fff;border:1px solid var(--qz-bdr);border-radius:14px;padding:1.5rem;text-align:center;max-width:420px;margin:2rem auto;}
 .login-gate-card p{color:var(--qz-muted);font-size:.85rem;margin:.5rem 0 1.1rem;line-height:1.6;}
 .btn-go-login{background:linear-gradient(135deg,var(--qz-t1),var(--qz-t3));color:#fff;font-size:.85rem;font-weight:700;padding:.65rem 1.4rem;border-radius:10px;border:none;cursor:pointer;text-decoration:none;display:inline-block;}
+.quiz-wait-card{background:linear-gradient(180deg,var(--qz-t-dark) 0%,var(--qz-t1) 55%,var(--qz-t3) 100%);border-radius:18px;padding:2.2rem 1.6rem;text-align:center;max-width:460px;margin:2rem auto;color:#fff;box-shadow:0 10px 30px rgba(0,77,63,.28);position:relative;overflow:hidden;}
+.quiz-wait-card::before{content:'';position:absolute;inset:0;background:repeating-linear-gradient(0deg,rgba(255,255,255,.04) 0px,rgba(255,255,255,.04) 1px,transparent 1px,transparent 22px);pointer-events:none;}
+.quiz-wait-icon{font-size:2.4rem;position:relative;z-index:1;}
+.quiz-wait-title{font-family:'Nunito',sans-serif;font-size:1.15rem;font-weight:800;margin:.7rem 0 .5rem;position:relative;z-index:1;}
+.quiz-wait-sub{font-size:.85rem;color:rgba(255,255,255,.85);line-height:1.6;position:relative;z-index:1;}
 .inst-sec-title{font-size:.7rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--qz-t1);margin-bottom:.7rem;padding-bottom:.4rem;border-bottom:2px solid #a7f3d0;}
 .inst-list{list-style:none;display:flex;flex-direction:column;gap:.45rem;margin-bottom:1.1rem;}
 .inst-list li{display:flex;align-items:flex-start;gap:.6rem;font-size:.84rem;color:#374151;line-height:1.6;}
@@ -446,11 +451,16 @@ body{font-family:'Open Sans',sans-serif;font-size:14px;}
 .opt-letter{width:26px;height:26px;border-radius:50%;border:1.5px solid var(--qz-bdr);background:var(--qz-bg);display:grid;place-items:center;font-size:.7rem;font-weight:700;flex-shrink:0;color:var(--qz-muted);}
 .opt-btn.selected .opt-letter{background:var(--qz-t3);border-color:var(--qz-t3);color:#fff;}
 .opt-text{line-height:1.55;font-size:.88rem;}
-.q-nav{display:flex;flex-wrap:wrap;gap:.5rem;margin-top:1.2rem;}
-.q-btn{padding:.55rem 1rem;border-radius:8px;border:1.5px solid var(--qz-bdr);background:#fff;font-family:'Open Sans',sans-serif;font-size:.78rem;font-weight:700;color:var(--qz-ink);cursor:pointer;transition:all .15s;flex:1;text-align:center;}
-.q-btn:hover{border-color:var(--qz-t3);color:var(--qz-t1);}
+.q-nav{display:flex;flex-wrap:nowrap;gap:.5rem;margin-top:1.2rem;}
+.q-btn{padding:.55rem .6rem;border-radius:8px;border:1.5px solid var(--qz-bdr);background:#fff;font-family:'Open Sans',sans-serif;font-size:.78rem;font-weight:700;color:var(--qz-ink);cursor:pointer;transition:all .15s;flex:1;min-width:0;text-align:center;white-space:nowrap;}
+.q-btn:hover{border-color:var(--qz-t3);color:var(--qz-t1);background:#e6faf5;}
 .q-btn-primary{background:var(--qz-t3);border-color:var(--qz-t3);color:#fff;}
-.q-btn-submit{background:var(--qz-dark);border-color:var(--qz-dark);color:#fff;flex:0;margin-left:auto;}
+.q-btn-primary:hover{background:var(--qz-t1);border-color:var(--qz-t1);color:#fff;}
+.q-btn-submit{background:var(--qz-dark);border-color:var(--qz-dark);color:#fff;flex:0 0 auto;margin-left:auto;}
+.q-btn-submit:hover{background:var(--qz-dark2);border-color:var(--qz-dark2);color:#fff;}
+@media(max-width:420px){
+  .q-btn{padding:.55rem .45rem;font-size:.7rem;}
+}
 .palette-toggle-btn{display:flex;align-items:center;justify-content:center;gap:.4rem;width:100%;padding:.6rem;margin-top:1rem;background:#fff;border:1.5px solid var(--qz-bdr);border-radius:10px;font-size:.8rem;font-weight:600;color:var(--qz-muted);cursor:pointer;}
 @media(min-width:769px){.palette-toggle-btn{display:none;}}
 .sidebar{background:#fff;border-top:1px solid var(--qz-bdr);padding:1rem;overflow-y:auto;display:none;}
@@ -867,6 +877,42 @@ let logoTapCount=0,logoTapTimer=null;
 const RESET_HOUR=5;
 function todayKey(){const d=new Date(Date.now()-RESET_HOUR*3600000);return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0');}
 function isOpenNow(){return true;} // open every day, resets at 5:00 AM
+
+/* ═══════════ TODAY'S QUIZ AVAILABILITY ═══════════
+   The quiz day resets at 5:00 AM, but the actual questions only go live once the
+   admin uploads today's rows into the Supabase `quiz_questions` table — there is
+   no manual switch to flip. We detect "today's quiz is live" purely from data:
+   has ANY quiz_questions row been created since this reset window began? If not,
+   the dashboard shows a holding message instead of the paper grid, and re-checks
+   automatically (no page reload needed) once rows start appearing. */
+function todayResetTimestampISO(){
+  const n=new Date();
+  let reset=new Date(n.getFullYear(),n.getMonth(),n.getDate(),RESET_HOUR,0,0,0);
+  if(n<reset)reset.setDate(reset.getDate()-1); // before 5 AM → the window started yesterday
+  return reset.toISOString();
+}
+let quizUploadedTodayCache=null,quizUploadedCacheKey=null;
+async function isTodaysQuizUploaded(){
+  const key=todayKey();
+  if(quizUploadedCacheKey===key&&quizUploadedTodayCache!==null)return quizUploadedTodayCache;
+  try{
+    const since=todayResetTimestampISO();
+    const rows=await sbFetch('quiz_questions?select=id&created_at=gte.'+encodeURIComponent(since)+'&limit=1');
+    quizUploadedTodayCache=Array.isArray(rows)&&rows.length>0;
+  }catch(e){quizUploadedTodayCache=false;}
+  quizUploadedCacheKey=key;
+  return quizUploadedTodayCache;
+}
+// Poll periodically so the dashboard flips itself live the moment the admin uploads
+// today's questions, without anyone needing to refresh the page.
+setInterval(async()=>{
+  const wasKey=quizUploadedCacheKey,wasVal=quizUploadedTodayCache;
+  quizUploadedCacheKey=null; // force a fresh check
+  const nowVal=await isTodaysQuizUploaded();
+  if((wasKey!==todayKey()||wasVal!==nowVal)&&document.getElementById('dashboard-page')&&document.getElementById('dashboard-page').classList.contains('active')){
+    renderDashboard();
+  }
+},60000);
 function msUntilMidnight(){
   const n=new Date();
   let next=new Date(n.getFullYear(),n.getMonth(),n.getDate(),RESET_HOUR,0,0,0);
@@ -939,7 +985,7 @@ document.addEventListener('visibilitychange',()=>{
 });
 
 /* ═══════════ DASHBOARD ═══════════ */
-function renderDashboard(){
+async function renderDashboard(){
   const loggedIn=getLoggedInUser();
   const gridEl=document.getElementById('paper-grid');
   if(!loggedIn){
@@ -953,6 +999,19 @@ function renderDashboard(){
       </div>`;
     return;
   }
+
+  const quizLive=await isTodaysQuizUploaded();
+  if(!quizLive){
+    document.getElementById('day-limit-banner').innerHTML='';
+    gridEl.innerHTML=`
+      <div class="quiz-wait-card">
+        <div class="quiz-wait-icon">⏳</div>
+        <div class="quiz-wait-title">Today's Quiz is yet to Start</div>
+        <div class="quiz-wait-sub">Kindly hold your breath — today's papers will go live shortly. This page updates automatically, no need to refresh.</div>
+      </div>`;
+    return;
+  }
+
   const attemptedToday=getTodaysAttemptedPaperId();
 
   const bannerEl=document.getElementById('day-limit-banner');
