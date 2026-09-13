@@ -480,13 +480,13 @@ body{background:var(--bg);color:var(--ink);font-family:'Open Sans',sans-serif;ov
     <div class="mb">
       <div id="step1">
         <p style="font-size:.77rem;color:var(--muted);margin-bottom:.85rem;">Choose your plan:</p>
+        <div id="coupon-wrap" style="background:#fff7e6;border:1.5px dashed #f5c518;border-radius:10px;padding:.55rem .7rem;margin-bottom:.85rem;"><div style="font-size:.68rem;font-weight:700;color:#8a6300;margin-bottom:.35rem;">🎟️ Have a coupon code?</div><div style="display:flex;gap:.4rem;"><input id="coupon-input" type="text" placeholder="Enter code" onkeydown="if(event.key==='Enter'){event.preventDefault();applyCoupon();}" style="flex:1;padding:.4rem .55rem;border:1.5px solid #ddd;border-radius:7px;font-size:.72rem;font-family:inherit;"><button id="coupon-apply-btn" type="button" onclick="applyCoupon()" style="padding:.4rem .8rem;border:none;border-radius:7px;background:var(--t1);color:#fff;font-size:.7rem;font-weight:700;cursor:pointer;">Apply</button></div><div id="coupon-msg" style="display:none;font-size:.66rem;font-weight:700;margin-top:.35rem;"></div></div>
         <div class="plan-cards" id="plan-cards"></div>
         <button class="btn-cont" id="cont-btn" onclick="doContinue()">Continue →</button>
       </div>
       <div id="step2" style="display:none">
         <!-- PAY SCREEN -->
         <div id="pay-screen">
-          <div id="coupon-wrap" style="background:#fff7e6;border:1.5px dashed #f5c518;border-radius:10px;padding:.55rem .7rem;margin-bottom:.6rem;"><div style="font-size:.68rem;font-weight:700;color:#8a6300;margin-bottom:.35rem;">🎟️ Have a coupon code?</div><div style="display:flex;gap:.4rem;"><input id="coupon-input" type="text" placeholder="Enter code" style="flex:1;padding:.4rem .55rem;border:1.5px solid #ddd;border-radius:7px;font-size:.72rem;font-family:inherit;"><button id="coupon-apply-btn" type="button" onclick="applyCoupon()" style="padding:.4rem .8rem;border:none;border-radius:7px;background:var(--t1);color:#fff;font-size:.7rem;font-weight:700;cursor:pointer;">Apply</button></div><div id="coupon-msg" style="display:none;font-size:.66rem;font-weight:700;margin-top:.35rem;"></div></div>
           <div class=qr-box>
             <div class=qr-top>
               <div class=qr-lbl>
@@ -1313,7 +1313,7 @@ Object.assign(window,{
   closeModal,overlayClick,doContinue,submitPayment,backToPlan,
   buildTabs,switchTab,render,checkPaymentStatus,
   onUpiAppClick,onPaidClick,showPayScreen,showConfirmScreen,showPendingScreen,
-  openModal,openComboModal,selectSubject,selectModalPlan
+  openModal,openComboModal,selectSubject,selectModalPlan,applyCoupon
 });
 
 })();
