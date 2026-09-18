@@ -895,6 +895,14 @@ function isUnlocked(t,paperKey){if(t.free)return true;return isPaidForPaper(pape
 function getScore(id){try{return JSON.parse(localStorage.getItem('t11_score_'+id)||'null')}catch(e){return null}}
 function getAttempts(id){try{return parseInt(localStorage.getItem('t11_attempts_'+id)||'0',10);}catch(e){return 0;}}
 function recordAttempt(id){const n=getAttempts(id)+1;localStorage.setItem('t11_attempts_'+id,n);}
+function fsSupported(){return !!(document.fullscreenEnabled||document.webkitFullscreenEnabled||document.msFullscreenEnabled);}
+function enterFullscreenOnTestClick(){
+  if(!fsSupported())return;
+  const el=document.documentElement;
+  const req=el.requestFullscreen||el.webkitRequestFullscreen||el.msRequestFullscreen;
+  if(!req)return;
+  try{const result=req.call(el);if(result&&typeof result.catch==='function')result.catch(()=>{});}catch(e){}
+}
 function logout(){
   const keysToRemove=Object.keys(localStorage).filter(k=>k.startsWith('t11_user')||k==='t11_user');
   keysToRemove.forEach(k=>localStorage.removeItem(k));
@@ -1000,7 +1008,7 @@ function buildCards(p,i){
     }else if(unlocked&&!maxed){
       card=document.createElement('a');
       card.href='online-mock-test.html?id='+t.id;
-      card.addEventListener('click',()=>recordAttempt(t.id));
+      card.addEventListener('click',()=>{recordAttempt(t.id);enterFullscreenOnTestClick();});
     }else{
       card=document.createElement('div');
     }
