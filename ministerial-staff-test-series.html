@@ -306,9 +306,18 @@ body{background:var(--bg);color:var(--ink);font-family:'Open Sans',sans-serif;ov
 @media(min-width:641px) and (max-width:900px){
   .tests-grid{grid-template-columns:repeat(2,1fr)}.logo-box .site-name{font-size:1.65rem}
 }
+#t11-test-overlay{position:fixed;inset:0;z-index:99999;background:#f7f7f7;display:none;}
+#t11-test-overlay.active{display:block;}
+#t11-test-frame{width:100%;height:100%;border:none;display:block;}
+#t11-fs-resume{position:fixed;inset:0;z-index:100000;background:rgba(26,26,46,.94);display:none;align-items:center;justify-content:center;flex-direction:column;gap:.75rem;cursor:pointer;}
+#t11-fs-resume.show{display:flex;}
+#t11-fs-resume p{color:#fff;font-size:1rem;font-weight:700;text-align:center;padding:0 2rem;}
+#t11-fs-resume span{color:rgba(255,255,255,.7);font-size:.85rem;font-weight:600;}
 </style>
 </head>
 <body>
+<div id="t11-test-overlay"><iframe id="t11-test-frame" title="Test" allow="fullscreen" allowfullscreen></iframe></div>
+<div id="t11-fs-resume" onclick="t11ResumeFullscreen()"><p>Full screen was exited</p><span>Click anywhere to resume full screen</span></div>
 <div id="progress"></div><div id="offer-banner" style="display:none;background:linear-gradient(90deg,#f5c518,#e8a900);color:#1a1a2e;text-align:center;padding:.6rem 1rem;font-weight:800;font-size:.8rem;letter-spacing:.02em;position:relative;z-index:300;">🎉 LIMITED-TIME OFFER: <span style="text-decoration:underline;">50% OFF</span> on all MS test series — 13 Sep to 20 Sep 2026. Use code <strong style="background:#1a1a2e;color:#f5c518;padding:.12rem .5rem;border-radius:5px;letter-spacing:.03em;box-shadow:0 1px 4px rgba(0,0,0,.25);">50%</strong> at checkout!</div><script>(function(){var b=document.getElementById('offer-banner');var s=new Date('2026-09-13T00:00:00+05:30'),e=new Date('2026-09-20T23:59:59+05:30'),n=new Date();if(n>=s&&n<=e)b.style.display='block';})();</script>
 <a href="#main-content" class="skip-link">Skip to main content</a>
 <button aria-label="Back to top" onclick="scrollTo({top:0,behavior:'smooth'})" id="btt">
@@ -746,6 +755,60 @@ function isUnlocked(t,paperKey){return t.free||isPaperUnlocked(paperKey);}
 function getScore(id){try{return JSON.parse(localStorage.getItem('t11_score_'+id)||'null')}catch(e){return null}}
 function getAttempts(id){try{return parseInt(localStorage.getItem('t11_attempts_'+id)||'0',10);}catch(e){return 0;}}
 function recordAttempt(id){const n=getAttempts(id)+1;localStorage.setItem('t11_attempts_'+id,n);}
+function fsSupported(){return !!(document.fullscreenEnabled||document.webkitFullscreenEnabled||document.msFullscreenEnabled);}
+function enterFullscreenOnTestClick(){
+  if(!fsSupported())return;
+  const el=document.documentElement;
+  const req=el.requestFullscreen||el.webkitRequestFullscreen||el.msRequestFullscreen;
+  if(!req)return;
+  try{const result=req.call(el);if(result&&typeof result.catch==='function')result.catch(()=>{});}catch(e){}
+}
+function t11ExitFullscreenLocal(){
+  try{if(document.fullscreenElement||document.webkitFullscreenElement||document.msFullscreenElement){if(document.exitFullscreen)document.exitFullscreen().catch(()=>{});else if(document.webkitExitFullscreen)document.webkitExitFullscreen();else if(document.msExitFullscreen)document.msExitFullscreen();}}catch(e){}
+}
+function openTestOverlay(url){
+  enterFullscreenOnTestClick();
+  const overlay=document.getElementById('t11-test-overlay');
+  const frame=document.getElementById('t11-test-frame');
+  frame.src=url;
+  overlay.classList.add('active');
+  document.body.style.overflow='hidden';
+  try{history.pushState({t11Test:true},'',url);}catch(e){}
+}
+function closeTestOverlay(){
+  const overlay=document.getElementById('t11-test-overlay');
+  const frame=document.getElementById('t11-test-frame');
+  const resumeBanner=document.getElementById('t11-fs-resume');
+  overlay.classList.remove('active');
+  resumeBanner.classList.remove('show');
+  frame.src='about:blank';
+  document.body.style.overflow='';
+  t11ExitFullscreenLocal();
+  const base=window.location.pathname;
+  try{if(history.state&&history.state.t11Test)history.back();else history.replaceState(null,'',base);}catch(e){}
+}
+function t11ResumeFullscreen(){
+  enterFullscreenOnTestClick();
+  document.getElementById('t11-fs-resume').classList.remove('show');
+}
+document.addEventListener('fullscreenchange',()=>{
+  const overlay=document.getElementById('t11-test-overlay');
+  const resumeBanner=document.getElementById('t11-fs-resume');
+  if(overlay&&overlay.classList.contains('active')&&!document.fullscreenElement){
+    resumeBanner.classList.add('show');
+  }else{
+    resumeBanner.classList.remove('show');
+  }
+});
+window.addEventListener('message',(e)=>{
+  if(!e.data||typeof e.data!=='object')return;
+  if(e.data.type==='t11-exit-fullscreen'){t11ExitFullscreenLocal();}
+  else if(e.data.type==='t11-close-test'){closeTestOverlay();}
+});
+window.addEventListener('popstate',()=>{
+  const overlay=document.getElementById('t11-test-overlay');
+  if(overlay&&overlay.classList.contains('active')){closeTestOverlay();}
+});
 function logout(){const keysToRemove=Object.keys(localStorage).filter(k=>k.startsWith('t11_user')||k==='t11_user');keysToRemove.forEach(k=>localStorage.removeItem(k));window.location.href='login.html';}
 
 function buildTabs(){
@@ -848,7 +911,7 @@ function buildCards(p,i){
     const wrap=document.createElement('div');
     if(t.free){wrap.className='free-wrap';}
     let card;
-    if(unlocked&&!maxed){card=document.createElement('a');card.href='online-mock-test.html?id='+t.id;card.addEventListener('click',()=>recordAttempt(t.id));}
+    if(unlocked&&!maxed){card=document.createElement('a');card.href='online-mock-test.html?id='+t.id;card.addEventListener('click',(e)=>{e.preventDefault();recordAttempt(t.id);openTestOverlay(card.href);});}
     else{card=document.createElement('div');}
     card.className='card'+(maxed?' completed':unlocked?'':' locked');
     const stTxt=t.free?'FREE':maxed?'DONE':unlocked?'OPEN':'LOCKED';
