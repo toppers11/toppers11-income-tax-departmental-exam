@@ -943,18 +943,20 @@ function closeTestOverlay(){
 function t11ResumeFullscreen(){
   enterFullscreenOnTestClick();
 }
+let t11SuppressResumeNag=false;
 document.addEventListener('fullscreenchange',()=>{
   const overlay=document.getElementById('t11-test-overlay');
   const resumeBanner=document.getElementById('t11-fs-resume');
   if(overlay&&overlay.classList.contains('active')&&!document.fullscreenElement){
-    resumeBanner.classList.add('show');
+    if(t11SuppressResumeNag){t11SuppressResumeNag=false;resumeBanner.classList.remove('show');}
+    else{resumeBanner.classList.add('show');}
   }else{
     resumeBanner.classList.remove('show');
   }
 });
 window.addEventListener('message',(e)=>{
   if(!e.data||typeof e.data!=='object')return;
-  if(e.data.type==='t11-exit-fullscreen'){t11ExitFullscreenLocal();}
+  if(e.data.type==='t11-exit-fullscreen'){t11SuppressResumeNag=true;t11ExitFullscreenLocal();}
   else if(e.data.type==='t11-close-test'){closeTestOverlay();}
 });
 window.addEventListener('popstate',()=>{
