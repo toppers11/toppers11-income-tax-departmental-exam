@@ -260,6 +260,8 @@ body{background:var(--bg);color:var(--ink);font-family:'Open Sans',sans-serif;ov
 .cf-btn-group{display:flex;align-items:center;gap:.35rem;flex-wrap:wrap}
 .btn-view-result{display:inline-flex;align-items:center;gap:.3rem;background:#eaf2ff;color:#1e40af;border:1px solid #bfdbfe;border-radius:6px;padding:.36rem .8rem;font-size:.68rem;font-weight:700;cursor:pointer;letter-spacing:.03em;font-family:'Open Sans',sans-serif;transition:all .15s;text-decoration:none}
 .btn-view-result:hover{background:#1e40af;color:#fff;border-color:#1e40af}
+.btn-download-pdf{display:inline-flex;align-items:center;gap:.3rem;background:#f0fdf8;color:var(--t1);border:1px solid #a7f3d0;border-radius:6px;padding:.36rem .8rem;font-size:.68rem;font-weight:700;cursor:pointer;letter-spacing:.03em;font-family:'Open Sans',sans-serif;transition:all .15s;text-decoration:none}
+.btn-download-pdf:hover{background:var(--t3);color:#fff;border-color:var(--t3)}
 
 /* ── PURCHASE MODAL ── */
 .overlay{position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:600;display:none;place-items:center;padding:1rem}
@@ -1013,14 +1015,20 @@ function buildCards(p,i){
     const sc=hasScore?`<span class="cscore">${score.correct||0}/${score.total||t.qs} correct</span>`:'';
     const viewResultBtn=hasScore?`<button type="button" class="btn-view-result" onclick="event.preventDefault();event.stopPropagation();window.location.href='online-mock-test.html?id=${t.id}&review=1';">📊 View Result</button>`:'';
 
+    // PDF download link (previous-year-question PDFs, hosted on GitHub)
+    const pdfBase='https://raw.githubusercontent.com/toppers11/toppers11-income-tax-departmental-exam/main/';
+    const pdfYear=t.pyq?(t.lbl.match(/\d{4}/)||[])[0]:null;
+    const pdfFile=pdfYear?`ITO-${p.key.toUpperCase()}-${pdfYear}.pdf`:null;
+    const downloadPdfBtn=t.pyq&&pdfFile?`<a href="${pdfBase}${pdfFile}" download="${pdfFile}" class="btn-download-pdf" onclick="event.stopPropagation();" target="_blank" rel="noopener">⬇ DOWNLOAD PDF</a>`:'';
+
     // Footer action button
     let footerBtn;
     if(!available){
       footerBtn=`<span class="btn-unavailable-test"><svg width="11" height="11" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6"/></svg>View Notice</span>`;
     }else if(maxed){
-      footerBtn=`<div class="cf-btn-group"><span class="btn-completed-test"><svg width="11" height="11" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>Completed</span><span class="retest-badge">All 3 Used</span>${viewResultBtn}</div>`;
+      footerBtn=`<div class="cf-btn-group"><span class="btn-completed-test"><svg width="11" height="11" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>Completed</span><span class="retest-badge">All 3 Used</span>${viewResultBtn}${downloadPdfBtn}</div>`;
     }else if(unlocked&&t.free){
-      footerBtn=`<div class="cf-btn-group"><span class="btn-free-test"><svg width="11" height="11" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24"><polygon points="5 3 19 12 5 21 5 3"/></svg>${score?'Re-take':'FREE TEST'}</span>${viewResultBtn}</div>`;
+      footerBtn=`<div class="cf-btn-group"><span class="btn-free-test"><svg width="11" height="11" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24"><polygon points="5 3 19 12 5 21 5 3"/></svg>${score?'Re-take':'FREE TEST'}</span>${viewResultBtn}${downloadPdfBtn}</div>`;
     }else if(unlocked){
       footerBtn=`<div class="cf-btn-group"><span class="${score?'btn-retake-test':'btn-start-test'}"><svg width="11" height="11" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24"><polygon points="5 3 19 12 5 21 5 3"/></svg>${score?'Retake':'Start Test'}</span>${viewResultBtn}</div>`;
     }else{
