@@ -757,11 +757,16 @@ function getAttempts(id){try{return parseInt(localStorage.getItem('t11_attempts_
 function recordAttempt(id){const n=getAttempts(id)+1;localStorage.setItem('t11_attempts_'+id,n);}
 function fsSupported(){return !!(document.fullscreenEnabled||document.webkitFullscreenEnabled||document.msFullscreenEnabled);}
 function enterFullscreenOnTestClick(){
-  if(!fsSupported())return;
+  if(!fsSupported()){console.warn('[T11] Fullscreen not supported/enabled in this browser context.');return;}
   const el=document.documentElement;
   const req=el.requestFullscreen||el.webkitRequestFullscreen||el.msRequestFullscreen;
-  if(!req)return;
-  try{const result=req.call(el);if(result&&typeof result.catch==='function')result.catch(()=>{});}catch(e){}
+  if(!req){console.warn('[T11] No requestFullscreen method available.');return;}
+  try{
+    const result=req.call(el);
+    if(result&&typeof result.catch==='function'){
+      result.catch(err=>{console.warn('[T11] requestFullscreen() was rejected:',err&&err.message?err.message:err);});
+    }
+  }catch(e){console.warn('[T11] requestFullscreen() threw synchronously:',e&&e.message?e.message:e);}
 }
 function t11ExitFullscreenLocal(){
   try{if(document.fullscreenElement||document.webkitFullscreenElement||document.msFullscreenElement){if(document.exitFullscreen)document.exitFullscreen().catch(()=>{});else if(document.webkitExitFullscreen)document.webkitExitFullscreen();else if(document.msExitFullscreen)document.msExitFullscreen();}}catch(e){}
@@ -789,7 +794,6 @@ function closeTestOverlay(){
 }
 function t11ResumeFullscreen(){
   enterFullscreenOnTestClick();
-  document.getElementById('t11-fs-resume').classList.remove('show');
 }
 document.addEventListener('fullscreenchange',()=>{
   const overlay=document.getElementById('t11-test-overlay');
