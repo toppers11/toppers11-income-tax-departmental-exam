@@ -1514,10 +1514,33 @@ function fetchWithTimeoutMock(url,opts,ms){
 }
 
 function validateCandidateInfo(){const nameEl=document.getElementById('cand-name');const mobEl=document.getElementById('cand-mobile');const nameWrap=document.getElementById('cf-name-wrap');const mobWrap=document.getElementById('cf-mobile-wrap');const name=nameEl.value.trim();const mobile=mobEl.value.trim();let ok=true;if(!name){nameWrap.classList.add('has-err');ok=false;}else{nameWrap.classList.remove('has-err');}if(!/^[6-9]\d{9}$/.test(mobile)){mobWrap.classList.add('has-err');ok=false;}else{mobWrap.classList.remove('has-err');}if(ok){try{const u=getUser();u.name=name;u.mobile=mobile;localStorage.setItem('t11_user',JSON.stringify(u));}catch(e){console.warn('Could not save candidate info:',e.message);}candName=name;candMobile=mobile;}return ok;}
-function enterFullscreen(){const el=document.documentElement;try{if(el.requestFullscreen)el.requestFullscreen().catch(()=>{});else if(el.webkitRequestFullscreen)el.webkitRequestFullscreen();else if(el.msRequestFullscreen)el.msRequestFullscreen();}catch(e){}}
+function fsSupported(){return !!(document.fullscreenEnabled||document.webkitFullscreenEnabled||document.msFullscreenEnabled);}
+function enterFullscreen(){
+  const el=document.documentElement;
+  if(!fsSupported()){
+    console.warn('[T11] Fullscreen API not enabled by this browser/host (document.fullscreenEnabled is false). This usually means a Permissions-Policy header on the server is blocking it, or the browser/device does not support it (e.g. iOS Safari).');
+    showToast('Full screen mode is blocked by this browser. Press F11 for full screen.');
+    return;
+  }
+  const req=el.requestFullscreen||el.webkitRequestFullscreen||el.msRequestFullscreen;
+  if(!req){console.warn('[T11] No requestFullscreen method found on documentElement.');return;}
+  try{
+    const result=req.call(el);
+    if(result&&typeof result.catch==='function'){
+      result.catch(err=>{
+        console.warn('[T11] requestFullscreen() was rejected:',err&&err.message?err.message:err);
+        showToast('Could not enter full screen automatically. Press F11 for full screen.');
+      });
+    }
+  }catch(e){
+    console.warn('[T11] requestFullscreen() threw synchronously:',e&&e.message?e.message:e);
+    showToast('Could not enter full screen automatically. Press F11 for full screen.');
+  }
+}
 function exitFullscreen(){try{if(document.fullscreenElement||document.webkitFullscreenElement||document.msFullscreenElement){if(document.exitFullscreen)document.exitFullscreen().catch(()=>{});else if(document.webkitExitFullscreen)document.webkitExitFullscreen();else if(document.msExitFullscreen)document.msExitFullscreen();}}catch(e){}}
-document.addEventListener('fullscreenchange',()=>{const testActive=document.getElementById('test-page').classList.contains('active')||document.getElementById('subj-page').classList.contains('active');if(!document.fullscreenElement&&testActive)showToast('You exited full screen. Click anywhere to resume full screen.');});
-document.addEventListener('click',()=>{const testActive=document.getElementById('test-page')&&document.getElementById('test-page').classList.contains('active')||document.getElementById('subj-page')&&document.getElementById('subj-page').classList.contains('active');if(testActive&&!document.fullscreenElement)enterFullscreen();});
+function inFullscreenFlow(){return['inst-page','test-page','subj-page'].some(id=>{const el=document.getElementById(id);return el&&el.classList.contains('active');});}
+document.addEventListener('fullscreenchange',()=>{if(!document.fullscreenElement&&inFullscreenFlow())showToast('You exited full screen. Click anywhere to resume full screen.');});
+document.addEventListener('click',()=>{if(inFullscreenFlow()&&!document.fullscreenElement&&fsSupported())enterFullscreen();});
 function startTest(){if(!validateCandidateInfo())return;enterFullscreen();if(META.type==='subjective'){showPage('subj-page');renderSubjective();startTimer(META.mins,'subj-timer-box',submitSubjective);document.getElementById('subj-tp-info').textContent=`${META.paper} — ${TOTAL} Questions`;}else{showPage('test-page');const resuming=!!pausedState;if(resuming){answers=pausedState.answers;visited=pausedState.visited;marked=pausedState.marked;currentQ=Math.min(pausedState.currentQ,TOTAL-1);}else{visited[0]=true;}document.getElementById('tp-info').textContent=META.paper;document.getElementById('q-paper-tag').textContent=META.paper;renderPalette();renderQuestion();startTimer(META.mins,'timer-box',submitTest,resuming?pausedState.remainingSecs:undefined);if(resuming)showToast('Resumed from where you left off.');pausedState=null;}}
 function showPage(id){document.querySelectorAll('#inst-page,#test-page,#result-page,#subj-page,#subj-result-page').forEach(p=>p.classList.remove('active'));document.getElementById(id).classList.add('active');}
 function startTimer(mins,boxId,onExpire,startSecs){remainingSecs=(typeof startSecs==='number'&&startSecs>0)?startSecs:mins*60;timerBoxId=boxId;timerOnExpire=onExpire;updateTimerDisplay();timerInterval=setInterval(()=>{remainingSecs--;updateTimerDisplay();if(remainingSecs<=0){clearInterval(timerInterval);onExpire();}},1000);}
