@@ -309,7 +309,7 @@ body{background:var(--bg);color:var(--ink);font-family:'Open Sans',sans-serif;ov
 #t11-test-overlay{position:fixed;inset:0;z-index:99999;background:#f7f7f7;display:none;}
 #t11-test-overlay.active{display:block;}
 #t11-test-frame{width:100%;height:100%;border:none;display:block;}
-#t11-fs-resume{position:fixed;inset:0;z-index:100000;background:rgba(26,26,46,.94);display:none;align-items:center;justify-content:center;flex-direction:column;gap:.75rem;cursor:pointer;}
+#t11-fs-resume{position:fixed;inset:0;z-index:100000;background:rgba(26,26,46,.94);display:none;align-items:center;justify-content:center;flex-direction:column;gap:.75rem;cursor:pointer;touch-action:manipulation;-webkit-tap-highlight-color:transparent;-webkit-user-select:none;user-select:none;}
 #t11-fs-resume.show{display:flex;}
 #t11-fs-resume p{color:#fff;font-size:1rem;font-weight:700;text-align:center;padding:0 2rem;}
 #t11-fs-resume span{color:rgba(255,255,255,.7);font-size:.85rem;font-weight:600;}
@@ -317,7 +317,7 @@ body{background:var(--bg);color:var(--ink);font-family:'Open Sans',sans-serif;ov
 </head>
 <body>
 <div id="t11-test-overlay"><iframe id="t11-test-frame" title="Test" allow="fullscreen" allowfullscreen></iframe></div>
-<div id="t11-fs-resume" onclick="t11ResumeFullscreen()"><p>Full screen was exited</p><span>Click anywhere to resume full screen</span></div>
+<div id="t11-fs-resume" role="button" tabindex="0"><p>Full screen was exited</p><span>Click anywhere to resume full screen</span></div>
 <div id="progress"></div><div id="offer-banner" style="display:none;background:linear-gradient(90deg,#f5c518,#e8a900);color:#1a1a2e;text-align:center;padding:.6rem 1rem;font-weight:800;font-size:.8rem;letter-spacing:.02em;position:relative;z-index:300;">🎉 LIMITED-TIME OFFER: <span style="text-decoration:underline;">50% OFF</span> on all MS test series — 13 Sep to 20 Sep 2026. Use code <strong style="background:#1a1a2e;color:#f5c518;padding:.12rem .5rem;border-radius:5px;letter-spacing:.03em;box-shadow:0 1px 4px rgba(0,0,0,.25);">50%</strong> at checkout!</div><script>(function(){var b=document.getElementById('offer-banner');var s=new Date('2026-09-13T00:00:00+05:30'),e=new Date('2026-09-20T23:59:59+05:30'),n=new Date();if(n>=s&&n<=e)b.style.display='block';})();</script>
 <a href="#main-content" class="skip-link">Skip to main content</a>
 <button aria-label="Back to top" onclick="scrollTo({top:0,behavior:'smooth'})" id="btt">
@@ -756,22 +756,33 @@ function getScore(id){try{return JSON.parse(localStorage.getItem('t11_score_'+id
 function getAttempts(id){try{return parseInt(localStorage.getItem('t11_attempts_'+id)||'0',10);}catch(e){return 0;}}
 function recordAttempt(id){const n=getAttempts(id)+1;localStorage.setItem('t11_attempts_'+id,n);}
 function fsSupported(){return !!(document.fullscreenEnabled||document.webkitFullscreenEnabled||document.msFullscreenEnabled);}
+function t11IsFs(){return !!(document.fullscreenElement||document.webkitFullscreenElement||document.msFullscreenElement);}
+function t11HideResume(){const b=document.getElementById('t11-fs-resume');if(b)b.classList.remove('show');}
+/* Tries to enter full screen. MUST be called synchronously from a user gesture.
+   Always returns a Promise<boolean> (true = now in full screen) and never throws. */
 function enterFullscreenOnTestClick(){
-  if(!fsSupported()){console.warn('[T11] Fullscreen not supported/enabled in this browser context.');return;}
+  if(t11IsFs())return Promise.resolve(true);
+  if(!fsSupported()){console.warn('[T11] Fullscreen not supported/enabled in this browser context.');return Promise.resolve(false);}
   const el=document.documentElement;
   const req=el.requestFullscreen||el.webkitRequestFullscreen||el.msRequestFullscreen;
-  if(!req){console.warn('[T11] No requestFullscreen method available.');return;}
+  if(!req){console.warn('[T11] No requestFullscreen method available.');return Promise.resolve(false);}
   try{
-    const result=req.call(el);
-    if(result&&typeof result.catch==='function'){
-      result.catch(err=>{console.warn('[T11] requestFullscreen() was rejected:',err&&err.message?err.message:err);});
+    const result=req.call(el,{navigationUI:'hide'});
+    if(result&&typeof result.then==='function'){
+      return result.then(()=>true,err=>{console.warn('[T11] requestFullscreen() was rejected:',err&&err.message?err.message:err);return false;});
     }
-  }catch(e){console.warn('[T11] requestFullscreen() threw synchronously:',e&&e.message?e.message:e);}
+    // Older webkit-prefixed browsers return undefined; check state shortly after.
+    return new Promise(res=>setTimeout(()=>res(t11IsFs()),350));
+  }catch(e){
+    console.warn('[T11] requestFullscreen() threw synchronously:',e&&e.message?e.message:e);
+    return Promise.resolve(false);
+  }
 }
 function t11ExitFullscreenLocal(){
-  try{if(document.fullscreenElement||document.webkitFullscreenElement||document.msFullscreenElement){if(document.exitFullscreen)document.exitFullscreen().catch(()=>{});else if(document.webkitExitFullscreen)document.webkitExitFullscreen();else if(document.msExitFullscreen)document.msExitFullscreen();}}catch(e){}
+  try{if(t11IsFs()){if(document.exitFullscreen)document.exitFullscreen().catch(()=>{});else if(document.webkitExitFullscreen)document.webkitExitFullscreen();else if(document.msExitFullscreen)document.msExitFullscreen();}}catch(e){}
 }
 function openTestOverlay(url){
+  t11SuppressResumeNag=false;
   enterFullscreenOnTestClick();
   const overlay=document.getElementById('t11-test-overlay');
   const frame=document.getElementById('t11-test-frame');
@@ -783,32 +794,52 @@ function openTestOverlay(url){
 function closeTestOverlay(){
   const overlay=document.getElementById('t11-test-overlay');
   const frame=document.getElementById('t11-test-frame');
-  const resumeBanner=document.getElementById('t11-fs-resume');
   overlay.classList.remove('active');
-  resumeBanner.classList.remove('show');
+  t11HideResume();
   frame.src='about:blank';
   document.body.style.overflow='';
   t11ExitFullscreenLocal();
   const base=window.location.pathname;
   try{if(history.state&&history.state.t11Test)history.back();else history.replaceState(null,'',base);}catch(e){}
 }
-function t11ResumeFullscreen(){
-  enterFullscreenOnTestClick();
+/* Resume banner: a tap ALWAYS dismisses it. We try to re-enter full screen, but if the
+   browser refuses (very common on phones after a call / notification / app switch) we
+   let the candidate carry on with the test instead of leaving them stuck. */
+let t11ResumeBusy=false;
+function t11ResumeFullscreen(e){
+  if(e&&e.type==='touchend'&&e.cancelable)e.preventDefault(); // stop the follow-up synthetic click
+  if(t11ResumeBusy)return;
+  t11ResumeBusy=true;
+  const attempt=enterFullscreenOnTestClick(); // called synchronously => keeps the user gesture
+  t11HideResume(); // dismiss immediately so the test is never blocked
+  attempt.then(ok=>{
+    if(!ok)showToast('Full screen is not available on this device right now. You can continue your test.');
+  }).then(()=>{setTimeout(()=>{t11ResumeBusy=false;},300);});
 }
+(function(){
+  const b=document.getElementById('t11-fs-resume');
+  if(!b)return;
+  b.addEventListener('click',t11ResumeFullscreen);
+  b.addEventListener('touchend',t11ResumeFullscreen,{passive:false});
+  b.addEventListener('keydown',ev=>{if(ev.key==='Enter'||ev.key===' '){ev.preventDefault();t11ResumeFullscreen(ev);}});
+})();
 let t11SuppressResumeNag=false;
-document.addEventListener('fullscreenchange',()=>{
+function t11OnFullscreenChange(){
   const overlay=document.getElementById('t11-test-overlay');
   const resumeBanner=document.getElementById('t11-fs-resume');
-  if(overlay&&overlay.classList.contains('active')&&!document.fullscreenElement){
+  if(overlay&&overlay.classList.contains('active')&&!t11IsFs()){
     if(t11SuppressResumeNag){t11SuppressResumeNag=false;resumeBanner.classList.remove('show');}
     else{resumeBanner.classList.add('show');}
   }else{
     resumeBanner.classList.remove('show');
   }
-});
+}
+document.addEventListener('fullscreenchange',t11OnFullscreenChange);
+// Only listen to the prefixed event on browsers that lack the standard one (avoids double firing).
+if(!('onfullscreenchange' in document))document.addEventListener('webkitfullscreenchange',t11OnFullscreenChange);
 window.addEventListener('message',(e)=>{
   if(!e.data||typeof e.data!=='object')return;
-  if(e.data.type==='t11-exit-fullscreen'){t11SuppressResumeNag=true;t11ExitFullscreenLocal();}
+  if(e.data.type==='t11-exit-fullscreen'){t11SuppressResumeNag=t11IsFs();t11ExitFullscreenLocal();}
   else if(e.data.type==='t11-close-test'){closeTestOverlay();}
 });
 window.addEventListener('popstate',()=>{
