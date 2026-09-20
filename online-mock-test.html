@@ -649,7 +649,11 @@ body{-webkit-user-select:none;-moz-user-select:none;user-select:none;}
   function flashBlock(){const el=document.getElementById('ss-blocked');if(el){el.classList.add('show');setTimeout(()=>el.classList.remove('show'),2500);}}
   document.addEventListener('keydown',e=>{const k=e.key?e.key.toLowerCase():'',kR=e.key||'';const iC=e.ctrlKey,iS=e.shiftKey,iM=e.metaKey;let b=false;if(kR==='PrintScreen')b=true;if(iM&&iS&&k==='s')b=true;if(iM&&iS&&['3','4','5','6'].includes(k))b=true;if(iC&&k==='p')b=true;if(iC&&k==='u')b=true;if(kR==='F12')b=true;if(iC&&iS&&['i','j','c'].includes(k))b=true;if(b){e.preventDefault();showCurtain(2500);flashBlock();}},false);
   document.addEventListener('visibilitychange',()=>{if(document.hidden)showCurtain(3000);else setTimeout(hideCurtain,600);});
-  let bT;window.addEventListener('blur',()=>{clearTimeout(bT);showCurtain(1500);});window.addEventListener('focus',()=>{clearTimeout(bT);setTimeout(hideCurtain,400);});
+  // When embedded, the parent page owns full screen. Pressing Esc or tapping the "resume full screen" banner moves focus
+  // between the parent and this iframe, which fires a harmless 'blur' here and used to flash the black curtain.
+  // So inside the iframe we ignore blur; real tab switches/minimising are still caught by 'visibilitychange'.
+  const inFrame=(function(){try{return window.self!==window.top;}catch(e){return true;}})();
+  let bT;window.addEventListener('blur',()=>{if(inFrame)return;clearTimeout(bT);showCurtain(1500);});window.addEventListener('focus',()=>{clearTimeout(bT);setTimeout(hideCurtain,400);});
   setInterval(()=>{if(!document.hidden&&document.hasFocus())hideCurtain();},4000);
 })();
 
