@@ -318,7 +318,7 @@ body{background:var(--bg);color:var(--ink);font-family:'Open Sans',sans-serif;ov
 <body>
 <div id="t11-test-overlay"><iframe id="t11-test-frame" title="Test" allow="fullscreen" allowfullscreen></iframe></div>
 <div id="t11-fs-resume" role="button" tabindex="0"><p>Full screen was exited</p><span>Click anywhere to resume full screen</span></div>
-<div id="progress"></div><div id="offer-banner" style="display:none;background:linear-gradient(90deg,#f5c518,#e8a900);color:#1a1a2e;text-align:center;padding:.6rem 1rem;font-weight:800;font-size:.8rem;letter-spacing:.02em;position:relative;z-index:300;">🎉 LIMITED-TIME OFFER: <span style="text-decoration:underline;">50% OFF</span> on all MS test series — 13 Sep to 20 Sep 2026. Use code <strong style="background:#1a1a2e;color:#f5c518;padding:.12rem .5rem;border-radius:5px;letter-spacing:.03em;box-shadow:0 1px 4px rgba(0,0,0,.25);">50%</strong> at checkout!</div><script>(function(){var b=document.getElementById('offer-banner');var s=new Date('2026-09-13T00:00:00+05:30'),e=new Date('2026-09-20T23:59:59+05:30'),n=new Date();if(n>=s&&n<=e)b.style.display='block';})();</script>
+<div id="progress"></div>
 <a href="#main-content" class="skip-link">Skip to main content</a>
 <button aria-label="Back to top" onclick="scrollTo({top:0,behavior:'smooth'})" id="btt">
   <svg viewBox="0 0 24 24" fill=none height=15 stroke=currentColor stroke-width=2.5 width=15><path d="M5 15l7-7 7 7"/></svg>
@@ -489,7 +489,7 @@ body{background:var(--bg);color:var(--ink);font-family:'Open Sans',sans-serif;ov
     <div class="mb">
       <div id="step1">
         <p style="font-size:.77rem;color:var(--muted);margin-bottom:.85rem;">Choose your plan:</p>
-        <div id="coupon-wrap" style="background:#fff7e6;border:1.5px dashed #f5c518;border-radius:10px;padding:.55rem .7rem;margin-bottom:.85rem;"><div style="font-size:.68rem;font-weight:700;color:#8a6300;margin-bottom:.35rem;">🎟️ Have a coupon code?</div><div style="display:flex;gap:.4rem;"><input id="coupon-input" type="text" placeholder="Enter code" onkeydown="if(event.key==='Enter'){event.preventDefault();applyCoupon();}" style="flex:1;padding:.4rem .55rem;border:1.5px solid #ddd;border-radius:7px;font-size:.72rem;font-family:inherit;"><button id="coupon-apply-btn" type="button" onclick="applyCoupon()" style="padding:.4rem .8rem;border:none;border-radius:7px;background:var(--t1);color:#fff;font-size:.7rem;font-weight:700;cursor:pointer;">Apply</button></div><div id="coupon-msg" style="display:none;font-size:.66rem;font-weight:700;margin-top:.35rem;"></div></div>
+        
         <div class="plan-cards" id="plan-cards"></div>
         <button class="btn-cont" id="cont-btn" onclick="doContinue()">Continue →</button>
       </div>
@@ -616,32 +616,7 @@ const PLANS={
   'combo-ms-p2p4':{label:'MS Paper II + IV Combo',amount:600,desc:'40 tests · Paper II & Paper IV together · ₹600 / yr — save ₹110',best:true,requiresPaperSelect:false},
   'bunch-ms':{label:'MS Complete — All 4 Papers',amount:955,desc:'All 80 tests · ₹955 / Calendar Year · All 4 Papers — save ₹465',requiresPaperSelect:false,disabled:true}
 };
-/* ---- 50% OFF coupon offer (13–20 Sep 2026) ---- */
-const OFFER_START=new Date('2026-09-13T00:00:00+05:30');
-const OFFER_END=new Date('2026-09-20T23:59:59+05:30');
-function isOfferLive(){const n=new Date();return n>=OFFER_START&&n<=OFFER_END;}
-let couponApplied=false;
-const COUPON_CODE='50%';
-function priceFor(a){return couponApplied?Math.round(a/2):a;}
-function applyCoupon(){
-  const inp=document.getElementById('coupon-input');const msg=document.getElementById('coupon-msg');if(!inp)return;
-  const code=(inp.value||'').trim().toUpperCase().replace(/\s+/g,'');
-  const matches=code===COUPON_CODE.toUpperCase()||code==='50'||code==='50OFF'||code==='50%OFF';
-  if(matches&&!isOfferLive()){
-    couponApplied=false;
-    if(msg){msg.style.display='block';msg.style.color='#c0392b';msg.textContent='⏰ This coupon is valid only from 13 Sep to 20 Sep 2026.';}
-  }else if(matches){
-    couponApplied=true;
-    if(msg){msg.style.display='block';msg.style.color='#00805f';msg.textContent='✅ Coupon applied — 50% OFF!';}
-    inp.disabled=true;const ab=document.getElementById('coupon-apply-btn');if(ab)ab.disabled=true;
-  }else{
-    couponApplied=false;
-    if(msg){msg.style.display='block';msg.style.color='#c0392b';msg.textContent='❌ Invalid coupon code.';}
-  }
-  buildPlans();
-  const s2=document.getElementById('step2');
-  if(s2&&s2.style.display!=='none')renderUpiStep();
-}
+
 const BUNCH_LABEL='All 4 Papers (Complete Bunch)';
 const COMBO_P2P4_LABEL='MS Paper II + IV Combo';
 
@@ -997,7 +972,7 @@ function buildPlans(){
     d.className='pc-m'+(k===selPlan?' sel':'')+(p.disabled?' disabled':'');
     if(!p.disabled)d.onclick=()=>selectModalPlan(k);
     const badge=p.disabled?'<span class="soon-m">Coming Soon</span>':(p.best?'<span class="best-m">Best Value</span>':'');
-    const priceHTML=(couponApplied&&!p.disabled)?`<div class="pp"><span style="text-decoration:line-through;color:#999;font-size:.68rem;font-weight:600;margin-right:.3rem;">₹${p.amount}</span>₹${priceFor(p.amount)}</div>`:`<div class="pp">₹${p.amount}</div>`;
+    const priceHTML=`<div class="pp">₹${p.amount}</div>`;
     d.innerHTML=`<div class="pr"><div class="pd-dot"></div></div><div class="pi"><h4>${p.label}</h4><p>${p.desc}</p></div>${priceHTML}${badge}`;
     pc.appendChild(d);
   });
@@ -1033,10 +1008,10 @@ ${livePapers.map(p=>`
   if(!cb)return;
   if(selPlan==='single-ms'){
     const subjectPaper=PAPERS.find(p=>p.key===selSubjectKey);
-    cb.textContent=subjectPaper?`Pay ₹${priceFor(PLANS['single-ms'].amount)} for ${subjectPaper.name} →`:'Select a subject to continue';
+    cb.textContent=subjectPaper?`Pay ₹${PLANS['single-ms'].amount} for ${subjectPaper.name} →`:'Select a subject to continue';
     cb.disabled=!selSubjectKey;
   } else if(selPlan){
-    cb.textContent=`Pay ₹${priceFor(PLANS[selPlan].amount)} via UPI →`;
+    cb.textContent=`Pay ₹${PLANS[selPlan].amount} via UPI →`;
     cb.disabled=false;
   } else {
     cb.textContent='Select a plan to continue';
@@ -1086,8 +1061,8 @@ async function doContinue(){
   document.getElementById('step2').style.display='';
   const labelEl=document.getElementById('qr-lbl');
   const forLabel=selPlan==='single-ms'&&subjectPaper?subjectPaper.name:(selPlan==='combo-ms-p2p4'?COMBO_P2P4_LABEL:(selPlan==='bunch-ms'?BUNCH_LABEL:p.label));
-  labelEl.textContent=forLabel+' · ₹'+priceFor(p.amount);
-  document.getElementById('amt-lbl').textContent='₹'+priceFor(p.amount);
+  labelEl.textContent=forLabel+' · ₹'+p.amount;
+  document.getElementById('amt-lbl').textContent='₹'+p.amount;
   await loadQrLib();
   renderUpiStep();
 }
@@ -1101,7 +1076,7 @@ function showConfirmScreen(){
   const paperObj=PAPERS.find(x=>x.key===selSubjectKey);
   const subjectPhrase=selPlan==='bunch-ms'?BUNCH_LABEL:(selPlan==='combo-ms-p2p4'?COMBO_P2P4_LABEL:(paperObj?paperObj.name:p.label));
   const lbl=document.getElementById('confirm-sublabel');
-  if(lbl)lbl.innerHTML=`You selected <strong style="color:var(--t1)">${subjectPhrase}</strong> for <strong style="color:var(--t1)">₹${priceFor(p.amount)}</strong>${couponApplied?' <span style="color:#00805f;font-weight:700;">(50% OFF applied)</span>':''}. If your payment app showed a success screen, submit it below — we'll verify and unlock your tests.`;
+  if(lbl)lbl.innerHTML=`You selected <strong style="color:var(--t1)">${subjectPhrase}</strong> for <strong style="color:var(--t1)">₹${p.amount}</strong>. If your payment app showed a success screen, submit it below — we'll verify and unlock your tests.`;
   const utrInput=document.getElementById('utr-input');
   if(utrInput){utrInput.value='';utrInput.classList.remove('invalid');}
   const errEl2=document.getElementById('utr-err');if(errEl2){errEl2.classList.remove('show');errEl2.textContent='';}
@@ -1127,7 +1102,7 @@ function renderUpiStep(){
   const subjectPaper=PAPERS.find(pp=>pp.key===selSubjectKey);
   const forLabel=selPlan==='single-ms'&&subjectPaper?subjectPaper.name:(selPlan==='combo-ms-p2p4'?COMBO_P2P4_LABEL:(selPlan==='bunch-ms'?BUNCH_LABEL:p.label));
   const payNote=(forLabel+' (MS Exam)').replace(/&/g,'and');
-  const payAmt=priceFor(p.amount);
+  const payAmt=p.amount;
   const qrLbl=document.getElementById('qr-lbl');
   if(qrLbl)qrLbl.textContent=forLabel+' · ₹'+payAmt;
   const upiStr=`upi://pay?pa=${UPI_ID}&pn=${encodeURIComponent(UPI_NAME)}&am=${payAmt}&cu=INR&tn=${encodeURIComponent(payNote)}`;
@@ -1184,10 +1159,10 @@ async function submitPayment(){
     mobile_number:mobileNumber||null,
     name:user.name||'',
     plan_key:selPlan,
-    plan_label:(plan.label||'')+(couponApplied?' [50% OFF Coupon]':''),
+    plan_label:(plan.label||''),
     subject_key:selPlan==='single-ms'?(selSubjectKey||''):null,
     subject_name:subjectName,
-    amount:priceFor(plan.amount||0),
+    amount:plan.amount||0,
     exam_type:'MS',
     upi_ref:utr,
     activated_at:new Date().toISOString(),
@@ -1413,7 +1388,7 @@ Object.assign(window,{
   closeModal,overlayClick,doContinue,submitPayment,backToPlan,
   buildTabs,switchTab,render,checkPaymentStatus,
   onUpiAppClick,onPaidClick,showPayScreen,showConfirmScreen,showPendingScreen,
-  openModal,openComboModal,selectSubject,selectModalPlan,applyCoupon
+  openModal,openComboModal,selectSubject,selectModalPlan
 });
 
 })();
