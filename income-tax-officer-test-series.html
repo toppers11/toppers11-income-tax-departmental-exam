@@ -585,19 +585,19 @@ Check Status
       <div class="rn-body-text">
         <div class="rn-badge">
           <svg width=7 height=7 viewBox="0 0 24 24" fill="var(--t3)"><circle cx=12 cy=12 r=10/></svg>
-          Exam Rule
+          Good News
         </div>
-        <div class="rn-title">3 Attempts Per Assessment</div>
-        <div class="rn-msg">You have <strong>3 total attempts</strong> for each paid test in this series. Once all 3 attempts are used, the test will be marked <strong>Completed</strong>. This mirrors actual departmental exam rules. <strong>Free PYQ tests have unlimited attempts.</strong></div>
+        <div class="rn-title">Unlimited Attempts on Every Test</div>
+        <div class="rn-msg">You can take every test in this series <strong>as many times as you like</strong> — there is no attempt limit. Retake any test to improve your score; your latest result is always saved and available under <strong>View Result</strong>. This applies to both paid tests and <strong>free PYQ tests</strong>.</div>
       </div>
       <div class="rn-chips">
         <div class="rn-chip">
-          <span class="rn-chip-num">3</span>
-          <span class="rn-chip-lbl">Max<br>Attempts</span>
+          <span class="rn-chip-num" style="font-size:1.1rem;">∞</span>
+          <span class="rn-chip-lbl">Unlimited<br>Attempts</span>
         </div>
         <div class="rn-chip">
-          <svg width=16 height=16 fill=none stroke="var(--t3)" stroke-width=2.2 viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>
-          <span class="rn-chip-lbl">Auto<br>Completes</span>
+          <svg width=16 height=16 fill=none stroke="var(--t3)" stroke-width=2.2 viewBox="0 0 24 24"><polyline points="1 4 1 10 7 10"/><path d="M3.51 15a9 9 0 1 0 2.13-9.36L1 10"/></svg>
+          <span class="rn-chip-lbl">Retake<br>Anytime</span>
         </div>
       </div>
     </div>
@@ -1063,7 +1063,7 @@ function buildCards(p,i){
     const unlocked=isUnlocked(t,p.key);
     const score=getScore(t.id);
     const attempts=getAttempts(t.id);
-    const maxed=unlocked&&score&&attempts>=3&&!t.free;
+    const maxed=false; // Unlimited attempts — tests are never locked as "Completed"
     const wrap=document.createElement('div');
     if(t.free){wrap.className='free-wrap';wrap.innerHTML='<div class="free-ribbon">★ FREE PYQ</div>';}
 
