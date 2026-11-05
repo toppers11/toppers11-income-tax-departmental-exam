@@ -745,7 +745,7 @@ let selSubjectKey=null;
 let selPlan=null;
 
 const PAPERS=[
-  {key:'p1',num:1,name:'IT Law & Taxpayer Services',hasFree:true,topics:'IT Act 1961 & 2025, Taxpayer Services, TRACES, 26AS, e-PAN, Prefilled ITR, ASK, SEVOTTAM, CPGRAM, SC case laws by topic.',type:'Objective',marks:100,tests:[
+  {key:'p1',num:1,name:'IT Law & Taxpayer Services',tab:'IT Law & Taxpayer Services',hasFree:true,topics:'IT Act 1961 & 2025, Taxpayer Services, TRACES, 26AS, e-PAN, Prefilled ITR, ASK, SEVOTTAM, CPGRAM, SC case laws by topic.',type:'Objective',marks:100,tests:[
     {id:'ito-p1-pyq26',lbl:'PYQ 2026',title:'ITO Paper 1 - Previous Years questions of 2026',free:true,pyq:true,qs:100,mins:120},
     {id:'ito-p1-pyq25',lbl:'PYQ 2025',title:'ITO Paper 1 - Previous Years questions of 2025',free:true,pyq:true,qs:100,mins:120},
     {id:'ito-p1-pyq24',lbl:'PYQ 2024',title:'ITO Paper 1 - Previous Years questions of 2024',free:true,pyq:true,qs:100,mins:120},
@@ -773,7 +773,7 @@ const PAPERS=[
     {id:'ito-p1-s19',lbl:'Series 19',title:'IT Law & Taxpayer Services — Series 19',free:false,pyq:false,qs:100,mins:120},
     {id:'ito-p1-s20',lbl:'Series 20',title:'IT Law & Taxpayer Services — Series 20',free:false,pyq:false,qs:100,mins:120},
   ]},
-  {key:'p2',num:2,name:'Advance Accountancy',hasFree:true,topics:'Partnership, company accounts, hire purchase, depreciation, 12 Accounting Standards (AS-1,2,7,9,10,11,12,13,16,19,22,29), amalgamation.',type:'Objective',marks:100,tests:[
+  {key:'p2',num:2,name:'Advance Accountancy',tab:'Advance Accountancy',hasFree:true,topics:'Partnership, company accounts, hire purchase, depreciation, 12 Accounting Standards (AS-1,2,7,9,10,11,12,13,16,19,22,29), amalgamation.',type:'Objective',marks:100,tests:[
     {id:'ito-p2-pyq26',lbl:'PYQ 2026',title:'ITO Paper 2 - Previous Years questions of 2026',free:true,pyq:true,qs:100,mins:120},
     {id:'ito-p2-pyq25',lbl:'PYQ 2025',title:'ITO Paper 2 - Previous Years questions of 2025',free:true,pyq:true,qs:100,mins:120},
     {id:'ito-p2-pyq24',lbl:'PYQ 2024',title:'ITO Paper 2 - Previous Years questions of 2024',free:true,pyq:true,qs:100,mins:120},
@@ -801,7 +801,7 @@ const PAPERS=[
     {id:'ito-p2-s19',lbl:'Series 19',title:'Advance Accountancy — Series 19',free:false,pyq:false,qs:100,mins:120},
     {id:'ito-p2-s20',lbl:'Series 20',title:'Advance Accountancy — Series 20',free:false,pyq:false,qs:100,mins:120},
   ]},
-  {key:'p3',num:3,name:'Allied Laws & Office Administration',hasFree:true,topics:'Contract Act, TP Act, Hindu Succession Act, Companies Act, LLP Act, RTI Act, FR/SR, CCS Rules, POSH, RPwD Act, GeM, DFPR 2024.',type:'Objective',marks:100,tests:[
+  {key:'p3',num:3,name:'Allied Laws & Office Administration',tab:'Allied Laws',hasFree:true,topics:'Contract Act, TP Act, Hindu Succession Act, Companies Act, LLP Act, RTI Act, FR/SR, CCS Rules, POSH, RPwD Act, GeM, DFPR 2024.',type:'Objective',marks:100,tests:[
     {id:'ito-p3-pyq26',lbl:'PYQ 2026',title:'ITO Paper 3 - Previous Years questions of 2026',free:true,pyq:true,qs:100,mins:120},
     {id:'ito-p3-pyq25',lbl:'PYQ 2025',title:'ITO Paper 3 - Previous Years questions of 2025',free:true,pyq:true,qs:100,mins:120},
     {id:'ito-p3-pyq24',lbl:'PYQ 2024',title:'ITO Paper 3 - Previous Years questions of 2024',free:true,pyq:true,qs:100,mins:120},
@@ -829,7 +829,8 @@ const PAPERS=[
     {id:'ito-p3-s19',lbl:'Series 19',title:'Allied Laws & Office Admin — Series 19',free:false,pyq:false,qs:100,mins:120},
     {id:'ito-p3-s20',lbl:'Series 20',title:'Allied Laws & Office Admin — Series 20',free:false,pyq:false,qs:100,mins:120},
   ]},
-  {key:'p5',num:5,name:'IT Applications & Operations',hasFree:true,topics:'ITBA modules, Faceless Assessment, HRMS, Insight Portal, ITD Information Security Policy 2020, Digital Forensics (DIALs, disk/mobile/cloud forensics).',type:'Objective',marks:100,tests:[
+  {key:'p4',num:4,name:'Computation of Income',tab:'Computation of Income (FREE)',descriptive:true,type:'Descriptive',marks:100,years:[2026,2025,2024,2023,2022,2021],topics:'Computation of total income and tax liability under the Income-tax Act — descriptive / practical paper.',tests:[]},
+  {key:'p5',num:5,name:'IT Applications & Operations',tab:'IT Applications',hasFree:true,topics:'ITBA modules, Faceless Assessment, HRMS, Insight Portal, ITD Information Security Policy 2020, Digital Forensics (DIALs, disk/mobile/cloud forensics).',type:'Objective',marks:100,tests:[
     {id:'ito-p5-pyq26',lbl:'PYQ 2026',title:'ITO Paper 5 - Previous Years questions of 2026',free:true,pyq:true,qs:100,mins:120},
     {id:'ito-p5-s01',lbl:'Series 01',title:'IT Applications & Operations — Series 01',free:true,pyq:false,qs:100,mins:120},
     {id:'ito-p5-s02',lbl:'Series 02',title:'IT Applications & Operations — Series 02',free:false,pyq:false,qs:100,mins:120},
@@ -984,7 +985,7 @@ function buildTabs(){
   PAPERS.forEach((p,i)=>{
     const btn=document.createElement('button');
     btn.className='tab-btn'+(i===activeTab?' active':'');
-    btn.innerHTML=`Paper ${p.num}<span class="tab-sep">·</span>${p.name}`;
+    btn.innerHTML=`Paper${p.num}<span class="tab-sep">·</span>${p.tab||p.name}`;
     btn.onclick=()=>switchTab(i);
     bar.appendChild(btn);
   });
@@ -996,6 +997,7 @@ function switchTab(i){
 }
 
 function buildCards(p,i){
+  if(p.descriptive){buildDescriptivePanel(p,i);return;}
   const div=document.createElement('div');
   div.className='panel'+(i===0?' active':'');
   div.id='panel-'+p.key;
@@ -1131,6 +1133,66 @@ function buildCards(p,i){
 
     if(available&&!unlocked)card.onclick=()=>openModal(p.key);
     wrap.appendChild(card);grid.appendChild(wrap);
+  });
+}
+
+/* ── Descriptive paper (Paper 4 — Computation of Income): free PDFs of question papers + solutions ──
+   Files expected on GitHub:  ITO-P4-<year>.pdf  and  ITO-P4-<year>-Solution.pdf
+   Any file not uploaded yet shows "Coming soon" automatically. */
+const DESC_PDF_BASE='https://raw.githubusercontent.com/toppers11/toppers11-income-tax-departmental-exam/main/';
+const DESC_PDF_STATUS={}; // file -> true (exists) / false (missing)
+function descPdfBtn(file,label){
+  const st=DESC_PDF_STATUS[file];
+  if(st===false)return `<span class="btn-unavailable-test" data-pdf="${file}" data-label="${label}" style="cursor:default">⏳ ${label} — Coming soon</span>`;
+  return `<a href="${DESC_PDF_BASE}${file}" download="${file}" class="btn-download-pdf" data-pdf="${file}" data-label="${label}" target="_blank" rel="noopener">⬇ ${label}</a>`;
+}
+function checkDescPdf(file){
+  if(file in DESC_PDF_STATUS)return;
+  DESC_PDF_STATUS[file]=undefined;
+  fetch(DESC_PDF_BASE+file,{method:'HEAD',cache:'no-store'}).then(r=>{
+    DESC_PDF_STATUS[file]=r.ok;
+    document.querySelectorAll(`[data-pdf="${file}"]`).forEach(el=>{el.outerHTML=descPdfBtn(file,el.getAttribute('data-label'));});
+  }).catch(()=>{});
+}
+function buildDescriptivePanel(p,i){
+  const div=document.createElement('div');
+  div.className='panel'+(i===0?' active':'');
+  div.id='panel-'+p.key;
+  div.innerHTML=`
+    <div class="ph">
+      <div class="ph-left">
+        <h2>Paper ${p.num} — ${p.name} <span style="font-size:.62rem;font-weight:800;letter-spacing:.08em;color:var(--t1);background:#f0fdf8;border:1px solid #a7f3d0;border-radius:999px;padding:.15rem .55rem;vertical-align:middle">FREE</span></h2>
+        <p>${p.type} paper &nbsp;·&nbsp; ${p.marks} marks &nbsp;·&nbsp; Previous year question papers with solutions (PDF)</p>
+      </div>
+    </div>
+    <div class="papers-lbl">${p.years.length} Question Papers + Solutions — ${p.years[p.years.length-1]} to ${p.years[0]} · Free download</div>
+    <div class="tests-grid" id="grid-${p.key}"></div>`;
+  document.getElementById('panels').appendChild(div);
+  const grid=document.getElementById('grid-'+p.key);
+  p.years.forEach(y=>{
+    const qFile=`ITO-P4-${y}.pdf`, sFile=`ITO-P4-${y}-Solution.pdf`;
+    const wrap=document.createElement('div');
+    wrap.className='free-wrap';
+    wrap.innerHTML='<div class="free-ribbon">★ FREE · DESCRIPTIVE</div>';
+    const card=document.createElement('div');
+    card.className='card';
+    card.style.cursor='default';
+    card.innerHTML=`
+      <div class="ct">
+        <span class="lbl lbl-pyq">PYQ ${y}</span>
+        <span class="st st-open">FREE</span>
+      </div>
+      <div class="cb">
+        <div class="ctitle">ITO Paper ${p.num} - Previous Years questions of ${y}</div>
+        <div class="cdesc">${p.name} — question paper and detailed solution.</div>
+        <div class="cmeta">
+          <span class="mi"><svg width="10" height="10" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6"/></svg>PDF</span>
+          <span class="type-pill">${p.type}</span>
+        </div>
+      </div>
+      <div class="cf"><div class="cf-btn-group" style="flex-direction:column;align-items:stretch;width:100%">${descPdfBtn(qFile,'Question Paper')}${descPdfBtn(sFile,'Solution')}</div></div>`;
+    wrap.appendChild(card);grid.appendChild(wrap);
+    checkDescPdf(qFile);checkDescPdf(sFile);
   });
 }
 
