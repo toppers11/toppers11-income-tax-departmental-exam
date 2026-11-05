@@ -172,6 +172,12 @@ body{background:var(--bg);color:var(--ink);font-family:'Open Sans',sans-serif;ov
 .st{font-size:.6rem;font-weight:800;letter-spacing:.06em}
 .st-open{color:var(--t3)}
 .st-lock{color:var(--muted)}
+.st-unavail{color:#c48a00}
+.card.unavailable{border-color:#ffe4a3;cursor:default}
+.card.unavailable:hover{transform:none;box-shadow:none}
+.btn-unavailable-test{display:inline-flex;align-items:center;gap:.3rem;background:#fff7e6;color:#c48a00;border:1px solid #ffe4a3;border-radius:6px;padding:.36rem .9rem;font-size:.7rem;font-weight:700;letter-spacing:.03em;font-family:'Open Sans',sans-serif}
+.btn-download-pdf{display:inline-flex;align-items:center;gap:.3rem;background:#f0fdf8;color:var(--t1);border:1px solid #a7f3d0;border-radius:6px;padding:.36rem .8rem;font-size:.68rem;font-weight:700;cursor:pointer;letter-spacing:.03em;font-family:'Open Sans',sans-serif;transition:all .15s;text-decoration:none}
+.btn-download-pdf:hover{background:var(--t3);color:#fff;border-color:var(--t3)}
 .st-done{color:var(--t1)}
 .cb{padding:0 .9rem .5rem}
 .ctitle{font-size:.88rem;font-weight:800;color:var(--ink);line-height:1.3;margin-bottom:.28rem}
@@ -465,7 +471,7 @@ body{background:var(--bg);color:var(--ink);font-family:'Open Sans',sans-serif;ov
           Good News
         </div>
         <div class="rn-title">Unlimited Attempts on Every Test</div>
-        <div class="rn-msg">You can take every test in this series <strong>as many times as you like</strong> — there is no attempt limit. Retake any test to improve your score; your latest result is always saved and available under <strong>View Result</strong>. Papers I–IV are <strong>Objective MCQ</strong> (1/4 negative marking).</div>
+        <div class="rn-msg">You can take every test in this series <strong>as many times as you like</strong> — there is no attempt limit. Retake any test to improve your score; your latest result is always saved and available under <strong>View Result</strong>. Papers I–IV are <strong>Objective MCQ</strong> (1/8 negative marking).</div>
       </div>
       <div class="rn-chips">
         <div class="rn-chip">
@@ -613,8 +619,8 @@ const UPI_NAME='Toppers11';
 
 const PLANS={
   'single-ms':{label:'MS Single Paper',amount:355,desc:'All 20 tests for 1 subject · ₹355 / yr',requiresPaperSelect:true},
-  'combo-ms-p2p4':{label:'MS Paper II + IV Combo',amount:600,desc:'40 tests · Paper II & Paper IV together · ₹600 / yr — save ₹110',best:true,requiresPaperSelect:false},
-  'bunch-ms':{label:'MS Complete — All 4 Papers',amount:955,desc:'All 80 tests · ₹955 / Calendar Year · All 4 Papers — save ₹465',requiresPaperSelect:false,disabled:true}
+  'combo-ms-p2p4':{label:'MS Paper II + IV Combo',amount:600,desc:'40 tests · Paper II & Paper IV together · ₹600 / yr — save ₹110',requiresPaperSelect:false,hidden:true},
+  'bunch-ms':{label:'MS Complete — All 4 Papers',amount:955,desc:'All 80 tests · ₹955 / Calendar Year · All 4 Papers — save ₹465',best:true,requiresPaperSelect:false}
 };
 
 const BUNCH_LABEL='All 4 Papers (Complete Bunch)';
@@ -625,29 +631,31 @@ let modalPaperKey=null; // which paper (p1..p4) the open modal is unlocking; nul
 let selSubjectKey=null; // which paper (p1..p4) is picked inside the "single-ms" plan's subject-picker
 
 const PAPERS=[
-  {key:'p1',name:'IT Law & Taxpayer Services',hasFree:true,comingSoon:true,topics:'IT Act 1961 & 2025, Basis of Charge, Deductions, Set-off of losses, Return of income, Appeals, Taxpayer Charter, TRACES, 26AS, e-PAN, Prefilled ITR, ASK, SEVOTTAM, CPGRAM, e-Nivaran.',type:'Objective MCQ',marks:100,tests:[
-    {id:'ms-p1-s01',lbl:'Series 01',title:'IT Law & Taxpayer Services — Series 01',free:true,pyq:false,qs:100,mins:120},
-    {id:'ms-p1-s02',lbl:'Series 02',title:'IT Law & Taxpayer Services — Series 02',free:false,pyq:false,qs:100,mins:120},
-    {id:'ms-p1-s03',lbl:'Series 03',title:'IT Law & Taxpayer Services — Series 03',free:false,pyq:false,qs:100,mins:120},
-    {id:'ms-p1-s04',lbl:'Series 04',title:'IT Law & Taxpayer Services — Series 04',free:false,pyq:false,qs:100,mins:120},
-    {id:'ms-p1-s05',lbl:'Series 05',title:'IT Law & Taxpayer Services — Series 05',free:false,pyq:false,qs:100,mins:120},
-    {id:'ms-p1-s06',lbl:'Series 06',title:'IT Law & Taxpayer Services — Series 06',free:false,pyq:false,qs:100,mins:120},
-    {id:'ms-p1-s07',lbl:'Series 07',title:'IT Law & Taxpayer Services — Series 07',free:false,pyq:false,qs:100,mins:120},
-    {id:'ms-p1-s08',lbl:'Series 08',title:'IT Law & Taxpayer Services — Series 08',free:false,pyq:false,qs:100,mins:120},
-    {id:'ms-p1-s09',lbl:'Series 09',title:'IT Law & Taxpayer Services — Series 09',free:false,pyq:false,qs:100,mins:120},
-    {id:'ms-p1-s10',lbl:'Series 10',title:'IT Law & Taxpayer Services — Series 10',free:false,pyq:false,qs:100,mins:120},
-    {id:'ms-p1-s11',lbl:'Series 11',title:'IT Law & Taxpayer Services — Series 11',free:false,pyq:false,qs:100,mins:120},
-    {id:'ms-p1-s12',lbl:'Series 12',title:'IT Law & Taxpayer Services — Series 12',free:false,pyq:false,qs:100,mins:120},
-    {id:'ms-p1-s13',lbl:'Series 13',title:'IT Law & Taxpayer Services — Series 13',free:false,pyq:false,qs:100,mins:120},
-    {id:'ms-p1-s14',lbl:'Series 14',title:'IT Law & Taxpayer Services — Series 14',free:false,pyq:false,qs:100,mins:120},
-    {id:'ms-p1-s15',lbl:'Series 15',title:'IT Law & Taxpayer Services — Series 15',free:false,pyq:false,qs:100,mins:120},
-    {id:'ms-p1-s16',lbl:'Series 16',title:'IT Law & Taxpayer Services — Series 16',free:false,pyq:false,qs:100,mins:120},
-    {id:'ms-p1-s17',lbl:'Series 17',title:'IT Law & Taxpayer Services — Series 17',free:false,pyq:false,qs:100,mins:120},
-    {id:'ms-p1-s18',lbl:'Series 18',title:'IT Law & Taxpayer Services — Series 18',free:false,pyq:false,qs:100,mins:120},
-    {id:'ms-p1-s19',lbl:'Series 19',title:'IT Law & Taxpayer Services — Series 19',free:false,pyq:false,qs:100,mins:120},
-    {id:'ms-p1-s20',lbl:'Series 20',title:'IT Law & Taxpayer Services — Series 20',free:false,pyq:false,qs:100,mins:120},
+  {key:'p1',name:'IT Law & Taxpayer Services',hasFree:true,comingSoon:false,topics:'IT Act 1961 & 2025, Basis of Charge, Deductions, Set-off of losses, Return of income, Appeals, Taxpayer Charter, TRACES, 26AS, e-PAN, Prefilled ITR, ASK, SEVOTTAM, CPGRAM, e-Nivaran.',type:'Objective MCQ',marks:100,tests:[
+    {id:'ms-p1-pyq26',lbl:'PYQ 2026',title:'MS Paper 1 - Previous Years questions of 2026',free:true,pyq:true,table:'ms_paper1_2026_pyq',pdf:'MS-P1-2026.pdf',qs:100,mins:120},
+    {id:'ms_paper1_test01',lbl:'Series 01',title:'IT Law & Taxpayer Services — Series 01',free:true,pyq:false,qs:100,mins:120},
+    {id:'ms_paper1_test02',lbl:'Series 02',title:'IT Law & Taxpayer Services — Series 02',free:false,pyq:false,qs:100,mins:120},
+    {id:'ms_paper1_test03',lbl:'Series 03',title:'IT Law & Taxpayer Services — Series 03',free:false,pyq:false,qs:100,mins:120},
+    {id:'ms_paper1_test04',lbl:'Series 04',title:'IT Law & Taxpayer Services — Series 04',free:false,pyq:false,qs:100,mins:120},
+    {id:'ms_paper1_test05',lbl:'Series 05',title:'IT Law & Taxpayer Services — Series 05',free:false,pyq:false,qs:100,mins:120},
+    {id:'ms_paper1_test06',lbl:'Series 06',title:'IT Law & Taxpayer Services — Series 06',free:false,pyq:false,qs:100,mins:120},
+    {id:'ms_paper1_test07',lbl:'Series 07',title:'IT Law & Taxpayer Services — Series 07',free:false,pyq:false,qs:100,mins:120},
+    {id:'ms_paper1_test08',lbl:'Series 08',title:'IT Law & Taxpayer Services — Series 08',free:false,pyq:false,qs:100,mins:120},
+    {id:'ms_paper1_test09',lbl:'Series 09',title:'IT Law & Taxpayer Services — Series 09',free:false,pyq:false,qs:100,mins:120},
+    {id:'ms_paper1_test10',lbl:'Series 10',title:'IT Law & Taxpayer Services — Series 10',free:false,pyq:false,qs:100,mins:120},
+    {id:'ms_paper1_test11',lbl:'Series 11',title:'IT Law & Taxpayer Services — Series 11',free:false,pyq:false,qs:100,mins:120},
+    {id:'ms_paper1_test12',lbl:'Series 12',title:'IT Law & Taxpayer Services — Series 12',free:false,pyq:false,qs:100,mins:120},
+    {id:'ms_paper1_test13',lbl:'Series 13',title:'IT Law & Taxpayer Services — Series 13',free:false,pyq:false,qs:100,mins:120},
+    {id:'ms_paper1_test14',lbl:'Series 14',title:'IT Law & Taxpayer Services — Series 14',free:false,pyq:false,qs:100,mins:120},
+    {id:'ms_paper1_test15',lbl:'Series 15',title:'IT Law & Taxpayer Services — Series 15',free:false,pyq:false,qs:100,mins:120},
+    {id:'ms_paper1_test16',lbl:'Series 16',title:'IT Law & Taxpayer Services — Series 16',free:false,pyq:false,qs:100,mins:120},
+    {id:'ms_paper1_test17',lbl:'Series 17',title:'IT Law & Taxpayer Services — Series 17',free:false,pyq:false,qs:100,mins:120},
+    {id:'ms_paper1_test18',lbl:'Series 18',title:'IT Law & Taxpayer Services — Series 18',free:false,pyq:false,qs:100,mins:120},
+    {id:'ms_paper1_test19',lbl:'Series 19',title:'IT Law & Taxpayer Services — Series 19',free:false,pyq:false,qs:100,mins:120},
+    {id:'ms_paper1_test20',lbl:'Series 20',title:'IT Law & Taxpayer Services — Series 20',free:false,pyq:false,qs:100,mins:120},
   ]},
   {key:'p2',name:'Income Tax Computation',hasFree:true,comingSoon:false,topics:'Computation under all heads of income, Set-off & carry forward, Exemptions & deductions, Advance tax, TDS, Self-assessment tax, Tax for individual/firm/company, Interests, Depreciation (SLM & WDV), Demand/Refund on OGE/rectification orders.',type:'Objective MCQ',marks:100,tests:[
+    {id:'ms-p2-pyq26',lbl:'PYQ 2026',title:'MS Paper 2 - Previous Years questions of 2026',free:true,pyq:true,table:'ms_paper2_2026_pyq',pdf:'MS-P2-2026.pdf',qs:100,mins:120},
     {id:'ms_paper2_test01',lbl:'Series 01',title:'IT Computation — Series 01',free:true,pyq:false,qs:100,mins:120},
     {id:'ms_paper2_test02',lbl:'Series 02',title:'IT Computation — Series 02',free:false,pyq:false,qs:100,mins:120},
     {id:'ms_paper2_test03',lbl:'Series 03',title:'IT Computation — Series 03',free:false,pyq:false,qs:100,mins:120},
@@ -669,29 +677,31 @@ const PAPERS=[
     {id:'ms_paper2_test19',lbl:'Series 19',title:'IT Computation — Series 19',free:false,pyq:false,qs:100,mins:120},
     {id:'ms_paper2_test20',lbl:'Series 20',title:'IT Computation — Series 20',free:false,pyq:false,qs:100,mins:120},
   ]},
-  {key:'p3',name:'Office Procedure (With Books)',hasFree:true,comingSoon:true,topics:'FR & SR (Pay, Leave, TA, Joining Time), CCS (CCA) Rules 1965, CCS Conduct Rules 1964, CCS Leave Rules 1972, CCS Pension Rules 2021, DFPR 2024, GFR 2017, Manual of Office Procedure Vol I-III, POSH Act 2013, RPwD Act 2016, GeM & Contract Management.',type:'Objective MCQ',marks:100,tests:[
-    {id:'ms-p3-s01',lbl:'Series 01',title:'Office Procedure — Series 01',free:true,pyq:false,qs:100,mins:120},
-    {id:'ms-p3-s02',lbl:'Series 02',title:'Office Procedure — Series 02',free:false,pyq:false,qs:100,mins:120},
-    {id:'ms-p3-s03',lbl:'Series 03',title:'Office Procedure — Series 03',free:false,pyq:false,qs:100,mins:120},
-    {id:'ms-p3-s04',lbl:'Series 04',title:'Office Procedure — Series 04',free:false,pyq:false,qs:100,mins:120},
-    {id:'ms-p3-s05',lbl:'Series 05',title:'Office Procedure — Series 05',free:false,pyq:false,qs:100,mins:120},
-    {id:'ms-p3-s06',lbl:'Series 06',title:'Office Procedure — Series 06',free:false,pyq:false,qs:100,mins:120},
-    {id:'ms-p3-s07',lbl:'Series 07',title:'Office Procedure — Series 07',free:false,pyq:false,qs:100,mins:120},
-    {id:'ms-p3-s08',lbl:'Series 08',title:'Office Procedure — Series 08',free:false,pyq:false,qs:100,mins:120},
-    {id:'ms-p3-s09',lbl:'Series 09',title:'Office Procedure — Series 09',free:false,pyq:false,qs:100,mins:120},
-    {id:'ms-p3-s10',lbl:'Series 10',title:'Office Procedure — Series 10',free:false,pyq:false,qs:100,mins:120},
-    {id:'ms-p3-s11',lbl:'Series 11',title:'Office Procedure — Series 11',free:false,pyq:false,qs:100,mins:120},
-    {id:'ms-p3-s12',lbl:'Series 12',title:'Office Procedure — Series 12',free:false,pyq:false,qs:100,mins:120},
-    {id:'ms-p3-s13',lbl:'Series 13',title:'Office Procedure — Series 13',free:false,pyq:false,qs:100,mins:120},
-    {id:'ms-p3-s14',lbl:'Series 14',title:'Office Procedure — Series 14',free:false,pyq:false,qs:100,mins:120},
-    {id:'ms-p3-s15',lbl:'Series 15',title:'Office Procedure — Series 15',free:false,pyq:false,qs:100,mins:120},
-    {id:'ms-p3-s16',lbl:'Series 16',title:'Office Procedure — Series 16',free:false,pyq:false,qs:100,mins:120},
-    {id:'ms-p3-s17',lbl:'Series 17',title:'Office Procedure — Series 17',free:false,pyq:false,qs:100,mins:120},
-    {id:'ms-p3-s18',lbl:'Series 18',title:'Office Procedure — Series 18',free:false,pyq:false,qs:100,mins:120},
-    {id:'ms-p3-s19',lbl:'Series 19',title:'Office Procedure — Series 19',free:false,pyq:false,qs:100,mins:120},
-    {id:'ms-p3-s20',lbl:'Series 20',title:'Office Procedure — Series 20',free:false,pyq:false,qs:100,mins:120},
+  {key:'p3',name:'Office Procedure (With Books)',hasFree:true,comingSoon:false,topics:'FR & SR (Pay, Leave, TA, Joining Time), CCS (CCA) Rules 1965, CCS Conduct Rules 1964, CCS Leave Rules 1972, CCS Pension Rules 2021, DFPR 2024, GFR 2017, Manual of Office Procedure Vol I-III, POSH Act 2013, RPwD Act 2016, GeM & Contract Management.',type:'Objective MCQ',marks:100,tests:[
+    {id:'ms-p3-pyq26',lbl:'PYQ 2026',title:'MS Paper 3 - Previous Years questions of 2026',free:true,pyq:true,table:'ms_paper3_2026_pyq',pdf:'MS-P3-2026.pdf',qs:100,mins:120},
+    {id:'ms_paper3_test01',lbl:'Series 01',title:'Office Procedure — Series 01',free:true,pyq:false,qs:100,mins:120},
+    {id:'ms_paper3_test02',lbl:'Series 02',title:'Office Procedure — Series 02',free:false,pyq:false,qs:100,mins:120},
+    {id:'ms_paper3_test03',lbl:'Series 03',title:'Office Procedure — Series 03',free:false,pyq:false,qs:100,mins:120},
+    {id:'ms_paper3_test04',lbl:'Series 04',title:'Office Procedure — Series 04',free:false,pyq:false,qs:100,mins:120},
+    {id:'ms_paper3_test05',lbl:'Series 05',title:'Office Procedure — Series 05',free:false,pyq:false,qs:100,mins:120},
+    {id:'ms_paper3_test06',lbl:'Series 06',title:'Office Procedure — Series 06',free:false,pyq:false,qs:100,mins:120},
+    {id:'ms_paper3_test07',lbl:'Series 07',title:'Office Procedure — Series 07',free:false,pyq:false,qs:100,mins:120},
+    {id:'ms_paper3_test08',lbl:'Series 08',title:'Office Procedure — Series 08',free:false,pyq:false,qs:100,mins:120},
+    {id:'ms_paper3_test09',lbl:'Series 09',title:'Office Procedure — Series 09',free:false,pyq:false,qs:100,mins:120},
+    {id:'ms_paper3_test10',lbl:'Series 10',title:'Office Procedure — Series 10',free:false,pyq:false,qs:100,mins:120},
+    {id:'ms_paper3_test11',lbl:'Series 11',title:'Office Procedure — Series 11',free:false,pyq:false,qs:100,mins:120},
+    {id:'ms_paper3_test12',lbl:'Series 12',title:'Office Procedure — Series 12',free:false,pyq:false,qs:100,mins:120},
+    {id:'ms_paper3_test13',lbl:'Series 13',title:'Office Procedure — Series 13',free:false,pyq:false,qs:100,mins:120},
+    {id:'ms_paper3_test14',lbl:'Series 14',title:'Office Procedure — Series 14',free:false,pyq:false,qs:100,mins:120},
+    {id:'ms_paper3_test15',lbl:'Series 15',title:'Office Procedure — Series 15',free:false,pyq:false,qs:100,mins:120},
+    {id:'ms_paper3_test16',lbl:'Series 16',title:'Office Procedure — Series 16',free:false,pyq:false,qs:100,mins:120},
+    {id:'ms_paper3_test17',lbl:'Series 17',title:'Office Procedure — Series 17',free:false,pyq:false,qs:100,mins:120},
+    {id:'ms_paper3_test18',lbl:'Series 18',title:'Office Procedure — Series 18',free:false,pyq:false,qs:100,mins:120},
+    {id:'ms_paper3_test19',lbl:'Series 19',title:'Office Procedure — Series 19',free:false,pyq:false,qs:100,mins:120},
+    {id:'ms_paper3_test20',lbl:'Series 20',title:'Office Procedure — Series 20',free:false,pyq:false,qs:100,mins:120},
   ]},
   {key:'p4',name:'IT Applications & Operations',hasFree:true,topics:'ITBA modules (ITR processing, Rectification, Recovery, Audit, Faceless Appeal, OGE, Penalty, e-Nivaran, PAN/TAN, TDS, MIS Reports, Email & VC), HRMS in ITBA (user roles, access control), Insight Portal (data handling, e-verification, third-party reporting), ITD Information Security Policy 2020.',type:'Objective MCQ',marks:100,tests:[
+    {id:'ms-p4-pyq26',lbl:'PYQ 2026',title:'MS Paper 4 - Previous Years questions of 2026',free:true,pyq:true,table:'ms_paper4_2026_pyq',pdf:'MS-P4-2026.pdf',qs:100,mins:120},
     {id:'ms_paper4_test01',lbl:'Series 01',title:'IT Applications & Operations — Series 01',free:true,pyq:false,qs:100,mins:120},
     {id:'ms_paper4_test02',lbl:'Series 02',title:'IT Applications & Operations — Series 02',free:false,pyq:false,qs:100,mins:120},
     {id:'ms_paper4_test03',lbl:'Series 03',title:'IT Applications & Operations — Series 03',free:false,pyq:false,qs:100,mins:120},
@@ -883,11 +893,12 @@ function buildCards(p,i){
   <div class="bundle-in" style="position:relative;z-index:2;"><div>
     <div class="bundle-badge">⭐ Best Value</div>
     <div class="bundle-title">MS Paper ${i+1} — ${p.name}</div>
-    <div class="bundle-sub">20 Tests · 20 AI-Crafted Series · ${p.marks} Marks · ${p.type}</div>
+    <div class="bundle-sub">${p.tests.length} Tests · ${p.tests.filter(t=>t.pyq).length} Free PYQ + ${p.tests.filter(t=>!t.pyq).length} AI-Crafted Series · ${p.marks} Marks · ${p.type}</div>
     <div class="bundle-papers">
+      <div class="bp"><svg viewBox="0 0 24 24" fill=none height=11 stroke=rgba(255,255,255,.65) stroke-width=2 width=11><path d="M5 13l4 4L19 7"/></svg>1 Previous Year Question (PYQ) Test — 2026 · <strong style="color:#3ef0bc">FREE, unlimited attempts</strong></div>
       <div class="bp"><svg viewBox="0 0 24 24" fill=none height=11 stroke=rgba(255,255,255,.65) stroke-width=2 width=11><path d="M5 13l4 4L19 7"/></svg>20 AI-Leveled Series Tests (Series 01–20)</div>
       <div class="bp"><svg viewBox="0 0 24 24" fill=none height=11 stroke=rgba(255,255,255,.65) stroke-width=2 width=11><path d="M5 13l4 4L19 7"/></svg>Topics: ${p.topics.substring(0,80)}…</div>
-      <div class="bp"><svg viewBox="0 0 24 24" fill=none height=11 stroke=rgba(255,255,255,.65) stroke-width=2 width=11><path d="M5 13l4 4L19 7"/></svg>${p.type === "Subjective" ? "Subjective — model answers provided" : "Objective MCQ · 1/4 negative marking"}</div>
+      <div class="bp"><svg viewBox="0 0 24 24" fill=none height=11 stroke=rgba(255,255,255,.65) stroke-width=2 width=11><path d="M5 13l4 4L19 7"/></svg>${p.type === "Subjective" ? "Subjective — model answers provided" : "Objective MCQ · 1/8 negative marking"}</div>
     </div>
   </div>
   <div style="display:flex;flex-direction:column;align-items:flex-end;gap:.65rem;flex-shrink:0">
@@ -898,7 +909,7 @@ function buildCards(p,i){
       </div>
     </div>
     <button class="btn-bunch" onclick="openModal('${p.key}')">Unlock This Paper →</button>
-    ${(p.key==='p2'||p.key==='p4')?`<button class="btn-bunch" style="background:rgba(255,255,255,.15);color:#fff;border:1px solid rgba(255,255,255,.4)" onclick="openComboModal()">🔥 Or get P2+P4 Combo — ₹600</button>`:''}
+    <button class="btn-bunch" style="background:rgba(255,255,255,.15);color:#fff;border:1px solid rgba(255,255,255,.4)" onclick="openBunchModal()">🔥 Or get Complete Bunch (All 4 Papers) — ₹955</button>
   </div></div></div>`;
 
   div.innerHTML=`
@@ -909,7 +920,7 @@ function buildCards(p,i){
       </div>
     </div>
     ${!isPaperUnlocked(p.key)?bundleHTML:''}
-    <div class="papers-lbl">All 21 Tests — ${p.tests.filter(t=>t.pyq).length} PYQs + ${p.tests.filter(t=>!t.pyq).length} Series</div>
+    <div class="papers-lbl">${(()=>{const y=p.tests.filter(t=>t.pyq).length,z=p.tests.filter(t=>!t.pyq).length;return `All ${p.tests.length} Tests — ${y} PYQ${y===1?'':'s'} + ${z} Series`;})()}</div>
     <div class="tests-grid" id="grid-${p.key}"></div>`;
 
   document.getElementById('panels').appendChild(div);
@@ -921,19 +932,23 @@ function buildCards(p,i){
     const attempts=getAttempts(t.id);
     const maxed=false; // Unlimited attempts — tests are never locked as "Completed"
     const wrap=document.createElement('div');
-    if(t.free){wrap.className='free-wrap';}
+    if(t.free){wrap.className='free-wrap';if(t.pyq)wrap.innerHTML='<div class="free-ribbon">★ FREE PYQ</div>';}
+    const available=t.available!==false;
     let card;
-    if(unlocked&&!maxed){card=document.createElement('a');card.href='online-mock-test.html?id='+t.id;card.addEventListener('click',(e)=>{e.preventDefault();recordAttempt(t.id);openTestOverlay(card.href);});}
+    if(!available){card=document.createElement('div');}
+    else if(unlocked&&!maxed){card=document.createElement('a');card.href='online-mock-test.html?id='+t.id;card.addEventListener('click',(e)=>{e.preventDefault();recordAttempt(t.id);openTestOverlay(card.href);});}
     else{card=document.createElement('div');}
-    card.className='card'+(maxed?' completed':unlocked?'':' locked');
-    const stTxt=t.free?'FREE':maxed?'DONE':unlocked?'OPEN':'LOCKED';
-    const stCls=maxed?'st-done':unlocked?'st-open':'st-lock';
+    card.className='card'+(!available?' unavailable':maxed?' completed':unlocked?'':' locked');
+    const stTxt=!available?'SOON':t.free?'FREE':maxed?'DONE':unlocked?'OPEN':'LOCKED';
+    const stCls=!available?'st-unavail':maxed?'st-done':unlocked?'st-open':'st-lock';
+    const pdfBtn=t.pdf?msPdfBtn(t.pdf):'';
     const hasScore=!!(score&&typeof score==='object'&&score.total);
     const sc=hasScore?`<span class="cscore">${score.correct||0}/${score.total||t.qs} correct</span>`:'';
     const viewResultBtn=hasScore?`<button type="button" class="btn-view-result" onclick="event.preventDefault();event.stopPropagation();window.location.href='online-mock-test.html?id=${t.id}&review=1';">📊 View Result</button>`:'';
     let footerBtn;
-    if(maxed){footerBtn=`<div class="cf-btn-group"><span class="btn-completed-test"><svg width="11" height="11" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>Completed</span><span class="retest-badge">All 3 Used</span>${viewResultBtn}</div>`;}
-    else if(unlocked&&t.free){footerBtn=`<div class="cf-btn-group"><span class="btn-free-test"><svg width="11" height="11" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24"><polygon points="5 3 19 12 5 21 5 3"/></svg>${score?'Re-take':'FREE TEST'}</span>${viewResultBtn}</div>`;}
+    if(!available){footerBtn=`<div class="cf-btn-group"><span class="btn-unavailable-test">⏳ Coming soon</span>${pdfBtn}</div>`;}
+    else if(maxed){footerBtn=`<div class="cf-btn-group"><span class="btn-completed-test"><svg width="11" height="11" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>Completed</span><span class="retest-badge">All 3 Used</span>${viewResultBtn}</div>`;}
+    else if(unlocked&&t.free){footerBtn=`<div class="cf-btn-group"><span class="btn-free-test"><svg width="11" height="11" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24"><polygon points="5 3 19 12 5 21 5 3"/></svg>${score?'Re-take':'FREE TEST'}</span>${viewResultBtn}${pdfBtn}</div>`;}
     else if(unlocked){footerBtn=`<div class="cf-btn-group"><span class="${score?'btn-retake-test':'btn-start-test'}"><svg width="11" height="11" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24"><polygon points="5 3 19 12 5 21 5 3"/></svg>${score?'Retake':'Start Test'}</span>${viewResultBtn}</div>`;}
     else{footerBtn=`<span class="btn-locked-test"><svg width="11" height="11" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0110 0v4"/></svg>Locked</span>`;}
     card.innerHTML=`
@@ -951,9 +966,50 @@ function buildCards(p,i){
         </div>
       </div>
       <div class="cf">${footerBtn}${sc}</div>`;
-    if(!unlocked)card.onclick=()=>openModal(p.key);
+    if(available&&!unlocked)card.onclick=()=>openModal(p.key);
     wrap.appendChild(card);grid.appendChild(wrap);
+    if(t.pdf)checkMsPdf(t.pdf);
   });
+}
+
+/* ── Live checks ──
+   A test card stays "Coming soon" until its Supabase table exists and the website can read
+   at least one question from it. PYQ tests check their own table; each paper's 20 series
+   tests check that paper's ms_paperN_test01 table. Cards switch on automatically. */
+async function checkTestAvailability(){
+  const groups=[];
+  PAPERS.forEach((p,i)=>{
+    p.tests.filter(t=>t.pyq&&t.table).forEach(t=>groups.push({tests:[t],table:t.table}));
+    const series=p.tests.filter(t=>!t.pyq);
+    if(series.length)groups.push({tests:series,table:`ms_paper${i+1}_test01`});
+  });
+  let changed=false;
+  await Promise.all(groups.map(async g=>{
+    try{
+      const res=await fetchWithTimeout(SUPABASE_URL+'/rest/v1/'+g.table+'?select=*&limit=1',{headers:{'apikey':SUPABASE_ANON_KEY,'Authorization':'Bearer '+SUPABASE_ANON_KEY}},6000);
+      let ok;
+      if(res.status===404)ok=false;            // table does not exist yet
+      else if(!res.ok)return;                  // unknown error — leave the card as it is
+      else{const d=await res.json();ok=Array.isArray(d)&&d.length>0;} // empty / not readable => not ready
+      g.tests.forEach(t=>{const was=t.available!==false;t.available=ok;if(was!==ok)changed=true;});
+    }catch(e){}
+  }));
+  if(changed)render();
+}
+/* PYQ PDFs on GitHub: the Download PDF button appears only once the file exists. */
+const MS_PDF_BASE='https://raw.githubusercontent.com/toppers11/toppers11-income-tax-departmental-exam/main/';
+const MS_PDF_STATUS={};
+function msPdfBtn(file){
+  if(MS_PDF_STATUS[file]!==true)return `<span data-mspdf="${file}" style="display:none"></span>`;
+  return `<a href="${MS_PDF_BASE}${file}" download="${file}" class="btn-download-pdf" data-mspdf="${file}" onclick="event.stopPropagation();" target="_blank" rel="noopener">⬇ Download PDF</a>`;
+}
+function checkMsPdf(file){
+  if(file in MS_PDF_STATUS)return;
+  MS_PDF_STATUS[file]=undefined;
+  fetch(MS_PDF_BASE+file,{method:'HEAD',cache:'no-store'}).then(r=>{
+    MS_PDF_STATUS[file]=r.ok;
+    if(r.ok)document.querySelectorAll(`[data-mspdf="${file}"]`).forEach(el=>{el.outerHTML=msPdfBtn(file);});
+  }).catch(()=>{});
 }
 
 function render(){
@@ -968,6 +1024,7 @@ function render(){
 function buildPlans(){
   const pc=document.getElementById('plan-cards');pc.innerHTML='';
   Object.entries(PLANS).forEach(([k,p])=>{
+    if(p.hidden)return;
     const d=document.createElement('div');
     d.className='pc-m'+(k===selPlan?' sel':'')+(p.disabled?' disabled':'');
     if(!p.disabled)d.onclick=()=>selectModalPlan(k);
@@ -1019,7 +1076,7 @@ ${livePapers.map(p=>`
   }
 }
 function selectModalPlan(k){
-  if(PLANS[k]&&PLANS[k].disabled)return;
+  if(PLANS[k]&&(PLANS[k].disabled||PLANS[k].hidden))return;
   selPlan=k;
   if(k!=='single-ms')selSubjectKey=null;
   buildPlans();
@@ -1047,6 +1104,16 @@ function openComboModal(){
   const titleEl=document.getElementById('modal-title');
   if(titleEl)titleEl.textContent='Unlock MS Paper II + IV Combo';
   selPlan='combo-ms-p2p4';
+  buildPlans();
+}
+function openBunchModal(){
+  modalPaperKey=null;selSubjectKey=null;
+  document.getElementById('overlay').classList.add('show');
+  document.getElementById('step1').style.display='';
+  document.getElementById('step2').style.display='none';
+  const titleEl=document.getElementById('modal-title');
+  if(titleEl)titleEl.textContent='Unlock MS Complete — All 4 Papers';
+  selPlan='bunch-ms';
   buildPlans();
 }
 function closeModal(){document.getElementById('overlay').classList.remove('show');}
@@ -1326,7 +1393,7 @@ window.addEventListener('DOMContentLoaded',async()=>{
     }
   }catch(e){console.warn('Profile sync failed — using cached data',e);}
 
-  populateProfile(getUser(),getUsers());await syncRemoteAttempts();render();fetchAndUpdateQuestionCounts();
+  populateProfile(getUser(),getUsers());await syncRemoteAttempts();render();fetchAndUpdateQuestionCounts();checkTestAvailability();
 });
 
 // Pulls this student's saved test results from Supabase (test_attempts table)
@@ -1388,7 +1455,7 @@ Object.assign(window,{
   closeModal,overlayClick,doContinue,submitPayment,backToPlan,
   buildTabs,switchTab,render,checkPaymentStatus,
   onUpiAppClick,onPaidClick,showPayScreen,showConfirmScreen,showPendingScreen,
-  openModal,openComboModal,selectSubject,selectModalPlan
+  openModal,openComboModal,openBunchModal,selectSubject,selectModalPlan
 });
 
 })();
