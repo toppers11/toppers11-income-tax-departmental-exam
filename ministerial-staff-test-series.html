@@ -158,7 +158,8 @@ body{background:var(--bg);color:var(--ink);font-family:'Open Sans',sans-serif;ov
 .tests-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:.85rem}
 .free-wrap{position:relative}
 .free-ribbon{background:linear-gradient(135deg,var(--t1),var(--t3));color:#fff;font-size:.58rem;font-weight:800;letter-spacing:.08em;text-transform:uppercase;text-align:center;padding:.3rem;border-radius:10px 10px 0 0;display:flex;align-items:center;justify-content:center;gap:.25rem}
-.free-wrap .card{border-radius:0 0 10px 10px;border-color:var(--t3);box-shadow:0 3px 14px rgba(0,171,132,.15)}
+.free-wrap .card{border-radius:10px;border-color:var(--t3);box-shadow:0 3px 14px rgba(0,171,132,.15)}
+.free-wrap .free-ribbon+.card{border-radius:0 0 10px 10px}
 .card{background:#fff;border:1.5px solid var(--bdr);border-radius:10px;overflow:hidden;cursor:pointer;display:block;text-decoration:none;transition:all .17s}
 .card:hover{transform:translateY(-3px);border-color:var(--t3);box-shadow:0 8px 22px rgba(0,171,132,.14)}
 .card.locked{opacity:.65;cursor:not-allowed}
