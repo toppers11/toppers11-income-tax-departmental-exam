@@ -588,7 +588,7 @@ Check Status
           Good News
         </div>
         <div class="rn-title">Unlimited Attempts on Every Test</div>
-        <div class="rn-msg">You can take every test in this series <strong>as many times as you like</strong> — there is no attempt limit. Retake any test to improve your score; your latest result is always saved and available under <strong>View Result</strong>. This applies to both paid tests and <strong>free PYQ tests</strong>.</div>
+        <div class="rn-msg">You can take every test in this series <strong>as many times as you like</strong> — there is no attempt limit. Retake any test to improve your score; your latest result is always saved and available under <strong>View Result</strong>. This applies to both paid tests and <strong>free PYQ tests (2021–2026)</strong>.</div>
       </div>
       <div class="rn-chips">
         <div class="rn-chip">
@@ -746,6 +746,7 @@ let selPlan=null;
 
 const PAPERS=[
   {key:'p1',num:1,name:'IT Law & Taxpayer Services',hasFree:true,topics:'IT Act 1961 & 2025, Taxpayer Services, TRACES, 26AS, e-PAN, Prefilled ITR, ASK, SEVOTTAM, CPGRAM, SC case laws by topic.',type:'Objective',marks:100,tests:[
+    {id:'ito-p1-pyq26',lbl:'PYQ 2026',title:'ITO Paper 1 - Previous Years questions of 2026',free:true,pyq:true,qs:100,mins:120},
     {id:'ito-p1-pyq25',lbl:'PYQ 2025',title:'ITO Paper 1 - Previous Years questions of 2025',free:true,pyq:true,qs:100,mins:120},
     {id:'ito-p1-pyq24',lbl:'PYQ 2024',title:'ITO Paper 1 - Previous Years questions of 2024',free:true,pyq:true,qs:100,mins:120},
     {id:'ito-p1-pyq23',lbl:'PYQ 2023',title:'ITO Paper 1 - Previous Years questions of 2023',free:true,pyq:true,qs:100,mins:120},
@@ -773,6 +774,7 @@ const PAPERS=[
     {id:'ito-p1-s20',lbl:'Series 20',title:'IT Law & Taxpayer Services — Series 20',free:false,pyq:false,qs:100,mins:120},
   ]},
   {key:'p2',num:2,name:'Advance Accountancy',hasFree:true,topics:'Partnership, company accounts, hire purchase, depreciation, 12 Accounting Standards (AS-1,2,7,9,10,11,12,13,16,19,22,29), amalgamation.',type:'Objective',marks:100,tests:[
+    {id:'ito-p2-pyq26',lbl:'PYQ 2026',title:'ITO Paper 2 - Previous Years questions of 2026',free:true,pyq:true,qs:100,mins:120},
     {id:'ito-p2-pyq25',lbl:'PYQ 2025',title:'ITO Paper 2 - Previous Years questions of 2025',free:true,pyq:true,qs:100,mins:120},
     {id:'ito-p2-pyq24',lbl:'PYQ 2024',title:'ITO Paper 2 - Previous Years questions of 2024',free:true,pyq:true,qs:100,mins:120},
     {id:'ito-p2-pyq23',lbl:'PYQ 2023',title:'ITO Paper 2 - Previous Years questions of 2023',free:true,pyq:true,qs:100,mins:120},
@@ -800,6 +802,7 @@ const PAPERS=[
     {id:'ito-p2-s20',lbl:'Series 20',title:'Advance Accountancy — Series 20',free:false,pyq:false,qs:100,mins:120},
   ]},
   {key:'p3',num:3,name:'Allied Laws & Office Administration',hasFree:true,topics:'Contract Act, TP Act, Hindu Succession Act, Companies Act, LLP Act, RTI Act, FR/SR, CCS Rules, POSH, RPwD Act, GeM, DFPR 2024.',type:'Objective',marks:100,tests:[
+    {id:'ito-p3-pyq26',lbl:'PYQ 2026',title:'ITO Paper 3 - Previous Years questions of 2026',free:true,pyq:true,qs:100,mins:120},
     {id:'ito-p3-pyq25',lbl:'PYQ 2025',title:'ITO Paper 3 - Previous Years questions of 2025',free:true,pyq:true,qs:100,mins:120},
     {id:'ito-p3-pyq24',lbl:'PYQ 2024',title:'ITO Paper 3 - Previous Years questions of 2024',free:true,pyq:true,qs:100,mins:120},
     {id:'ito-p3-pyq23',lbl:'PYQ 2023',title:'ITO Paper 3 - Previous Years questions of 2023',free:true,pyq:true,qs:100,mins:120},
@@ -827,6 +830,7 @@ const PAPERS=[
     {id:'ito-p3-s20',lbl:'Series 20',title:'Allied Laws & Office Admin — Series 20',free:false,pyq:false,qs:100,mins:120},
   ]},
   {key:'p5',num:5,name:'IT Applications & Operations',hasFree:true,topics:'ITBA modules, Faceless Assessment, HRMS, Insight Portal, ITD Information Security Policy 2020, Digital Forensics (DIALs, disk/mobile/cloud forensics).',type:'Objective',marks:100,tests:[
+    {id:'ito-p5-pyq26',lbl:'PYQ 2026',title:'ITO Paper 4 - Previous Years questions of 2026',free:true,pyq:true,pdf:'ITO-P4-2026.pdf',qs:100,mins:120},
     {id:'ito-p5-s01',lbl:'Series 01',title:'IT Applications & Operations — Series 01',free:true,pyq:false,qs:100,mins:120},
     {id:'ito-p5-s02',lbl:'Series 02',title:'IT Applications & Operations — Series 02',free:false,pyq:false,qs:100,mins:120},
     {id:'ito-p5-s03',lbl:'Series 03',title:'IT Applications & Operations — Series 03',free:false,pyq:false,qs:100,mins:120},
@@ -1022,9 +1026,9 @@ function buildCards(p,i){
   <div class="bundle-in" style="position:relative;z-index:2;"><div>
     <div class="bundle-badge">⭐ Best Value</div>
     <div class="bundle-title">ITO Paper ${p.num} — ${p.name}</div>
-    <div class="bundle-sub">${p.key==='p5'?`${p.tests.length} Tests · ${p.marks} Marks · Objective`:`25 Tests · 5 PYQs Free Test Series + 20 Sample Test Series · ${p.marks} Marks · Objective`}</div>
+    <div class="bundle-sub">${p.key==='p5'?`${p.tests.length} Tests · ${p.marks} Marks · Objective`:`${p.tests.length} Tests · ${p.tests.filter(t=>t.pyq).length} PYQs Free Test Series + ${p.tests.filter(t=>!t.pyq).length} Sample Test Series · ${p.marks} Marks · Objective`}</div>
     <div class="bundle-papers">
-      ${p.key==='p5'?'':'<div class="bp"><svg viewBox="0 0 24 24" fill=none height=11 stroke=rgba(255,255,255,.65) stroke-width=2 width=11><path d="M5 13l4 4L19 7"/></svg>5 Previous Year Question (PYQ) Tests — 2021 to 2025 · <strong style="color:#3ef0bc">FREE, unlimited attempts</strong></div>'}
+      ${p.key==='p5'?'':'<div class="bp"><svg viewBox="0 0 24 24" fill=none height=11 stroke=rgba(255,255,255,.65) stroke-width=2 width=11><path d="M5 13l4 4L19 7"/></svg>6 Previous Year Question (PYQ) Tests — 2021 to 2026 · <strong style="color:#3ef0bc">FREE, unlimited attempts</strong></div>'}
       <div class="bp"><svg viewBox="0 0 24 24" fill=none height=11 stroke=rgba(255,255,255,.65) stroke-width=2 width=11><path d="M5 13l4 4L19 7"/></svg>Topics: ${p.topics.substring(0,80)}…</div>
       <div class="bp"><svg viewBox="0 0 24 24" fill=none height=11 stroke=rgba(255,255,255,.65) stroke-width=2 width=11><path d="M5 13l4 4L19 7"/></svg>1/8 negative marking · Timed auto-submit</div>
     </div>
@@ -1052,7 +1056,7 @@ function buildCards(p,i){
       </div>
     </div>
     ${!isPaidForPaper(p.key)?bundleHTML:''}
-    <div class="papers-lbl">${(()=>{const pyqN=p.tests.filter(t=>t.pyq).length;const serN=p.tests.filter(t=>!t.pyq).length;return pyqN>0?`All ${p.tests.length} Tests — ${pyqN} PYQs + ${serN} Series`:`All ${p.tests.length} Tests — ${serN} Series`;})()}</div>
+    <div class="papers-lbl">${(()=>{const pyqN=p.tests.filter(t=>t.pyq).length;const serN=p.tests.filter(t=>!t.pyq).length;return pyqN>0?`All ${p.tests.length} Tests — ${pyqN} PYQ${pyqN>1?'s':''} + ${serN} Series`:`All ${p.tests.length} Tests — ${serN} Series`;})()}</div>
     <div class="tests-grid" id="grid-${p.key}"></div>`;
 
   document.getElementById('panels').appendChild(div);
@@ -1092,7 +1096,7 @@ function buildCards(p,i){
     // PDF download link (previous-year-question PDFs, hosted on GitHub)
     const pdfBase='https://raw.githubusercontent.com/toppers11/toppers11-income-tax-departmental-exam/main/';
     const pdfYear=t.pyq?(t.lbl.match(/\d{4}/)||[])[0]:null;
-    const pdfFile=pdfYear?`ITO-${p.key.toUpperCase()}-${pdfYear}.pdf`:null;
+    const pdfFile=t.pdf||(pdfYear?`ITO-${p.key.toUpperCase()}-${pdfYear}.pdf`:null);
     const downloadPdfBtn=t.pyq&&pdfFile?`<a href="${pdfBase}${pdfFile}" download="${pdfFile}" class="btn-download-pdf" onclick="event.stopPropagation();" target="_blank" rel="noopener">⬇ DOWNLOAD PDF</a>`:'';
 
     // Footer action button
