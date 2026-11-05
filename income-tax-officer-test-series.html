@@ -994,6 +994,12 @@ function switchTab(i){
   activeTab=i;
   document.querySelectorAll('.tab-btn').forEach((b,idx)=>b.classList.toggle('active',idx===i));
   document.querySelectorAll('.panel').forEach((p,idx)=>p.classList.toggle('active',idx===i));
+  updateRetestNotice();
+}
+/* Hide the 'Unlimited Attempts' notice on descriptive (PDF-only) papers like Paper 4 */
+function updateRetestNotice(){
+  const n=document.querySelector('.retest-notice');
+  if(n)n.style.display=(PAPERS[activeTab]&&PAPERS[activeTab].descriptive)?'none':'';
 }
 
 function buildCards(p,i){
@@ -1200,6 +1206,7 @@ function render(){
   document.getElementById('panels').innerHTML='';
   PAPERS.forEach((p,i)=>buildCards(p,i));
   buildTabs();
+  updateRetestNotice();
 }
 
 /* ── Bundle plan selection ── */
