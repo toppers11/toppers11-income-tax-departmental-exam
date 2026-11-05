@@ -701,7 +701,7 @@ const PAPERS=[
     {id:'ms_paper3_test20',lbl:'Series 20',title:'Office Procedure — Series 20',free:false,pyq:false,qs:100,mins:120},
   ]},
   {key:'p4',name:'IT Applications & Operations',hasFree:true,topics:'ITBA modules (ITR processing, Rectification, Recovery, Audit, Faceless Appeal, OGE, Penalty, e-Nivaran, PAN/TAN, TDS, MIS Reports, Email & VC), HRMS in ITBA (user roles, access control), Insight Portal (data handling, e-verification, third-party reporting), ITD Information Security Policy 2020.',type:'Objective MCQ',marks:100,tests:[
-    {id:'ms-p4-pyq26',lbl:'PYQ 2026',title:'MS Paper 4 - Previous Years questions of 2026',free:true,pyq:true,table:'ms_paper4_2026_pyq',pdf:'MS-P4-2026.pdf',qs:100,mins:120},
+    {id:'ms-p4-pyq26',lbl:'PYQ 2026',title:'MS Paper 4 - Previous Years questions of 2026',free:true,pyq:true,table:'ms_paper4_2026_pyq',pdf:'MS-P4-2026.mht',qs:100,mins:120},
     {id:'ms_paper4_test01',lbl:'Series 01',title:'IT Applications & Operations — Series 01',free:true,pyq:false,qs:100,mins:120},
     {id:'ms_paper4_test02',lbl:'Series 02',title:'IT Applications & Operations — Series 02',free:false,pyq:false,qs:100,mins:120},
     {id:'ms_paper4_test03',lbl:'Series 03',title:'IT Applications & Operations — Series 03',free:false,pyq:false,qs:100,mins:120},
@@ -1001,7 +1001,18 @@ const MS_PDF_BASE='https://raw.githubusercontent.com/toppers11/toppers11-income-
 const MS_PDF_STATUS={};
 function msPdfBtn(file){
   if(MS_PDF_STATUS[file]!==true)return `<span data-mspdf="${file}" style="display:none"></span>`;
-  return `<a href="${MS_PDF_BASE}${file}" download="${file}" class="btn-download-pdf" data-mspdf="${file}" onclick="event.stopPropagation();" target="_blank" rel="noopener">⬇ Download PDF</a>`;
+  const isPdf=/\.pdf$/i.test(file);
+  // Non-PDF files (e.g. .mht) are served by GitHub as plain text, so they are fetched and saved as a real download.
+  const click=isPdf?'event.stopPropagation();':`event.preventDefault();event.stopPropagation();msDownload('${file}');`;
+  return `<a href="${MS_PDF_BASE}${file}" download="${file}" class="btn-download-pdf" data-mspdf="${file}" onclick="${click}" target="_blank" rel="noopener">⬇ Download ${isPdf?'PDF':'Paper'}</a>`;
+}
+function msDownload(file){
+  const type=/\.mht(ml)?$/i.test(file)?'multipart/related':'application/octet-stream';
+  fetch(MS_PDF_BASE+file,{cache:'no-store'}).then(r=>{if(!r.ok)throw new Error(r.status);return r.blob();}).then(b=>{
+    const url=URL.createObjectURL(new Blob([b],{type}));
+    const a=document.createElement('a');a.href=url;a.download=file;document.body.appendChild(a);a.click();a.remove();
+    setTimeout(()=>URL.revokeObjectURL(url),4000);
+  }).catch(()=>{window.open(MS_PDF_BASE+file,'_blank','noopener');});
 }
 function checkMsPdf(file){
   if(file in MS_PDF_STATUS)return;
@@ -1455,7 +1466,7 @@ Object.assign(window,{
   closeModal,overlayClick,doContinue,submitPayment,backToPlan,
   buildTabs,switchTab,render,checkPaymentStatus,
   onUpiAppClick,onPaidClick,showPayScreen,showConfirmScreen,showPendingScreen,
-  openModal,openComboModal,openBunchModal,selectSubject,selectModalPlan
+  openModal,openComboModal,openBunchModal,msDownload,selectSubject,selectModalPlan
 });
 
 })();
